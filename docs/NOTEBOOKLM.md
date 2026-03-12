@@ -14,6 +14,7 @@ Akemi Tattoo Portfolio es una webapp brutalista para exhibir trabajos de un arti
 - CRUD de galería y publicaciones.
 - Escalabilidad: tags, colecciones, estilos, ubicaciones.
 - Temas UI: dark mode y eye-rest mode.
+- Editor avanzado de galería y publicaciones (bulk upload, reordenamiento, drafts).
 
 ## Funcionalidades Clave
 - Gestión de contenido por el artista.

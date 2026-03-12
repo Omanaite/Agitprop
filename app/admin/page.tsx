@@ -1,3 +1,4 @@
+import { GalleriesManager } from "@/components/admin/GalleriesManager";
 import { GalleryManager } from "@/components/admin/GalleryManager";
 import { PostManager } from "@/components/admin/PostManager";
 import { signOutAdmin } from "./actions";
@@ -23,6 +24,7 @@ export default function AdminPage() {
           </form>
         </header>
 
+        <GalleriesManager />
         <GalleryManager />
         <PostManager />
       </div>

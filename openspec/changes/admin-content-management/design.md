@@ -76,6 +76,26 @@ type ValidationError = {
 ## Migration / Rollout
 Add `posts` table and RLS policies. No breaking changes to public views.
 
+## Version Control Standard
+All significant changes **SHALL** be committed with clear, prefixed messages
+(`feat:`, `fix:`, `docs:`, `refactor:`). Commits should represent meaningful
+milestones for future development history.
+
+## Planned Editor Architecture (Advanced)
+Future iteration for editor UX:
+- Gallery editor: bulk upload, drag-and-drop reordering, tagging/collections,
+  and quick metadata edits per item.
+- Post editor: structured content, draft/publish toggle, scheduling, and
+  preview mode.
+- Metadata fields: tattoo style, location link, session length, and aftercare notes.
+
+This design is inspired by common CMS patterns such as bulk upload, sorting,
+and tagging flows used in gallery managers and editorial tools. citeturn1search1turn1search0
+
+## Knowledge Capture & Skills
+Maintain SDD artifacts in `openspec/` and keep skill registry updated so
+future changes stay aligned with existing standards.
+
 ## Open Questions
 - [ ] Exact admin roles and number of admin users?
 - [ ] Should posts be public immediately or require a publish workflow?

@@ -21,3 +21,20 @@ export type ContactRequest = {
   email: string;
   message: string;
 };
+
+export type Gallery = {
+  id: string;
+  title: string;
+  description: string | null;
+  slug: string;
+  created_at: string;
+};
+
+export type Post = {
+  id: string;
+  title: string;
+  body: string;
+  status: "draft" | "published";
+  created_at: string;
+  updated_at: string;
+};

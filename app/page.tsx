@@ -8,11 +8,15 @@ import { PaymentButtons } from "@/components/PaymentButtons";
 import { PriceCards } from "@/components/PriceCards";
 import { Reveal } from "@/components/Reveal";
 import { Section } from "@/components/Section";
+import { getGalleries } from "@/lib/data/galleries";
+import { getPublishedPosts } from "@/lib/data/posts";
 import { getTattooGallery } from "@/lib/data/tattoos";
 
 // Home page for the tattoo portfolio, built to the brutalist spec.
 export default async function Home() {
   const tattoos = await getTattooGallery();
+  const posts = await getPublishedPosts();
+  const galleries = await getGalleries();
 
   return (
     <div className="min-h-screen bg-[var(--bg)] p-4 text-[var(--fg)] md:p-8">
@@ -40,6 +44,30 @@ export default async function Home() {
         <Reveal>
           <Section id="work" title="Selected Work" eyebrow="Gallery">
             <GalleryGrid tattoos={tattoos} />
+          </Section>
+        </Reveal>
+
+        <Reveal>
+          <Section id="galleries" title="Curated Galleries" eyebrow="Collections">
+            {galleries.length ? (
+              <div className="grid gap-4 md:grid-cols-2">
+                {galleries.map((gallery) => (
+                  <div key={gallery.id} className="hard-border p-4">
+                    <p className="text-xs uppercase tracking-[0.2em]">
+                      {gallery.slug}
+                    </p>
+                    <h3 className="mt-2 text-lg uppercase">{gallery.title}</h3>
+                    {gallery.description ? (
+                      <p className="text-sm">{gallery.description}</p>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm uppercase tracking-[0.2em]">
+                No galleries published yet.
+              </p>
+            )}
           </Section>
         </Reveal>
 
@@ -80,6 +108,25 @@ export default async function Home() {
         <Reveal>
           <Section id="contact" title="Direct Contact" eyebrow="Signal">
             <ContactForm />
+          </Section>
+        </Reveal>
+
+        <Reveal>
+          <Section id="posts" title="Studio Notes" eyebrow="Posts">
+            {posts.length ? (
+              <div className="grid gap-4 md:grid-cols-2">
+                {posts.map((post) => (
+                  <article key={post.id} className="hard-border p-4">
+                    <h3 className="text-lg uppercase">{post.title}</h3>
+                    <p className="text-sm">{post.body}</p>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm uppercase tracking-[0.2em]">
+                No public posts yet.
+              </p>
+            )}
           </Section>
         </Reveal>
 

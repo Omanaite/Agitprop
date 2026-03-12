@@ -37,6 +37,11 @@ create table if not exists galleries (
   created_at timestamptz not null default now()
 );
 
+alter table tattoos
+  add constraint tattoos_gallery_fk
+  foreign key (gallery_id) references galleries(id)
+  on delete set null;
+
 -- Enable RLS for public safety.
 alter table tattoos enable row level security;
 alter table bookings enable row level security;

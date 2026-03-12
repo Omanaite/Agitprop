@@ -34,6 +34,10 @@ Objetivo: evolucionar a una plataforma administrable por el artista con login, C
 - Webhooks de pagos (Stripe/PayPal) si aplica.
 - Modo oscuro (dark mode).
 - Modo descanso de ojos (tono amarillo en modo claro).
+- Publicación visible para cliente (feed público de posts).
+- Galerías múltiples con navegación.
+- Editor avanzado de galería (bulk upload, drag & drop, tags).
+- Editor avanzado de publicaciones (draft, preview, scheduling).
 
 ### Fase 4 - Escalabilidad y calidad
 - Tags/colecciones/estilos/ubicaciones.

@@ -39,6 +39,18 @@ export function Header() {
         </a>
         <a
           className="snap-transition theme-border-thin px-2 py-1 theme-hover-invert"
+          href="#galleries"
+        >
+          Galleries
+        </a>
+        <a
+          className="snap-transition theme-border-thin px-2 py-1 theme-hover-invert"
+          href="#posts"
+        >
+          Posts
+        </a>
+        <a
+          className="snap-transition theme-border-thin px-2 py-1 theme-hover-invert"
           href="#contact"
         >
           Contact

@@ -31,8 +31,16 @@
 - [ ] 6.2 Update `docs/PROJECT_OVERVIEW.md` with admin feature summary.
 - [ ] 6.3 Update `docs/NOTEBOOKLM.md` with finalized admin workflow and security notes.
 - [ ] 6.4 Update `docs/VALIDATION_UX.md` when new fields or forms are added.
+- [ ] 6.5 Record commit message standard in design docs (prefixed messages).
 
 ## Phase 7: UX Enhancements
 - [ ] 7.1 Add dark mode toggle (persist preference).
 - [ ] 7.2 Add eye-rest mode: warm/yellow tint for light mode.
 - [ ] 7.3 Document theme modes in `docs/ADMIN_MANUAL.md` and `docs/PROJECT_OVERVIEW.md`.
+
+## Phase 8: Public Content + Advanced Editors
+- [ ] 8.1 Add public posts feed to home page.
+- [ ] 8.2 Add public galleries listing to home page.
+- [ ] 8.3 Build advanced gallery editor (bulk upload, drag/drop reorder, tagging).
+- [ ] 8.4 Build advanced post editor (draft/publish, preview, scheduling).
+- [ ] 8.5 Extend tattoo metadata (style, location link, session length).

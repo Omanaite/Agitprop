@@ -34,6 +34,10 @@ Asegurar que cada fase del roadmap tenga documentación asociada y se mantenga a
 - Documento: `openspec/changes/admin-content-management/specs/*/spec.md`
 - Estado: Actualizadas con validaciones y guardas de admin
 
+### Public Site Specs
+- Documento: `openspec/changes/admin-content-management/specs/public-site/spec.md`
+- Estado: Completo
+
 ### Fase 3 - Contenido ampliado y operaciones
 - Documento: `docs/ADMIN_MANUAL.md`
 - Estado: Pendiente (extender con publicaciones avanzadas)
