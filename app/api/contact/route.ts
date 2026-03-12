@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { contactSchema } from "@/lib/validators";
 import { sendNotificationEmail } from "@/lib/email/resend";
 
+// Ensure Node.js runtime for Resend SDK in Vercel.
+export const runtime = "nodejs";
+
 // Sends a contact email using Resend if configured.
 export async function POST(request: Request) {
   try {

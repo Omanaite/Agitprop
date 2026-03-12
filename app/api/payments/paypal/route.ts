@@ -1,7 +1,13 @@
 import { NextResponse } from "next/server";
 import type { OrderRequest } from "@paypal/paypal-server-sdk";
-import { OrdersController } from "@paypal/paypal-server-sdk";
+import {
+  CheckoutPaymentIntent,
+  OrdersController,
+} from "@paypal/paypal-server-sdk";
 import { createPayPalClient } from "@/lib/payments/paypal";
+
+// Ensure Node.js runtime for PayPal SDK in Vercel.
+export const runtime = "nodejs";
 
 // Creates a PayPal order for deposits or design fees.
 export async function POST(request: Request) {
@@ -22,7 +28,7 @@ export async function POST(request: Request) {
         : Number(process.env.PRICE_DEPOSIT_EUR || 120);
 
     const orderRequest: OrderRequest = {
-      intent: "CAPTURE",
+      intent: CheckoutPaymentIntent.Capture,
       purchaseUnits: [
         {
           amount: {

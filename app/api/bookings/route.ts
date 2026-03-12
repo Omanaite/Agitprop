@@ -3,6 +3,9 @@ import { bookingSchema } from "@/lib/validators";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { sendNotificationEmail } from "@/lib/email/resend";
 
+// Ensure Node.js runtime for Supabase + email SDKs in Vercel.
+export const runtime = "nodejs";
+
 // Creates a booking request and optionally triggers a notification email.
 export async function POST(request: Request) {
   try {

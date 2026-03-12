@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { createStripeClient } from "@/lib/payments/stripe";
 
+// Ensure Node.js runtime for Stripe SDK in Vercel.
+export const runtime = "nodejs";
+
 // Creates a Stripe checkout session for deposits or design fees.
 export async function POST(request: Request) {
   try {

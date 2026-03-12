@@ -7,7 +7,6 @@ export function createStripeClient() {
     throw new Error("STRIPE_SECRET_KEY is missing.");
   }
 
-  return new Stripe(key, {
-    apiVersion: "2024-06-20",
-  });
+  // Use the SDK default API version to avoid mismatch in build types.
+  return new Stripe(key);
 }
