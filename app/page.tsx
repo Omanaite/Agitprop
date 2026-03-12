@@ -15,13 +15,13 @@ export default async function Home() {
   const tattoos = await getTattooGallery();
 
   return (
-    <div className="min-h-screen bg-white p-4 text-black md:p-8">
+    <div className="min-h-screen bg-[var(--bg)] p-4 text-[var(--fg)] md:p-8">
       <NoiseOverlay />
       <div className="mx-auto flex max-w-6xl flex-col gap-6">
         <Header />
 
         <Reveal>
-          <section className="hard-border bg-white px-6 py-10 md:px-10 md:py-14">
+          <section className="hard-border bg-[var(--bg)] px-6 py-10 md:px-10 md:py-14">
             <p className="mb-4 text-xs uppercase tracking-[0.5em]">
               Brutalist Digital Zine
             </p>

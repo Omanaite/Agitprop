@@ -41,28 +41,28 @@ export function PaymentButtons() {
   return (
     <div className="grid gap-3 md:grid-cols-2">
       <button
-        className="snap-transition hard-border bg-black px-4 py-3 text-white hover:bg-white hover:text-black"
+        className="snap-transition theme-border theme-invert px-4 py-3"
         type="button"
         onClick={() => startStripe("deposit")}
       >
         Pay Deposit with Stripe
       </button>
       <button
-        className="snap-transition hard-border bg-black px-4 py-3 text-white hover:bg-white hover:text-black"
+        className="snap-transition theme-border theme-invert px-4 py-3"
         type="button"
         onClick={() => startPayPal("deposit")}
       >
         Pay Deposit with PayPal
       </button>
       <button
-        className="snap-transition hard-border bg-white px-4 py-3 text-black hover:bg-black hover:text-white"
+        className="snap-transition theme-border theme-hover-invert px-4 py-3"
         type="button"
         onClick={() => startStripe("design")}
       >
         Pay Design with Stripe
       </button>
       <button
-        className="snap-transition hard-border bg-white px-4 py-3 text-black hover:bg-black hover:text-white"
+        className="snap-transition theme-border theme-hover-invert px-4 py-3"
         type="button"
         onClick={() => startPayPal("design")}
       >

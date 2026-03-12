@@ -19,7 +19,7 @@ export function GalleryGrid({ tattoos }: GalleryGridProps) {
       {tattoos.map((tattoo) => (
         <article
           key={tattoo.id}
-          className="hard-border flex flex-col gap-3 bg-white p-3"
+          className="hard-border flex flex-col gap-3 bg-[var(--bg)] p-3"
         >
           <img
             className="tattoo-image h-64 w-full object-cover"

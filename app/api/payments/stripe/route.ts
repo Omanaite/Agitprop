@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createStripeClient } from "@/lib/payments/stripe";
+import { getClientIp, rateLimit } from "@/lib/rate-limit";
 
 // Ensure Node.js runtime for Stripe SDK in Vercel.
 export const runtime = "nodejs";
@@ -7,6 +8,14 @@ export const runtime = "nodejs";
 // Creates a Stripe checkout session for deposits or design fees.
 export async function POST(request: Request) {
   try {
+    const ip = getClientIp(request);
+    const limit = rateLimit(`payments-stripe:${ip}`, 10, 60_000);
+    if (!limit.allowed) {
+      return NextResponse.json(
+        { message: "Too many requests. Try again later." },
+        { status: 429 }
+      );
+    }
     const { type } = (await request.json()) as { type: "deposit" | "design" };
     if (!process.env.STRIPE_SECRET_KEY) {
       return NextResponse.json(

@@ -8,6 +8,8 @@ type BookingFormState = "idle" | "submitting" | "success" | "error";
 export function BookingForm() {
   const [state, setState] = useState<BookingFormState>("idle");
   const [message, setMessage] = useState<string>("");
+  const [errors, setErrors] = useState<{ path: string; message: string }[]>([]);
+  const errorMap = new Map(errors.map((error) => [error.path, error.message]));
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -26,11 +28,13 @@ export function BookingForm() {
 
       if (!response.ok) {
         const error = await response.json();
+        setErrors(error.errors ?? []);
         throw new Error(error.message || "Booking failed.");
       }
 
       setState("success");
       setMessage("Booking request sent. We will reply within 48h.");
+      setErrors([]);
       event.currentTarget.reset();
     } catch (error) {
       setState("error");
@@ -46,20 +50,35 @@ export function BookingForm() {
         <label className="text-xs uppercase tracking-[0.2em]">
           Name
           <input
-            className="hard-border mt-1 w-full px-3 py-2"
+            className={`hard-border mt-1 w-full px-3 py-2 ${
+              errorMap.get("name") ? "input-error" : ""
+            }`}
             name="name"
+            minLength={2}
             required
           />
         </label>
+        {errorMap.get("name") ? (
+          <p className="input-helper" data-variant="error">
+            name: {errorMap.get("name")}
+          </p>
+        ) : null}
         <label className="text-xs uppercase tracking-[0.2em]">
           Email
           <input
-            className="hard-border mt-1 w-full px-3 py-2"
+            className={`hard-border mt-1 w-full px-3 py-2 ${
+              errorMap.get("email") ? "input-error" : ""
+            }`}
             name="email"
             type="email"
             required
           />
         </label>
+        {errorMap.get("email") ? (
+          <p className="input-helper" data-variant="error">
+            email: {errorMap.get("email")}
+          </p>
+        ) : null}
         <label className="text-xs uppercase tracking-[0.2em]">
           Preferred Date
           <input
@@ -72,29 +91,51 @@ export function BookingForm() {
         <label className="text-xs uppercase tracking-[0.2em]">
           Placement / Size
           <input
-            className="hard-border mt-1 w-full px-3 py-2"
+            className={`hard-border mt-1 w-full px-3 py-2 ${
+              errorMap.get("placement") ? "input-error" : ""
+            }`}
             name="placement"
+            minLength={2}
             required
           />
         </label>
+        {errorMap.get("placement") ? (
+          <p className="input-helper" data-variant="error">
+            placement: {errorMap.get("placement")}
+          </p>
+        ) : null}
         <label className="text-xs uppercase tracking-[0.2em]">
           Description
           <textarea
-            className="hard-border mt-1 min-h-[120px] w-full px-3 py-2"
+            className={`hard-border mt-1 min-h-[120px] w-full px-3 py-2 ${
+              errorMap.get("description") ? "input-error" : ""
+            }`}
             name="description"
+            minLength={10}
             required
           />
         </label>
+        {errorMap.get("description") ? (
+          <p className="input-helper" data-variant="error">
+            description: {errorMap.get("description")}
+          </p>
+        ) : null}
       </div>
       <button
-        className="snap-transition hard-border w-full bg-black px-4 py-3 text-white hover:bg-white hover:text-black"
+        className="snap-transition theme-border theme-invert w-full px-4 py-3"
         type="submit"
         disabled={state === "submitting"}
       >
         {state === "submitting" ? "Submitting..." : "Request Session"}
       </button>
       {message ? (
-        <p className="text-xs uppercase tracking-[0.2em]">{message}</p>
+        <p
+          className="validation-box"
+          data-variant={state === "error" ? "error" : "success"}
+          aria-live="polite"
+        >
+          {message}
+        </p>
       ) : null}
     </form>
   );

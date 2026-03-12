@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { bookingSchema } from "@/lib/validators";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { sendNotificationEmail } from "@/lib/email/resend";
+import { getClientIp, rateLimit } from "@/lib/rate-limit";
 
 // Ensure Node.js runtime for Supabase + email SDKs in Vercel.
 export const runtime = "nodejs";
@@ -9,7 +10,29 @@ export const runtime = "nodejs";
 // Creates a booking request and optionally triggers a notification email.
 export async function POST(request: Request) {
   try {
-    const payload = bookingSchema.parse(await request.json());
+    const ip = getClientIp(request);
+    const limit = rateLimit(`booking:${ip}`, 5, 60_000);
+    if (!limit.allowed) {
+      return NextResponse.json(
+        { message: "Too many requests. Try again later." },
+        { status: 429 }
+      );
+    }
+    const json = await request.json();
+    const parsed = bookingSchema.safeParse(json);
+    if (!parsed.success) {
+      return NextResponse.json(
+        {
+          message: "Invalid booking payload.",
+          errors: parsed.error.issues.map((issue) => ({
+            path: issue.path.join("."),
+            message: issue.message,
+          })),
+        },
+        { status: 400 }
+      );
+    }
+    const payload = parsed.data;
     if (
       !process.env.NEXT_PUBLIC_SUPABASE_URL ||
       !process.env.SUPABASE_SERVICE_ROLE_KEY

@@ -5,6 +5,7 @@ import {
   OrdersController,
 } from "@paypal/paypal-server-sdk";
 import { createPayPalClient } from "@/lib/payments/paypal";
+import { getClientIp, rateLimit } from "@/lib/rate-limit";
 
 // Ensure Node.js runtime for PayPal SDK in Vercel.
 export const runtime = "nodejs";
@@ -12,6 +13,14 @@ export const runtime = "nodejs";
 // Creates a PayPal order for deposits or design fees.
 export async function POST(request: Request) {
   try {
+    const ip = getClientIp(request);
+    const limit = rateLimit(`payments-paypal:${ip}`, 10, 60_000);
+    if (!limit.allowed) {
+      return NextResponse.json(
+        { message: "Too many requests. Try again later." },
+        { status: 429 }
+      );
+    }
     const { type } = (await request.json()) as { type: "deposit" | "design" };
     if (!process.env.PAYPAL_CLIENT_ID || !process.env.PAYPAL_CLIENT_SECRET) {
       return NextResponse.json(

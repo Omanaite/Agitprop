@@ -29,7 +29,7 @@ export function PriceCards() {
       {PRICES.map((card) => (
         <article
           key={card.title}
-          className="hard-border flex flex-col gap-3 bg-white p-4"
+          className="hard-border flex flex-col gap-3 bg-[var(--bg)] p-4"
         >
           <h3 className="font-[var(--font-heading)] text-xl uppercase">
             {card.title}

@@ -12,7 +12,7 @@ export function Section({ id, title, eyebrow, children }: SectionProps) {
   return (
     <section
       id={id}
-      className="hard-border bg-white px-6 py-10 md:px-10 md:py-14"
+      className="hard-border bg-[var(--bg)] px-6 py-10 md:px-10 md:py-14"
     >
       {eyebrow ? (
         <p className="mb-3 text-xs uppercase tracking-[0.4em]">{eyebrow}</p>
