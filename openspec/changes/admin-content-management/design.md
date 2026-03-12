@@ -90,7 +90,8 @@ Future iteration for editor UX:
 - Metadata fields: tattoo style, location link, session length, and aftercare notes.
 
 This design is inspired by common CMS patterns such as bulk upload, sorting,
-and tagging flows used in gallery managers and editorial tools. citeturn1search1turn1search0
+nd drag-and-drop organization used in gallery managers and editorial tools.
+citeturn1search1turn1search4
 
 ## Knowledge Capture & Skills
 Maintain SDD artifacts in `openspec/` and keep skill registry updated so
@@ -99,3 +100,4 @@ future changes stay aligned with existing standards.
 ## Open Questions
 - [ ] Exact admin roles and number of admin users?
 - [ ] Should posts be public immediately or require a publish workflow?
+
