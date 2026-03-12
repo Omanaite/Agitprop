@@ -13,11 +13,18 @@ Nota: el usuario debe tener el rol `admin` en `app_metadata` de Supabase Auth.
 - Editar pieza: actualizar metadatos.
 - Eliminar pieza: confirmar antes de borrar.
 Opcional: subir imagen desde el panel para obtener URL pública.
+Opcional: asignar la pieza a una galería específica.
+
+## Gestión de Galerías
+- Crear galería con título y slug.
+- Editar descripción y slug.
+- Eliminar galería si ya no se usa.
 
 ## Gestión de Publicaciones
 - Crear post: título y contenido.
 - Editar post: actualizar contenido.
 - Eliminar post: confirmar antes de borrar.
+Nota: solo los posts `published` se muestran en el sitio público.
 
 ## Buenas prácticas
 - Usar imágenes optimizadas y con buena resolución.
