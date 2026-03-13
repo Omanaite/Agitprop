@@ -5,10 +5,10 @@ const nextConfig: NextConfig = {
     const isDev = process.env.NODE_ENV !== "production";
     const scriptSrc = isDev
       ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
-      : "script-src 'self'";
+      : "script-src 'self' 'unsafe-inline'";
     const styleSrc = isDev
       ? "style-src 'self' 'unsafe-inline'"
-      : "style-src 'self'";
+      : "style-src 'self' 'unsafe-inline'";
     const csp =
       "default-src 'self'; img-src 'self' data: https:; " +
       styleSrc +
