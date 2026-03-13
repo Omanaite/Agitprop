@@ -36,6 +36,7 @@ Objetivo: evolucionar a una plataforma administrable por el artista con login, C
 - Modo descanso de ojos (tono amarillo en modo claro).
 - Publicación visible para cliente (feed público de posts).
 - Galerías múltiples con navegación.
+- Filtro de galería en vista pública.
 - Editor avanzado de galería (bulk upload, drag & drop, tags).
 - Editor avanzado de publicaciones (draft, preview, scheduling).
 

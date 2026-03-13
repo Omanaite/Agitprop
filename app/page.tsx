@@ -1,7 +1,7 @@
 import { BookingForm } from "@/components/BookingForm";
 import { ContactForm } from "@/components/ContactForm";
 import { Footer } from "@/components/Footer";
-import { GalleryGrid } from "@/components/GalleryGrid";
+import { GalleryFilter } from "@/components/GalleryFilter";
 import { Header } from "@/components/Header";
 import { NoiseOverlay } from "@/components/NoiseOverlay";
 import { PaymentButtons } from "@/components/PaymentButtons";
@@ -43,7 +43,7 @@ export default async function Home() {
 
         <Reveal>
           <Section id="work" title="Selected Work" eyebrow="Gallery">
-            <GalleryGrid tattoos={tattoos} />
+            <GalleryFilter tattoos={tattoos} galleries={galleries} />
           </Section>
         </Reveal>
 
