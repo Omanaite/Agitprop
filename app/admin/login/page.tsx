@@ -14,6 +14,8 @@ function getErrorMessage(code?: string) {
       return "Cuenta sin permisos de administrador.";
     case "config":
       return "Configura Supabase en Vercel antes de iniciar sesion.";
+    case "server":
+      return "Error de servidor. Verifica las credenciales y vuelve a intentar.";
     default:
       return "";
   }

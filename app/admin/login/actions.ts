@@ -24,19 +24,23 @@ export async function signInAdmin(formData: FormData) {
     redirect("/admin/login?error=config");
   }
 
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-  if (error || !data.user) {
-    redirect("/admin/login?error=invalid");
+    if (error || !data.user) {
+      redirect("/admin/login?error=invalid");
+    }
+
+    if (data.user.app_metadata?.role !== "admin") {
+      await supabase.auth.signOut();
+      redirect("/admin/login?error=forbidden");
+    }
+
+    redirect("/admin");
+  } catch {
+    redirect("/admin/login?error=server");
   }
-
-  if (data.user.app_metadata?.role !== "admin") {
-    await supabase.auth.signOut();
-    redirect("/admin/login?error=forbidden");
-  }
-
-  redirect("/admin");
 }
