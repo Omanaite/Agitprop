@@ -11,13 +11,18 @@ export async function signInAdmin(formData: FormData) {
     redirect("/admin/login?error=missing");
   }
 
-  const cookieStore = await cookies();
-  const supabase = createSupabaseServerClient({
-    getAll: () => cookieStore.getAll(),
-    setAll: (cookiesToSet) => {
-      cookiesToSet.forEach((cookie) => cookieStore.set(cookie));
-    },
-  });
+  let supabase;
+  try {
+    const cookieStore = await cookies();
+    supabase = createSupabaseServerClient({
+      getAll: () => cookieStore.getAll(),
+      setAll: (cookiesToSet) => {
+        cookiesToSet.forEach((cookie) => cookieStore.set(cookie));
+      },
+    });
+  } catch {
+    redirect("/admin/login?error=config");
+  }
 
   const { data, error } = await supabase.auth.signInWithPassword({
     email,

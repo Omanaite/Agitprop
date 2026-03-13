@@ -12,6 +12,8 @@ function getErrorMessage(code?: string) {
       return "Credenciales invalidas.";
     case "forbidden":
       return "Cuenta sin permisos de administrador.";
+    case "config":
+      return "Configura Supabase en Vercel antes de iniciar sesion.";
     default:
       return "";
   }
