@@ -12,11 +12,21 @@ type Post = {
   publish_at?: string | null;
 };
 
-const emptyPost = {
+type PostForm = {
+  id: string;
+  title: string;
+  body: string;
+  status: Post["status"];
+  excerpt: string;
+  cover_image_url: string;
+  publish_at: string;
+};
+
+const emptyPost: PostForm = {
   id: "",
   title: "",
   body: "",
-  status: "draft" as const,
+  status: "draft",
   excerpt: "",
   cover_image_url: "",
   publish_at: "",
@@ -36,7 +46,7 @@ function toLocalInput(value?: string | null) {
 
 export function PostManager() {
   const [items, setItems] = useState<Post[]>([]);
-  const [form, setForm] = useState<typeof emptyPost>(emptyPost);
+  const [form, setForm] = useState<PostForm>(emptyPost);
   const [status, setStatus] = useState<string>("");
   const [errors, setErrors] = useState<ValidationError[]>([]);
   const errorMap = useMemo(

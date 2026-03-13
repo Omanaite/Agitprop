@@ -23,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+engram/
 
 # debug
 npm-debug.log*

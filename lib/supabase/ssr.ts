@@ -15,8 +15,9 @@ export function createSupabaseServerClient(cookieStore: {
   return createServerClient(url, anonKey, {
     cookies: {
       getAll: () => cookieStore.getAll(),
-      setAll: (cookiesToSet) => cookieStore.setAll(cookiesToSet),
+      setAll: (
+        cookiesToSet: { name: string; value: string; options?: CookieOptions }[]
+      ) => cookieStore.setAll(cookiesToSet),
     },
   });
 }
-
