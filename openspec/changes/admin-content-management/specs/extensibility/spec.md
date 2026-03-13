@@ -51,3 +51,16 @@ The system **SHOULD** apply the same validation messaging standard to new conten
 - GIVEN a new admin-managed content type exists
 - WHEN validation fails for that type
 - THEN the system uses the same validation messaging standard
+
+### Requirement: External Integrations Extensibility
+The system **SHOULD** support adding external integrations (OAuth providers, cloud storage) without breaking core flows.
+
+#### Scenario: OAuth provider added
+- GIVEN a new OAuth provider is enabled
+- WHEN users attempt to authenticate
+- THEN the existing email/password flow remains functional
+
+#### Scenario: Cloud storage provider added
+- GIVEN a cloud storage provider is enabled
+- WHEN the admin opens image editors
+- THEN the upload options adapt without breaking existing uploads

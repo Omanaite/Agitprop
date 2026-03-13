@@ -40,3 +40,16 @@ The system **SHALL** protect admin routes with session validation and role verif
 - GIVEN an admin session has expired
 - WHEN the user accesses an admin route
 - THEN the system redirects to the admin login
+
+### Requirement: OAuth Providers (Planned)
+The system **SHOULD** support OAuth providers (Google, GitHub, Facebook, or others used by artists).
+
+#### Scenario: OAuth login enabled
+- GIVEN OAuth is configured for a provider
+- WHEN the admin selects that provider
+- THEN the system authenticates via Supabase Auth OAuth flow
+
+#### Scenario: OAuth not configured
+- GIVEN OAuth is not configured
+- WHEN the admin selects a provider
+- THEN the system shows a configuration error and blocks the flow

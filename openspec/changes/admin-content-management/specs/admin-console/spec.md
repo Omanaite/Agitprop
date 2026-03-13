@@ -39,3 +39,21 @@ The system **MUST** display validation errors using a consistent visual style ac
 - WHEN the system validates the payload
 - THEN the system shows field-level errors
 - AND the error styling matches the global validation standard
+
+### Requirement: Admin Profile (Planned)
+The system **SHOULD** provide an admin profile view to manage payment data, addresses, email, and nickname.
+
+#### Scenario: Admin edits profile
+- GIVEN an authenticated admin user
+- WHEN the user updates profile data
+- THEN the system validates required fields
+- AND saves the profile changes
+
+### Requirement: Cloud Storage Connection (Planned)
+The system **SHOULD** allow the admin to connect a cloud storage provider for image uploads.
+
+#### Scenario: Cloud storage not connected
+- GIVEN no cloud storage connection exists
+- WHEN the admin opens the gallery/post editor
+- THEN cloud upload options are disabled
+- AND the UI explains how to connect

@@ -1,40 +1,45 @@
 # Project Overview: Akemi Tattoo Portfolio
 
 ## Producto
-Webapp de portfolio para artista tatuador con estética brutalista. Incluye galería, formulario de booking, contacto, y pagos opcionales.
+Webapp de portfolio para artista tatuador con estetica brutalista. Incluye galeria, formulario de booking, contacto y pagos opcionales (pagos al final del roadmap).
 
 ## Alcance Actual
-- Galería: lectura pública desde Supabase con fallback local.
-- Booking: creación de solicitudes en DB.
-- Contacto: envío de email (si Resend está configurado).
-- Pagos: Stripe/PayPal para depósitos y diseño (checkout/orden).
+- Galeria: lectura publica desde Supabase con fallback local.
+- Booking: creacion de solicitudes en DB.
+- Contacto: envio de email (si Resend esta configurado).
+- Pagos: Stripe/PayPal disponibles pero planificados al final.
 
 ## Alcance Propuesto
 - Login para artista/administrador.
-- Panel admin con CRUD de galería y publicaciones.
+- Panel admin con CRUD de galeria y publicaciones.
 - Escalabilidad para nuevas entidades (tags, colecciones, estilos, ubicaciones).
 - Temas de interfaz: dark mode y eye-rest mode.
-- Editor avanzado de galería y publicaciones (bulk upload, reordenamiento, drafts).
+- Editor avanzado de galeria y publicaciones (bulk upload, reordenamiento, drafts).
+- Perfil administrador (datos de pago, direcciones, email, apodo).
+- Conexion a nube para cargar imagenes (habilita editor si esta conectado).
+- OAuth con GitHub/Google/Facebook u otros usados por artistas.
 
-## Estado de Implementación
+## Estado de Implementacion
 - Admin login y panel: Implementado.
-- CRUD de galería y posts: Implementado (API + UI).
+- CRUD de galeria y posts: Implementado (API + UI).
 - RLS y storage bucket: Definidos en `supabase/schema.sql`.
-- Galerías múltiples: Implementación base (DB + API + UI select).
-- Posts públicos: Vista pública básica implementada.
+- Galerias multiples: Implementacion base (DB + API + UI select).
+- Posts publicos: Vista publica basica implementada.
+- Proxy middleware: Migrado a `proxy.ts`.
 
 ## Casos de Uso
-- Visitantes exploran la galería y contenido público.
+- Visitantes exploran la galeria y contenido publico.
 - Clientes solicitan sesiones mediante booking.
 - Artista publica y mantiene su trabajo desde el panel.
-- Pagos gestionados por pasarela externa.
+- Perfil admin para gestionar datos y conexiones.
 
 ## Stack
 - Next.js App Router
 - Supabase (Postgres + RLS)
 - Resend (email)
-- Stripe y PayPal (pagos)
+- Stripe y PayPal (pagos, al final del roadmap)
 
-## Gestión de Conocimiento
+## Gestion de Conocimiento
 - Mantener `openspec/` actualizado con specs, design y tasks.
 - Actualizar el skill registry cuando se agreguen/remuevan skills.
+- Mantener `docs/STATE.md` como snapshot del estado.
