@@ -38,6 +38,7 @@ export function PostManager() {
   const [status, setStatus] = useState<string>("");
   const [errors, setErrors] = useState<{ path: string; message: string }[]>([]);
   const errorMap = new Map(errors.map((error) => [error.path, error.message]));
+  const [showPreview, setShowPreview] = useState(false);
 
   async function load() {
     setStatus("");
@@ -173,6 +174,15 @@ export function PostManager() {
           onChange={(e) => setForm({ ...form, publish_at: e.target.value })}
           type="datetime-local"
         />
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            className="theme-border px-4 py-2"
+            onClick={() => setShowPreview((prev) => !prev)}
+          >
+            {showPreview ? "Hide preview" : "Show preview"}
+          </button>
+        </div>
         {errorMap.get("body") ? (
           <p className="input-helper" data-variant="error">
             body: {errorMap.get("body")}
@@ -214,6 +224,20 @@ export function PostManager() {
         >
           {status}
         </p>
+      ) : null}
+      {showPreview ? (
+        <div className="theme-border mt-4 p-3">
+          <p className="text-xs uppercase tracking-[0.2em]">Preview</p>
+          {form.cover_image_url ? (
+            <img
+              className="mt-2 w-full object-cover"
+              src={form.cover_image_url}
+              alt={form.title || "Post cover"}
+            />
+          ) : null}
+          <h3 className="mt-3 text-lg uppercase">{form.title || "Untitled"}</h3>
+          <p className="text-sm">{form.excerpt || form.body}</p>
+        </div>
       ) : null}
       {errors.length ? (
         <ul className="validation-list" aria-live="polite">

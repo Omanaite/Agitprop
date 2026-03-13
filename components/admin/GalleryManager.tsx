@@ -39,10 +39,15 @@ export function GalleryManager() {
   const [items, setItems] = useState<GalleryItem[]>([]);
   const [galleries, setGalleries] = useState<Gallery[]>([]);
   const [form, setForm] = useState<typeof emptyItem>(emptyItem);
+  const [bulkStyle, setBulkStyle] = useState<string>("");
+  const [bulkGalleryId, setBulkGalleryId] = useState<string>("");
+  const [bulkTitlePrefix, setBulkTitlePrefix] = useState<string>("New piece");
+  const [bulkUploads, setBulkUploads] = useState<string[]>([]);
   const [status, setStatus] = useState<string>("");
   const [errors, setErrors] = useState<{ path: string; message: string }[]>([]);
   const errorMap = new Map(errors.map((error) => [error.path, error.message]));
   const [isUploading, setIsUploading] = useState(false);
+  const [dragId, setDragId] = useState<string | null>(null);
 
   async function load() {
     setStatus("");
@@ -165,6 +170,97 @@ export function GalleryManager() {
     }
     const data = await res.json();
     setForm((prev) => ({ ...prev, image_url: data.url }));
+  }
+
+  async function handleBulkUpload(files: FileList) {
+    setIsUploading(true);
+    setStatus("");
+    const uploaded: string[] = [];
+    for (const file of Array.from(files)) {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await fetch("/api/admin/uploads", {
+        method: "POST",
+        body: formData,
+      });
+      if (!res.ok) {
+        setIsUploading(false);
+        setStatus("Error en carga masiva.");
+        return;
+      }
+      const data = await res.json();
+      uploaded.push(data.url);
+    }
+    setBulkUploads((prev) => [...prev, ...uploaded]);
+    setIsUploading(false);
+  }
+
+  async function createFromUploads() {
+    if (!bulkUploads.length) return;
+    if (!bulkStyle.trim()) {
+      setStatus("Define un estilo por defecto para la carga masiva.");
+      return;
+    }
+    const requests = bulkUploads.map((url, index) =>
+      fetch("/api/admin/gallery", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: `${bulkTitlePrefix} ${index + 1}`,
+          style: bulkStyle,
+          image_url: url,
+          gallery_id: bulkGalleryId || undefined,
+          sort_order: index,
+        }),
+      })
+    );
+    const results = await Promise.all(requests);
+    if (results.some((r) => !r.ok)) {
+      setStatus("Error al crear items desde carga masiva.");
+      return;
+    }
+    setBulkUploads([]);
+    await load();
+    setStatus("Carga masiva completada.");
+  }
+
+  function reorderItems(targetId: string) {
+    if (!dragId || dragId === targetId) return;
+    const next = [...items];
+    const fromIndex = next.findIndex((i) => i.id === dragId);
+    const toIndex = next.findIndex((i) => i.id === targetId);
+    if (fromIndex < 0 || toIndex < 0) return;
+    const [moved] = next.splice(fromIndex, 1);
+    next.splice(toIndex, 0, moved);
+    setItems(next);
+  }
+
+  async function saveOrder() {
+    setStatus("");
+    const updates = items.map((item, index) =>
+      fetch(`/api/admin/gallery/${item.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: item.title,
+          description: item.description ?? "",
+          style: item.style,
+          image_url: item.image_url,
+          gallery_id: item.gallery_id ?? undefined,
+          tags: item.tags ?? undefined,
+          location_link: item.location_link ?? undefined,
+          session_length_minutes: item.session_length_minutes ?? undefined,
+          aftercare: item.aftercare ?? undefined,
+          sort_order: index,
+        }),
+      })
+    );
+    const results = await Promise.all(updates);
+    if (results.some((r) => !r.ok)) {
+      setStatus("Error al guardar el orden.");
+      return;
+    }
+    setStatus("Orden guardado.");
   }
 
   return (
@@ -330,7 +426,14 @@ export function GalleryManager() {
       ) : null}
       <ul className="mt-4 grid gap-3 md:grid-cols-2">
         {items.map((item) => (
-          <li key={item.id} className="theme-border p-3">
+          <li
+            key={item.id}
+            className="theme-border p-3"
+            draggable
+            onDragStart={() => setDragId(item.id)}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={() => reorderItems(item.id)}
+          >
             <div className="text-sm uppercase">{item.style}</div>
             <div className="font-semibold">{item.title}</div>
             <div className="text-xs">{item.description}</div>
@@ -351,6 +454,62 @@ export function GalleryManager() {
           </li>
         ))}
       </ul>
+      <div className="mt-4 flex flex-wrap gap-2">
+        <button
+          type="button"
+          className="theme-border px-4 py-2"
+          onClick={() => void saveOrder()}
+        >
+          Save Order
+        </button>
+      </div>
+
+      <div className="mt-6 grid gap-3 md:grid-cols-2">
+        <h3 className="md:col-span-2 text-sm uppercase tracking-[0.2em]">
+          Bulk Upload
+        </h3>
+        <input
+          className="theme-border p-2"
+          placeholder="Default style"
+          value={bulkStyle}
+          onChange={(e) => setBulkStyle(e.target.value)}
+        />
+        <input
+          className="theme-border p-2"
+          placeholder="Title prefix"
+          value={bulkTitlePrefix}
+          onChange={(e) => setBulkTitlePrefix(e.target.value)}
+        />
+        <select
+          className="theme-border p-2"
+          value={bulkGalleryId}
+          onChange={(e) => setBulkGalleryId(e.target.value)}
+        >
+          <option value="">No gallery (default)</option>
+          {galleries.map((gallery) => (
+            <option key={gallery.id} value={gallery.id}>
+              {gallery.title}
+            </option>
+          ))}
+        </select>
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={(e) => {
+            const files = e.target.files;
+            if (files && files.length) void handleBulkUpload(files);
+          }}
+        />
+        <button
+          type="button"
+          className="theme-border theme-invert px-4 py-2 md:col-span-2"
+          onClick={() => void createFromUploads()}
+          disabled={!bulkUploads.length}
+        >
+          Create Items from Uploads ({bulkUploads.length})
+        </button>
+      </div>
     </section>
   );
 }
