@@ -60,3 +60,4 @@ Asegurar que cada fase del roadmap tenga documentación asociada y se mantenga a
 
 ## Registro de cambios
 - 2026-03-12: Inicialización de roadmap y documentación base.
+- 2026-03-13: Agregado detalle de galerias publicas, ajustes de login admin y datos publicos.

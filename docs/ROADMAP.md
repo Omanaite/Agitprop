@@ -56,3 +56,8 @@ Objetivo: evolucionar a una plataforma administrable por el artista con login, C
 
 ## Bloqueos conocidos
 - Requiere configuración de llaves y credenciales (Supabase, Resend, Stripe/PayPal) para flujos completos.
+
+## Actualizacion 2026-03-13
+- Galerias publicas con pagina de detalle.
+- Enlaces desde listado de galerias a detalle.
+- Fix de login admin para flujo de errores sin romper build.
