@@ -47,7 +47,9 @@ export async function signInAdmin(formData: FormData) {
     }
 
     redirect("/admin");
-  } catch {
-    redirect("/admin/login?error=server");
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "unknown";
+    const reason = encodeURIComponent(message.slice(0, 80));
+    redirect(`/admin/login?error=server&reason=${reason}`);
   }
 }

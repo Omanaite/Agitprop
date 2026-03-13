@@ -4,7 +4,7 @@ type LoginPageProps = {
   searchParams?: { error?: string };
 };
 
-function getErrorMessage(code?: string) {
+function getErrorMessage(code?: string, reason?: string) {
   switch (code) {
     case "missing":
       return "Completa email y password.";
@@ -15,7 +15,7 @@ function getErrorMessage(code?: string) {
     case "config":
       return "Configura Supabase en Vercel antes de iniciar sesion.";
     case "server":
-      return "Error de servidor. Verifica las credenciales y vuelve a intentar.";
+      return `Error de servidor. ${reason ? `Detalle: ${reason}` : ""}`.trim();
     case "unconfirmed":
       return "Confirma tu email en Supabase antes de iniciar sesion.";
     case "rate":
@@ -26,7 +26,10 @@ function getErrorMessage(code?: string) {
 }
 
 export default function AdminLoginPage({ searchParams }: LoginPageProps) {
-  const errorMessage = getErrorMessage(searchParams?.error);
+  const errorMessage = getErrorMessage(
+    searchParams?.error,
+    searchParams?.reason
+  );
 
   return (
     <div className="min-h-screen bg-[var(--bg)] p-6 text-[var(--fg)] md:p-10">
