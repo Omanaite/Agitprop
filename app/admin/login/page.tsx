@@ -1,6 +1,25 @@
 import { signInAdmin } from "./actions";
 
-export default function AdminLoginPage() {
+type LoginPageProps = {
+  searchParams?: { error?: string };
+};
+
+function getErrorMessage(code?: string) {
+  switch (code) {
+    case "missing":
+      return "Completa email y password.";
+    case "invalid":
+      return "Credenciales invalidas.";
+    case "forbidden":
+      return "Cuenta sin permisos de administrador.";
+    default:
+      return "";
+  }
+}
+
+export default function AdminLoginPage({ searchParams }: LoginPageProps) {
+  const errorMessage = getErrorMessage(searchParams?.error);
+
   return (
     <div className="min-h-screen bg-[var(--bg)] p-6 text-[var(--fg)] md:p-10">
       <div className="mx-auto max-w-md theme-border p-6">
@@ -8,6 +27,15 @@ export default function AdminLoginPage() {
           Admin Login
         </h1>
         <p className="mb-6 text-sm">Acceso exclusivo para administradores.</p>
+        {errorMessage ? (
+          <p
+            className="validation-box mb-4"
+            data-variant="error"
+            aria-live="polite"
+          >
+            {errorMessage}
+          </p>
+        ) : null}
 
         <form action={signInAdmin} className="flex flex-col gap-4">
           <label className="text-sm uppercase tracking-[0.2em]">

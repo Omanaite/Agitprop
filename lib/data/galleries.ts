@@ -20,3 +20,21 @@ export async function getGalleries(): Promise<Gallery[]> {
   }
 }
 
+export async function getGalleryBySlug(slug: string): Promise<Gallery | null> {
+  try {
+    const client = createSupabasePublicClient();
+    const { data, error } = await client
+      .from("galleries")
+      .select("id,title,description,slug,created_at")
+      .eq("slug", slug)
+      .maybeSingle();
+
+    if (error) {
+      throw error;
+    }
+
+    return (data ?? null) as Gallery | null;
+  } catch {
+    return null;
+  }
+}

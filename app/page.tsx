@@ -52,7 +52,11 @@ export default async function Home() {
             {galleries.length ? (
               <div className="grid gap-4 md:grid-cols-2">
                 {galleries.map((gallery) => (
-                  <div key={gallery.id} className="hard-border p-4">
+                  <a
+                    key={gallery.id}
+                    className="hard-border p-4 theme-hover-invert"
+                    href={`/galleries/${gallery.slug}`}
+                  >
                     <p className="text-xs uppercase tracking-[0.2em]">
                       {gallery.slug}
                     </p>
@@ -60,7 +64,7 @@ export default async function Home() {
                     {gallery.description ? (
                       <p className="text-sm">{gallery.description}</p>
                     ) : null}
-                  </div>
+                  </a>
                 ))}
               </div>
             ) : (

@@ -7,6 +7,9 @@ import { createSupabaseServerClient } from "@/lib/supabase/ssr";
 export async function signInAdmin(formData: FormData) {
   const email = String(formData.get("email") || "");
   const password = String(formData.get("password") || "");
+  if (!email || !password) {
+    redirect("/admin/login?error=missing");
+  }
 
   const cookieStore = await cookies();
   const supabase = createSupabaseServerClient({
@@ -22,12 +25,12 @@ export async function signInAdmin(formData: FormData) {
   });
 
   if (error || !data.user) {
-    return { error: "Credenciales inválidas." };
+    redirect("/admin/login?error=invalid");
   }
 
   if (data.user.app_metadata?.role !== "admin") {
     await supabase.auth.signOut();
-    return { error: "Cuenta sin permisos de administrador." };
+    redirect("/admin/login?error=forbidden");
   }
 
   redirect("/admin");
