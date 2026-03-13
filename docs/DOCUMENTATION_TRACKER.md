@@ -50,5 +50,13 @@ Asegurar que cada fase del roadmap tenga documentación asociada y se mantenga a
 - Documento: `docs/SECURITY_REVIEW.md`
 - Estado: Revisión inicial aplicada (pendiente hardening)
 
+### SDLC Standard
+- Documento: `docs/SDLC_QUALITY_STANDARD.md`
+- Estado: Completo
+
+### PR Process
+- Documento: `docs/PR_PROCESS.md`
+- Estado: Completo
+
 ## Registro de cambios
 - 2026-03-12: Inicialización de roadmap y documentación base.

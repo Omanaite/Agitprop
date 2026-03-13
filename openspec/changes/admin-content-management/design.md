@@ -97,6 +97,10 @@ This design is inspired by common CMS patterns such as bulk upload, sorting,
 Maintain SDD artifacts in `openspec/` and keep skill registry updated so
 future changes stay aligned with existing standards.
 
+## SDLC Quality Standard
+This project follows a security-gated PR workflow and documented quality
+gates in `docs/SDLC_QUALITY_STANDARD.md` and `docs/PR_PROCESS.md`.
+
 ## Open Questions
 - [ ] Exact admin roles and number of admin users?
 - [ ] Should posts be public immediately or require a publish workflow?
