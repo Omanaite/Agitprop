@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createStripeClient } from "@/lib/payments/stripe";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
+import { enforceSameOrigin } from "@/lib/security";
 
 // Ensure Node.js runtime for Stripe SDK in Vercel.
 export const runtime = "nodejs";
@@ -8,6 +9,13 @@ export const runtime = "nodejs";
 // Creates a Stripe checkout session for deposits or design fees.
 export async function POST(request: Request) {
   try {
+    const originCheck = enforceSameOrigin(request);
+    if (!originCheck.ok) {
+      return NextResponse.json(
+        { message: "Invalid origin." },
+        { status: 403 }
+      );
+    }
     const ip = getClientIp(request);
     const limit = rateLimit(`payments-stripe:${ip}`, 10, 60_000);
     if (!limit.allowed) {

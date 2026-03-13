@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { contactSchema } from "@/lib/validators";
 import { sendNotificationEmail } from "@/lib/email/resend";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
+import { enforceSameOrigin } from "@/lib/security";
 
 // Ensure Node.js runtime for Resend SDK in Vercel.
 export const runtime = "nodejs";
@@ -9,6 +10,13 @@ export const runtime = "nodejs";
 // Sends a contact email using Resend if configured.
 export async function POST(request: Request) {
   try {
+    const originCheck = enforceSameOrigin(request);
+    if (!originCheck.ok) {
+      return NextResponse.json(
+        { message: "Invalid origin." },
+        { status: 403 }
+      );
+    }
     const ip = getClientIp(request);
     const limit = rateLimit(`contact:${ip}`, 5, 60_000);
     if (!limit.allowed) {

@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { gallerySchema } from "@/lib/validators";
 import { requireAdmin } from "@/lib/supabase/auth";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
+import { enforceSameOrigin } from "@/lib/security";
+import { logAuditEvent } from "@/lib/audit";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -12,6 +14,10 @@ function isUuid(value: string) {
 }
 
 export async function PUT(request: Request, { params }: Params) {
+  const originCheck = enforceSameOrigin(request);
+  if (!originCheck.ok) {
+    return NextResponse.json({ message: "Invalid origin." }, { status: 403 });
+  }
   const ip = getClientIp(request);
   const limit = rateLimit(`admin-galleries:update:${ip}`, 40, 60_000);
   if (!limit.allowed) {
@@ -69,10 +75,21 @@ export async function PUT(request: Request, { params }: Params) {
     );
   }
 
+  await logAuditEvent({
+    actor_email: auth.user?.email ?? null,
+    action: "update",
+    entity: "galleries",
+    entity_id: id,
+  });
+
   return NextResponse.json({ ok: true });
 }
 
 export async function DELETE(request: Request, { params }: Params) {
+  const originCheck = enforceSameOrigin(request);
+  if (!originCheck.ok) {
+    return NextResponse.json({ message: "Invalid origin." }, { status: 403 });
+  }
   const ip = getClientIp(request);
   const limit = rateLimit(`admin-galleries:delete:${ip}`, 20, 60_000);
   if (!limit.allowed) {
@@ -106,6 +123,12 @@ export async function DELETE(request: Request, { params }: Params) {
     );
   }
 
+  await logAuditEvent({
+    actor_email: auth.user?.email ?? null,
+    action: "delete",
+    entity: "galleries",
+    entity_id: id,
+  });
+
   return NextResponse.json({ ok: true });
 }
-

@@ -43,8 +43,8 @@ Objetivo: evolucionar a una plataforma administrable por el artista con login, C
 - Tags/colecciones/estilos/ubicaciones.
 - Analíticas básicas.
 - Internacionalización.
-- Endurecimiento de seguridad y performance.
-- Estándar SDLC + PR security-gated.
+ - Endurecimiento de seguridad y performance.
+ - Estándar SDLC + PR con revisión de seguridad manual.
 
 ## Entregables por fase
 - F0: Documento de alcance y roadmap (este archivo).

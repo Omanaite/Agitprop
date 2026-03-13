@@ -3,6 +3,7 @@ import { bookingSchema } from "@/lib/validators";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { sendNotificationEmail } from "@/lib/email/resend";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
+import { enforceSameOrigin } from "@/lib/security";
 
 // Ensure Node.js runtime for Supabase + email SDKs in Vercel.
 export const runtime = "nodejs";
@@ -10,6 +11,13 @@ export const runtime = "nodejs";
 // Creates a booking request and optionally triggers a notification email.
 export async function POST(request: Request) {
   try {
+    const originCheck = enforceSameOrigin(request);
+    if (!originCheck.ok) {
+      return NextResponse.json(
+        { message: "Invalid origin." },
+        { status: 403 }
+      );
+    }
     const ip = getClientIp(request);
     const limit = rateLimit(`booking:${ip}`, 5, 60_000);
     if (!limit.allowed) {

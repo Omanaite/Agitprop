@@ -1,8 +1,14 @@
 import { NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/supabase/auth";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
+import { enforceSameOrigin } from "@/lib/security";
+import { logAuditEvent } from "@/lib/audit";
 
 export async function POST(request: Request) {
+  const originCheck = enforceSameOrigin(request);
+  if (!originCheck.ok) {
+    return NextResponse.json({ message: "Invalid origin." }, { status: 403 });
+  }
   const ip = getClientIp(request);
   const limit = rateLimit(`admin-upload:${ip}`, 10, 60_000);
   if (!limit.allowed) {
@@ -55,6 +61,13 @@ export async function POST(request: Request) {
   }
 
   const { data } = auth.supabase.storage.from("gallery").getPublicUrl(path);
+
+  await logAuditEvent({
+    actor_email: auth.user?.email ?? null,
+    action: "upload",
+    entity: "gallery",
+    metadata: { path },
+  });
 
   return NextResponse.json({ url: data.publicUrl });
 }

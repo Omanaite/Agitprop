@@ -37,6 +37,16 @@ create table if not exists galleries (
   created_at timestamptz not null default now()
 );
 
+create table if not exists audit_logs (
+  id uuid primary key default gen_random_uuid(),
+  actor_email text,
+  action text not null,
+  entity text not null,
+  entity_id uuid,
+  metadata jsonb,
+  created_at timestamptz not null default now()
+);
+
 alter table tattoos
   add constraint tattoos_gallery_fk
   foreign key (gallery_id) references galleries(id)
@@ -47,6 +57,7 @@ alter table tattoos enable row level security;
 alter table bookings enable row level security;
 alter table posts enable row level security;
 alter table galleries enable row level security;
+alter table audit_logs enable row level security;
 
 -- Public read access for tattoos.
 create policy "Public read tattoos" on tattoos
@@ -75,6 +86,11 @@ create policy "Admin manage posts" on posts
   with check (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin');
 
 create policy "Admin manage galleries" on galleries
+  for all
+  using (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin')
+  with check (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin');
+
+create policy "Admin manage audit logs" on audit_logs
   for all
   using (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin')
   with check (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin');

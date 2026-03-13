@@ -6,6 +6,7 @@ import {
 } from "@paypal/paypal-server-sdk";
 import { createPayPalClient } from "@/lib/payments/paypal";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
+import { enforceSameOrigin } from "@/lib/security";
 
 // Ensure Node.js runtime for PayPal SDK in Vercel.
 export const runtime = "nodejs";
@@ -13,6 +14,13 @@ export const runtime = "nodejs";
 // Creates a PayPal order for deposits or design fees.
 export async function POST(request: Request) {
   try {
+    const originCheck = enforceSameOrigin(request);
+    if (!originCheck.ok) {
+      return NextResponse.json(
+        { message: "Invalid origin." },
+        { status: 403 }
+      );
+    }
     const ip = getClientIp(request);
     const limit = rateLimit(`payments-paypal:${ip}`, 10, 60_000);
     if (!limit.allowed) {

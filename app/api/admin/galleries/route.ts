@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { gallerySchema } from "@/lib/validators";
 import { requireAdmin } from "@/lib/supabase/auth";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
+import { enforceSameOrigin } from "@/lib/security";
+import { logAuditEvent } from "@/lib/audit";
 
 export async function GET(request: Request) {
   const ip = getClientIp(request);
@@ -40,6 +42,10 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const originCheck = enforceSameOrigin(request);
+  if (!originCheck.ok) {
+    return NextResponse.json({ message: "Invalid origin." }, { status: 403 });
+  }
   const ip = getClientIp(request);
   const limit = rateLimit(`admin-galleries:create:${ip}`, 20, 60_000);
   if (!limit.allowed) {
@@ -91,6 +97,13 @@ export async function POST(request: Request) {
       );
     }
 
+    await logAuditEvent({
+      actor_email: auth.user?.email ?? null,
+      action: "create",
+      entity: "galleries",
+      metadata: { title: payload.title, slug: payload.slug },
+    });
+
     return NextResponse.json({ ok: true });
   } catch {
     return NextResponse.json(
@@ -99,4 +112,3 @@ export async function POST(request: Request) {
     );
   }
 }
-

@@ -2,8 +2,19 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   async headers() {
+    const isDev = process.env.NODE_ENV !== "production";
+    const scriptSrc = isDev
+      ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
+      : "script-src 'self'";
+    const styleSrc = isDev
+      ? "style-src 'self' 'unsafe-inline'"
+      : "style-src 'self'";
     const csp =
-      "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src 'self' https:; font-src 'self' data: https:; frame-ancestors 'none';";
+      "default-src 'self'; img-src 'self' data: https:; " +
+      styleSrc +
+      "; " +
+      scriptSrc +
+      "; connect-src 'self' https:; font-src 'self' data: https:; frame-ancestors 'none';";
 
     return [
       {

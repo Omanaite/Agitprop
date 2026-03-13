@@ -18,12 +18,12 @@ Definir un estándar de calidad para todo el ciclo de vida del software.
 - Verificar flujos críticos manualmente cuando no existan tests.
 
 ### 4) Seguridad
-- Ejecutar revisión de seguridad con **Claude Code Security Review**.
+- Ejecutar revisión de seguridad manual usando `docs/SECURITY_REVIEW.md`.
 - Registrar hallazgos en `docs/SECURITY_REVIEW.md`.
 
 ### 5) Pull Request
 - Cada push relevante debe abrir PR.
-- Condición: aprobar directrices del security review.
+- Condición: aprobar directrices internas de seguridad.
 - El merge se realiza manualmente tras aprobación.
 
 ## Checklist de Release

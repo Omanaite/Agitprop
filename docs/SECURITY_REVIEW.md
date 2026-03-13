@@ -9,7 +9,7 @@
 - [ ] A06 Vulnerable Components: run `npm audit` periodically
 - [x] A07 Authentication Failures: enforce admin role in `app_metadata`
 - [x] A08 Data Integrity Failures: validate upload mime types and size limits
-- [ ] A09 Logging Failures: log admin auth events and API errors
+- [x] A09 Logging Failures: log admin auth events and API errors
 - [x] A10 SSRF: no outbound fetches with user-provided URLs
 
 ## Supabase RLS Review
@@ -25,7 +25,9 @@
 ## Findings (Resumen)
 - Admin access control y RLS OK.
 - Headers de seguridad y rate limiting aplicados.
+- Same-origin guard aplicado en rutas mutables.
 - Validaciones y errores unificados OK.
+- Logging de eventos admin implementado (requiere tabla `audit_logs`).
 
 ## Recomendaciones
 1. Ejecutar `npm audit` y corregir dependencias críticas.
