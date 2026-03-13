@@ -1,7 +1,7 @@
 import { signInAdmin } from "./actions";
 
 type LoginPageProps = {
-  searchParams?: { error?: string };
+  searchParams?: { error?: string; reason?: string };
 };
 
 function getErrorMessage(code?: string, reason?: string) {
