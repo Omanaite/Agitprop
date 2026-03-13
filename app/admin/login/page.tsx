@@ -16,6 +16,10 @@ function getErrorMessage(code?: string) {
       return "Configura Supabase en Vercel antes de iniciar sesion.";
     case "server":
       return "Error de servidor. Verifica las credenciales y vuelve a intentar.";
+    case "unconfirmed":
+      return "Confirma tu email en Supabase antes de iniciar sesion.";
+    case "rate":
+      return "Demasiados intentos. Espera e intenta nuevamente.";
     default:
       return "";
   }

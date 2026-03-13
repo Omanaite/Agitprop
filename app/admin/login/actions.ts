@@ -31,6 +31,13 @@ export async function signInAdmin(formData: FormData) {
     });
 
     if (error || !data.user) {
+      const message = error?.message?.toLowerCase() ?? "";
+      if (message.includes("confirm") || message.includes("confirmed")) {
+        redirect("/admin/login?error=unconfirmed");
+      }
+      if (message.includes("rate") || message.includes("too many")) {
+        redirect("/admin/login?error=rate");
+      }
       redirect("/admin/login?error=invalid");
     }
 
