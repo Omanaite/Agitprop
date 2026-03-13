@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type Gallery = {
   id: string;
@@ -16,19 +16,25 @@ const emptyGallery = {
   slug: "",
 };
 
+type ValidationError = { path: string; message: string };
+
 export function GalleriesManager() {
   const [items, setItems] = useState<Gallery[]>([]);
   const [form, setForm] = useState<typeof emptyGallery>(emptyGallery);
   const [status, setStatus] = useState("");
-  const [errors, setErrors] = useState<{ path: string; message: string }[]>([]);
-  const errorMap = new Map(errors.map((error) => [error.path, error.message]));
+  const [errors, setErrors] = useState<ValidationError[]>([]);
+  const errorMap = useMemo(
+    () => new Map(errors.map((error) => [error.path, error.message])),
+    [errors]
+  );
+  const [isSaving, setIsSaving] = useState(false);
 
   async function load() {
     setStatus("");
     setErrors([]);
     const res = await fetch("/api/admin/galleries");
     if (!res.ok) {
-      setStatus("No se pudo cargar las galerías.");
+      setStatus("No se pudo cargar las galerias.");
       return;
     }
     const data = await res.json();
@@ -52,11 +58,30 @@ export function GalleriesManager() {
     setForm(emptyGallery);
   }
 
+  function validateForm(): ValidationError[] {
+    const nextErrors: ValidationError[] = [];
+    if (!form.title.trim()) {
+      nextErrors.push({ path: "title", message: "Required" });
+    }
+    if (!form.slug.trim()) {
+      nextErrors.push({ path: "slug", message: "Required" });
+    }
+    return nextErrors;
+  }
+
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     setStatus("");
     setErrors([]);
 
+    const clientErrors = validateForm();
+    if (clientErrors.length) {
+      setErrors(clientErrors);
+      setStatus("Faltan datos requeridos.");
+      return;
+    }
+
+    setIsSaving(true);
     const payload = {
       title: form.title,
       description: form.description || undefined,
@@ -76,43 +101,56 @@ export function GalleriesManager() {
     if (!res.ok) {
       const data = await res.json().catch(() => null);
       setErrors(data?.errors ?? []);
-      setStatus(data?.message ?? "Error al guardar la galería.");
+      setStatus(data?.message ?? "Error al guardar la galeria.");
+      setIsSaving(false);
       return;
     }
 
     resetForm();
     await load();
     setStatus("Guardado.");
+    setIsSaving(false);
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Eliminar esta galería?")) return;
+    if (!confirm("Eliminar esta galeria?")) return;
     setStatus("");
+    setIsSaving(true);
     const res = await fetch(`/api/admin/galleries/${id}`, { method: "DELETE" });
     if (!res.ok) {
       const data = await res.json().catch(() => null);
       setErrors(data?.errors ?? []);
       setStatus(data?.message ?? "Error al eliminar.");
+      setIsSaving(false);
       return;
     }
     await load();
     setStatus("Eliminado.");
+    setIsSaving(false);
   }
 
   return (
     <section className="theme-border p-4">
-      <h2 className="mb-4 text-lg uppercase">Galerías</h2>
+      <h2 className="mb-2 text-lg uppercase">Galerias</h2>
+      <p className="mb-4 text-xs uppercase tracking-[0.2em]">
+        Crea galerias primero. Luego asigna piezas desde el editor de galeria.
+      </p>
       <form onSubmit={handleSubmit} className="grid gap-3 md:grid-cols-2">
         <input
           className={`theme-border p-2 ${
             errorMap.get("title") ? "input-error" : ""
           }`}
-          placeholder="Título"
+          placeholder="Titulo"
           value={form.title}
           onChange={(e) => setForm({ ...form, title: e.target.value })}
           minLength={2}
           required
         />
+        {errorMap.get("title") ? (
+          <p className="input-helper" data-variant="error">
+            title: {errorMap.get("title")}
+          </p>
+        ) : null}
         <input
           className={`theme-border p-2 ${
             errorMap.get("slug") ? "input-error" : ""
@@ -123,26 +161,38 @@ export function GalleriesManager() {
           minLength={2}
           required
         />
+        {errorMap.get("slug") ? (
+          <p className="input-helper" data-variant="error">
+            slug: {errorMap.get("slug")}
+          </p>
+        ) : null}
         <input
           className={`theme-border p-2 md:col-span-2 ${
             errorMap.get("description") ? "input-error" : ""
           }`}
-          placeholder="Descripción"
+          placeholder="Descripcion"
           value={form.description ?? ""}
           onChange={(e) => setForm({ ...form, description: e.target.value })}
         />
+        {errorMap.get("description") ? (
+          <p className="input-helper" data-variant="error">
+            description: {errorMap.get("description")}
+          </p>
+        ) : null}
         <div className="flex gap-2 md:col-span-2">
           <button
             type="submit"
             className="theme-border theme-invert px-4 py-2"
+            disabled={isSaving}
           >
-            {form.id ? "Actualizar" : "Crear"}
+            {isSaving ? "Guardando..." : form.id ? "Actualizar" : "Crear"}
           </button>
           {form.id ? (
             <button
               type="button"
               onClick={resetForm}
               className="theme-border px-4 py-2"
+              disabled={isSaving}
             >
               Cancelar
             </button>
@@ -193,4 +243,3 @@ export function GalleriesManager() {
     </section>
   );
 }
-

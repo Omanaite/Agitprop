@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type Post = {
   id: string;
@@ -22,6 +22,8 @@ const emptyPost = {
   publish_at: "",
 };
 
+type ValidationError = { path: string; message: string };
+
 function toLocalInput(value?: string | null) {
   if (!value) return "";
   const date = new Date(value);
@@ -36,9 +38,13 @@ export function PostManager() {
   const [items, setItems] = useState<Post[]>([]);
   const [form, setForm] = useState<typeof emptyPost>(emptyPost);
   const [status, setStatus] = useState<string>("");
-  const [errors, setErrors] = useState<{ path: string; message: string }[]>([]);
-  const errorMap = new Map(errors.map((error) => [error.path, error.message]));
+  const [errors, setErrors] = useState<ValidationError[]>([]);
+  const errorMap = useMemo(
+    () => new Map(errors.map((error) => [error.path, error.message])),
+    [errors]
+  );
   const [showPreview, setShowPreview] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   async function load() {
     setStatus("");
@@ -72,10 +78,30 @@ export function PostManager() {
     setForm(emptyPost);
   }
 
+  function validateForm(): ValidationError[] {
+    const nextErrors: ValidationError[] = [];
+    if (!form.title.trim()) {
+      nextErrors.push({ path: "title", message: "Required" });
+    }
+    if (!form.body.trim()) {
+      nextErrors.push({ path: "body", message: "Required" });
+    }
+    return nextErrors;
+  }
+
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     setStatus("");
     setErrors([]);
+
+    const clientErrors = validateForm();
+    if (clientErrors.length) {
+      setErrors(clientErrors);
+      setStatus("Faltan datos requeridos.");
+      return;
+    }
+
+    setIsSaving(true);
     const payload = {
       title: form.title,
       body: form.body,
@@ -99,37 +125,45 @@ export function PostManager() {
       const data = await res.json().catch(() => null);
       setErrors(data?.errors ?? []);
       setStatus(data?.message ?? "Error al guardar el post.");
+      setIsSaving(false);
       return;
     }
 
     resetForm();
     await load();
     setStatus("Guardado.");
+    setIsSaving(false);
   }
 
   async function handleDelete(id: string) {
     if (!confirm("Eliminar este post?")) return;
     setStatus("");
+    setIsSaving(true);
     const res = await fetch(`/api/admin/posts/${id}`, { method: "DELETE" });
     if (!res.ok) {
       const data = await res.json().catch(() => null);
       setErrors(data?.errors ?? []);
       setStatus(data?.message ?? "Error al eliminar.");
+      setIsSaving(false);
       return;
     }
     await load();
     setStatus("Eliminado.");
+    setIsSaving(false);
   }
 
   return (
     <section className="theme-border p-4">
-      <h2 className="mb-4 text-lg uppercase">Posts</h2>
+      <h2 className="mb-2 text-lg uppercase">Posts</h2>
+      <p className="mb-4 text-xs uppercase tracking-[0.2em]">
+        Crea borradores, agrega portada, y programa publicacion si aplica.
+      </p>
       <form onSubmit={handleSubmit} className="grid gap-3">
         <input
           className={`theme-border p-2 ${
             errorMap.get("title") ? "input-error" : ""
           }`}
-          placeholder="Título"
+          placeholder="Titulo"
           value={form.title}
           onChange={(e) => setForm({ ...form, title: e.target.value })}
           minLength={2}
@@ -151,6 +185,11 @@ export function PostManager() {
           minLength={10}
           required
         />
+        {errorMap.get("body") ? (
+          <p className="input-helper" data-variant="error">
+            body: {errorMap.get("body")}
+          </p>
+        ) : null}
         <textarea
           className="theme-border p-2"
           placeholder="Excerpt (optional)"
@@ -169,7 +208,7 @@ export function PostManager() {
         />
         <input
           className="theme-border p-2"
-          placeholder="Publish at (ISO)"
+          placeholder="Publish at"
           value={form.publish_at}
           onChange={(e) => setForm({ ...form, publish_at: e.target.value })}
           type="datetime-local"
@@ -183,11 +222,6 @@ export function PostManager() {
             {showPreview ? "Hide preview" : "Show preview"}
           </button>
         </div>
-        {errorMap.get("body") ? (
-          <p className="input-helper" data-variant="error">
-            body: {errorMap.get("body")}
-          </p>
-        ) : null}
         <select
           className="theme-border p-2"
           value={form.status}
@@ -202,14 +236,16 @@ export function PostManager() {
           <button
             type="submit"
             className="theme-border theme-invert px-4 py-2"
+            disabled={isSaving}
           >
-            {form.id ? "Actualizar" : "Crear"}
+            {isSaving ? "Guardando..." : form.id ? "Actualizar" : "Crear"}
           </button>
           {form.id ? (
             <button
               type="button"
               onClick={resetForm}
               className="theme-border px-4 py-2"
+              disabled={isSaving}
             >
               Cancelar
             </button>
