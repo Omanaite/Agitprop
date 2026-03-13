@@ -52,6 +52,9 @@ export async function PUT(request: Request, { params }: Params) {
         body: payload.body,
         status: payload.status ?? "draft",
         updated_at: new Date().toISOString(),
+        excerpt: payload.excerpt ?? null,
+        cover_image_url: payload.cover_image_url ?? null,
+        publish_at: payload.publish_at ? new Date(payload.publish_at) : null,
       })
       .eq("id", id);
 

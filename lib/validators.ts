@@ -21,12 +21,20 @@ export const galleryItemSchema = z.object({
   style: z.string().min(2),
   image_url: z.string().url(),
   gallery_id: z.string().uuid().optional(),
+  tags: z.array(z.string().min(1)).optional(),
+  location_link: z.string().url().optional(),
+  session_length_minutes: z.number().int().positive().optional(),
+  aftercare: z.string().optional(),
+  sort_order: z.number().int().optional(),
 });
 
 export const postSchema = z.object({
   title: z.string().min(2),
   body: z.string().min(10),
   status: z.enum(["draft", "published"]).default("draft"),
+  excerpt: z.string().optional(),
+  cover_image_url: z.string().url().optional(),
+  publish_at: z.string().optional(),
 });
 
 export const gallerySchema = z.object({

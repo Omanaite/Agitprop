@@ -7,6 +7,9 @@ type Post = {
   title: string;
   body: string;
   status: "draft" | "published";
+  excerpt?: string | null;
+  cover_image_url?: string | null;
+  publish_at?: string | null;
 };
 
 const emptyPost = {
@@ -14,7 +17,20 @@ const emptyPost = {
   title: "",
   body: "",
   status: "draft" as const,
+  excerpt: "",
+  cover_image_url: "",
+  publish_at: "",
 };
+
+function toLocalInput(value?: string | null) {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  const pad = (n: number) => n.toString().padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
+    date.getDate()
+  )}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
 
 export function PostManager() {
   const [items, setItems] = useState<Post[]>([]);
@@ -45,6 +61,9 @@ export function PostManager() {
       title: item.title,
       body: item.body,
       status: item.status,
+      excerpt: item.excerpt ?? "",
+      cover_image_url: item.cover_image_url ?? "",
+      publish_at: toLocalInput(item.publish_at),
     });
   }
 
@@ -60,6 +79,9 @@ export function PostManager() {
       title: form.title,
       body: form.body,
       status: form.status,
+      excerpt: form.excerpt || undefined,
+      cover_image_url: form.cover_image_url || undefined,
+      publish_at: form.publish_at || undefined,
     };
 
     const isEdit = Boolean(form.id);
@@ -127,6 +149,29 @@ export function PostManager() {
           rows={4}
           minLength={10}
           required
+        />
+        <textarea
+          className="theme-border p-2"
+          placeholder="Excerpt (optional)"
+          value={form.excerpt}
+          onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
+          rows={2}
+        />
+        <input
+          className="theme-border p-2"
+          placeholder="Cover image URL"
+          value={form.cover_image_url}
+          onChange={(e) =>
+            setForm({ ...form, cover_image_url: e.target.value })
+          }
+          type="url"
+        />
+        <input
+          className="theme-border p-2"
+          placeholder="Publish at (ISO)"
+          value={form.publish_at}
+          onChange={(e) => setForm({ ...form, publish_at: e.target.value })}
+          type="datetime-local"
         />
         {errorMap.get("body") ? (
           <p className="input-helper" data-variant="error">

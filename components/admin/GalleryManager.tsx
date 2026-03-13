@@ -9,6 +9,11 @@ type GalleryItem = {
   style: string;
   image_url: string;
   gallery_id: string | null;
+  tags?: string[] | null;
+  location_link?: string | null;
+  session_length_minutes?: number | null;
+  aftercare?: string | null;
+  sort_order?: number | null;
 };
 
 type Gallery = {
@@ -22,6 +27,12 @@ const emptyItem = {
   description: "",
   style: "",
   image_url: "",
+  gallery_id: "",
+  tags: "",
+  location_link: "",
+  session_length_minutes: "",
+  aftercare: "",
+  sort_order: "0",
 };
 
 export function GalleryManager() {
@@ -64,6 +75,12 @@ export function GalleryManager() {
       style: item.style,
       image_url: item.image_url,
       gallery_id: item.gallery_id ?? "",
+      tags: Array.isArray(item.tags) ? item.tags.join(", ") : "",
+      location_link: item.location_link ?? "",
+      session_length_minutes:
+        item.session_length_minutes?.toString() ?? "",
+      aftercare: item.aftercare ?? "",
+      sort_order: item.sort_order?.toString() ?? "0",
     });
   }
 
@@ -81,6 +98,15 @@ export function GalleryManager() {
       style: form.style,
       image_url: form.image_url,
       gallery_id: form.gallery_id || undefined,
+      tags: form.tags
+        ? form.tags.split(",").map((t) => t.trim()).filter(Boolean)
+        : undefined,
+      location_link: form.location_link || undefined,
+      session_length_minutes: form.session_length_minutes
+        ? Number(form.session_length_minutes)
+        : undefined,
+      aftercare: form.aftercare || undefined,
+      sort_order: form.sort_order ? Number(form.sort_order) : 0,
     };
 
     const isEdit = Boolean(form.id);
@@ -212,6 +238,44 @@ export function GalleryManager() {
             onChange={(e) => setForm({ ...form, image_url: e.target.value })}
             type="url"
             required
+          />
+          <input
+            className="theme-border p-2"
+            placeholder="Tags (comma separated)"
+            value={form.tags}
+            onChange={(e) => setForm({ ...form, tags: e.target.value })}
+          />
+          <input
+            className="theme-border p-2"
+            placeholder="Location link (URL)"
+            value={form.location_link}
+            onChange={(e) =>
+              setForm({ ...form, location_link: e.target.value })
+            }
+            type="url"
+          />
+          <input
+            className="theme-border p-2"
+            placeholder="Session length (minutes)"
+            value={form.session_length_minutes}
+            onChange={(e) =>
+              setForm({ ...form, session_length_minutes: e.target.value })
+            }
+            type="number"
+            min={0}
+          />
+          <input
+            className="theme-border p-2"
+            placeholder="Sort order"
+            value={form.sort_order}
+            onChange={(e) => setForm({ ...form, sort_order: e.target.value })}
+            type="number"
+          />
+          <textarea
+            className="theme-border p-2 min-h-[90px]"
+            placeholder="Aftercare notes"
+            value={form.aftercare}
+            onChange={(e) => setForm({ ...form, aftercare: e.target.value })}
           />
           {errorMap.get("image_url") ? (
             <p className="input-helper" data-variant="error">

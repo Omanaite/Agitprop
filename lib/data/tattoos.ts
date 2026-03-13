@@ -8,7 +8,9 @@ export async function getTattooGallery(): Promise<Tattoo[]> {
     const client = createSupabasePublicClient();
     const { data, error } = await client
       .from("tattoos")
-      .select("id,title,description,style,image_url,created_at")
+      .select(
+        "id,title,description,style,image_url,gallery_id,tags,location_link,session_length_minutes,aftercare,sort_order,created_at"
+      )
       .order("created_at", { ascending: false });
 
     if (error) {

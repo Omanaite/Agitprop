@@ -5,10 +5,12 @@ import { createSupabasePublicClient } from "@/lib/supabase/public";
 export async function getPublishedPosts(): Promise<Post[]> {
   try {
     const client = createSupabasePublicClient();
+    const now = new Date().toISOString();
     const { data, error } = await client
       .from("posts")
-      .select("id,title,body,status,created_at,updated_at")
+      .select("id,title,body,excerpt,cover_image_url,status,publish_at,created_at,updated_at")
       .eq("status", "published")
+      .or(`publish_at.is.null,publish_at.lte.${now}`)
       .order("created_at", { ascending: false });
 
     if (error) {
@@ -20,4 +22,3 @@ export async function getPublishedPosts(): Promise<Post[]> {
     return [];
   }
 }
-

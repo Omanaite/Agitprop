@@ -5,6 +5,12 @@ export type Tattoo = {
   description: string | null;
   style: string;
   image_url: string;
+  gallery_id?: string | null;
+  tags?: string[] | null;
+  location_link?: string | null;
+  session_length_minutes?: number | null;
+  aftercare?: string | null;
+  sort_order?: number | null;
   created_at: string;
 };
 
@@ -34,7 +40,10 @@ export type Post = {
   id: string;
   title: string;
   body: string;
+  excerpt?: string | null;
+  cover_image_url?: string | null;
   status: "draft" | "published";
+  publish_at?: string | null;
   created_at: string;
   updated_at: string;
 };

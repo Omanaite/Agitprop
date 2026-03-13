@@ -24,7 +24,7 @@ export async function GET(request: Request) {
 
   const { data, error } = await auth.supabase
     .from("posts")
-    .select("id,title,body,status,created_at,updated_at")
+    .select("id,title,body,excerpt,cover_image_url,status,publish_at,created_at,updated_at")
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -81,6 +81,9 @@ export async function POST(request: Request) {
       title: payload.title,
       body: payload.body,
       status: payload.status ?? "draft",
+      excerpt: payload.excerpt ?? null,
+      cover_image_url: payload.cover_image_url ?? null,
+      publish_at: payload.publish_at ? new Date(payload.publish_at) : null,
     });
 
     if (error) {

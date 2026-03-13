@@ -6,6 +6,11 @@ create table if not exists tattoos (
   style text not null,
   image_url text not null,
   gallery_id uuid,
+  tags text[],
+  location_link text,
+  session_length_minutes int,
+  aftercare text,
+  sort_order int not null default 0,
   created_at timestamptz not null default now()
 );
 
@@ -24,7 +29,10 @@ create table if not exists posts (
   id uuid primary key default gen_random_uuid(),
   title text not null,
   body text not null,
+  excerpt text,
+  cover_image_url text,
   status text not null default 'draft',
+  publish_at timestamptz,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );

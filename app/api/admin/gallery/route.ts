@@ -24,7 +24,9 @@ export async function GET(request: Request) {
 
   const { data, error } = await auth.supabase
     .from("tattoos")
-    .select("id,title,description,style,image_url,created_at")
+    .select(
+      "id,title,description,style,image_url,gallery_id,tags,location_link,session_length_minutes,aftercare,sort_order,created_at"
+    )
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -83,6 +85,11 @@ export async function POST(request: Request) {
       style: payload.style,
       image_url: payload.image_url,
       gallery_id: payload.gallery_id ?? null,
+      tags: payload.tags ?? null,
+      location_link: payload.location_link ?? null,
+      session_length_minutes: payload.session_length_minutes ?? null,
+      aftercare: payload.aftercare ?? null,
+      sort_order: payload.sort_order ?? 0,
     });
 
     if (error) {

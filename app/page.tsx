@@ -117,8 +117,17 @@ export default async function Home() {
               <div className="grid gap-4 md:grid-cols-2">
                 {posts.map((post) => (
                   <article key={post.id} className="hard-border p-4">
+                    {post.cover_image_url ? (
+                      <img
+                        className="mb-3 w-full object-cover"
+                        src={post.cover_image_url}
+                        alt={post.title}
+                      />
+                    ) : null}
                     <h3 className="text-lg uppercase">{post.title}</h3>
-                    <p className="text-sm">{post.body}</p>
+                    <p className="text-sm">
+                      {post.excerpt || post.body}
+                    </p>
                   </article>
                 ))}
               </div>
