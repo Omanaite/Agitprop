@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { isRedirectError, redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/ssr";
 
 export async function signInAdmin(formData: FormData) {
@@ -48,6 +48,9 @@ export async function signInAdmin(formData: FormData) {
 
     redirect("/admin");
   } catch (err) {
+    if (isRedirectError(err)) {
+      throw err;
+    }
     const message = err instanceof Error ? err.message : "unknown";
     const reason = encodeURIComponent(message.slice(0, 80));
     redirect(`/admin/login?error=server&reason=${reason}`);

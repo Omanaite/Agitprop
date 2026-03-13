@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
     const scriptSrc = isDev
       ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
       : "script-src 'self' 'unsafe-inline'";
+    const scriptSrcElem = isDev
+      ? "script-src-elem 'self' 'unsafe-inline' https://vercel.live"
+      : "script-src-elem 'self' 'unsafe-inline' https://vercel.live";
     const styleSrc = isDev
       ? "style-src 'self' 'unsafe-inline'"
       : "style-src 'self' 'unsafe-inline'";
@@ -14,6 +17,8 @@ const nextConfig: NextConfig = {
       styleSrc +
       "; " +
       scriptSrc +
+      "; " +
+      scriptSrcElem +
       "; connect-src 'self' https:; font-src 'self' data: https:; frame-ancestors 'none';";
 
     return [
