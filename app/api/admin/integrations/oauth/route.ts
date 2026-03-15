@@ -9,8 +9,10 @@ const allowedSet = new Set(allowedProviders);
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const provider = url.searchParams.get("provider") || "";
+  const isProvider = (value: string): value is Provider =>
+    allowedProviders.includes(value as Provider);
 
-  if (!allowedSet.has(provider)) {
+  if (!isProvider(provider)) {
     return NextResponse.json({ message: "Invalid provider." }, { status: 400 });
   }
 
@@ -24,7 +26,7 @@ export async function GET(request: Request) {
 
   const redirectTo = `${url.origin}/api/admin/integrations/callback?provider=${provider}`;
   const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: provider as Provider,
+    provider,
     options: {
       redirectTo,
     },
