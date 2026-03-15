@@ -29,6 +29,9 @@ export async function GET(request: Request) {
   if (!auth.user) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
+  if (!auth.user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
 
   const { data, error } = await auth.supabase
     .from("admin_integrations")
