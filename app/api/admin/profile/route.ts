@@ -29,11 +29,12 @@ export async function GET(request: Request) {
   if (!auth.user) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
+  const user = auth.user;
 
   const { data, error } = await auth.supabase
     .from("admin_profiles")
     .select("id,email,nickname,shipping_address,billing_address,payment_notes")
-    .eq("user_id", auth.user.id)
+    .eq("user_id", user.id)
     .maybeSingle();
 
   if (error) {
@@ -48,7 +49,7 @@ export async function GET(request: Request) {
 
   return NextResponse.json({
     profile: data ?? {
-      email: auth.user.email ?? "",
+      email: user.email ?? "",
       nickname: "",
       shipping_address: "",
       billing_address: "",
@@ -99,7 +100,7 @@ export async function PUT(request: Request) {
     const { error } = await auth.supabase
       .from("admin_profiles")
       .upsert({
-        user_id: auth.user.id,
+        user_id: user.id,
         email: payload.email,
         nickname: payload.nickname ?? null,
         shipping_address: payload.shipping_address ?? null,
@@ -121,10 +122,10 @@ export async function PUT(request: Request) {
     }
 
     await logAuditEvent({
-      actor_email: auth.user.email ?? null,
+      actor_email: user.email ?? null,
       action: "update",
       entity: "admin_profiles",
-      entity_id: auth.user.id,
+      entity_id: user.id,
     });
 
     return NextResponse.json({ ok: true });

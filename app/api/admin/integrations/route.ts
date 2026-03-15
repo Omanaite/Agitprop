@@ -29,14 +29,12 @@ export async function GET(request: Request) {
   if (!auth.user) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
-  if (!auth.user) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-  }
+  const user = auth.user;
 
   const { data, error } = await auth.supabase
     .from("admin_integrations")
     .select("id,provider,status,external_user_id,connected_at,last_checked_at")
-    .eq("user_id", auth.user.id)
+    .eq("user_id", user.id)
     .order("provider", { ascending: true });
 
   if (error) {
@@ -73,6 +71,10 @@ export async function POST(request: Request) {
       { status: auth.reason === "forbidden" ? 403 : 401 }
     );
   }
+  if (!auth.user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+  const user = auth.user;
 
   try {
     const json = await request.json();
@@ -94,14 +96,14 @@ export async function POST(request: Request) {
     const { error } = await auth.supabase
       .from("admin_integrations")
       .upsert({
-        user_id: auth.user.id,
+        user_id: user.id,
         provider: payload.provider,
         status: payload.status,
         external_user_id: payload.external_user_id ?? null,
         connected_at: payload.status === "connected" ? new Date().toISOString() : null,
         updated_at: new Date().toISOString(),
       })
-      .eq("user_id", auth.user.id)
+      .eq("user_id", user.id)
       .eq("provider", payload.provider);
 
     if (error) {
@@ -116,10 +118,10 @@ export async function POST(request: Request) {
     }
 
     await logAuditEvent({
-      actor_email: auth.user.email ?? null,
+      actor_email: user.email ?? null,
       action: "update",
       entity: "admin_integrations",
-      entity_id: auth.user.id,
+      entity_id: user.id,
     });
 
     return NextResponse.json({ ok: true });
