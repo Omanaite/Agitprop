@@ -1,6 +1,8 @@
 import { GalleriesManager } from "@/components/admin/GalleriesManager";
 import { GalleryManager } from "@/components/admin/GalleryManager";
+import { IntegrationsManager } from "@/components/admin/IntegrationsManager";
 import { PostManager } from "@/components/admin/PostManager";
+import { ProfileManager } from "@/components/admin/ProfileManager";
 import { signOutAdmin } from "./actions";
 
 export default function AdminPage() {
@@ -12,18 +14,17 @@ export default function AdminPage() {
             <h1 className="font-[var(--font-heading)] text-2xl uppercase">
               Admin Console
             </h1>
-            <p className="text-sm">Gestión de contenido</p>
+            <p className="text-sm">Gestion de contenido</p>
           </div>
           <form action={signOutAdmin}>
-            <button
-              type="submit"
-              className="theme-border px-4 py-2"
-            >
+            <button type="submit" className="theme-border px-4 py-2">
               Salir
             </button>
           </form>
         </header>
 
+        <ProfileManager />
+        <IntegrationsManager />
         <GalleriesManager />
         <GalleryManager />
         <PostManager />

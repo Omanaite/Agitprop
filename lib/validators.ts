@@ -42,3 +42,19 @@ export const gallerySchema = z.object({
   description: z.string().optional(),
   slug: z.string().min(2),
 });
+
+export const adminProfileSchema = z.object({
+  email: z.string().email(),
+  nickname: z.string().optional(),
+  shipping_address: z.string().optional(),
+  billing_address: z.string().optional(),
+  payment_notes: z.string().optional(),
+});
+
+export const adminIntegrationSchema = z.object({
+  provider: z.string().min(2),
+  status: z.enum(["connected", "disconnected", "expired"]).default(
+    "disconnected"
+  ),
+  external_user_id: z.string().optional(),
+});
