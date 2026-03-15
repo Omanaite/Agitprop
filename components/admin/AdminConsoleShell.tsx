@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import type { ReactNode } from "react";
 import { GalleriesManager } from "@/components/admin/GalleriesManager";
 import { GalleryManager } from "@/components/admin/GalleryManager";
 import { IntegrationsManager } from "@/components/admin/IntegrationsManager";
@@ -18,7 +19,7 @@ type Section = {
   id: SectionId;
   label: string;
   description: string;
-  content: JSX.Element;
+  content: ReactNode;
 };
 
 export function AdminConsoleShell() {
