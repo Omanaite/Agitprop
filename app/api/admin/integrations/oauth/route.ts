@@ -1,21 +1,16 @@
 import { NextResponse } from "next/server";
 import { createSupabaseServerClient } from "@/lib/supabase/ssr";
+import type { Provider } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 
-const allowedProviders = new Set([
-  "google",
-  "github",
-  "facebook",
-  "dropbox",
-  "drive",
-  "s3",
-]);
+const allowedProviders: Provider[] = ["google", "github", "facebook"];
+const allowedSet = new Set(allowedProviders);
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const provider = url.searchParams.get("provider") || "";
 
-  if (!allowedProviders.has(provider)) {
+  if (!allowedSet.has(provider)) {
     return NextResponse.json({ message: "Invalid provider." }, { status: 400 });
   }
 
@@ -29,7 +24,7 @@ export async function GET(request: Request) {
 
   const redirectTo = `${url.origin}/api/admin/integrations/callback?provider=${provider}`;
   const { data, error } = await supabase.auth.signInWithOAuth({
-    provider,
+    provider: provider as Provider,
     options: {
       redirectTo,
     },
