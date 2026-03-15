@@ -79,6 +79,10 @@ export async function PUT(request: Request) {
       { status: auth.reason === "forbidden" ? 403 : 401 }
     );
   }
+  if (!auth.user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+  const user = auth.user;
 
   try {
     const json = await request.json();
@@ -108,7 +112,7 @@ export async function PUT(request: Request) {
         payment_notes: payload.payment_notes ?? null,
         updated_at: new Date().toISOString(),
       })
-      .eq("user_id", auth.user.id);
+      .eq("user_id", user.id);
 
     if (error) {
       return NextResponse.json(
