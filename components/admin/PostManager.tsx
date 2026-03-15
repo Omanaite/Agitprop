@@ -55,17 +55,28 @@ export function PostManager() {
   );
   const [showPreview, setShowPreview] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [hasIntegration, setHasIntegration] = useState(false);
 
   async function load() {
     setStatus("");
     setErrors([]);
     const res = await fetch("/api/admin/posts");
+    const integrationsRes = await fetch("/api/admin/integrations");
     if (!res.ok) {
       setStatus("No se pudo cargar los posts.");
       return;
     }
+    if (!integrationsRes.ok) {
+      setStatus("No se pudieron cargar integraciones.");
+      return;
+    }
     const data = await res.json();
+    const integrationsData = await integrationsRes.json();
     setItems(data.items || []);
+    const connectedCount = (integrationsData.items || []).filter(
+      (item: { status: string }) => item.status === "connected"
+    ).length;
+    setHasIntegration(connectedCount > 0);
   }
 
   useEffect(() => {
@@ -168,6 +179,11 @@ export function PostManager() {
       <p className="mb-4 text-xs uppercase tracking-[0.2em]">
         Crea borradores, agrega portada, y programa publicacion si aplica.
       </p>
+      {!hasIntegration ? (
+        <p className="input-helper" data-variant="error">
+          Sin integracion activa. Upload remoto bloqueado.
+        </p>
+      ) : null}
       <form onSubmit={handleSubmit} className="grid gap-3">
         <input
           className={`theme-border p-2 ${
