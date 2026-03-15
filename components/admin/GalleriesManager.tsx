@@ -34,7 +34,7 @@ export function GalleriesManager() {
     setErrors([]);
     const res = await fetch("/api/admin/galleries");
     if (!res.ok) {
-      setStatus("No se pudo cargar las galerias.");
+      setStatus("Could not load galleries.");
       return;
     }
     const data = await res.json();
@@ -77,7 +77,7 @@ export function GalleriesManager() {
     const clientErrors = validateForm();
     if (clientErrors.length) {
       setErrors(clientErrors);
-      setStatus("Faltan datos requeridos.");
+      setStatus("Required fields are missing.");
       return;
     }
 
@@ -101,46 +101,46 @@ export function GalleriesManager() {
     if (!res.ok) {
       const data = await res.json().catch(() => null);
       setErrors(data?.errors ?? []);
-      setStatus(data?.message ?? "Error al guardar la galeria.");
+      setStatus(data?.message ?? "Failed to save gallery.");
       setIsSaving(false);
       return;
     }
 
     resetForm();
     await load();
-    setStatus("Guardado.");
+    setStatus("Saved.");
     setIsSaving(false);
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Eliminar esta galeria?")) return;
+    if (!confirm("Delete this gallery?")) return;
     setStatus("");
     setIsSaving(true);
     const res = await fetch(`/api/admin/galleries/${id}`, { method: "DELETE" });
     if (!res.ok) {
       const data = await res.json().catch(() => null);
       setErrors(data?.errors ?? []);
-      setStatus(data?.message ?? "Error al eliminar.");
+      setStatus(data?.message ?? "Failed to delete.");
       setIsSaving(false);
       return;
     }
     await load();
-    setStatus("Eliminado.");
+    setStatus("Deleted.");
     setIsSaving(false);
   }
 
   return (
     <section className="theme-border p-4">
-      <h2 className="mb-2 text-lg uppercase">Galerias</h2>
+      <h2 className="mb-2 text-lg uppercase">Galleries</h2>
       <p className="mb-4 text-xs uppercase tracking-[0.2em]">
-        Crea galerias primero. Luego asigna piezas desde el editor de galeria.
+        Create galleries first. Then assign pieces from the gallery editor.
       </p>
       <form onSubmit={handleSubmit} className="grid gap-3 md:grid-cols-2">
         <input
           className={`theme-border p-2 ${
             errorMap.get("title") ? "input-error" : ""
           }`}
-          placeholder="Titulo"
+          placeholder="Title"
           value={form.title}
           onChange={(e) => setForm({ ...form, title: e.target.value })}
           minLength={2}
@@ -155,7 +155,7 @@ export function GalleriesManager() {
           className={`theme-border p-2 ${
             errorMap.get("slug") ? "input-error" : ""
           }`}
-          placeholder="Slug (ej: blackwork-2026)"
+          placeholder="Slug (ex: blackwork-2026)"
           value={form.slug}
           onChange={(e) => setForm({ ...form, slug: e.target.value })}
           minLength={2}
@@ -170,7 +170,7 @@ export function GalleriesManager() {
           className={`theme-border p-2 md:col-span-2 ${
             errorMap.get("description") ? "input-error" : ""
           }`}
-          placeholder="Descripcion"
+          placeholder="Description"
           value={form.description ?? ""}
           onChange={(e) => setForm({ ...form, description: e.target.value })}
         />
@@ -185,7 +185,7 @@ export function GalleriesManager() {
             className="theme-border theme-invert px-4 py-2"
             disabled={isSaving}
           >
-            {isSaving ? "Guardando..." : form.id ? "Actualizar" : "Crear"}
+            {isSaving ? "Saving..." : form.id ? "Update" : "Create"}
           </button>
           {form.id ? (
             <button
@@ -194,7 +194,7 @@ export function GalleriesManager() {
               className="theme-border px-4 py-2"
               disabled={isSaving}
             >
-              Cancelar
+              Cancel
             </button>
           ) : null}
         </div>
@@ -228,13 +228,13 @@ export function GalleriesManager() {
                 className="theme-border px-2 py-1 text-xs"
                 onClick={() => editItem(item)}
               >
-                Editar
+                Edit
               </button>
               <button
                 className="theme-border px-2 py-1 text-xs"
                 onClick={() => void handleDelete(item.id)}
               >
-                Eliminar
+                Delete
               </button>
             </div>
           </li>

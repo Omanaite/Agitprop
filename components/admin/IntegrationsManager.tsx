@@ -29,7 +29,7 @@ export function IntegrationsManager() {
     setErrors([]);
     const res = await fetch("/api/admin/integrations");
     if (!res.ok) {
-      setStatus("No se pudieron cargar integraciones.");
+      setStatus("Could not load integrations.");
       return;
     }
     const data = await res.json();
@@ -56,13 +56,13 @@ export function IntegrationsManager() {
     if (!res.ok) {
       const data = await res.json().catch(() => null);
       setErrors(data?.errors ?? []);
-      setStatus(data?.message ?? "Error al actualizar integracion.");
+      setStatus(data?.message ?? "Failed to update integration.");
       setIsSaving(false);
       return;
     }
 
     await load();
-    setStatus("Integracion actualizada.");
+    setStatus("Integration updated.");
     setIsSaving(false);
   }
 
@@ -74,14 +74,14 @@ export function IntegrationsManager() {
 
   return (
     <section className="theme-border p-4">
-      <h2 className="mb-2 text-lg uppercase">Integraciones</h2>
+      <h2 className="mb-2 text-lg uppercase">Integrations</h2>
       <p className="mb-4 text-xs uppercase tracking-[0.2em]">
-        Conecta OAuth y nube. Upload remoto se habilita solo cuando haya conexion.
+        Connect OAuth and cloud. Remote uploads unlock only when connected.
       </p>
 
       {connectedCount === 0 ? (
         <p className="input-helper" data-variant="error">
-          Sin integraciones activas. El upload remoto esta bloqueado.
+          No active integrations. Remote uploads are blocked.
         </p>
       ) : null}
 
@@ -92,7 +92,7 @@ export function IntegrationsManager() {
             <div key={provider} className="theme-border p-3">
               <div className="text-xs uppercase tracking-[0.2em]">{provider}</div>
               <div className="text-sm">
-                Estado: {current?.status ?? "disconnected"}
+                Status: {current?.status ?? "disconnected"}
               </div>
               <div className="mt-2 flex gap-2">
                 <button
@@ -101,7 +101,7 @@ export function IntegrationsManager() {
                   disabled={isSaving}
                   onClick={() => connectProvider(provider)}
                 >
-                  Conectar
+                  Connect
                 </button>
                 <button
                   type="button"
@@ -109,7 +109,7 @@ export function IntegrationsManager() {
                   disabled={isSaving}
                   onClick={() => void updateIntegration(provider, "disconnected")}
                 >
-                  Desconectar
+                  Disconnect
                 </button>
               </div>
             </div>

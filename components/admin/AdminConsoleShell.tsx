@@ -26,32 +26,32 @@ export function AdminConsoleShell() {
     () => [
       {
         id: "profile",
-        label: "Perfil",
-        description: "Datos de contacto, pagos y envio.",
+        label: "Profile",
+        description: "Contact, payments, and delivery details.",
         content: <ProfileManager />,
       },
       {
         id: "integrations",
-        label: "Integraciones",
-        description: "Conecta GitHub, Google o la nube para uploads.",
+        label: "Integrations",
+        description: "Connect GitHub, Google, or cloud uploads.",
         content: <IntegrationsManager />,
       },
       {
         id: "galleries",
-        label: "Galerias",
-        description: "Crea y organiza multiples galerias.",
+        label: "Galleries",
+        description: "Create and organize multiple galleries.",
         content: <GalleriesManager />,
       },
       {
         id: "gallery-items",
-        label: "Piezas",
-        description: "Carga y edita piezas dentro de cada galeria.",
+        label: "Pieces",
+        description: "Upload and edit pieces inside each gallery.",
         content: <GalleryManager />,
       },
       {
         id: "posts",
-        label: "Publicaciones",
-        description: "Redacta y publica contenido editorial.",
+        label: "Posts",
+        description: "Draft and publish editorial content.",
         content: <PostManager />,
       },
     ],
@@ -67,7 +67,7 @@ export function AdminConsoleShell() {
       <div className="theme-border p-4">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-xs uppercase tracking-[0.2em]">Seccion activa</p>
+            <p className="text-xs uppercase tracking-[0.2em]">Active section</p>
             <h2 className="text-lg uppercase">
               {activeSection?.label ?? ""}
             </h2>
@@ -110,7 +110,7 @@ export function AdminConsoleShell() {
               ) : null}
             </div>
             <label className="text-xs uppercase tracking-[0.2em] md:hidden">
-              Cambiar seccion
+              Switch section
               <select
                 className="mt-2 w-full theme-border p-2 text-sm"
                 value={activeId}

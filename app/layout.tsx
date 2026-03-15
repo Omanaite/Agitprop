@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   // Root layout defines global fonts and language.
   return (
-    <html lang="es">
+    <html lang="en">
       <body className={`${headingFont.variable} ${bodyFont.variable}`}>
         {children}
       </body>

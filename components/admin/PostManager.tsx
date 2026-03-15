@@ -63,11 +63,11 @@ export function PostManager() {
     const res = await fetch("/api/admin/posts");
     const integrationsRes = await fetch("/api/admin/integrations");
     if (!res.ok) {
-      setStatus("No se pudo cargar los posts.");
+      setStatus("Could not load posts.");
       return;
     }
     if (!integrationsRes.ok) {
-      setStatus("No se pudieron cargar integraciones.");
+      setStatus("Could not load integrations.");
       return;
     }
     const data = await res.json();
@@ -118,7 +118,7 @@ export function PostManager() {
     const clientErrors = validateForm();
     if (clientErrors.length) {
       setErrors(clientErrors);
-      setStatus("Faltan datos requeridos.");
+      setStatus("Required fields are missing.");
       return;
     }
 
@@ -145,31 +145,31 @@ export function PostManager() {
     if (!res.ok) {
       const data = await res.json().catch(() => null);
       setErrors(data?.errors ?? []);
-      setStatus(data?.message ?? "Error al guardar el post.");
+      setStatus(data?.message ?? "Failed to save post.");
       setIsSaving(false);
       return;
     }
 
     resetForm();
     await load();
-    setStatus("Guardado.");
+    setStatus("Saved.");
     setIsSaving(false);
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Eliminar este post?")) return;
+    if (!confirm("Delete this post?")) return;
     setStatus("");
     setIsSaving(true);
     const res = await fetch(`/api/admin/posts/${id}`, { method: "DELETE" });
     if (!res.ok) {
       const data = await res.json().catch(() => null);
       setErrors(data?.errors ?? []);
-      setStatus(data?.message ?? "Error al eliminar.");
+      setStatus(data?.message ?? "Failed to delete.");
       setIsSaving(false);
       return;
     }
     await load();
-    setStatus("Eliminado.");
+    setStatus("Deleted.");
     setIsSaving(false);
   }
 
@@ -177,11 +177,11 @@ export function PostManager() {
     <section className="theme-border p-4">
       <h2 className="mb-2 text-lg uppercase">Posts</h2>
       <p className="mb-4 text-xs uppercase tracking-[0.2em]">
-        Crea borradores, agrega portada, y programa publicacion si aplica.
+        Draft posts, add a cover, and schedule publication when needed.
       </p>
       {!hasIntegration ? (
         <p className="input-helper" data-variant="error">
-          Sin integracion activa. Upload remoto bloqueado.
+          No active integration. Remote uploads are blocked.
         </p>
       ) : null}
       <form onSubmit={handleSubmit} className="grid gap-3">
@@ -189,7 +189,7 @@ export function PostManager() {
           className={`theme-border p-2 ${
             errorMap.get("title") ? "input-error" : ""
           }`}
-          placeholder="Titulo"
+          placeholder="Title"
           value={form.title}
           onChange={(e) => setForm({ ...form, title: e.target.value })}
           minLength={2}
@@ -204,7 +204,7 @@ export function PostManager() {
           className={`theme-border p-2 ${
             errorMap.get("body") ? "input-error" : ""
           }`}
-          placeholder="Contenido"
+          placeholder="Content"
           value={form.body}
           onChange={(e) => setForm({ ...form, body: e.target.value })}
           rows={4}
@@ -264,7 +264,7 @@ export function PostManager() {
             className="theme-border theme-invert px-4 py-2"
             disabled={isSaving}
           >
-            {isSaving ? "Guardando..." : form.id ? "Actualizar" : "Crear"}
+            {isSaving ? "Saving..." : form.id ? "Update" : "Create"}
           </button>
           {form.id ? (
             <button
@@ -273,7 +273,7 @@ export function PostManager() {
               className="theme-border px-4 py-2"
               disabled={isSaving}
             >
-              Cancelar
+              Cancel
             </button>
           ) : null}
         </div>
@@ -321,13 +321,13 @@ export function PostManager() {
                 className="theme-border px-2 py-1 text-xs"
                 onClick={() => editPost(item)}
               >
-                Editar
+                Edit
               </button>
               <button
                 className="theme-border px-2 py-1 text-xs"
                 onClick={() => void handleDelete(item.id)}
               >
-                Eliminar
+                Delete
               </button>
             </div>
           </li>

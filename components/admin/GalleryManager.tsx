@@ -63,15 +63,15 @@ export function GalleryManager() {
     const galleriesRes = await fetch("/api/admin/galleries");
     const integrationsRes = await fetch("/api/admin/integrations");
     if (!res.ok) {
-      setStatus("No se pudo cargar la galeria.");
+      setStatus("Could not load gallery items.");
       return;
     }
     if (!galleriesRes.ok) {
-      setStatus("No se pudo cargar las galerias.");
+      setStatus("Could not load galleries.");
       return;
     }
     if (!integrationsRes.ok) {
-      setStatus("No se pudieron cargar integraciones.");
+      setStatus("Could not load integrations.");
       return;
     }
     const data = await res.json();
@@ -131,7 +131,7 @@ export function GalleryManager() {
     const clientErrors = validateForm();
     if (clientErrors.length) {
       setErrors(clientErrors);
-      setStatus("Faltan datos requeridos.");
+      setStatus("Required fields are missing.");
       return;
     }
 
@@ -155,7 +155,7 @@ export function GalleryManager() {
 
     const isEdit = Boolean(form.id);
     if (isEdit && (!form.id || form.id === "undefined")) {
-      setStatus("Selecciona una pieza valida para editar.");
+      setStatus("Select a valid piece to edit.");
       setIsSaving(false);
       return;
     }
@@ -171,31 +171,31 @@ export function GalleryManager() {
     if (!res.ok) {
       const data = await res.json().catch(() => null);
       setErrors(data?.errors ?? []);
-      setStatus(data?.message ?? "Error al guardar la pieza.");
+      setStatus(data?.message ?? "Failed to save piece.");
       setIsSaving(false);
       return;
     }
 
     resetForm();
     await load();
-    setStatus("Guardado.");
+    setStatus("Saved.");
     setIsSaving(false);
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Eliminar esta pieza?")) return;
+    if (!confirm("Delete this piece?")) return;
     setStatus("");
     setIsSaving(true);
     const res = await fetch(`/api/admin/gallery/${id}`, { method: "DELETE" });
     if (!res.ok) {
       const data = await res.json().catch(() => null);
       setErrors(data?.errors ?? []);
-      setStatus(data?.message ?? "Error al eliminar.");
+      setStatus(data?.message ?? "Failed to delete.");
       setIsSaving(false);
       return;
     }
     await load();
-    setStatus("Eliminado.");
+    setStatus("Deleted.");
     setIsSaving(false);
   }
 
@@ -209,7 +209,7 @@ export function GalleryManager() {
       body: formData,
     });
     if (!res.ok) {
-      setStatus("Error al subir imagen.");
+      setStatus("Image upload failed.");
       setIsUploading(false);
       return;
     }
@@ -229,11 +229,11 @@ export function GalleryManager() {
         method: "POST",
         body: formData,
       });
-      if (!res.ok) {
-        setIsUploading(false);
-        setStatus("Error en carga masiva.");
-        return;
-      }
+    if (!res.ok) {
+      setIsUploading(false);
+      setStatus("Bulk upload failed.");
+      return;
+    }
       const data = await res.json();
       uploaded.push(data.url);
     }
@@ -244,7 +244,7 @@ export function GalleryManager() {
   async function createFromUploads() {
     if (!bulkUploads.length) return;
     if (!bulkStyle.trim()) {
-      setStatus("Define un estilo por defecto para la carga masiva.");
+      setStatus("Set a default style for bulk upload.");
       return;
     }
     setIsSaving(true);
@@ -263,13 +263,13 @@ export function GalleryManager() {
     );
     const results = await Promise.all(requests);
     if (results.some((r) => !r.ok)) {
-      setStatus("Error al crear items desde carga masiva.");
+      setStatus("Failed to create items from bulk upload.");
       setIsSaving(false);
       return;
     }
     setBulkUploads([]);
     await load();
-    setStatus("Carga masiva completada.");
+    setStatus("Bulk upload completed.");
     setIsSaving(false);
   }
 
@@ -307,23 +307,23 @@ export function GalleryManager() {
     );
     const results = await Promise.all(updates);
     if (results.some((r) => !r.ok)) {
-      setStatus("Error al guardar el orden.");
+      setStatus("Failed to save order.");
       setIsSaving(false);
       return;
     }
-    setStatus("Orden guardado.");
+    setStatus("Order saved.");
     setIsSaving(false);
   }
 
   return (
     <section className="theme-border p-4">
-      <h2 className="mb-2 text-lg uppercase">Galeria</h2>
+      <h2 className="mb-2 text-lg uppercase">Gallery</h2>
       <p className="mb-4 text-xs uppercase tracking-[0.2em]">
-        1) Crea galerias. 2) Sube piezas y asigna galeria. 3) Reordena y guarda.
+        1) Create galleries. 2) Upload pieces and assign a gallery. 3) Reorder and save.
       </p>
       {!hasIntegration ? (
         <p className="input-helper" data-variant="error">
-          Sin integracion activa. Upload remoto bloqueado.
+          No active integration. Remote uploads are blocked.
         </p>
       ) : null}
       <form onSubmit={handleSubmit} className="grid gap-3 md:grid-cols-2">
@@ -331,7 +331,7 @@ export function GalleryManager() {
           className={`theme-border p-2 ${
             errorMap.get("title") ? "input-error" : ""
           }`}
-          placeholder="Titulo"
+          placeholder="Title"
           value={form.title}
           onChange={(e) => setForm({ ...form, title: e.target.value })}
           minLength={2}
@@ -346,7 +346,7 @@ export function GalleryManager() {
           className={`theme-border p-2 ${
             errorMap.get("style") ? "input-error" : ""
           }`}
-          placeholder="Estilo (ej: blackwork, linework)"
+          placeholder="Style (ex: blackwork, linework)"
           value={form.style}
           onChange={(e) => setForm({ ...form, style: e.target.value })}
           minLength={2}
@@ -361,7 +361,7 @@ export function GalleryManager() {
           className={`theme-border p-2 md:col-span-2 ${
             errorMap.get("description") ? "input-error" : ""
           }`}
-          placeholder="Descripcion corta"
+          placeholder="Short description"
           value={form.description ?? ""}
           onChange={(e) => setForm({ ...form, description: e.target.value })}
         />
@@ -378,7 +378,7 @@ export function GalleryManager() {
             value={form.gallery_id}
             onChange={(e) => setForm({ ...form, gallery_id: e.target.value })}
           >
-            <option value="">Sin galeria (default)</option>
+            <option value="">No gallery (default)</option>
             {galleries.map((gallery) => (
               <option key={gallery.id} value={gallery.id}>
                 {gallery.title}
@@ -396,7 +396,7 @@ export function GalleryManager() {
             required
           />
           <p className="input-helper">
-            Usa imagenes cuadradas o verticales para el grid brutalista.
+            Use square or vertical images for the brutal grid.
           </p>
           <input
             className="theme-border p-2"
@@ -451,9 +451,9 @@ export function GalleryManager() {
             }}
           />
           <p className="input-helper">
-            Selecciona una imagen desde tu dispositivo o computadora.
+            Choose an image from your device or computer.
           </p>
-          {isUploading ? <p>Subiendo...</p> : null}
+          {isUploading ? <p>Uploading...</p> : null}
         </div>
         <div className="flex gap-2 md:col-span-2">
           <button
@@ -461,7 +461,7 @@ export function GalleryManager() {
             className="theme-border theme-invert px-4 py-2"
             disabled={isSaving}
           >
-            {isSaving ? "Guardando..." : form.id ? "Actualizar" : "Crear"}
+            {isSaving ? "Saving..." : form.id ? "Update" : "Create"}
           </button>
           {form.id ? (
             <button
@@ -470,7 +470,7 @@ export function GalleryManager() {
               className="theme-border px-4 py-2"
               disabled={isSaving}
             >
-              Cancelar
+              Cancel
             </button>
           ) : null}
         </div>
@@ -511,13 +511,13 @@ export function GalleryManager() {
                 className="theme-border px-2 py-1 text-xs"
                 onClick={() => editItem(item)}
               >
-                Editar
+                Edit
               </button>
               <button
                 className="theme-border px-2 py-1 text-xs"
                 onClick={() => void handleDelete(item.id)}
               >
-                Eliminar
+                Delete
               </button>
             </div>
           </li>
@@ -530,10 +530,10 @@ export function GalleryManager() {
           onClick={() => void saveOrder()}
           disabled={isSaving || items.length === 0}
         >
-          {isSaving ? "Guardando..." : "Guardar orden"}
+          {isSaving ? "Saving..." : "Save order"}
         </button>
         <p className="text-xs uppercase tracking-[0.2em]">
-          Tip: arrastra y luego guarda el orden.
+          Tip: drag and then save the order.
         </p>
       </div>
 
@@ -576,7 +576,7 @@ export function GalleryManager() {
           }}
         />
         <p className="input-helper md:col-span-2">
-          Puedes seleccionar varias imagenes desde tu dispositivo.
+          You can select multiple images from your device.
         </p>
         <button
           type="button"
@@ -584,7 +584,7 @@ export function GalleryManager() {
           onClick={() => void createFromUploads()}
           disabled={!hasIntegration || !bulkUploads.length}
         >
-          Crear items desde uploads ({bulkUploads.length})
+          Create items from uploads ({bulkUploads.length})
         </button>
       </div>
     </section>

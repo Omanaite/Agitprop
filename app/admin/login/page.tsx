@@ -7,19 +7,19 @@ type LoginPageProps = {
 function getErrorMessage(code?: string, reason?: string) {
   switch (code) {
     case "missing":
-      return "Completa email y password.";
+      return "Enter email and password.";
     case "invalid":
-      return "Credenciales invalidas.";
+      return "Invalid credentials.";
     case "forbidden":
-      return "Cuenta sin permisos de administrador.";
+      return "Account does not have admin access.";
     case "config":
-      return "Configura Supabase en Vercel antes de iniciar sesion.";
+      return "Configure Supabase in Vercel before signing in.";
     case "server":
-      return `Error de servidor. ${reason ? `Detalle: ${reason}` : ""}`.trim();
+      return `Server error. ${reason ? `Detail: ${reason}` : ""}`.trim();
     case "unconfirmed":
-      return "Confirma tu email en Supabase antes de iniciar sesion.";
+      return "Confirm your email in Supabase before signing in.";
     case "rate":
-      return "Demasiados intentos. Espera e intenta nuevamente.";
+      return "Too many attempts. Please try again later.";
     default:
       return "";
   }
@@ -37,7 +37,7 @@ export default function AdminLoginPage({ searchParams }: LoginPageProps) {
         <h1 className="mb-2 font-[var(--font-heading)] text-2xl uppercase">
           Admin Login
         </h1>
-        <p className="mb-6 text-sm">Acceso exclusivo para administradores.</p>
+        <p className="mb-6 text-sm">Admin-only access.</p>
         {errorMessage ? (
           <p
             className="validation-box mb-4"
@@ -71,13 +71,13 @@ export default function AdminLoginPage({ searchParams }: LoginPageProps) {
             type="submit"
             className="theme-border theme-invert px-4 py-2"
           >
-            Entrar
+            Sign in
           </button>
         </form>
 
         <div className="mt-6 grid gap-2">
           <p className="text-xs uppercase tracking-[0.2em]">
-            Acceso con OAuth
+            Sign in with OAuth
           </p>
           <div className="flex flex-wrap gap-2">
             <a

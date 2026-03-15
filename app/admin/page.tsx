@@ -10,11 +10,11 @@ export default function AdminPage() {
             <h1 className="font-[var(--font-heading)] text-2xl uppercase">
               Admin Console
             </h1>
-            <p className="text-sm">Gestion de contenido</p>
+            <p className="text-sm">Content management</p>
           </div>
           <form action={signOutAdmin}>
             <button type="submit" className="theme-border px-4 py-2">
-              Salir
+              Sign out
             </button>
           </form>
         </header>

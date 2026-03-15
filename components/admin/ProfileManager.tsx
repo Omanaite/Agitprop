@@ -35,7 +35,7 @@ export function ProfileManager() {
     setErrors([]);
     const res = await fetch("/api/admin/profile");
     if (!res.ok) {
-      setStatus("No se pudo cargar el perfil.");
+      setStatus("Could not load profile.");
       return;
     }
     const data = await res.json();
@@ -62,7 +62,7 @@ export function ProfileManager() {
     const clientErrors = validateProfile();
     if (clientErrors.length) {
       setErrors(clientErrors);
-      setStatus("Faltan datos requeridos.");
+      setStatus("Required fields are missing.");
       return;
     }
 
@@ -76,20 +76,20 @@ export function ProfileManager() {
     if (!res.ok) {
       const data = await res.json().catch(() => null);
       setErrors(data?.errors ?? []);
-      setStatus(data?.message ?? "Error al guardar el perfil.");
+      setStatus(data?.message ?? "Failed to save profile.");
       setIsSaving(false);
       return;
     }
 
-    setStatus("Perfil guardado.");
+    setStatus("Profile saved.");
     setIsSaving(false);
   }
 
   return (
     <section className="theme-border p-4">
-      <h2 className="mb-2 text-lg uppercase">Perfil Admin</h2>
+      <h2 className="mb-2 text-lg uppercase">Admin Profile</h2>
       <p className="mb-4 text-xs uppercase tracking-[0.2em]">
-        Datos base para facturacion, pagos y contacto.
+        Base data for billing, payments, and contact.
       </p>
       <form onSubmit={handleSubmit} className="grid gap-3 md:grid-cols-2">
         <input
@@ -109,13 +109,13 @@ export function ProfileManager() {
         ) : null}
         <input
           className="theme-border p-2"
-          placeholder="Apodo"
+          placeholder="Nickname"
           value={profile.nickname || ""}
           onChange={(e) => setProfile({ ...profile, nickname: e.target.value })}
         />
         <input
           className="theme-border p-2 md:col-span-2"
-          placeholder="Direccion de envio"
+          placeholder="Shipping address"
           value={profile.shipping_address || ""}
           onChange={(e) =>
             setProfile({ ...profile, shipping_address: e.target.value })
@@ -123,7 +123,7 @@ export function ProfileManager() {
         />
         <input
           className="theme-border p-2 md:col-span-2"
-          placeholder="Direccion de facturacion"
+          placeholder="Billing address"
           value={profile.billing_address || ""}
           onChange={(e) =>
             setProfile({ ...profile, billing_address: e.target.value })
@@ -131,7 +131,7 @@ export function ProfileManager() {
         />
         <textarea
           className="theme-border p-2 md:col-span-2 min-h-[80px]"
-          placeholder="Notas de pago (referencias)"
+          placeholder="Payment notes (internal references)"
           value={profile.payment_notes || ""}
           onChange={(e) =>
             setProfile({ ...profile, payment_notes: e.target.value })
@@ -143,7 +143,7 @@ export function ProfileManager() {
             className="theme-border theme-invert px-4 py-2"
             disabled={isSaving}
           >
-            {isSaving ? "Guardando..." : "Guardar"}
+            {isSaving ? "Saving..." : "Save"}
           </button>
         </div>
       </form>
