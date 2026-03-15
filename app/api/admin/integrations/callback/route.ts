@@ -24,6 +24,9 @@ export async function GET(request: Request) {
   if (!auth.ok) {
     return NextResponse.redirect(new URL("/admin/login", url.origin));
   }
+  if (!auth.user) {
+    return NextResponse.redirect(new URL("/admin/login", url.origin));
+  }
 
   if (provider) {
     await auth.supabase
