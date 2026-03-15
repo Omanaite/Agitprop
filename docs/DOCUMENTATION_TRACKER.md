@@ -1,64 +1,64 @@
-# Documentación por Proceso
+﻿# Documentation by Process
 
-## Objetivo
-Asegurar que cada fase del roadmap tenga documentación asociada y se mantenga actualizada.
+## Goal
+Ensure each roadmap phase has associated documentation and is kept up to date.
 
-## Estado por Fase
+## Status by Phase
 
-### Fase 0 - Descubrimiento y alcance
-- Documento: `docs/ROADMAP.md`
-- Documento: `docs/PROJECT_OVERVIEW.md`
-- Estado: Completo
+### Phase 0 - Discovery and scope
+- Document: `docs/ROADMAP.md`
+- Document: `docs/PROJECT_OVERVIEW.md`
+- Status: Complete
 
-### Fase 1 - Specs formales (SDD)
-- Documento: `openspec/changes/<change-name>/specs/*/spec.md`
-- Estado: Completo (change: admin-content-management)
+### Phase 1 - Formal specs (SDD)
+- Document: `openspec/changes/<change-name>/specs/*/spec.md`
+- Status: Complete (change: admin-content-management)
 
-### Diseño técnico (SDD)
-- Documento: `openspec/changes/admin-content-management/design.md`
-- Estado: Completo
+### Technical design (SDD)
+- Document: `openspec/changes/admin-content-management/design.md`
+- Status: Complete
 
-### Tareas (SDD)
-- Documento: `openspec/changes/admin-content-management/tasks.md`
-- Estado: Completo
+### Tasks (SDD)
+- Document: `openspec/changes/admin-content-management/tasks.md`
+- Status: Complete
 
-### Fase 2 - Implementación núcleo admin
-- Documento: `docs/ADMIN_MANUAL.md`
-- Estado: En progreso (UI y flujos base implementados)
+### Phase 2 - Core admin implementation
+- Document: `docs/ADMIN_MANUAL.md`
+- Status: In progress (UI and base flows implemented)
 
-### Validaciones UX
-- Documento: `docs/VALIDATION_UX.md`
-- Estado: Completo
+### UX validations
+- Document: `docs/VALIDATION_UX.md`
+- Status: Complete
 
-### Specs Actualizadas
-- Documento: `openspec/changes/admin-content-management/specs/*/spec.md`
-- Estado: Actualizadas con validaciones y guardas de admin
+### Updated specs
+- Document: `openspec/changes/admin-content-management/specs/*/spec.md`
+- Status: Updated with validations and admin guards
 
-### Public Site Specs
-- Documento: `openspec/changes/admin-content-management/specs/public-site/spec.md`
-- Estado: Completo
+### Public site specs
+- Document: `openspec/changes/admin-content-management/specs/public-site/spec.md`
+- Status: Complete
 
-### Fase 3 - Contenido ampliado y operaciones
-- Documento: `docs/ADMIN_MANUAL.md`
-- Estado: Pendiente (extender con publicaciones avanzadas)
+### Phase 3 - Extended content and operations
+- Document: `docs/ADMIN_MANUAL.md`
+- Status: Pending (extend with advanced posts + integrations)
 
-### Fase 4 - Escalabilidad y calidad
-- Documento: `docs/PROJECT_OVERVIEW.md`
-- Estado: Pendiente (extender con analíticas y i18n)
+### Phase 4 - Scalability and quality
+- Document: `docs/PROJECT_OVERVIEW.md`
+- Status: Pending (extend with analytics and i18n)
 
-### Seguridad
-- Documento: `docs/SECURITY_REVIEW.md`
-- Estado: Revisión inicial aplicada (pendiente hardening)
+### Security
+- Document: `docs/SECURITY_REVIEW.md`
+- Status: Initial review applied (hardening pending)
 
 ### SDLC Standard
-- Documento: `docs/SDLC_QUALITY_STANDARD.md`
-- Estado: Completo
+- Document: `docs/SDLC_QUALITY_STANDARD.md`
+- Status: Complete
 
 ### PR Process
-- Documento: `docs/PR_PROCESS.md`
-- Estado: Completo
+- Document: `docs/PR_PROCESS.md`
+- Status: Complete
 
-## Registro de cambios
-- 2026-03-12: Inicialización de roadmap y documentación base.
-- 2026-03-13: Agregado detalle de galerias publicas, ajustes de login admin y datos publicos.
-- 2026-03-13: Seed SQL agregado, roadmap actualizado con OAuth/admin profile y specs extendidas.
+## Change log
+- 2026-03-12: Roadmap and baseline documentation initialized.
+- 2026-03-13: Public galleries detail, admin login fixes, seed data added.
+- 2026-03-15: Admin console navigation update + English UI copy documented.

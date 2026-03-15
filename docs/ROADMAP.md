@@ -1,69 +1,70 @@
-# Roadmap del Proyecto: Akemi Tattoo Portfolio
+# Project Roadmap: Akemi Tattoo Portfolio
 
-Fecha: 2026-03-13
-Estado actual: Fase 3 - Contenido ampliado y operaciones
+Date: 2026-03-15
+Current status: Phase 3 - Extended content and operations
 
-## Resumen Ejecutivo
-Producto: portfolio brutalista para tatuadora con galeria, bookings, contacto y pagos.
-Objetivo: evolucionar a una plataforma administrable por el artista con login, CRUD de contenido, y escalabilidad para nuevas funcionalidades.
+## Executive Summary
+Product: brutalist tattoo portfolio with gallery, bookings, contact, and payments.
+Goal: evolve into an artist-managed platform with login, content CRUD, and scalable features.
 
 ## Fases
 
-### Fase 0 - Descubrimiento y alcance (Completo)
-- Inventario de funcionalidades existentes.
-- Definicion de casos de uso principales.
-- Especificaciones funcionales preliminares para admin y escalabilidad.
+### Phase 0 - Discovery and scope (Done)
+- Inventory of existing capabilities.
+- Definition of main use cases.
+- Initial functional specs for admin and scalability.
 
-### Fase 1 - Especificaciones formales (SDD) (Completo)
-- SDD Spec: requisitos y escenarios (auth/roles, admin, gallery, posts, extensibilidad).
-- SDD Design: arquitectura, flujos, entidades, RLS, storage y webhooks.
-- SDD Tasks: desglose en tareas implementables con dependencias.
+### Phase 1 - Formal specs (SDD) (Done)
+- SDD Spec: requirements and scenarios (auth/roles, admin, gallery, posts, extensibility).
+- SDD Design: architecture, flows, entities, RLS, storage, webhooks.
+- SDD Tasks: implementation breakdown with dependencies.
 
-### Fase 2 - Implementacion nucleo admin (Completo)
-- Auth admin (Supabase Auth).
-- Panel admin base.
-- CRUD de galeria (imagenes + metadatos).
-- Validaciones y mensajes de error.
-- Estandarizacion UX de validaciones (admin + cliente).
-- Proteccion de rutas admin con sesion y rol.
-- Estados visuales por campo (error + helper).
+### Phase 2 - Core admin implementation (Done)
+- Admin auth (Supabase Auth).
+- Admin base panel.
+- Gallery CRUD (images + metadata).
+- Validations and error messages.
+- UX standardization for validations (admin + client).
+- Admin route protection with session and role.
+- Field-level error states (error + helper).
 
-### Fase 3 - Contenido ampliado y operaciones (Actual)
-- CRUD de posts/noticias/flash drops.
-- Storage para imagenes (Supabase Storage) + CDN.
-- Modo oscuro (dark mode).
-- Modo descanso de ojos (tono amarillo en modo claro).
-- Publicacion visible para cliente (feed publico de posts).
-- Galerias multiples con navegacion.
-- Filtro de galeria en vista publica.
-- Editor avanzado de galeria (bulk upload, drag & drop, tags).
-- Editor avanzado de publicaciones (draft, preview, scheduling).
-- Perfil de administrador (datos de pago, direcciones, email, apodo).
-- Conexion a nube para subida de imagenes (habilita editor si esta conectado).
-- OAuth (Google, GitHub, Facebook u otros usados por artistas).
+### Phase 3 - Extended content and operations (Active)
+- Posts/news CRUD.
+- Image storage (Supabase Storage) + CDN.
+- Dark mode.
+- Eye rest mode (warm tone on light theme).
+- Public posts feed visible to clients.
+- Multiple galleries with navigation.
+- Gallery filter on public view.
+- Advanced gallery editor (bulk upload, drag & drop, tags).
+- Advanced post editor (draft, preview, scheduling).
+- Admin profile (payments, addresses, email, nickname).
+- Cloud connection for uploads (editor enabled only if connected).
+- OAuth (Google, GitHub, Facebook or other artist providers).
+- Admin console navigation (single active section + dropdown).
+- English UI copy (admin + client).
 
-### Fase 4 - Escalabilidad y calidad (Pendiente)
-- Tags/colecciones/estilos/ubicaciones.
-- Analiticas basicas.
-- Internacionalizacion.
-- Endurecimiento de seguridad y performance.
-- Estandar SDLC + PR con revision de seguridad manual.
+### Phase 4 - Scalability and quality (Pending)
+- Tags/collections/styles/locations.
+- Basic analytics.
+- Internationalization.
+- Security and performance hardening.
+- SDLC standard + PR manual security review.
 
-### Pagos (Final)
-- Pagos y webhooks se implementan al final, luego de QA y estabilidad total.
+### Payments (Last)
+- Payments and webhooks are implemented last, after QA and stability.
 
-## Entregables por fase
-- F0: Documento de alcance y roadmap (este archivo).
-- F1: Specs + Design + Tasks.
-- F2: Implementacion admin + pruebas base.
-- F3: Contenido avanzado + storage + admin profile + OAuth.
-- F4: Escalabilidad + QA + observabilidad.
+## Deliverables by phase
+- P0: Scope and roadmap document (this file).
+- P1: Specs + Design + Tasks.
+- P2: Admin implementation + baseline tests.
+- P3: Advanced content + storage + admin profile + OAuth.
+- P4: Scalability + QA + observability.
 
-## Bloqueos conocidos
-- Requiere configuracion de llaves y credenciales (Supabase, Resend, Stripe/PayPal) para flujos completos.
+## Known blockers
+- Requires keys and credentials (Supabase, Resend, Stripe/PayPal) for full flows.
 
-## Actualizacion 2026-03-13
-- Galerias publicas con pagina de detalle.
-- Enlaces desde listado de galerias a detalle.
-- Fix de login admin para flujo de errores sin romper build.
-- Admin UX refinado con validaciones y flujo guiado.
+## Update 2026-03-15
+- Admin console navigation now single-section with dropdown.
+- English UI copy for admin + client.
+- OAuth integrations and admin profile flows stabilized.

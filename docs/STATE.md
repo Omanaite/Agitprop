@@ -1,63 +1,60 @@
-# State Snapshot - Akemi Tattoo Portfolio
+ï»¿# State Snapshot - Akemi Tattoo Portfolio
 
-Fecha: 2026-03-13
-Branch objetivo: vercel
+Date: 2026-03-15
+Branch target: vercel
 
-## Objetivo
-Mantener un resumen unico y persistente del estado del proyecto, decisiones, pendientes y pasos de produccion para evitar depender del contexto del chat.
+## Purpose
+Keep a single, persistent summary of project status, decisions, pending work, and production steps to avoid depending on chat context.
 
-## Estado Actual
-- Admin CMS: login + CRUD de galerias, piezas (tattoos) y posts implementado.
-- Public site: galeria, listado de galerias con detalle, posts publicados, contacto, bookings, pagos.
-- Seguridad: RLS, rate limiting, validaciones en API, verificacion de origen, CSP en prod.
-- Temas: light, dark, eye (descanso de ojos).
-- Documentacion: roadmap, manual admin, validaciones UX, seguridad, SDLC, PR process.
-- Engram: activo en Codex (config en AppData\Roaming\codex\config.toml).
+## Current Status
+- Admin CMS: login + CRUD for galleries, pieces (tattoos), and posts implemented.
+- Public site: gallery, gallery list with detail, published posts, contact, bookings, payments.
+- Security: RLS, rate limiting, API validation, origin checks, CSP in prod.
+- Themes: light, dark, eye (eye rest).
+- Documentation: roadmap, admin manual, validation UX, security, SDLC, PR process.
+- Engram: active in Codex (config in AppData\Roaming\codex\config.toml).
 
-## Cambios Clave Recientes
-- proxy.ts activo (migracion de middleware) para Next 16.
-- Fix de build TypeScript: tipado en lib/supabase/ssr.ts.
-- Admin UX: flujo guiado en galerias/piezas, validacion rapida de campos requeridos.
-- Posts: preview + programacion publica y validaciones UI.
-- Gitignore: engram/ ignorado para evitar fallos en build.
+## Recent Key Changes
+- proxy.ts active (middleware migration) for Next 16.
+- TypeScript build fixes in lib/supabase/ssr.ts.
+- Admin UX: guided flow in galleries/pieces, quick required-field validation.
+- Posts: preview + scheduled publishing and UI validation.
+- Admin console navigation: single active section + dropdown.
+- UI copy migrated to English.
+- Gitignore: engram/ ignored to avoid build failures.
 
-## Bloqueo Actual (Vercel)
-Vercel sigue compilando un commit antiguo (ej: 15419e2) en lugar del ultimo. Esto mantiene errores de build.
+## Current Blocker (Vercel)
+None reported after latest redeploys, but keep verifying the build uses the latest commit.
 
-### Solucion
-1. Confirmar que el branch `vercel` en GitHub tenga el ultimo commit (ej: cccb696 o mas nuevo).
-2. En Vercel, seleccionar ese commit y hacer Redeploy.
-3. Verificar en el log: "Cloning ... (Branch: vercel, Commit: <ultimo>)".
+## Pending Tasks (High Priority)
+- Confirm clean Vercel deploy on latest commit.
+- Final UX/UI sweep (admin + client) per validation guide.
+- Pre-prod checklist + manual testing.
 
-## Tareas Pendientes (Alta prioridad)
-- Confirmar deploy limpio en Vercel con el ultimo commit.
-- Barrido final UX/UI (admin + cliente) segun guia de validaciones.
-- Checklist pre-prod + pruebas manuales.
+## Pending Tasks (Medium)
+- Full English copy audit in docs and remaining strings.
+- Final accessibility adjustments (focus, aria-live, touch sizes).
 
-## Tareas Pendientes (Media)
-- Refinar copy y microcopy admin/cliente (coherencia total).
-- Ajustes finales de accesibilidad (focus, aria-live, tamaños tactiles).
+## Production Runbook (Summary)
+1. Verify env vars in Vercel: SUPABASE, RESEND, STRIPE, PAYPAL.
+2. Deploy branch `vercel` with latest commit.
+3. Manual tests:
+   - Admin login
+   - Galleries CRUD
+   - Pieces CRUD + ordering
+   - Posts CRUD + preview
+   - Public site: galleries, detail, posts, contact, booking, payments
+4. Validate error logs (Vercel + Supabase).
 
-## Runbook Produccion (Resumen)
-1. Verificar env vars en Vercel: SUPABASE, RESEND, STRIPE, PAYPAL.
-2. Deploy branch `vercel` con commit actual.
-3. Pruebas manuales:
-   - Login admin
-   - CRUD galerias
-   - CRUD piezas + orden
-   - CRUD posts + preview
-   - Public site: galerias, detalle, posts, contacto, booking, pagos
-4. Validar logs de errores (Vercel + Supabase).
-
-## Archivos Clave
+## Key Files
 - Admin UI: components/admin/GalleryManager.tsx, GalleriesManager.tsx, PostManager.tsx
 - API: app/api/admin/*, app/api/bookings, app/api/contact
 - Data: lib/data/*
-- Seguridad: lib/security.ts, lib/rate-limit.ts, docs/SECURITY_REVIEW.md
+- Security: lib/security.ts, lib/rate-limit.ts, docs/SECURITY_REVIEW.md
 - Specs: openspec/changes/admin-content-management/*
 
-## Decisiones Clave
-- Auth admin con Supabase Auth + app_metadata.role=admin.
-- RLS aplicado en todas las tablas.
+## Key Decisions
+- Admin auth with Supabase Auth + app_metadata.role=admin.
+- RLS applied on all tables.
 - Storage bucket: gallery (public read, admin write).
-- Commit estándar con prefijos (feat, fix, docs, chore).
+- Commit standard with prefixes (feat, fix, docs, chore).
