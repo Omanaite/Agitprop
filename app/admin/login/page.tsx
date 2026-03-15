@@ -74,6 +74,26 @@ export default function AdminLoginPage({ searchParams }: LoginPageProps) {
             Entrar
           </button>
         </form>
+
+        <div className="mt-6 grid gap-2">
+          <p className="text-xs uppercase tracking-[0.2em]">
+            Acceso con OAuth
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <a
+              className="theme-border px-4 py-2 text-xs uppercase tracking-[0.2em]"
+              href="/api/admin/integrations/oauth?provider=google"
+            >
+              Google
+            </a>
+            <a
+              className="theme-border px-4 py-2 text-xs uppercase tracking-[0.2em]"
+              href="/api/admin/integrations/oauth?provider=github"
+            >
+              GitHub
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );
