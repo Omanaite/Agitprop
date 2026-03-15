@@ -68,6 +68,10 @@ export function IntegrationsManager() {
 
   const connectedCount = items.filter((item) => item.status === "connected").length;
 
+  function connectProvider(provider: string) {
+    window.location.href = `/api/admin/integrations/oauth?provider=${provider}`;
+  }
+
   return (
     <section className="theme-border p-4">
       <h2 className="mb-2 text-lg uppercase">Integraciones</h2>
@@ -95,7 +99,7 @@ export function IntegrationsManager() {
                   type="button"
                   className="theme-border px-3 py-1 text-xs"
                   disabled={isSaving}
-                  onClick={() => void updateIntegration(provider, "connected")}
+                  onClick={() => connectProvider(provider)}
                 >
                   Conectar
                 </button>
