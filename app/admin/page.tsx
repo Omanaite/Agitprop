@@ -1,8 +1,4 @@
-import { GalleriesManager } from "@/components/admin/GalleriesManager";
-import { GalleryManager } from "@/components/admin/GalleryManager";
-import { IntegrationsManager } from "@/components/admin/IntegrationsManager";
-import { PostManager } from "@/components/admin/PostManager";
-import { ProfileManager } from "@/components/admin/ProfileManager";
+import { AdminConsoleShell } from "@/components/admin/AdminConsoleShell";
 import { signOutAdmin } from "./actions";
 
 export default function AdminPage() {
@@ -23,11 +19,7 @@ export default function AdminPage() {
           </form>
         </header>
 
-        <ProfileManager />
-        <IntegrationsManager />
-        <GalleriesManager />
-        <GalleryManager />
-        <PostManager />
+        <AdminConsoleShell />
       </div>
     </div>
   );

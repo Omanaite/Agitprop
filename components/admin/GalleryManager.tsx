@@ -450,6 +450,9 @@ export function GalleryManager() {
               if (file) void handleUpload(file);
             }}
           />
+          <p className="input-helper">
+            Selecciona una imagen desde tu dispositivo o computadora.
+          </p>
           {isUploading ? <p>Subiendo...</p> : null}
         </div>
         <div className="flex gap-2 md:col-span-2">
@@ -572,6 +575,9 @@ export function GalleryManager() {
             if (files && files.length) void handleBulkUpload(files);
           }}
         />
+        <p className="input-helper md:col-span-2">
+          Puedes seleccionar varias imagenes desde tu dispositivo.
+        </p>
         <button
           type="button"
           className="theme-border theme-invert px-4 py-2 md:col-span-2"
