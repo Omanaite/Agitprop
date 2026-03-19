@@ -58,6 +58,21 @@ The system **SHOULD** show skeleton loading states while the admin login and adm
 - WHEN the dashboard or a management section is still loading
 - THEN the system renders a skeleton state aligned with the admin layout
 
+### Requirement: Public Section Configuration
+The system **SHOULD** allow the admin to manage the order and display names of public homepage sections.
+
+#### Scenario: Admin reorders sections
+- GIVEN an authenticated admin user in the console
+- WHEN the user changes the position of homepage sections
+- THEN the system stores the new order
+- AND the public site renders sections in that order
+
+#### Scenario: Admin renames a section
+- GIVEN an authenticated admin user in the console
+- WHEN the user updates the display name of a homepage section
+- THEN the system stores the new label
+- AND the public site renders the updated section name
+
 ### Requirement: Action Feedback
 The system **SHOULD** provide success or error feedback after admin actions.
 

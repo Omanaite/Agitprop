@@ -44,7 +44,7 @@ Ensure each roadmap phase has associated documentation and is kept up to date.
 
 ### Phase 4 - Scalability and quality
 - Document: `docs/PROJECT_OVERVIEW.md`
-- Status: Pending (extend with analytics and i18n)
+- Status: Pending (extended with analytics, configurable page composition, and i18n planning)
 
 ### Security
 - Document: `docs/SECURITY_REVIEW.md`
@@ -63,3 +63,4 @@ Ensure each roadmap phase has associated documentation and is kept up to date.
 - 2026-03-13: Public galleries detail, admin login fixes, seed data added.
 - 2026-03-15: Admin console navigation update + English UI copy documented.
 - 2026-03-19: Admin design system, Headless UI navigation, and skeleton loading documented.
+- 2026-03-20: Added pending documentation for public section composition and multilingual site support.

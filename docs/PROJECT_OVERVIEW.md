@@ -13,8 +13,11 @@ Webapp de portfolio para artista tatuador con estetica brutalista. Incluye galer
 - Login para artista/administrador.
 - Panel admin con CRUD de galeria y publicaciones.
 - Sistema visual del admin separado del portal publico.
+- Configuracion del orden de secciones de la home por parte del admin.
+- Configuracion del nombre visible de secciones publicas por parte del admin.
 - Escalabilidad para nuevas entidades (tags, colecciones, estilos, ubicaciones).
 - Temas de interfaz: dark mode y eye-rest mode.
+- Selector de idioma para el sitio publico: aleman, ingles y espanol.
 - Editor avanzado de galeria y publicaciones (bulk upload, reordenamiento, drafts).
 - Perfil administrador (datos de pago, direcciones, email, apodo).
 - Conexion a nube para cargar imagenes (habilita editor si esta conectado).
@@ -35,6 +38,9 @@ Webapp de portfolio para artista tatuador con estetica brutalista. Incluye galer
 - Artista publica y mantiene su trabajo desde el panel.
 - Perfil admin para gestionar datos y conexiones.
 - Admin trabaja en una consola separada visualmente del sitio publico.
+- Admin decide que seccion aparece primero, segunda, tercera, etc. en la home.
+- Admin renombra secciones publicas segun necesidad editorial.
+- Visitante cambia idioma del sitio de forma similar al cambio de tema.
 
 ## Stack
 - Next.js App Router

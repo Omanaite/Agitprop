@@ -1,6 +1,6 @@
 ﻿# State Snapshot - Akemi Tattoo Portfolio
 
-Date: 2026-03-19
+Date: 2026-03-20
 Branch target: vercel
 
 ## Purpose
@@ -33,6 +33,8 @@ None reported after latest redeploys, but keep verifying the build uses the late
 - Final UX/UI sweep (admin + client) per validation guide.
 - Responsive QA pass for the new admin design system.
 - Pre-prod checklist + manual testing.
+- Define configurable homepage section ordering and naming.
+- Define multilingual public-site support with persistent locale selector.
 
 ## Pending Tasks (Medium)
 - Full English copy audit in docs and remaining strings.

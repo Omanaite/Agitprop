@@ -30,3 +30,43 @@ The system **SHOULD** display available galleries on the public site.
 - GIVEN no galleries exist
 - WHEN a visitor loads the home page
 - THEN the galleries section shows an empty-state message
+
+### Requirement: Configurable Public Section Order
+The system **SHOULD** render public homepage sections according to admin-managed order settings.
+
+#### Scenario: Custom section order exists
+- GIVEN an admin-defined order exists for homepage sections
+- WHEN a visitor loads the home page
+- THEN the sections render in the configured order
+
+#### Scenario: No custom order exists
+- GIVEN no admin-defined order exists
+- WHEN a visitor loads the home page
+- THEN the system uses the default section order
+
+### Requirement: Configurable Public Section Labels
+The system **SHOULD** render public section names using admin-managed labels when present.
+
+#### Scenario: Custom section label exists
+- GIVEN a custom label exists for a homepage section
+- WHEN a visitor loads the home page
+- THEN the section renders with the configured label
+
+#### Scenario: No custom section label exists
+- GIVEN no custom label exists for a homepage section
+- WHEN a visitor loads the home page
+- THEN the section renders with the default label
+
+### Requirement: User-Selectable Language
+The system **SHOULD** allow visitors to select between German, English, and Spanish.
+
+#### Scenario: Visitor changes language
+- GIVEN a visitor is on the public site
+- WHEN the visitor selects a supported language
+- THEN the system updates visible labels and copy to the selected language
+- AND the preference persists for the next visit
+
+#### Scenario: Unsupported or missing locale preference
+- GIVEN no valid language preference is available
+- WHEN a visitor loads the public site
+- THEN the system falls back to the default locale
