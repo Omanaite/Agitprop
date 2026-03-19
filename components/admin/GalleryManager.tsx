@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { AdminSectionSkeleton } from "@/components/admin/AdminSectionSkeleton";
 
 type GalleryItem = {
   id: string;
@@ -55,23 +56,28 @@ export function GalleryManager() {
   const [isUploading, setIsUploading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [dragId, setDragId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   async function load() {
     setStatus("");
     setErrors([]);
+    setIsLoading(true);
     const res = await fetch("/api/admin/gallery");
     const galleriesRes = await fetch("/api/admin/galleries");
     const integrationsRes = await fetch("/api/admin/integrations");
     if (!res.ok) {
       setStatus("Could not load gallery items.");
+      setIsLoading(false);
       return;
     }
     if (!galleriesRes.ok) {
       setStatus("Could not load galleries.");
+      setIsLoading(false);
       return;
     }
     if (!integrationsRes.ok) {
       setStatus("Could not load integrations.");
+      setIsLoading(false);
       return;
     }
     const data = await res.json();
@@ -83,11 +89,16 @@ export function GalleryManager() {
       (item: { status: string }) => item.status === "connected"
     ).length;
     setHasIntegration(connectedCount > 0);
+    setIsLoading(false);
   }
 
   useEffect(() => {
     void load();
   }, []);
+
+  if (isLoading) {
+    return <AdminSectionSkeleton fields={6} cards={4} />;
+  }
 
   function editItem(item: GalleryItem) {
     setForm({
@@ -316,20 +327,21 @@ export function GalleryManager() {
   }
 
   return (
-    <section className="theme-border p-4">
-      <h2 className="mb-2 text-lg uppercase">Gallery</h2>
-      <p className="mb-4 text-xs uppercase tracking-[0.2em]">
+    <section className="admin-card p-6 md:p-7">
+      <p className="admin-chip">Portfolio library</p>
+      <h2 className="admin-title mt-4 text-2xl font-semibold">Gallery Pieces</h2>
+      <p className="admin-muted mt-2 mb-4 text-sm leading-6">
         1) Create galleries. 2) Upload pieces and assign a gallery. 3) Reorder and save.
       </p>
       {!hasIntegration ? (
-        <p className="input-helper" data-variant="error">
+        <p className="admin-validation mb-4" data-variant="error">
           No active integration. Remote uploads are blocked.
         </p>
       ) : null}
       <form onSubmit={handleSubmit} className="grid gap-3 md:grid-cols-2">
         <input
-          className={`theme-border p-2 ${
-            errorMap.get("title") ? "input-error" : ""
+          className={`admin-input ${
+            errorMap.get("title") ? "admin-field-error" : ""
           }`}
           placeholder="Title"
           value={form.title}
@@ -338,13 +350,13 @@ export function GalleryManager() {
           required
         />
         {errorMap.get("title") ? (
-          <p className="input-helper" data-variant="error">
+          <p className="admin-helper" data-variant="error">
             title: {errorMap.get("title")}
           </p>
         ) : null}
         <input
-          className={`theme-border p-2 ${
-            errorMap.get("style") ? "input-error" : ""
+          className={`admin-input ${
+            errorMap.get("style") ? "admin-field-error" : ""
           }`}
           placeholder="Style (ex: blackwork, linework)"
           value={form.style}
@@ -353,27 +365,27 @@ export function GalleryManager() {
           required
         />
         {errorMap.get("style") ? (
-          <p className="input-helper" data-variant="error">
+          <p className="admin-helper" data-variant="error">
             style: {errorMap.get("style")}
           </p>
         ) : null}
         <input
-          className={`theme-border p-2 md:col-span-2 ${
-            errorMap.get("description") ? "input-error" : ""
+          className={`admin-input md:col-span-2 ${
+            errorMap.get("description") ? "admin-field-error" : ""
           }`}
           placeholder="Short description"
           value={form.description ?? ""}
           onChange={(e) => setForm({ ...form, description: e.target.value })}
         />
         {errorMap.get("description") ? (
-          <p className="input-helper" data-variant="error">
+          <p className="admin-helper" data-variant="error">
             description: {errorMap.get("description")}
           </p>
         ) : null}
         <div className="flex flex-col gap-2 md:col-span-2">
           <select
-            className={`theme-border p-2 ${
-              errorMap.get("gallery_id") ? "input-error" : ""
+            className={`admin-select ${
+              errorMap.get("gallery_id") ? "admin-field-error" : ""
             }`}
             value={form.gallery_id}
             onChange={(e) => setForm({ ...form, gallery_id: e.target.value })}
@@ -386,26 +398,26 @@ export function GalleryManager() {
             ))}
           </select>
           <input
-            className={`theme-border p-2 ${
-              errorMap.get("image_url") ? "input-error" : ""
+            className={`admin-input ${
+              errorMap.get("image_url") ? "admin-field-error" : ""
             }`}
-            placeholder="URL de imagen"
+            placeholder="Image URL"
             value={form.image_url}
             onChange={(e) => setForm({ ...form, image_url: e.target.value })}
             type="url"
             required
           />
-          <p className="input-helper">
+          <p className="admin-helper">
             Use square or vertical images for the brutal grid.
           </p>
           <input
-            className="theme-border p-2"
+            className="admin-input"
             placeholder="Tags (comma separated)"
             value={form.tags}
             onChange={(e) => setForm({ ...form, tags: e.target.value })}
           />
           <input
-            className="theme-border p-2"
+            className="admin-input"
             placeholder="Location link (URL) - optional"
             value={form.location_link}
             onChange={(e) =>
@@ -414,7 +426,7 @@ export function GalleryManager() {
             type="url"
           />
           <input
-            className="theme-border p-2"
+            className="admin-input"
             placeholder="Session length (minutes)"
             value={form.session_length_minutes}
             onChange={(e) =>
@@ -424,20 +436,20 @@ export function GalleryManager() {
             min={0}
           />
           <input
-            className="theme-border p-2"
+            className="admin-input"
             placeholder="Sort order"
             value={form.sort_order}
             onChange={(e) => setForm({ ...form, sort_order: e.target.value })}
             type="number"
           />
           <textarea
-            className="theme-border p-2 min-h-[90px]"
+            className="admin-textarea min-h-[120px]"
             placeholder="Aftercare notes"
             value={form.aftercare}
             onChange={(e) => setForm({ ...form, aftercare: e.target.value })}
           />
           {errorMap.get("image_url") ? (
-            <p className="input-helper" data-variant="error">
+            <p className="admin-helper" data-variant="error">
               image_url: {errorMap.get("image_url")}
             </p>
           ) : null}
@@ -450,15 +462,17 @@ export function GalleryManager() {
               if (file) void handleUpload(file);
             }}
           />
-          <p className="input-helper">
+          <p className="admin-helper">
             Choose an image from your device or computer.
           </p>
-          {isUploading ? <p>Uploading...</p> : null}
+          {isUploading ? (
+            <p className="admin-helper text-[var(--admin-accent)]">Uploading...</p>
+          ) : null}
         </div>
         <div className="flex gap-2 md:col-span-2">
           <button
             type="submit"
-            className="theme-border theme-invert px-4 py-2"
+            className="admin-button admin-button-primary"
             disabled={isSaving}
           >
             {isSaving ? "Saving..." : form.id ? "Update" : "Create"}
@@ -467,7 +481,7 @@ export function GalleryManager() {
             <button
               type="button"
               onClick={resetForm}
-              className="theme-border px-4 py-2"
+              className="admin-button admin-button-ghost"
               disabled={isSaving}
             >
               Cancel
@@ -477,7 +491,7 @@ export function GalleryManager() {
       </form>
       {status ? (
         <p
-          className="validation-box mt-3"
+          className="admin-validation mt-4"
           data-variant={errors.length ? "error" : "success"}
           aria-live="polite"
         >
@@ -485,7 +499,7 @@ export function GalleryManager() {
         </p>
       ) : null}
       {errors.length ? (
-        <ul className="validation-list" aria-live="polite">
+        <ul className="mt-3 space-y-1 text-sm text-[var(--admin-danger)]" aria-live="polite">
           {errors.map((error) => (
             <li key={`${error.path}-${error.message}`}>
               {error.path}: {error.message}
@@ -493,28 +507,28 @@ export function GalleryManager() {
           ))}
         </ul>
       ) : null}
-      <ul className="mt-4 grid gap-3 md:grid-cols-2">
+      <ul className="mt-6 grid gap-4 md:grid-cols-2">
         {items.map((item) => (
           <li
             key={item.id}
-            className="theme-border p-3"
+            className="admin-card-soft p-4"
             draggable
             onDragStart={() => setDragId(item.id)}
             onDragOver={(e) => e.preventDefault()}
             onDrop={() => reorderItems(item.id)}
           >
-            <div className="text-sm uppercase">{item.style}</div>
-            <div className="font-semibold">{item.title}</div>
-            <div className="text-xs">{item.description}</div>
+            <div className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--admin-muted)]">{item.style}</div>
+            <div className="admin-title mt-2 text-lg font-semibold">{item.title}</div>
+            <div className="admin-muted mt-2 text-sm leading-6">{item.description}</div>
             <div className="mt-2 flex gap-2">
               <button
-                className="theme-border px-2 py-1 text-xs"
+                className="admin-button"
                 onClick={() => editItem(item)}
               >
                 Edit
               </button>
               <button
-                className="theme-border px-2 py-1 text-xs"
+                className="admin-button admin-button-danger"
                 onClick={() => void handleDelete(item.id)}
               >
                 Delete
@@ -526,35 +540,35 @@ export function GalleryManager() {
       <div className="mt-4 flex flex-wrap gap-2">
         <button
           type="button"
-          className="theme-border px-4 py-2"
+          className="admin-button"
           onClick={() => void saveOrder()}
           disabled={isSaving || items.length === 0}
         >
           {isSaving ? "Saving..." : "Save order"}
         </button>
-        <p className="text-xs uppercase tracking-[0.2em]">
+        <p className="admin-helper uppercase tracking-[0.14em]">
           Tip: drag and then save the order.
         </p>
       </div>
 
-      <div className="mt-6 grid gap-3 md:grid-cols-2">
-        <h3 className="md:col-span-2 text-sm uppercase tracking-[0.2em]">
+      <div className="admin-card-soft mt-6 grid gap-3 p-4 md:grid-cols-2">
+        <h3 className="md:col-span-2 text-sm font-semibold uppercase tracking-[0.18em] text-[var(--admin-title)]">
           Bulk Upload
         </h3>
         <input
-          className="theme-border p-2"
+          className="admin-input"
           placeholder="Default style"
           value={bulkStyle}
           onChange={(e) => setBulkStyle(e.target.value)}
         />
         <input
-          className="theme-border p-2"
+          className="admin-input"
           placeholder="Title prefix"
           value={bulkTitlePrefix}
           onChange={(e) => setBulkTitlePrefix(e.target.value)}
         />
         <select
-          className="theme-border p-2"
+          className="admin-select"
           value={bulkGalleryId}
           onChange={(e) => setBulkGalleryId(e.target.value)}
         >
@@ -575,12 +589,12 @@ export function GalleryManager() {
             if (files && files.length) void handleBulkUpload(files);
           }}
         />
-        <p className="input-helper md:col-span-2">
+        <p className="admin-helper md:col-span-2">
           You can select multiple images from your device.
         </p>
         <button
           type="button"
-          className="theme-border theme-invert px-4 py-2 md:col-span-2"
+          className="admin-button admin-button-primary md:col-span-2"
           onClick={() => void createFromUploads()}
           disabled={!hasIntegration || !bulkUploads.length}
         >

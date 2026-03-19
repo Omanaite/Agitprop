@@ -28,6 +28,11 @@ Add an admin-only content management layer using Supabase Auth for authenticatio
 **Choice**: Add a profile view for the admin to manage payment data, addresses, email, nickname, and cloud storage connections. Editors should only enable cloud upload when connected.
 **Rationale**: Keeps account management centralized and reduces broken upload flows.
 
+### Decision: Separate visual language for admin experience
+**Choice**: Give the admin console a distinct UI system from the public brutalist portfolio, using a friendlier operations-oriented layout with Headless UI navigation primitives and skeleton loading states.
+**Alternatives considered**: Reuse the public brutalist styling across admin, or create a completely separate application.
+**Rationale**: The public site optimizes for brand expression, while the admin optimizes for clarity, speed, and repeat operational tasks. A separate admin visual language reduces cognitive friction without requiring a second application.
+
 ## Data Flow
 
 Admin Login -> Supabase Auth -> Admin Session
@@ -49,6 +54,7 @@ Public Pages -> Server components -> Supabase public client (read-only)
 | `app/api/admin/*` | Create | CRUD endpoints for admin |
 | `app/admin/*` | Create | Admin UI routes (protected) |
 | `components/*` | Modify | Reusable admin form components |
+| `components/admin/*` | Modify | Dedicated admin shell, theme selector, and loading states |
 
 ## Interfaces / Contracts
 
@@ -102,6 +108,15 @@ Future iteration for editor UX:
 - Metadata fields: tattoo style, location link, session length, and aftercare notes.
 - Admin profile: payment data, addresses, email, nickname, and cloud connections.
 - OAuth providers: enable GitHub/Google/Facebook sign-in for admin.
+
+## Admin UI Architecture
+- Public portal and admin console intentionally use different visual systems.
+- Public portal remains brutalist and brand-driven.
+- Admin console uses softer surfaces, clearer spacing, and operational navigation.
+- Headless UI provides accessible interaction primitives for menu/tab navigation.
+- Skeleton loading is required on admin login and admin dashboard entry states.
+- Theme controls remain available inside admin so operators can switch between
+  light, eye-rest, and dark modes without leaving the workspace.
 
 ## Knowledge Capture & Skills
 Maintain SDD artifacts in `openspec/` and keep skill registry updated so

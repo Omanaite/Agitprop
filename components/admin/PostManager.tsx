@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { AdminSectionSkeleton } from "@/components/admin/AdminSectionSkeleton";
 
 type Post = {
   id: string;
@@ -56,18 +57,22 @@ export function PostManager() {
   const [showPreview, setShowPreview] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [hasIntegration, setHasIntegration] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   async function load() {
     setStatus("");
     setErrors([]);
+    setIsLoading(true);
     const res = await fetch("/api/admin/posts");
     const integrationsRes = await fetch("/api/admin/integrations");
     if (!res.ok) {
       setStatus("Could not load posts.");
+      setIsLoading(false);
       return;
     }
     if (!integrationsRes.ok) {
       setStatus("Could not load integrations.");
+      setIsLoading(false);
       return;
     }
     const data = await res.json();
@@ -77,11 +82,16 @@ export function PostManager() {
       (item: { status: string }) => item.status === "connected"
     ).length;
     setHasIntegration(connectedCount > 0);
+    setIsLoading(false);
   }
 
   useEffect(() => {
     void load();
   }, []);
+
+  if (isLoading) {
+    return <AdminSectionSkeleton fields={5} cards={4} />;
+  }
 
   function editPost(item: Post) {
     setForm({
@@ -174,20 +184,21 @@ export function PostManager() {
   }
 
   return (
-    <section className="theme-border p-4">
-      <h2 className="mb-2 text-lg uppercase">Posts</h2>
-      <p className="mb-4 text-xs uppercase tracking-[0.2em]">
+    <section className="admin-card p-6 md:p-7">
+      <p className="admin-chip">Editorial</p>
+      <h2 className="admin-title mt-4 text-2xl font-semibold">Posts</h2>
+      <p className="admin-muted mt-2 mb-4 text-sm leading-6">
         Draft posts, add a cover, and schedule publication when needed.
       </p>
       {!hasIntegration ? (
-        <p className="input-helper" data-variant="error">
+        <p className="admin-validation mb-4" data-variant="error">
           No active integration. Remote uploads are blocked.
         </p>
       ) : null}
       <form onSubmit={handleSubmit} className="grid gap-3">
         <input
-          className={`theme-border p-2 ${
-            errorMap.get("title") ? "input-error" : ""
+          className={`admin-input ${
+            errorMap.get("title") ? "admin-field-error" : ""
           }`}
           placeholder="Title"
           value={form.title}
@@ -196,13 +207,13 @@ export function PostManager() {
           required
         />
         {errorMap.get("title") ? (
-          <p className="input-helper" data-variant="error">
+          <p className="admin-helper" data-variant="error">
             title: {errorMap.get("title")}
           </p>
         ) : null}
         <textarea
-          className={`theme-border p-2 ${
-            errorMap.get("body") ? "input-error" : ""
+          className={`admin-textarea min-h-[180px] ${
+            errorMap.get("body") ? "admin-field-error" : ""
           }`}
           placeholder="Content"
           value={form.body}
@@ -212,19 +223,19 @@ export function PostManager() {
           required
         />
         {errorMap.get("body") ? (
-          <p className="input-helper" data-variant="error">
+          <p className="admin-helper" data-variant="error">
             body: {errorMap.get("body")}
           </p>
         ) : null}
         <textarea
-          className="theme-border p-2"
+          className="admin-textarea min-h-[96px]"
           placeholder="Excerpt (optional)"
           value={form.excerpt}
           onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
           rows={2}
         />
         <input
-          className="theme-border p-2"
+          className="admin-input"
           placeholder="Cover image URL"
           value={form.cover_image_url}
           onChange={(e) =>
@@ -233,7 +244,7 @@ export function PostManager() {
           type="url"
         />
         <input
-          className="theme-border p-2"
+          className="admin-input"
           placeholder="Publish at"
           value={form.publish_at}
           onChange={(e) => setForm({ ...form, publish_at: e.target.value })}
@@ -242,14 +253,14 @@ export function PostManager() {
         <div className="flex flex-wrap gap-2">
           <button
             type="button"
-            className="theme-border px-4 py-2"
+            className="admin-button"
             onClick={() => setShowPreview((prev) => !prev)}
           >
             {showPreview ? "Hide preview" : "Show preview"}
           </button>
         </div>
         <select
-          className="theme-border p-2"
+          className="admin-select"
           value={form.status}
           onChange={(e) =>
             setForm({ ...form, status: e.target.value as Post["status"] })
@@ -261,7 +272,7 @@ export function PostManager() {
         <div className="flex gap-2">
           <button
             type="submit"
-            className="theme-border theme-invert px-4 py-2"
+            className="admin-button admin-button-primary"
             disabled={isSaving}
           >
             {isSaving ? "Saving..." : form.id ? "Update" : "Create"}
@@ -270,7 +281,7 @@ export function PostManager() {
             <button
               type="button"
               onClick={resetForm}
-              className="theme-border px-4 py-2"
+              className="admin-button admin-button-ghost"
               disabled={isSaving}
             >
               Cancel
@@ -280,7 +291,7 @@ export function PostManager() {
       </form>
       {status ? (
         <p
-          className="validation-box mt-3"
+          className="admin-validation mt-4"
           data-variant={errors.length ? "error" : "success"}
           aria-live="polite"
         >
@@ -288,21 +299,27 @@ export function PostManager() {
         </p>
       ) : null}
       {showPreview ? (
-        <div className="theme-border mt-4 p-3">
-          <p className="text-xs uppercase tracking-[0.2em]">Preview</p>
+        <div className="admin-card-soft mt-5 p-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--admin-muted)]">
+            Preview
+          </p>
           {form.cover_image_url ? (
             <img
-              className="mt-2 w-full object-cover"
+              className="mt-3 h-56 w-full rounded-2xl object-cover"
               src={form.cover_image_url}
               alt={form.title || "Post cover"}
             />
           ) : null}
-          <h3 className="mt-3 text-lg uppercase">{form.title || "Untitled"}</h3>
-          <p className="text-sm">{form.excerpt || form.body}</p>
+          <h3 className="admin-title mt-4 text-xl font-semibold">
+            {form.title || "Untitled"}
+          </h3>
+          <p className="admin-muted mt-2 text-sm leading-6">
+            {form.excerpt || form.body}
+          </p>
         </div>
       ) : null}
       {errors.length ? (
-        <ul className="validation-list" aria-live="polite">
+        <ul className="mt-3 space-y-1 text-sm text-[var(--admin-danger)]" aria-live="polite">
           {errors.map((error) => (
             <li key={`${error.path}-${error.message}`}>
               {error.path}: {error.message}
@@ -310,21 +327,25 @@ export function PostManager() {
           ))}
         </ul>
       ) : null}
-      <ul className="mt-4 grid gap-3 md:grid-cols-2">
+      <ul className="mt-6 grid gap-4 md:grid-cols-2">
         {items.map((item) => (
-          <li key={item.id} className="theme-border p-3">
-            <div className="text-xs uppercase">{item.status}</div>
-            <div className="font-semibold">{item.title}</div>
-            <div className="text-xs">{item.body.slice(0, 120)}...</div>
+          <li key={item.id} className="admin-card-soft p-4">
+            <div className="flex items-center justify-between gap-3">
+              <span className="admin-chip">{item.status}</span>
+            </div>
+            <div className="admin-title mt-3 text-lg font-semibold">{item.title}</div>
+            <div className="admin-muted mt-2 text-sm leading-6">
+              {item.body.slice(0, 120)}...
+            </div>
             <div className="mt-2 flex gap-2">
               <button
-                className="theme-border px-2 py-1 text-xs"
+                className="admin-button"
                 onClick={() => editPost(item)}
               >
                 Edit
               </button>
               <button
-                className="theme-border px-2 py-1 text-xs"
+                className="admin-button admin-button-danger"
                 onClick={() => void handleDelete(item.id)}
               >
                 Delete

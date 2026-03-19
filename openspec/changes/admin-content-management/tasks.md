@@ -46,11 +46,19 @@
 - [x] 8.5 Extend tattoo metadata (style, location link, session length).
 
 ## Phase 9: Admin Profile + OAuth + Cloud
-- [ ] 9.1 Define schema for admin profile (email, nickname, billing/shipping addresses, payment metadata).
-- [ ] 9.2 Add admin profile UI and API routes.
-- [ ] 9.3 Add OAuth provider configuration plan (Google/GitHub/Facebook).
-- [ ] 9.4 Add cloud storage connection model and UI gating (enable uploads only when connected).
-- [ ] 9.5 Update docs and specs for profile + OAuth + cloud.
+- [x] 9.1 Define schema for admin profile (email, nickname, billing/shipping addresses, payment metadata).
+- [x] 9.2 Add admin profile UI and API routes.
+- [x] 9.3 Add OAuth provider configuration plan (Google/GitHub/Facebook).
+- [x] 9.4 Add cloud storage connection model and UI gating (enable uploads only when connected).
+- [x] 9.5 Update docs and specs for profile + OAuth + cloud.
+
+## Phase 12: Admin Design System
+- [x] 12.1 Define a separate admin UI/UX direction independent from the public portal.
+- [x] 12.2 Add Headless UI navigation primitives for the admin workspace.
+- [x] 12.3 Add skeleton loading states for admin login and admin dashboard routes.
+- [x] 12.4 Expose theme controls in admin login and admin console.
+- [ ] 12.5 Complete responsive QA pass for mobile/tablet/desktop admin views.
+- [x] 12.6 Update roadmap, architecture, and specs for the admin design system.
 
 ## Phase 10: SEO + Quality
 - [ ] 10.1 Add OpenGraph metadata and social previews.

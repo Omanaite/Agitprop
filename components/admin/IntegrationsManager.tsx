@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { AdminSectionSkeleton } from "@/components/admin/AdminSectionSkeleton";
 
 type Integration = {
   id: string;
@@ -23,22 +24,30 @@ export function IntegrationsManager() {
     [errors]
   );
   const [isSaving, setIsSaving] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   async function load() {
     setStatus("");
     setErrors([]);
+    setIsLoading(true);
     const res = await fetch("/api/admin/integrations");
     if (!res.ok) {
       setStatus("Could not load integrations.");
+      setIsLoading(false);
       return;
     }
     const data = await res.json();
     setItems(data.items || []);
+    setIsLoading(false);
   }
 
   useEffect(() => {
     void load();
   }, []);
+
+  if (isLoading) {
+    return <AdminSectionSkeleton fields={2} cards={6} />;
+  }
 
   async function updateIntegration(provider: string, statusValue: Integration["status"]) {
     setStatus("");
@@ -73,31 +82,39 @@ export function IntegrationsManager() {
   }
 
   return (
-    <section className="theme-border p-4">
-      <h2 className="mb-2 text-lg uppercase">Integrations</h2>
-      <p className="mb-4 text-xs uppercase tracking-[0.2em]">
+    <section className="admin-card p-6 md:p-7">
+      <p className="admin-chip">Connections</p>
+      <h2 className="admin-title mt-4 text-2xl font-semibold">Integrations</h2>
+      <p className="admin-muted mt-2 mb-4 text-sm leading-6">
         Connect OAuth and cloud. Remote uploads unlock only when connected.
       </p>
 
       {connectedCount === 0 ? (
-        <p className="input-helper" data-variant="error">
+        <p className="admin-validation mb-4" data-variant="error">
           No active integrations. Remote uploads are blocked.
         </p>
       ) : null}
 
-      <div className="grid gap-3 md:grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {providers.map((provider) => {
           const current = items.find((item) => item.provider === provider);
           return (
-            <div key={provider} className="theme-border p-3">
-              <div className="text-xs uppercase tracking-[0.2em]">{provider}</div>
-              <div className="text-sm">
+            <div key={provider} className="admin-card-soft p-4">
+              <div className="flex items-center justify-between gap-3">
+                <div className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--admin-muted)]">
+                  {provider}
+                </div>
+                <span className="admin-chip">
+                  {current?.status ?? "disconnected"}
+                </span>
+              </div>
+              <div className="admin-muted mt-3 text-sm">
                 Status: {current?.status ?? "disconnected"}
               </div>
-              <div className="mt-2 flex gap-2">
+              <div className="mt-4 flex gap-2">
                 <button
                   type="button"
-                  className="theme-border px-3 py-1 text-xs"
+                  className="admin-button"
                   disabled={isSaving}
                   onClick={() => connectProvider(provider)}
                 >
@@ -105,7 +122,7 @@ export function IntegrationsManager() {
                 </button>
                 <button
                   type="button"
-                  className="theme-border px-3 py-1 text-xs"
+                  className="admin-button admin-button-danger"
                   disabled={isSaving}
                   onClick={() => void updateIntegration(provider, "disconnected")}
                 >
@@ -119,7 +136,7 @@ export function IntegrationsManager() {
 
       {status ? (
         <p
-          className="validation-box mt-3"
+          className="admin-validation mt-4"
           data-variant={errors.length ? "error" : "success"}
           aria-live="polite"
         >
@@ -127,7 +144,7 @@ export function IntegrationsManager() {
         </p>
       ) : null}
       {errors.length ? (
-        <ul className="validation-list" aria-live="polite">
+        <ul className="mt-3 space-y-1 text-sm text-[var(--admin-danger)]" aria-live="polite">
           {errors.map((error) => (
             <li key={`${error.path}-${error.message}`}>
               {error.path}: {error.message}

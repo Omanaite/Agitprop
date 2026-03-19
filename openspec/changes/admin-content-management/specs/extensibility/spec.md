@@ -64,3 +64,12 @@ The system **SHOULD** support adding external integrations (OAuth providers, clo
 - GIVEN a cloud storage provider is enabled
 - WHEN the admin opens image editors
 - THEN the upload options adapt without breaking existing uploads
+
+### Requirement: Admin Design System Extensibility
+The system **SHOULD** allow the admin visual system to evolve independently from the public site.
+
+#### Scenario: Admin UI component added
+- GIVEN a new admin feature is introduced
+- WHEN the UI for that feature is implemented
+- THEN it follows the admin design system and navigation model
+- AND it does not require changes to the public site design language

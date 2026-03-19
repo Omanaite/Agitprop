@@ -40,7 +40,7 @@ Ensure each roadmap phase has associated documentation and is kept up to date.
 
 ### Phase 3 - Extended content and operations
 - Document: `docs/ADMIN_MANUAL.md`
-- Status: Pending (extend with advanced posts + integrations)
+- Status: Updated with advanced posts, integrations, and dedicated admin design system
 
 ### Phase 4 - Scalability and quality
 - Document: `docs/PROJECT_OVERVIEW.md`
@@ -62,3 +62,4 @@ Ensure each roadmap phase has associated documentation and is kept up to date.
 - 2026-03-12: Roadmap and baseline documentation initialized.
 - 2026-03-13: Public galleries detail, admin login fixes, seed data added.
 - 2026-03-15: Admin console navigation update + English UI copy documented.
+- 2026-03-19: Admin design system, Headless UI navigation, and skeleton loading documented.

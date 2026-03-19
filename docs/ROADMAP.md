@@ -1,6 +1,6 @@
 # Project Roadmap: Akemi Tattoo Portfolio
 
-Date: 2026-03-15
+Date: 2026-03-19
 Current status: Phase 3 - Extended content and operations
 
 ## Executive Summary
@@ -43,6 +43,10 @@ Goal: evolve into an artist-managed platform with login, content CRUD, and scala
 - OAuth (Google, GitHub, Facebook or other artist providers).
 - Admin console navigation (single active section + dropdown).
 - English UI copy (admin + client).
+- Separate admin design system from the public portal.
+- Headless UI navigation for the admin workspace.
+- Skeleton loading states on admin login and dashboard.
+- Theme switcher available inside the admin experience.
 
 ### Phase 4 - Scalability and quality (Pending)
 - Tags/collections/styles/locations.
@@ -64,7 +68,8 @@ Goal: evolve into an artist-managed platform with login, content CRUD, and scala
 ## Known blockers
 - Requires keys and credentials (Supabase, Resend, Stripe/PayPal) for full flows.
 
-## Update 2026-03-15
-- Admin console navigation now single-section with dropdown.
-- English UI copy for admin + client.
-- OAuth integrations and admin profile flows stabilized.
+## Update 2026-03-19
+- Admin experience redesigned with a dedicated visual system separate from the public portal.
+- Headless UI powers focused section navigation in the dashboard.
+- Skeleton loading added to admin login and dashboard routes.
+- Theme controls exposed inside admin login and admin dashboard.

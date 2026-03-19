@@ -1,22 +1,31 @@
 import { AdminConsoleShell } from "@/components/admin/AdminConsoleShell";
+import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
 import { signOutAdmin } from "./actions";
 
 export default function AdminPage() {
   return (
-    <div className="min-h-screen bg-[var(--bg)] p-6 text-[var(--fg)] md:p-10">
-      <div className="mx-auto flex max-w-5xl flex-col gap-6">
-        <header className="flex items-center justify-between theme-border p-4">
+    <div className="admin-shell px-6 py-8 md:px-10 md:py-10">
+      <div className="mx-auto flex max-w-7xl flex-col gap-6">
+        <header className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <h1 className="font-[var(--font-heading)] text-2xl uppercase">
-              Admin Console
+            <p className="admin-chip">Admin console</p>
+            <h1 className="admin-title mt-4 text-4xl font-semibold">
+              Studio operations dashboard
             </h1>
-            <p className="text-sm">Content management</p>
+            <p className="admin-muted mt-2 max-w-2xl text-sm leading-6">
+              Manage content, uploads, profile settings, and integrations in a
+              workspace intentionally separate from the client-facing portal.
+            </p>
           </div>
-          <form action={signOutAdmin}>
-            <button type="submit" className="theme-border px-4 py-2">
-              Sign out
-            </button>
-          </form>
+
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <AdminThemeToggle />
+            <form action={signOutAdmin}>
+              <button type="submit" className="admin-button admin-button-ghost">
+                Sign out
+              </button>
+            </form>
+          </div>
         </header>
 
         <AdminConsoleShell />

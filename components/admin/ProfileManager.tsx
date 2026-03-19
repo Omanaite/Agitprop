@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { AdminSectionSkeleton } from "@/components/admin/AdminSectionSkeleton";
 
 type Profile = {
   email: string;
@@ -29,22 +30,30 @@ export function ProfileManager() {
     [errors]
   );
   const [isSaving, setIsSaving] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   async function load() {
     setStatus("");
     setErrors([]);
+    setIsLoading(true);
     const res = await fetch("/api/admin/profile");
     if (!res.ok) {
       setStatus("Could not load profile.");
+      setIsLoading(false);
       return;
     }
     const data = await res.json();
     setProfile(data.profile || emptyProfile);
+    setIsLoading(false);
   }
 
   useEffect(() => {
     void load();
   }, []);
+
+  if (isLoading) {
+    return <AdminSectionSkeleton fields={4} cards={0} />;
+  }
 
   function validateProfile(): ValidationError[] {
     const nextErrors: ValidationError[] = [];
@@ -86,15 +95,17 @@ export function ProfileManager() {
   }
 
   return (
-    <section className="theme-border p-4">
-      <h2 className="mb-2 text-lg uppercase">Admin Profile</h2>
-      <p className="mb-4 text-xs uppercase tracking-[0.2em]">
-        Base data for billing, payments, and contact.
+    <section className="admin-card p-6 md:p-7">
+      <p className="admin-chip">Identity</p>
+      <h2 className="admin-title mt-4 text-2xl font-semibold">Admin Profile</h2>
+      <p className="admin-muted mt-2 text-sm leading-6">
+        Keep the operational identity of the studio aligned across billing,
+        shipping, and internal payment references.
       </p>
       <form onSubmit={handleSubmit} className="grid gap-3 md:grid-cols-2">
         <input
-          className={`theme-border p-2 ${
-            errorMap.get("email") ? "input-error" : ""
+          className={`admin-input ${
+            errorMap.get("email") ? "admin-field-error" : ""
           }`}
           placeholder="Email"
           value={profile.email || ""}
@@ -103,18 +114,18 @@ export function ProfileManager() {
           required
         />
         {errorMap.get("email") ? (
-          <p className="input-helper" data-variant="error">
+          <p className="admin-helper" data-variant="error">
             email: {errorMap.get("email")}
           </p>
         ) : null}
         <input
-          className="theme-border p-2"
+          className="admin-input"
           placeholder="Nickname"
           value={profile.nickname || ""}
           onChange={(e) => setProfile({ ...profile, nickname: e.target.value })}
         />
         <input
-          className="theme-border p-2 md:col-span-2"
+          className="admin-input md:col-span-2"
           placeholder="Shipping address"
           value={profile.shipping_address || ""}
           onChange={(e) =>
@@ -122,7 +133,7 @@ export function ProfileManager() {
           }
         />
         <input
-          className="theme-border p-2 md:col-span-2"
+          className="admin-input md:col-span-2"
           placeholder="Billing address"
           value={profile.billing_address || ""}
           onChange={(e) =>
@@ -130,7 +141,7 @@ export function ProfileManager() {
           }
         />
         <textarea
-          className="theme-border p-2 md:col-span-2 min-h-[80px]"
+          className="admin-textarea md:col-span-2 min-h-[120px]"
           placeholder="Payment notes (internal references)"
           value={profile.payment_notes || ""}
           onChange={(e) =>
@@ -140,7 +151,7 @@ export function ProfileManager() {
         <div className="flex gap-2 md:col-span-2">
           <button
             type="submit"
-            className="theme-border theme-invert px-4 py-2"
+            className="admin-button admin-button-primary"
             disabled={isSaving}
           >
             {isSaving ? "Saving..." : "Save"}
@@ -149,7 +160,7 @@ export function ProfileManager() {
       </form>
       {status ? (
         <p
-          className="validation-box mt-3"
+          className="admin-validation mt-4"
           data-variant={errors.length ? "error" : "success"}
           aria-live="polite"
         >
@@ -157,7 +168,7 @@ export function ProfileManager() {
         </p>
       ) : null}
       {errors.length ? (
-        <ul className="validation-list" aria-live="polite">
+        <ul className="mt-3 space-y-1 text-sm text-[var(--admin-danger)]" aria-live="polite">
           {errors.map((error) => (
             <li key={`${error.path}-${error.message}`}>
               {error.path}: {error.message}

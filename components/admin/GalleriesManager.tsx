@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { AdminSectionSkeleton } from "@/components/admin/AdminSectionSkeleton";
 
 type Gallery = {
   id: string;
@@ -28,22 +29,30 @@ export function GalleriesManager() {
     [errors]
   );
   const [isSaving, setIsSaving] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   async function load() {
     setStatus("");
     setErrors([]);
+    setIsLoading(true);
     const res = await fetch("/api/admin/galleries");
     if (!res.ok) {
       setStatus("Could not load galleries.");
+      setIsLoading(false);
       return;
     }
     const data = await res.json();
     setItems(data.items || []);
+    setIsLoading(false);
   }
 
   useEffect(() => {
     void load();
   }, []);
+
+  if (isLoading) {
+    return <AdminSectionSkeleton fields={3} cards={4} />;
+  }
 
   function editItem(item: Gallery) {
     setForm({
@@ -130,15 +139,16 @@ export function GalleriesManager() {
   }
 
   return (
-    <section className="theme-border p-4">
-      <h2 className="mb-2 text-lg uppercase">Galleries</h2>
-      <p className="mb-4 text-xs uppercase tracking-[0.2em]">
+    <section className="admin-card p-6 md:p-7">
+      <p className="admin-chip">Collections</p>
+      <h2 className="admin-title mt-4 text-2xl font-semibold">Galleries</h2>
+      <p className="admin-muted mt-2 mb-4 text-sm leading-6">
         Create galleries first. Then assign pieces from the gallery editor.
       </p>
       <form onSubmit={handleSubmit} className="grid gap-3 md:grid-cols-2">
         <input
-          className={`theme-border p-2 ${
-            errorMap.get("title") ? "input-error" : ""
+          className={`admin-input ${
+            errorMap.get("title") ? "admin-field-error" : ""
           }`}
           placeholder="Title"
           value={form.title}
@@ -147,13 +157,13 @@ export function GalleriesManager() {
           required
         />
         {errorMap.get("title") ? (
-          <p className="input-helper" data-variant="error">
+          <p className="admin-helper" data-variant="error">
             title: {errorMap.get("title")}
           </p>
         ) : null}
         <input
-          className={`theme-border p-2 ${
-            errorMap.get("slug") ? "input-error" : ""
+          className={`admin-input ${
+            errorMap.get("slug") ? "admin-field-error" : ""
           }`}
           placeholder="Slug (ex: blackwork-2026)"
           value={form.slug}
@@ -162,27 +172,27 @@ export function GalleriesManager() {
           required
         />
         {errorMap.get("slug") ? (
-          <p className="input-helper" data-variant="error">
+          <p className="admin-helper" data-variant="error">
             slug: {errorMap.get("slug")}
           </p>
         ) : null}
         <input
-          className={`theme-border p-2 md:col-span-2 ${
-            errorMap.get("description") ? "input-error" : ""
+          className={`admin-input md:col-span-2 ${
+            errorMap.get("description") ? "admin-field-error" : ""
           }`}
           placeholder="Description"
           value={form.description ?? ""}
           onChange={(e) => setForm({ ...form, description: e.target.value })}
         />
         {errorMap.get("description") ? (
-          <p className="input-helper" data-variant="error">
+          <p className="admin-helper" data-variant="error">
             description: {errorMap.get("description")}
           </p>
         ) : null}
         <div className="flex gap-2 md:col-span-2">
           <button
             type="submit"
-            className="theme-border theme-invert px-4 py-2"
+            className="admin-button admin-button-primary"
             disabled={isSaving}
           >
             {isSaving ? "Saving..." : form.id ? "Update" : "Create"}
@@ -191,7 +201,7 @@ export function GalleriesManager() {
             <button
               type="button"
               onClick={resetForm}
-              className="theme-border px-4 py-2"
+              className="admin-button admin-button-ghost"
               disabled={isSaving}
             >
               Cancel
@@ -201,7 +211,7 @@ export function GalleriesManager() {
       </form>
       {status ? (
         <p
-          className="validation-box mt-3"
+          className="admin-validation mt-4"
           data-variant={errors.length ? "error" : "success"}
           aria-live="polite"
         >
@@ -209,7 +219,7 @@ export function GalleriesManager() {
         </p>
       ) : null}
       {errors.length ? (
-        <ul className="validation-list" aria-live="polite">
+        <ul className="mt-3 space-y-1 text-sm text-[var(--admin-danger)]" aria-live="polite">
           {errors.map((error) => (
             <li key={`${error.path}-${error.message}`}>
               {error.path}: {error.message}
@@ -217,21 +227,23 @@ export function GalleriesManager() {
           ))}
         </ul>
       ) : null}
-      <ul className="mt-4 grid gap-3 md:grid-cols-2">
+      <ul className="mt-6 grid gap-4 md:grid-cols-2">
         {items.map((item) => (
-          <li key={item.id} className="theme-border p-3">
-            <div className="text-xs uppercase">{item.slug}</div>
-            <div className="font-semibold">{item.title}</div>
-            <div className="text-xs">{item.description}</div>
+          <li key={item.id} className="admin-card-soft p-4">
+            <div className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--admin-muted)]">
+              {item.slug}
+            </div>
+            <div className="admin-title mt-2 text-lg font-semibold">{item.title}</div>
+            <div className="admin-muted mt-2 text-sm leading-6">{item.description}</div>
             <div className="mt-2 flex gap-2">
               <button
-                className="theme-border px-2 py-1 text-xs"
+                className="admin-button"
                 onClick={() => editItem(item)}
               >
                 Edit
               </button>
               <button
-                className="theme-border px-2 py-1 text-xs"
+                className="admin-button admin-button-danger"
                 onClick={() => void handleDelete(item.id)}
               >
                 Delete

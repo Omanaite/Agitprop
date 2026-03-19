@@ -15,6 +15,14 @@ Nota: el usuario debe tener el rol `admin` en `app_metadata` de Supabase Auth.
 4. Piezas (Galeria)
 5. Posts
 
+## UI del Admin
+- El panel usa una identidad visual separada del portal publico.
+- Solo se muestra una seccion principal a la vez.
+- En desktop la navegacion vive en la columna lateral.
+- En mobile la navegacion se resuelve mediante menu desplegable.
+- El login y el dashboard muestran skeleton loading mientras cargan.
+- El admin mantiene selector de tema: normal, eye-rest y dark.
+
 ## Perfil Admin
 - Editar email, apodo, direccion de envio y facturacion.
 - Guardar notas de pago (referencias internas).

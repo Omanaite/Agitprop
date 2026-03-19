@@ -1,136 +1,150 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import type { ReactNode } from "react";
+import {
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  Tab,
+  TabGroup,
+  TabList,
+  TabPanel,
+  TabPanels,
+} from "@headlessui/react";
+import { useState } from "react";
 import { GalleriesManager } from "@/components/admin/GalleriesManager";
 import { GalleryManager } from "@/components/admin/GalleryManager";
 import { IntegrationsManager } from "@/components/admin/IntegrationsManager";
 import { PostManager } from "@/components/admin/PostManager";
 import { ProfileManager } from "@/components/admin/ProfileManager";
 
-type SectionId =
-  | "profile"
-  | "integrations"
-  | "galleries"
-  | "gallery-items"
-  | "posts";
-
 type Section = {
-  id: SectionId;
+  id: string;
   label: string;
+  eyebrow: string;
   description: string;
-  content: ReactNode;
+  content: React.ReactNode;
 };
 
-export function AdminConsoleShell() {
-  const sections: Section[] = useMemo(
-    () => [
-      {
-        id: "profile",
-        label: "Profile",
-        description: "Contact, payments, and delivery details.",
-        content: <ProfileManager />,
-      },
-      {
-        id: "integrations",
-        label: "Integrations",
-        description: "Connect GitHub, Google, or cloud uploads.",
-        content: <IntegrationsManager />,
-      },
-      {
-        id: "galleries",
-        label: "Galleries",
-        description: "Create and organize multiple galleries.",
-        content: <GalleriesManager />,
-      },
-      {
-        id: "gallery-items",
-        label: "Pieces",
-        description: "Upload and edit pieces inside each gallery.",
-        content: <GalleryManager />,
-      },
-      {
-        id: "posts",
-        label: "Posts",
-        description: "Draft and publish editorial content.",
-        content: <PostManager />,
-      },
-    ],
-    []
-  );
+const sections: Section[] = [
+  {
+    id: "profile",
+    label: "Profile",
+    eyebrow: "Identity",
+    description: "Billing, contact details, and operating preferences.",
+    content: <ProfileManager />,
+  },
+  {
+    id: "integrations",
+    label: "Integrations",
+    eyebrow: "Connections",
+    description: "OAuth providers and cloud upload readiness.",
+    content: <IntegrationsManager />,
+  },
+  {
+    id: "galleries",
+    label: "Galleries",
+    eyebrow: "Collections",
+    description: "Curate gallery groups before assigning individual pieces.",
+    content: <GalleriesManager />,
+  },
+  {
+    id: "pieces",
+    label: "Pieces",
+    eyebrow: "Library",
+    description: "Upload, reorder, and enrich tattoo portfolio entries.",
+    content: <GalleryManager />,
+  },
+  {
+    id: "posts",
+    label: "Posts",
+    eyebrow: "Editorial",
+    description: "Draft stories, notes, and scheduled studio updates.",
+    content: <PostManager />,
+  },
+];
 
-  const [activeId, setActiveId] = useState<SectionId>(sections[0].id);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const activeSection = sections.find((section) => section.id === activeId);
+export function AdminConsoleShell() {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const activeSection = sections[selectedIndex];
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="theme-border p-4">
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p className="text-xs uppercase tracking-[0.2em]">Active section</p>
-            <h2 className="text-lg uppercase">
-              {activeSection?.label ?? ""}
-            </h2>
-            <p className="text-sm">{activeSection?.description ?? ""}</p>
-          </div>
-          <div className="flex flex-col gap-2 md:items-end">
-            <div className="relative">
-              <button
-                type="button"
-                className="theme-border px-4 py-2 text-sm uppercase"
-                onClick={() => setMenuOpen((prev) => !prev)}
-                aria-expanded={menuOpen}
-                aria-controls="admin-section-menu"
-              >
-                Menu
-              </button>
-              {menuOpen ? (
-                <div
-                  id="admin-section-menu"
-                  className="absolute right-0 z-20 mt-2 w-64 theme-border bg-[var(--bg)] p-2"
-                  role="menu"
-                >
-                  {sections.map((section) => (
-                    <button
-                      key={section.id}
-                      type="button"
-                      role="menuitem"
-                      className={`w-full text-left px-3 py-2 text-sm uppercase theme-border-thin mb-2 last:mb-0 ${
-                        section.id === activeId ? "theme-invert" : ""
-                      }`}
-                      onClick={() => {
-                        setActiveId(section.id);
-                        setMenuOpen(false);
-                      }}
-                    >
-                      {section.label}
-                    </button>
-                  ))}
-                </div>
-              ) : null}
-            </div>
-            <label className="text-xs uppercase tracking-[0.2em] md:hidden">
-              Switch section
-              <select
-                className="mt-2 w-full theme-border p-2 text-sm"
-                value={activeId}
-                onChange={(event) =>
-                  setActiveId(event.target.value as SectionId)
-                }
-              >
-                {sections.map((section) => (
-                  <option key={section.id} value={section.id}>
-                    {section.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
+    <TabGroup
+      selectedIndex={selectedIndex}
+      onChange={setSelectedIndex}
+      className="grid gap-6 lg:grid-cols-[280px_minmax(0,1fr)]"
+    >
+      <aside className="admin-card p-4 lg:sticky lg:top-6 lg:h-fit">
+        <div className="mb-5 px-2">
+          <p className="admin-chip">{activeSection.eyebrow}</p>
+          <h2 className="admin-title mt-4 text-2xl font-semibold">
+            {activeSection.label}
+          </h2>
+          <p className="admin-muted mt-2 text-sm leading-6">
+            {activeSection.description}
+          </p>
         </div>
-      </div>
 
-      <div>{activeSection?.content}</div>
-    </div>
+        <div className="lg:hidden">
+          <Menu>
+            <MenuButton className="admin-button w-full justify-between">
+              <span>{activeSection.label}</span>
+              <span className="admin-muted text-xs uppercase tracking-[0.14em]">
+                Menu
+              </span>
+            </MenuButton>
+            <MenuItems
+              anchor="bottom"
+              className="admin-card mt-3 w-[min(18rem,calc(100vw-3rem))] p-2 outline-none"
+            >
+              {sections.map((section, index) => (
+                <MenuItem key={section.id}>
+                  {({ focus }) => (
+                    <button
+                      type="button"
+                      className={`w-full rounded-2xl px-4 py-3 text-left transition ${
+                        focus || index === selectedIndex
+                          ? "bg-[var(--admin-accent-soft)] text-[var(--admin-title)]"
+                          : "text-[var(--admin-muted)]"
+                      }`}
+                      onClick={() => setSelectedIndex(index)}
+                    >
+                      <span className="block text-sm font-semibold">
+                        {section.label}
+                      </span>
+                      <span className="mt-1 block text-xs leading-5">
+                        {section.description}
+                      </span>
+                    </button>
+                  )}
+                </MenuItem>
+              ))}
+            </MenuItems>
+          </Menu>
+        </div>
+
+        <TabList className="hidden flex-col gap-2 lg:flex">
+          {sections.map((section) => (
+            <Tab
+              key={section.id}
+              className="rounded-2xl px-4 py-4 text-left outline-none transition data-[selected]:bg-[var(--admin-accent-soft)] data-[selected]:text-[var(--admin-title)] data-[selected]:shadow-sm"
+            >
+              <span className="block text-sm font-semibold">{section.label}</span>
+              <span className="admin-muted mt-1 block text-xs leading-5">
+                {section.description}
+              </span>
+            </Tab>
+          ))}
+        </TabList>
+      </aside>
+
+      <TabPanels>
+        {sections.map((section) => (
+          <TabPanel key={section.id} className="outline-none">
+            {section.content}
+          </TabPanel>
+        ))}
+      </TabPanels>
+    </TabGroup>
   );
 }
