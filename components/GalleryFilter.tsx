@@ -7,9 +7,16 @@ import { GalleryGrid } from "@/components/GalleryGrid";
 type Props = {
   tattoos: Tattoo[];
   galleries: Gallery[];
+  filterLabel: string;
+  allLabel: string;
 };
 
-export function GalleryFilter({ tattoos, galleries }: Props) {
+export function GalleryFilter({
+  tattoos,
+  galleries,
+  filterLabel,
+  allLabel,
+}: Props) {
   const [selected, setSelected] = useState<string>("all");
 
   const filtered = useMemo(() => {
@@ -20,13 +27,13 @@ export function GalleryFilter({ tattoos, galleries }: Props) {
   return (
     <div className="grid gap-4">
       <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.2em]">
-        <span>Filter</span>
+        <span>{filterLabel}</span>
         <select
           className="theme-border p-2"
           value={selected}
           onChange={(e) => setSelected(e.target.value)}
         >
-          <option value="all">All</option>
+          <option value="all">{allLabel}</option>
           {galleries.map((gallery) => (
             <option key={gallery.id} value={gallery.id}>
               {gallery.title}

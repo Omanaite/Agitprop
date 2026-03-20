@@ -34,7 +34,7 @@ Add an admin-only content management layer using Supabase Auth for authenticatio
 **Rationale**: The public site optimizes for brand expression, while the admin optimizes for clarity, speed, and repeat operational tasks. A separate admin visual language reduces cognitive friction without requiring a second application.
 
 ### Decision: Public section configuration managed by admin
-**Choice**: Introduce a configurable page section model so the admin can reorder public sections and rename them without code changes.
+**Choice**: Introduce a configurable page section model so the admin can reorder public sections, rename them, and hide/show them without code changes.
 **Alternatives considered**: Hardcode section order and labels in the homepage, or expose only a subset of sections as configurable.
 **Rationale**: The homepage is editorial by nature. Giving the admin control over order and naming allows the public site to adapt to campaigns, seasonal priorities, and portfolio direction without deployment.
 
@@ -42,6 +42,11 @@ Add an admin-only content management layer using Supabase Auth for authenticatio
 **Choice**: Add language selection for German, English, and Spanish, using the same preference-driven interaction style already used for themes.
 **Alternatives considered**: Browser-only language detection or a single default locale.
 **Rationale**: The artist audience and client audience span multiple languages. User-selectable locale control gives predictability and supports future SEO and localized content strategies.
+
+### Decision: Cookie-backed public locale preference
+**Choice**: Persist the public locale in a lightweight cookie and read it from server components before rendering public pages.
+**Alternatives considered**: Client-only locale state, query-string locale switching.
+**Rationale**: Cookie-backed locale preference keeps the selector simple while allowing server-rendered localized content and `html lang` alignment without introducing a full routing-based i18n framework yet.
 
 ## Data Flow
 
@@ -136,11 +141,14 @@ Future iteration for editor UX:
 - Each section should expose:
   - stable key
   - display label
+  - eyebrow label
   - sort position
   - visibility flag
   - localized labels when i18n is enabled
 - The public rendering layer should consume the configured composition before
   falling back to default section order.
+- The public header navigation should derive from the visible configured
+  sections so navigation order stays aligned with homepage composition.
 - Language preference should be stored independently from theme preference, but
   exposed with a similarly lightweight selector UX.
 

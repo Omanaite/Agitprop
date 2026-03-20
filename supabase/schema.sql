@@ -55,6 +55,17 @@ create table if not exists audit_logs (
   created_at timestamptz not null default now()
 );
 
+create table if not exists homepage_sections (
+  id uuid primary key default gen_random_uuid(),
+  section_key text not null unique,
+  title text not null,
+  eyebrow text,
+  sort_order int not null default 0,
+  is_visible boolean not null default true,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
 alter table tattoos
   add constraint tattoos_gallery_fk
   foreign key (gallery_id) references galleries(id)
@@ -66,6 +77,7 @@ alter table bookings enable row level security;
 alter table posts enable row level security;
 alter table galleries enable row level security;
 alter table audit_logs enable row level security;
+alter table homepage_sections enable row level security;
 
 -- Public read access for tattoos.
 create policy "Public read tattoos" on tattoos
@@ -75,6 +87,9 @@ create policy "Public read posts" on posts
   for select using (status = 'published');
 
 create policy "Public read galleries" on galleries
+  for select using (true);
+
+create policy "Public read homepage sections" on homepage_sections
   for select using (true);
 
 -- Booking inserts via server only (service role key).
@@ -102,6 +117,23 @@ create policy "Admin manage audit logs" on audit_logs
   for all
   using (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin')
   with check (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin');
+
+create policy "Admin manage homepage sections" on homepage_sections
+  for all
+  using (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin')
+  with check (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin');
+
+insert into homepage_sections (section_key, title, eyebrow, sort_order, is_visible)
+values
+  ('hero', 'Anatomy, Anarchy, Ink.', 'Brutalist Digital Zine', 0, true),
+  ('work', 'Selected Work', 'Gallery', 1, true),
+  ('galleries', 'Curated Galleries', 'Collections', 2, true),
+  ('about', 'Artist Statement', 'About', 3, true),
+  ('booking', 'Booking Protocol', 'Session', 4, true),
+  ('rates', 'Rates & Payments', 'Pricing', 5, true),
+  ('contact', 'Direct Contact', 'Signal', 6, true),
+  ('posts', 'Studio Notes', 'Posts', 7, true)
+on conflict (section_key) do nothing;
 
 -- Storage bucket for gallery images (public read).
 insert into storage.buckets (id, name, public)

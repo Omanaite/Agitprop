@@ -69,11 +69,11 @@
 - [ ] 10.4 Lighthouse QA pass and performance fixes.
 
 ## Phase 13: Public Composition + Localization
-- [ ] 13.1 Define schema/model for configurable homepage sections (key, label, order, visibility).
-- [ ] 13.2 Add admin UI for section ordering and section renaming.
-- [ ] 13.3 Update public homepage rendering to consume configured section order and labels.
-- [ ] 13.4 Add locale model and preference handling for German, English, and Spanish.
-- [ ] 13.5 Add public language selector with persistent preference.
+- [x] 13.1 Define schema/model for configurable homepage sections (key, label, order, visibility).
+- [x] 13.2 Add admin UI for section ordering and section renaming.
+- [x] 13.3 Update public homepage rendering to consume configured section order and labels.
+- [x] 13.4 Add locale model and preference handling for German, English, and Spanish.
+- [x] 13.5 Add public language selector with persistent preference.
 - [ ] 13.6 Localize public UI copy and admin-controlled section labels.
 - [ ] 13.7 Update roadmap, design, specs, and manuals for public composition + i18n.
 

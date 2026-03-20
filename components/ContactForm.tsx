@@ -4,8 +4,21 @@ import { useState } from "react";
 
 type ContactFormState = "idle" | "submitting" | "success" | "error";
 
+type ContactFormProps = {
+  copy: {
+    name: string;
+    email: string;
+    message: string;
+    submitIdle: string;
+    submitBusy: string;
+    success: string;
+    errorFallback: string;
+    unexpected: string;
+  };
+};
+
 // Lightweight contact form that posts to the contact API route.
-export function ContactForm() {
+export function ContactForm({ copy }: ContactFormProps) {
   const [state, setState] = useState<ContactFormState>("idle");
   const [message, setMessage] = useState<string>("");
   const [errors, setErrors] = useState<{ path: string; message: string }[]>([]);
@@ -29,25 +42,23 @@ export function ContactForm() {
       if (!response.ok) {
         const error = await response.json();
         setErrors(error.errors ?? []);
-        throw new Error(error.message || "Message failed.");
+        throw new Error(error.message || copy.errorFallback);
       }
 
       setState("success");
-      setMessage("Message sent. We will reply soon.");
+      setMessage(copy.success);
       setErrors([]);
       event.currentTarget.reset();
     } catch (error) {
       setState("error");
-      setMessage(
-        error instanceof Error ? error.message : "Unexpected error occurred."
-      );
+      setMessage(error instanceof Error ? error.message : copy.unexpected);
     }
   }
 
   return (
     <form className="grid gap-4" onSubmit={handleSubmit}>
       <label className="text-xs uppercase tracking-[0.2em]">
-        Name
+        {copy.name}
         <input
           className={`hard-border mt-1 w-full px-3 py-2 ${
             errorMap.get("name") ? "input-error" : ""
@@ -61,7 +72,7 @@ export function ContactForm() {
         </p>
       ) : null}
       <label className="text-xs uppercase tracking-[0.2em]">
-        Email
+        {copy.email}
         <input
           className={`hard-border mt-1 w-full px-3 py-2 ${
             errorMap.get("email") ? "input-error" : ""
@@ -77,7 +88,7 @@ export function ContactForm() {
         </p>
       ) : null}
       <label className="text-xs uppercase tracking-[0.2em]">
-        Message
+        {copy.message}
         <textarea
           className={`hard-border mt-1 min-h-[120px] w-full px-3 py-2 ${
             errorMap.get("message") ? "input-error" : ""
@@ -97,7 +108,7 @@ export function ContactForm() {
         type="submit"
         disabled={state === "submitting"}
       >
-        {state === "submitting" ? "Sending..." : "Send Message"}
+        {state === "submitting" ? copy.submitBusy : copy.submitIdle}
       </button>
       {message ? (
         <p

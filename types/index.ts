@@ -47,3 +47,14 @@ export type Post = {
   created_at: string;
   updated_at: string;
 };
+
+export type HomepageSection = {
+  id?: string;
+  section_key: string;
+  title: string;
+  eyebrow?: string | null;
+  sort_order: number;
+  is_visible: boolean;
+  created_at?: string;
+  updated_at?: string;
+};

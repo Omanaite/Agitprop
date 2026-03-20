@@ -4,14 +4,23 @@ import { useEffect, useState } from "react";
 
 type Theme = "light" | "dark" | "eye";
 
-const themes: { id: Theme; label: string }[] = [
-  { id: "light", label: "Light" },
-  { id: "eye", label: "Eye" },
-  { id: "dark", label: "Dark" },
-];
+type ThemeToggleProps = {
+  labels?: {
+    light: string;
+    eye: string;
+    dark: string;
+  };
+};
 
-export function ThemeToggle() {
+export function ThemeToggle({
+  labels = { light: "Light", eye: "Eye", dark: "Dark" },
+}: ThemeToggleProps) {
   const [theme, setTheme] = useState<Theme>("light");
+  const themes: { id: Theme; label: string }[] = [
+    { id: "light", label: labels.light },
+    { id: "eye", label: labels.eye },
+    { id: "dark", label: labels.dark },
+  ];
 
   useEffect(() => {
     const saved = (localStorage.getItem("theme") as Theme | null) ?? "light";

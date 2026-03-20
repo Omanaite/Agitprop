@@ -52,9 +52,10 @@ Goal: evolve into an artist-managed platform with login, content CRUD, and scala
 - Tags/collections/styles/locations.
 - Basic analytics.
 - Internationalization.
-- User-selectable site languages: German, English, Spanish.
-- Admin-managed homepage section ordering.
-- Admin-managed homepage section naming.
+- User-selectable site languages: German, English, Spanish. Implemented for public UI preference and routing-level rendering.
+- Admin-managed homepage section ordering. Implemented.
+- Admin-managed homepage section naming. Implemented.
+- Admin-managed homepage section visibility. Implemented.
 - Security and performance hardening.
 - SDLC standard + PR manual security review.
 
@@ -76,5 +77,6 @@ Goal: evolve into an artist-managed platform with login, content CRUD, and scala
 - Headless UI powers focused section navigation in the dashboard.
 - Skeleton loading added to admin login and dashboard routes.
 - Theme controls exposed inside admin login and admin dashboard.
-- Pending scope expanded with configurable public section order and naming.
-- Pending scope expanded with user-selectable multilingual site support.
+- Configurable public section order, naming, and visibility implemented from the admin console.
+- Public header navigation now follows configured visible homepage sections.
+- Public locale selector implemented with persistent German, English, and Spanish preference.

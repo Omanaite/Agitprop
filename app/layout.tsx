@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Bebas_Neue, Space_Mono } from "next/font/google";
+import { getRequestLocale } from "@/lib/request-locale";
 import "./globals.css";
 
 // Global font setup aligned with the brutalist spec (condensed heading + mono body).
@@ -22,17 +23,19 @@ export const metadata: Metadata = {
     "Brutalist tattoo portfolio and booking portal for Akemi. Built for Vercel + Supabase.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Root layout defines global fonts and language.
+  const locale = await getRequestLocale();
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body className={`${headingFont.variable} ${bodyFont.variable}`}>
         {children}
       </body>
     </html>
   );
 }
+

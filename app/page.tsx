@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { BookingForm } from "@/components/BookingForm";
 import { ContactForm } from "@/components/ContactForm";
 import { Footer } from "@/components/Footer";
@@ -9,141 +10,241 @@ import { PriceCards } from "@/components/PriceCards";
 import { Reveal } from "@/components/Reveal";
 import { Section } from "@/components/Section";
 import { getGalleries } from "@/lib/data/galleries";
+import { getHomepageSections } from "@/lib/data/homepage-sections";
+import { getPublicDictionary } from "@/lib/i18n";
+import { getRequestLocale } from "@/lib/request-locale";
 import { getPublishedPosts } from "@/lib/data/posts";
 import { getTattooGallery } from "@/lib/data/tattoos";
+import type { HomepageSection } from "@/types";
+
+type SectionRenderer = {
+  render: (section: HomepageSection) => ReactNode;
+};
 
 // Home page for the tattoo portfolio, built to the brutalist spec.
 export default async function Home() {
+  const locale = await getRequestLocale();
+  const dictionary = getPublicDictionary(locale);
   const tattoos = await getTattooGallery();
   const posts = await getPublishedPosts();
   const galleries = await getGalleries();
+  const homepageSections = await getHomepageSections(locale);
+
+  const renderers = new Map<string, SectionRenderer>([
+    [
+      "hero",
+      {
+        render: (section) => (
+          <Reveal key={section.section_key}>
+            <section className="hard-border bg-[var(--bg)] px-6 py-10 md:px-10 md:py-14">
+              {section.eyebrow ? (
+                <p className="mb-4 text-xs uppercase tracking-[0.5em]">
+                  {section.eyebrow}
+                </p>
+              ) : null}
+              <h2 className="mb-6 font-[var(--font-heading)] text-4xl uppercase md:text-5xl">
+                {section.title}
+              </h2>
+              <p className="max-w-2xl text-sm md:text-base">
+                {dictionary.hero.body}
+              </p>
+            </section>
+          </Reveal>
+        ),
+      },
+    ],
+    [
+      "work",
+      {
+        render: (section) => (
+          <Reveal key={section.section_key}>
+            <Section
+              id={section.section_key}
+              title={section.title}
+              eyebrow={section.eyebrow ?? undefined}
+            >
+              <GalleryFilter
+                tattoos={tattoos}
+                galleries={galleries}
+                filterLabel={dictionary.work.filter}
+                allLabel={dictionary.work.all}
+              />
+            </Section>
+          </Reveal>
+        ),
+      },
+    ],
+    [
+      "galleries",
+      {
+        render: (section) => (
+          <Reveal key={section.section_key}>
+            <Section
+              id={section.section_key}
+              title={section.title}
+              eyebrow={section.eyebrow ?? undefined}
+            >
+              {galleries.length ? (
+                <div className="grid gap-4 md:grid-cols-2">
+                  {galleries.map((gallery) => (
+                    <a
+                      key={gallery.id}
+                      className="hard-border p-4 theme-hover-invert"
+                      href={`/galleries/${gallery.slug}`}
+                    >
+                      <p className="text-xs uppercase tracking-[0.2em]">
+                        {gallery.slug}
+                      </p>
+                      <h3 className="mt-2 text-lg uppercase">{gallery.title}</h3>
+                      {gallery.description ? (
+                        <p className="text-sm">{gallery.description}</p>
+                      ) : null}
+                    </a>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm uppercase tracking-[0.2em]">
+                  {dictionary.galleries.empty}
+                </p>
+              )}
+            </Section>
+          </Reveal>
+        ),
+      },
+    ],
+    [
+      "about",
+      {
+        render: (section) => (
+          <Reveal key={section.section_key}>
+            <Section
+              id={section.section_key}
+              title={section.title}
+              eyebrow={section.eyebrow ?? undefined}
+            >
+              <p>{dictionary.about.body1}</p>
+              <p>{dictionary.about.body2}</p>
+            </Section>
+          </Reveal>
+        ),
+      },
+    ],
+    [
+      "booking",
+      {
+        render: (section) => (
+          <Reveal key={section.section_key}>
+            <Section
+              id={section.section_key}
+              title={section.title}
+              eyebrow={section.eyebrow ?? undefined}
+            >
+              <p className="text-sm uppercase tracking-[0.2em]">
+                {dictionary.booking.intro}
+              </p>
+              <BookingForm copy={dictionary.booking} />
+            </Section>
+          </Reveal>
+        ),
+      },
+    ],
+    [
+      "rates",
+      {
+        render: (section) => (
+          <Reveal key={section.section_key}>
+            <Section
+              id={section.section_key}
+              title={section.title}
+              eyebrow={section.eyebrow ?? undefined}
+            >
+              <PriceCards cards={dictionary.rates.cards} />
+              <p className="text-sm uppercase tracking-[0.2em]">
+                {dictionary.rates.depositNote}
+              </p>
+              <PaymentButtons copy={dictionary.rates} />
+            </Section>
+          </Reveal>
+        ),
+      },
+    ],
+    [
+      "contact",
+      {
+        render: (section) => (
+          <Reveal key={section.section_key}>
+            <Section
+              id={section.section_key}
+              title={section.title}
+              eyebrow={section.eyebrow ?? undefined}
+            >
+              <ContactForm copy={dictionary.contact} />
+            </Section>
+          </Reveal>
+        ),
+      },
+    ],
+    [
+      "posts",
+      {
+        render: (section) => (
+          <Reveal key={section.section_key}>
+            <Section
+              id={section.section_key}
+              title={section.title}
+              eyebrow={section.eyebrow ?? undefined}
+            >
+              {posts.length ? (
+                <div className="grid gap-4 md:grid-cols-2">
+                  {posts.map((post) => (
+                    <article key={post.id} className="hard-border p-4">
+                      {post.cover_image_url ? (
+                        <img
+                          className="mb-3 w-full object-cover"
+                          src={post.cover_image_url}
+                          alt={post.title}
+                        />
+                      ) : null}
+                      <h3 className="text-lg uppercase">{post.title}</h3>
+                      <p className="text-sm">{post.excerpt || post.body}</p>
+                    </article>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm uppercase tracking-[0.2em]">
+                  {dictionary.posts.empty}
+                </p>
+              )}
+            </Section>
+          </Reveal>
+        ),
+      },
+    ],
+  ]);
+
+  const visibleSections = homepageSections.filter((section) => section.is_visible);
 
   return (
     <div className="min-h-screen bg-[var(--bg)] p-4 text-[var(--fg)] md:p-8">
       <NoiseOverlay />
       <div className="mx-auto flex max-w-6xl flex-col gap-6">
-        <Header />
+        <Header
+          sections={visibleSections}
+          locale={locale}
+          brandEyebrow={dictionary.brand.eyebrow}
+          brandTitle={dictionary.brand.title}
+          themeLabels={dictionary.theme}
+          localeLabel={dictionary.locale.label}
+        />
 
-        <Reveal>
-          <section className="hard-border bg-[var(--bg)] px-6 py-10 md:px-10 md:py-14">
-            <p className="mb-4 text-xs uppercase tracking-[0.5em]">
-              Brutalist Digital Zine
-            </p>
-            <h2 className="mb-6 font-[var(--font-heading)] text-4xl uppercase md:text-5xl">
-              Anatomy, Anarchy, Ink.
-            </h2>
-            <p className="max-w-2xl text-sm md:text-base">
-              Akemi is a Berlin-based tattoo artist working at the intersection
-              of ignorant linework, fine-line precision, and surreal anatomy.
-              This portfolio is a living archive of pieces, flash fragments,
-              and booking rituals.
-            </p>
-          </section>
-        </Reveal>
+        {visibleSections.map((section) =>
+          renderers.get(section.section_key)?.render(section)
+        )}
 
-        <Reveal>
-          <Section id="work" title="Selected Work" eyebrow="Gallery">
-            <GalleryFilter tattoos={tattoos} galleries={galleries} />
-          </Section>
-        </Reveal>
-
-        <Reveal>
-          <Section id="galleries" title="Curated Galleries" eyebrow="Collections">
-            {galleries.length ? (
-              <div className="grid gap-4 md:grid-cols-2">
-                {galleries.map((gallery) => (
-                  <a
-                    key={gallery.id}
-                    className="hard-border p-4 theme-hover-invert"
-                    href={`/galleries/${gallery.slug}`}
-                  >
-                    <p className="text-xs uppercase tracking-[0.2em]">
-                      {gallery.slug}
-                    </p>
-                    <h3 className="mt-2 text-lg uppercase">{gallery.title}</h3>
-                    {gallery.description ? (
-                      <p className="text-sm">{gallery.description}</p>
-                    ) : null}
-                  </a>
-                ))}
-              </div>
-            ) : (
-              <p className="text-sm uppercase tracking-[0.2em]">
-                No galleries published yet.
-              </p>
-            )}
-          </Section>
-        </Reveal>
-
-        <Reveal>
-          <Section id="about" title="Artist Statement" eyebrow="About">
-            <p>
-              Each line is a refusal of ornament. The body is a canvas, the ink
-              is evidence. Expect high-contrast blackwork, raw texture, and
-              anatomical distortions that feel like found objects from a
-              terminal-era zine.
-            </p>
-            <p>
-              Studio policy: only custom projects, no replicas. Respect the
-              ritual; respect the aftercare.
-            </p>
-          </Section>
-        </Reveal>
-
-        <Reveal>
-          <Section id="booking" title="Booking Protocol" eyebrow="Session">
-            <p className="text-sm uppercase tracking-[0.2em]">
-              Slots open monthly. Use the form below. Replies within 48 hours.
-            </p>
-            <BookingForm />
-          </Section>
-        </Reveal>
-
-        <Reveal>
-          <Section id="rates" title="Rates & Payments" eyebrow="Pricing">
-            <PriceCards />
-            <p className="text-sm uppercase tracking-[0.2em]">
-              Deposits are required to confirm a session.
-            </p>
-            <PaymentButtons />
-          </Section>
-        </Reveal>
-
-        <Reveal>
-          <Section id="contact" title="Direct Contact" eyebrow="Signal">
-            <ContactForm />
-          </Section>
-        </Reveal>
-
-        <Reveal>
-          <Section id="posts" title="Studio Notes" eyebrow="Posts">
-            {posts.length ? (
-              <div className="grid gap-4 md:grid-cols-2">
-                {posts.map((post) => (
-                  <article key={post.id} className="hard-border p-4">
-                    {post.cover_image_url ? (
-                      <img
-                        className="mb-3 w-full object-cover"
-                        src={post.cover_image_url}
-                        alt={post.title}
-                      />
-                    ) : null}
-                    <h3 className="text-lg uppercase">{post.title}</h3>
-                    <p className="text-sm">
-                      {post.excerpt || post.body}
-                    </p>
-                  </article>
-                ))}
-              </div>
-            ) : (
-              <p className="text-sm uppercase tracking-[0.2em]">
-                No public posts yet.
-              </p>
-            )}
-          </Section>
-        </Reveal>
-
-        <Footer />
+        <Footer
+          studioLabel={dictionary.footer.studio}
+          copyrightLabel={dictionary.footer.copyright}
+        />
       </div>
     </div>
   );

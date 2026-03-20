@@ -14,6 +14,7 @@ import {
 import { useState } from "react";
 import { GalleriesManager } from "@/components/admin/GalleriesManager";
 import { GalleryManager } from "@/components/admin/GalleryManager";
+import { HomepageSectionsManager } from "@/components/admin/HomepageSectionsManager";
 import { IntegrationsManager } from "@/components/admin/IntegrationsManager";
 import { PostManager } from "@/components/admin/PostManager";
 import { ProfileManager } from "@/components/admin/ProfileManager";
@@ -40,6 +41,13 @@ const sections: Section[] = [
     eyebrow: "Connections",
     description: "OAuth providers and cloud upload readiness.",
     content: <IntegrationsManager />,
+  },
+  {
+    id: "homepage",
+    label: "Homepage",
+    eyebrow: "Composition",
+    description: "Control section order, naming, and public visibility.",
+    content: <HomepageSectionsManager />,
   },
   {
     id: "galleries",

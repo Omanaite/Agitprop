@@ -57,6 +57,20 @@ The system **SHOULD** render public section names using admin-managed labels whe
 - WHEN a visitor loads the home page
 - THEN the section renders with the default label
 
+### Requirement: Configurable Public Section Visibility
+The system **SHOULD** allow admins to hide or show homepage sections without code changes.
+
+#### Scenario: Section hidden by admin
+- GIVEN a homepage section is marked hidden
+- WHEN a visitor loads the home page
+- THEN the hidden section is not rendered
+- AND it is excluded from the public header navigation
+
+#### Scenario: Section visible by admin
+- GIVEN a homepage section is marked visible
+- WHEN a visitor loads the home page
+- THEN the section is rendered in its configured position
+
 ### Requirement: User-Selectable Language
 The system **SHOULD** allow visitors to select between German, English, and Spanish.
 

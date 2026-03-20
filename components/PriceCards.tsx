@@ -4,29 +4,15 @@ type PriceCard = {
   price: string;
 };
 
-const PRICES: PriceCard[] = [
-  {
-    title: "Session Deposit",
-    description: "Secures your booking slot. Non-refundable.",
-    price: "€120",
-  },
-  {
-    title: "Custom Design",
-    description: "Standalone design package with two revisions.",
-    price: "€220",
-  },
-  {
-    title: "Full Day",
-    description: "Large scale pieces, 6-7 hours of work.",
-    price: "€650",
-  },
-];
+type PriceCardsProps = {
+  cards: PriceCard[];
+};
 
 // Pricing cards used to communicate service tiers and deposit logic.
-export function PriceCards() {
+export function PriceCards({ cards }: PriceCardsProps) {
   return (
     <div className="grid gap-4 md:grid-cols-3">
-      {PRICES.map((card) => (
+      {cards.map((card) => (
         <article
           key={card.title}
           className="hard-border flex flex-col gap-3 bg-[var(--bg)] p-4"

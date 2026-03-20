@@ -4,8 +4,23 @@ import { useState } from "react";
 
 type BookingFormState = "idle" | "submitting" | "success" | "error";
 
+type BookingFormProps = {
+  copy: {
+    name: string;
+    email: string;
+    preferredDate: string;
+    placement: string;
+    description: string;
+    submitIdle: string;
+    submitBusy: string;
+    success: string;
+    errorFallback: string;
+    unexpected: string;
+  };
+};
+
 // Client booking form that posts to the booking API route.
-export function BookingForm() {
+export function BookingForm({ copy }: BookingFormProps) {
   const [state, setState] = useState<BookingFormState>("idle");
   const [message, setMessage] = useState<string>("");
   const [errors, setErrors] = useState<{ path: string; message: string }[]>([]);
@@ -29,18 +44,16 @@ export function BookingForm() {
       if (!response.ok) {
         const error = await response.json();
         setErrors(error.errors ?? []);
-        throw new Error(error.message || "Booking failed.");
+        throw new Error(error.message || copy.errorFallback);
       }
 
       setState("success");
-      setMessage("Booking request sent. We will reply within 48h.");
+      setMessage(copy.success);
       setErrors([]);
       event.currentTarget.reset();
     } catch (error) {
       setState("error");
-      setMessage(
-        error instanceof Error ? error.message : "Unexpected error occurred."
-      );
+      setMessage(error instanceof Error ? error.message : copy.unexpected);
     }
   }
 
@@ -48,7 +61,7 @@ export function BookingForm() {
     <form className="grid gap-4" onSubmit={handleSubmit}>
       <div className="grid gap-2">
         <label className="text-xs uppercase tracking-[0.2em]">
-          Name
+          {copy.name}
           <input
             className={`hard-border mt-1 w-full px-3 py-2 ${
               errorMap.get("name") ? "input-error" : ""
@@ -64,7 +77,7 @@ export function BookingForm() {
           </p>
         ) : null}
         <label className="text-xs uppercase tracking-[0.2em]">
-          Email
+          {copy.email}
           <input
             className={`hard-border mt-1 w-full px-3 py-2 ${
               errorMap.get("email") ? "input-error" : ""
@@ -80,7 +93,7 @@ export function BookingForm() {
           </p>
         ) : null}
         <label className="text-xs uppercase tracking-[0.2em]">
-          Preferred Date
+          {copy.preferredDate}
           <input
             className="hard-border mt-1 w-full px-3 py-2"
             name="preferredDate"
@@ -89,7 +102,7 @@ export function BookingForm() {
           />
         </label>
         <label className="text-xs uppercase tracking-[0.2em]">
-          Placement / Size
+          {copy.placement}
           <input
             className={`hard-border mt-1 w-full px-3 py-2 ${
               errorMap.get("placement") ? "input-error" : ""
@@ -105,7 +118,7 @@ export function BookingForm() {
           </p>
         ) : null}
         <label className="text-xs uppercase tracking-[0.2em]">
-          Description
+          {copy.description}
           <textarea
             className={`hard-border mt-1 min-h-[120px] w-full px-3 py-2 ${
               errorMap.get("description") ? "input-error" : ""
@@ -126,7 +139,7 @@ export function BookingForm() {
         type="submit"
         disabled={state === "submitting"}
       >
-        {state === "submitting" ? "Submitting..." : "Request Session"}
+        {state === "submitting" ? copy.submitBusy : copy.submitIdle}
       </button>
       {message ? (
         <p

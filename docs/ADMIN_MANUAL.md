@@ -11,9 +11,10 @@ Nota: el usuario debe tener el rol `admin` en `app_metadata` de Supabase Auth.
 ## Orden recomendado del panel
 1. Perfil Admin
 2. Integraciones (OAuth / nube)
-3. Galerias
-4. Piezas (Galeria)
-5. Posts
+3. Home Composition
+4. Galerias
+5. Piezas (Galeria)
+6. Posts
 
 ## UI del Admin
 - El panel usa una identidad visual separada del portal publico.
@@ -30,6 +31,13 @@ Nota: el usuario debe tener el rol `admin` en `app_metadata` de Supabase Auth.
 ## Integraciones
 - Conectar OAuth o nube (si aplica).
 - Si no hay conexion activa, el upload remoto se bloquea.
+
+## Home Composition
+- Reordenar las secciones publicas del home.
+- Renombrar el titulo visible de cada seccion.
+- Ajustar eyebrow/subtitulo editorial de cada bloque.
+- Ocultar o mostrar secciones sin redeploy.
+- La navegacion publica del header sigue las secciones visibles y su orden.
 
 ## Gestion de Galeria (Piezas)
 - Crear nueva pieza: subir imagen, titulo, descripcion y estilo.

@@ -15,6 +15,7 @@ Webapp de portfolio para artista tatuador con estetica brutalista. Incluye galer
 - Sistema visual del admin separado del portal publico.
 - Configuracion del orden de secciones de la home por parte del admin.
 - Configuracion del nombre visible de secciones publicas por parte del admin.
+- Configuracion de visibilidad de secciones publicas por parte del admin.
 - Escalabilidad para nuevas entidades (tags, colecciones, estilos, ubicaciones).
 - Temas de interfaz: dark mode y eye-rest mode.
 - Selector de idioma para el sitio publico: aleman, ingles y espanol.
@@ -31,6 +32,8 @@ Webapp de portfolio para artista tatuador con estetica brutalista. Incluye galer
 - Galerias multiples: Implementacion base (DB + API + UI select).
 - Posts publicos: Vista publica basica implementada.
 - Proxy middleware: Migrado a `proxy.ts`.
+- Composicion de home publica: implementada desde admin (orden, nombre, eyebrow, visibilidad).
+- Idioma publico: implementado con selector persistente para ingles, espanol y aleman.
 
 ## Casos de Uso
 - Visitantes exploran la galeria y contenido publico.
@@ -40,6 +43,7 @@ Webapp de portfolio para artista tatuador con estetica brutalista. Incluye galer
 - Admin trabaja en una consola separada visualmente del sitio publico.
 - Admin decide que seccion aparece primero, segunda, tercera, etc. en la home.
 - Admin renombra secciones publicas segun necesidad editorial.
+- Admin oculta o publica secciones de la home sin redeploy.
 - Visitante cambia idioma del sitio de forma similar al cambio de tema.
 
 ## Stack

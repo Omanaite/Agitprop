@@ -4,12 +4,25 @@ import { useState } from "react";
 
 type PaymentType = "deposit" | "design";
 
+type PaymentButtonsProps = {
+  copy: {
+    paymentStateStripeUnavailable: string;
+    paymentStatePaypalUnavailable: string;
+    paymentStateRedirecting: string;
+    paymentStateCreating: string;
+    payDepositStripe: string;
+    payDepositPaypal: string;
+    payDesignStripe: string;
+    payDesignPaypal: string;
+  };
+};
+
 // Client helper to trigger Stripe or PayPal checkout flows.
-export function PaymentButtons() {
+export function PaymentButtons({ copy }: PaymentButtonsProps) {
   const [state, setState] = useState<string>("");
 
   async function startStripe(type: PaymentType) {
-    setState("redirecting");
+    setState(copy.paymentStateRedirecting);
     const res = await fetch("/api/payments/stripe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -19,12 +32,12 @@ export function PaymentButtons() {
     if (data.url) {
       window.location.href = data.url;
     } else {
-      setState("Stripe unavailable.");
+      setState(copy.paymentStateStripeUnavailable);
     }
   }
 
   async function startPayPal(type: PaymentType) {
-    setState("creating");
+    setState(copy.paymentStateCreating);
     const res = await fetch("/api/payments/paypal", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -34,7 +47,7 @@ export function PaymentButtons() {
     if (data.id) {
       setState(`PayPal order created: ${data.id}`);
     } else {
-      setState("PayPal unavailable.");
+      setState(copy.paymentStatePaypalUnavailable);
     }
   }
 
@@ -45,28 +58,28 @@ export function PaymentButtons() {
         type="button"
         onClick={() => startStripe("deposit")}
       >
-        Pay Deposit with Stripe
+        {copy.payDepositStripe}
       </button>
       <button
         className="snap-transition theme-border theme-invert px-4 py-3"
         type="button"
         onClick={() => startPayPal("deposit")}
       >
-        Pay Deposit with PayPal
+        {copy.payDepositPaypal}
       </button>
       <button
         className="snap-transition theme-border theme-hover-invert px-4 py-3"
         type="button"
         onClick={() => startStripe("design")}
       >
-        Pay Design with Stripe
+        {copy.payDesignStripe}
       </button>
       <button
         className="snap-transition theme-border theme-hover-invert px-4 py-3"
         type="button"
         onClick={() => startPayPal("design")}
       >
-        Pay Design with PayPal
+        {copy.payDesignPaypal}
       </button>
       {state ? (
         <p className="text-xs uppercase tracking-[0.2em]">{state}</p>
