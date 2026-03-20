@@ -63,3 +63,5 @@ None reported after latest redeploys, but keep verifying the build uses the late
 - RLS applied on all tables.
 - Storage bucket: gallery (public read, admin write).
 - Commit standard with prefixes (feat, fix, docs, chore).
+- Skills review is mandatory before implementation, using `C:\GitHub\akemi\.atl\skill-registry.md` as the preflight registry.
+- Engram should be used to preserve task context and active-skill context whenever available.
