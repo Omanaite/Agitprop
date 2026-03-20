@@ -147,6 +147,12 @@ Future iteration for editor UX:
 ## Knowledge Capture & Skills
 Maintain SDD artifacts in `openspec/` and keep skill registry updated so
 future changes stay aligned with existing standards.
+- Before implementation, review `C:\GitHub\akemi\.atl\skill-registry.md`
+  and load the minimum relevant skills for the task.
+- When Engram is available, persist active task context and the selected skill
+  context before major execution work.
+- If the task changes domain during execution, repeat the skill review
+  preflight before continuing.
 
 ## SDLC Quality Standard
 This project follows a manual security review workflow and documented quality

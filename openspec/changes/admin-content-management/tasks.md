@@ -1,6 +1,8 @@
 # Tasks: Admin Content Management
 
 ## Phase 1: Foundation
+- [x] 1.0 Review relevant skills from `C:\GitHub\akemi\.atl\skill-registry.md` before implementation.
+- [x] 1.0.1 Persist working context in Engram when available.
 - [x] 1.1 Update `supabase/schema.sql` to add `posts` table and RLS policies.
 - [x] 1.2 Add admin auth helper utilities in `lib/supabase/server.ts` (session validation).
 - [x] 1.3 Add validation schemas for admin payloads in `lib/validators.ts`.
