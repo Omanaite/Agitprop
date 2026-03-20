@@ -269,7 +269,7 @@ export function PostManager() {
           <option value="draft">Draft</option>
           <option value="published">Published</option>
         </select>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <button
             type="submit"
             className="admin-button admin-button-primary"
@@ -337,7 +337,7 @@ export function PostManager() {
             <div className="admin-muted mt-2 text-sm leading-6">
               {item.body.slice(0, 120)}...
             </div>
-            <div className="mt-2 flex gap-2">
+            <div className="mt-3 flex flex-wrap gap-2">
               <button
                 className="admin-button"
                 onClick={() => editPost(item)}

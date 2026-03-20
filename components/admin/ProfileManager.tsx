@@ -148,7 +148,7 @@ export function ProfileManager() {
             setProfile({ ...profile, payment_notes: e.target.value })
           }
         />
-        <div className="flex gap-2 md:col-span-2">
+        <div className="flex flex-wrap gap-2 md:col-span-2">
           <button
             type="submit"
             className="admin-button admin-button-primary"

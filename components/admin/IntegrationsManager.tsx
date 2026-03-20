@@ -111,7 +111,7 @@ export function IntegrationsManager() {
               <div className="admin-muted mt-3 text-sm">
                 Status: {current?.status ?? "disconnected"}
               </div>
-              <div className="mt-4 flex gap-2">
+              <div className="mt-4 flex flex-wrap gap-2">
                 <button
                   type="button"
                   className="admin-button"

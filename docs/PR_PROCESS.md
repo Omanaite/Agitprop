@@ -1,9 +1,11 @@
 # PR Process (Security-Gated)
 
-## Reglas
-1. Cada push relevante debe abrir un Pull Request.
-2. El PR debe pasar revisión de seguridad manual.
-3. El PR solo se integra tras aprobación de directrices internas.
+## Rules
+1. Every relevant push MUST open a Pull Request.
+2. No Pull Request is eligible for merge without passing the internal manual security review.
+3. Approval of internal security directives is a mandatory merge gate, not an optional recommendation.
+4. Merge is always performed manually after review, approval, and final verification.
 
-## Implementación
-Se usa checklist manual de seguridad en `docs/SECURITY_REVIEW.md`.
+## Implementation
+- Use the manual security checklist in `docs/SECURITY_REVIEW.md`.
+- Cross-check release readiness against `docs/SDLC_QUALITY_STANDARD.md`.

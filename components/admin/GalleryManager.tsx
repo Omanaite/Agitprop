@@ -469,7 +469,7 @@ export function GalleryManager() {
             <p className="admin-helper text-[var(--admin-accent)]">Uploading...</p>
           ) : null}
         </div>
-        <div className="flex gap-2 md:col-span-2">
+        <div className="flex flex-wrap gap-2 md:col-span-2">
           <button
             type="submit"
             className="admin-button admin-button-primary"
@@ -520,7 +520,7 @@ export function GalleryManager() {
             <div className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--admin-muted)]">{item.style}</div>
             <div className="admin-title mt-2 text-lg font-semibold">{item.title}</div>
             <div className="admin-muted mt-2 text-sm leading-6">{item.description}</div>
-            <div className="mt-2 flex gap-2">
+            <div className="mt-3 flex flex-wrap gap-2">
               <button
                 className="admin-button"
                 onClick={() => editItem(item)}

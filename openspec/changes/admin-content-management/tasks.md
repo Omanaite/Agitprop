@@ -59,7 +59,7 @@
 - [x] 12.2 Add Headless UI navigation primitives for the admin workspace.
 - [x] 12.3 Add skeleton loading states for admin login and admin dashboard routes.
 - [x] 12.4 Expose theme controls in admin login and admin console.
-- [ ] 12.5 Complete responsive QA pass for mobile/tablet/desktop admin views.
+- [x] 12.5 Complete responsive QA pass for mobile/tablet/desktop admin views.
 - [x] 12.6 Update roadmap, architecture, and specs for the admin design system.
 
 ## Phase 10: SEO + Quality
