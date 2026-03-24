@@ -8,7 +8,7 @@
 - [x] 1.3 Add validation schemas for admin payloads in `lib/validators.ts`.
 
 ## Phase 2: Core Implementation
-- [x] 2.1 Create admin API routes in `app/api/admin/gallery/route.ts` for CRUD.
+- [x] 2.1 Create admin API routes in `app/api/admin/gallery-items/route.ts` for CRUD.
 - [x] 2.2 Create admin API routes in `app/api/admin/posts/route.ts` for CRUD.
 - [x] 2.3 Implement storage upload handler (if using Supabase Storage) in `app/api/admin/uploads/route.ts`.
 

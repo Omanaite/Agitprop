@@ -62,7 +62,7 @@ export function GalleryManager() {
     setStatus("");
     setErrors([]);
     setIsLoading(true);
-    const res = await fetch("/api/admin/gallery");
+    const res = await fetch("/api/admin/gallery-items");
     const galleriesRes = await fetch("/api/admin/galleries");
     const integrationsRes = await fetch("/api/admin/integrations");
     if (!res.ok) {
@@ -171,7 +171,7 @@ export function GalleryManager() {
       return;
     }
     const res = await fetch(
-      isEdit ? `/api/admin/gallery/${form.id}` : "/api/admin/gallery",
+      isEdit ? `/api/admin/gallery-items/${form.id}` : "/api/admin/gallery-items",
       {
         method: isEdit ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
@@ -197,7 +197,7 @@ export function GalleryManager() {
     if (!confirm("Delete this piece?")) return;
     setStatus("");
     setIsSaving(true);
-    const res = await fetch(`/api/admin/gallery/${id}`, { method: "DELETE" });
+    const res = await fetch(`/api/admin/gallery-items/${id}`, { method: "DELETE" });
     if (!res.ok) {
       const data = await res.json().catch(() => null);
       setErrors(data?.errors ?? []);
@@ -260,7 +260,7 @@ export function GalleryManager() {
     }
     setIsSaving(true);
     const requests = bulkUploads.map((url, index) =>
-      fetch("/api/admin/gallery", {
+      fetch("/api/admin/gallery-items", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -299,7 +299,7 @@ export function GalleryManager() {
     setStatus("");
     setIsSaving(true);
     const updates = items.map((item, index) =>
-      fetch(`/api/admin/gallery/${item.id}`, {
+      fetch(`/api/admin/gallery-items/${item.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
