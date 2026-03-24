@@ -41,6 +41,7 @@ Keep a single, persistent summary of project status, decisions, pending work, an
 - Registration flow now exists with email confirmation and OAuth sign-up.
 - Edit actions now move focus and scroll to the active form on mobile and desktop.
 - SEO baseline now includes metadata, sitemap, robots, and structured data.
+- Open Graph / Twitter image generation now exists for the home page and gallery detail routes.
 - Public gallery and post imagery now use `next/image` in the first performance pass.
 - Audit report `docs/reports/akemi-seo-security-audit-2026-03-24.pdf` reviewed and converted into tracked remediation backlog.
 - Canonical metadata baseline implemented on current public routes.
