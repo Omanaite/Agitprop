@@ -73,9 +73,31 @@ export default async function GalleryDetailPage({
   );
   const approxHours =
     totalSessionMinutes > 0 ? Math.round((totalSessionMinutes / 60) * 10) / 10 : null;
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: gallery.title,
+    description:
+      gallery.description ||
+      `Curated tattoo gallery from Akemi with ${tattoos.length} published pieces.`,
+    url: `${getSiteUrl()}/galleries/${gallery.slug}`,
+    isPartOf: {
+      "@type": "WebSite",
+      name: "Akemi Tattoo Manifesto",
+      url: getSiteUrl(),
+    },
+    about: styles.map((style) => ({
+      "@type": "Thing",
+      name: style,
+    })),
+  };
 
   return (
     <div className="min-h-screen bg-[var(--bg)] p-4 text-[var(--fg)] md:p-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <NoiseOverlay />
       <div className="mx-auto flex max-w-6xl flex-col gap-6">
         <Header />
