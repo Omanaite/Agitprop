@@ -9,6 +9,18 @@ import { homepageSectionsSchema } from "@/lib/validators";
 const selection =
   "id,section_key,title,eyebrow,sort_order,is_visible,created_at,updated_at";
 
+function isSchemaDriftError(message: string | undefined) {
+  const value = (message ?? "").toLowerCase();
+  return (
+    value.includes("homepage_sections") ||
+    value.includes("does not exist") ||
+    value.includes("could not find") ||
+    value.includes("column") ||
+    value.includes("policy") ||
+    value.includes("schema cache")
+  );
+}
+
 export async function GET(request: Request) {
   const ip = getClientIp(request);
   const limit = rateLimit(`admin-homepage-sections:list:${ip}`, 60, 60_000);
@@ -101,6 +113,20 @@ export async function PUT(request: Request) {
       .upsert(payload, { onConflict: "section_key" });
 
     if (error) {
+      if (isSchemaDriftError(error.message)) {
+        return NextResponse.json(
+          {
+            items: mergeSections(payload),
+            degraded: true,
+            message:
+              "Cannot save homepage composition yet. Apply the latest Supabase schema in production first.",
+            detail:
+              process.env.NODE_ENV === "production" ? undefined : error.message,
+          },
+          { status: 409 }
+        );
+      }
+
       return NextResponse.json(
         {
           message: "Failed to save homepage sections.",

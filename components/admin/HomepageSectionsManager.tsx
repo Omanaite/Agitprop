@@ -10,6 +10,7 @@ export function HomepageSectionsManager() {
   const [items, setItems] = useState<HomepageSection[]>([]);
   const [status, setStatus] = useState("");
   const [errors, setErrors] = useState<ValidationError[]>([]);
+  const [isDegraded, setIsDegraded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -21,6 +22,7 @@ export function HomepageSectionsManager() {
   async function load() {
     setStatus("");
     setErrors([]);
+    setIsDegraded(false);
     setIsLoading(true);
 
     const res = await fetch("/api/admin/homepage-sections");
@@ -33,6 +35,7 @@ export function HomepageSectionsManager() {
     const data = await res.json();
     setItems((data.items ?? []) as HomepageSection[]);
     if (data.degraded) {
+      setIsDegraded(true);
       setStatus(
         data.message ??
           "Fallback composition loaded. Apply the latest schema to persist changes."
@@ -118,6 +121,7 @@ export function HomepageSectionsManager() {
     if (!res.ok) {
       const data = await res.json().catch(() => null);
       setErrors(data?.errors ?? []);
+      setIsDegraded(Boolean(data?.degraded));
       setStatus(data?.message ?? "Failed to save homepage sections.");
       setIsSaving(false);
       return;
@@ -143,6 +147,12 @@ export function HomepageSectionsManager() {
         Organize the order of public sections, rename them, and decide which
         blocks stay visible on the client-facing homepage.
       </p>
+      {isDegraded ? (
+        <p className="admin-validation mt-4" data-variant="warning" aria-live="polite">
+          Persistence is temporarily disabled because production Supabase is missing
+          the latest homepage composition schema.
+        </p>
+      ) : null}
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-4">
         {items.map((item, index) => {
@@ -238,7 +248,7 @@ export function HomepageSectionsManager() {
           <button
             type="submit"
             className="admin-button admin-button-primary"
-            disabled={isSaving}
+            disabled={isSaving || isDegraded}
           >
             {isSaving ? "Saving..." : "Save composition"}
           </button>
