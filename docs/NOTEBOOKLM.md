@@ -1,35 +1,53 @@
-# Documento para NotebookLM / Exportable a PDF
+﻿# NotebookLM Source Pack - Akemi Tattoo Portfolio
 
-## Resumen del Proyecto
-Akemi Tattoo Portfolio es una webapp brutalista para exhibir trabajos de un artista tatuador. El sistema incluye galería pública, booking, contacto y pagos, y se expandirá con panel administrativo para gestionar contenido.
+## Snapshot
+- Date: 2026-03-24
+- Environment target: Vercel + Supabase production
+- Stack: Next.js App Router, React 19, Supabase (Postgres/Auth/Storage), Resend, Stripe/PayPal placeholders
+- Current phase: MVP hardening and production verification
 
-## Alcance Actual
-- Galería de trabajos (lectura pública).
-- Booking de sesiones (creación de solicitudes).
-- Contacto (envío de email).
-- Pagos (Stripe/PayPal).
+## What the Product Is
+Akemi Tattoo Portfolio is a web application for a tattoo artist. It combines a public editorial portfolio with a dedicated admin console for content operations.
 
-## Alcance Propuesto
-- Login para administrador.
-- CRUD de galería y publicaciones.
-- Escalabilidad: tags, colecciones, estilos, ubicaciones.
-- Temas UI: dark mode y eye-rest mode.
-- Editor avanzado de galería y publicaciones (bulk upload, reordenamiento, drafts).
+## MVP Scope
+### Public
+- Homepage with configurable sections.
+- Theme switching (`light`, `eye`, `dark`).
+- Locale switching (`en`, `es`, `de`).
+- Public galleries and gallery detail pages.
+- Public posts feed.
+- Booking and contact forms.
+- Registration with email confirmation and OAuth sign-up.
 
-## Funcionalidades Clave
-- Gestión de contenido por el artista.
-- Vistas públicas optimizadas.
-- Pagos externos configurables.
+### Admin
+- Email/password admin login.
+- OAuth admin login.
+- CRUD for galleries, pieces, and posts.
+- Homepage composition manager.
+- Admin profile and integrations screens.
+- Dedicated admin design system.
 
-## Manual de Administrador (Resumen)
-- Iniciar sesión en panel admin.
-- Crear/editar/eliminar piezas de galería.
-- Crear/editar/eliminar publicaciones.
-Nota: el usuario debe tener rol `admin` en Supabase Auth.
+## Architecture Summary
+- Frontend: Next.js App Router, server-rendered public routes, interactive admin components.
+- Backend: Supabase Postgres + Auth + Storage.
+- Security: RLS, role-based admin gating, rate limiting, same-origin checks, honeypot fields, reduced fingerprinting.
+- SEO: route metadata, canonicals, sitemap, robots, JSON-LD, social images.
 
-## Roadmap (Resumen)
-- F0: Descubrimiento y alcance.
-- F1: Specs y diseño (SDD).
-- F2: Implementación núcleo admin.
-- F3: Contenido ampliado y storage.
-- F4: Escalabilidad y calidad.
+## MVP Status
+The MVP is near-complete locally. Remaining work is mainly production verification and credential-dependent smoke testing.
+
+Reference documents:
+- `docs/MVP_STATUS.md`
+- `docs/PENDING_EXTERNAL_INTERVENTIONS.md`
+- `docs/PRE_PROD_CHECKLIST.md`
+
+## Post-MVP Direction
+After MVP signoff, the roadmap expands toward:
+- sandbox payments
+- appointment calendar management
+- reminders and notifications
+- WhatsApp and Google Calendar integrations
+- chatbot guidance and developer ticket routing
+- optional feature toggles and future SaaS direction
+
+Reference: `docs/POST_MVP_BACKLOG.md`

@@ -1,118 +1,111 @@
-# Project Roadmap: Akemi Tattoo Portfolio
+﻿# Project Roadmap: Akemi Tattoo Portfolio
 
-Date: 2026-03-20
-Current status: Phase 3 - Extended content and operations
+Date: 2026-03-24
+Current status: Phase 4 - MVP hardening and production verification
 
 ## Executive Summary
-Product: brutalist tattoo portfolio with gallery, bookings, contact, and payments.
-Goal: evolve into an artist-managed platform with login, content CRUD, and scalable features.
+Product: a Next.js + Supabase tattoo portfolio for a single artist, with a brutalist public experience and a separate admin console for operational work.
+Current objective: close the MVP safely, verify production, and preserve a clear handoff path for post-MVP SaaS expansion.
 
-## Fases
+## Phases
 
-### Phase 0 - Discovery and scope (Done)
+### Phase 0 - Discovery and Scope (Done)
 - Inventory of existing capabilities.
-- Definition of main use cases.
-- Initial functional specs for admin and scalability.
+- Primary use cases.
+- Initial product scope and constraints.
 
-### Phase 1 - Formal specs (SDD) (Done)
-- SDD Spec: requirements and scenarios (auth/roles, admin, gallery, posts, extensibility).
-- SDD Design: architecture, flows, entities, RLS, storage, webhooks.
-- SDD Tasks: implementation breakdown with dependencies.
+### Phase 1 - Formal Specs / SDD (Done)
+- SDD proposal, delta specs, design, and task breakdown.
+- Internal quality rules, PR process, and security-review gate.
 
-### Phase 2 - Core admin implementation (Done)
-- Admin auth (Supabase Auth).
-- Admin base panel.
-- Gallery CRUD (images + metadata).
-- Validations and error messages.
-- UX standardization for validations (admin + client).
-- Admin route protection with session and role.
-- Field-level error states (error + helper).
+### Phase 2 - Core Admin Implementation (Done)
+- Supabase admin auth.
+- Protected admin routes.
+- CRUD for galleries, pieces, and posts.
+- Validation and consistent error messaging.
+- Baseline RLS and storage model.
 
-### Phase 3 - Extended content and operations (Active)
-- Posts/news CRUD.
-- Image storage (Supabase Storage) + CDN.
-- Dark mode.
-- Eye rest mode (warm tone on light theme).
-- Public posts feed visible to clients.
-- Multiple galleries with navigation.
-- Gallery filter on public view.
-- Advanced gallery editor (bulk upload, drag & drop, tags).
-- Advanced post editor (draft, preview, scheduling).
-- Admin profile (payments, addresses, email, nickname).
-- Cloud connection for uploads (editor enabled only if connected).
-- OAuth (Google, GitHub, Facebook or other artist providers).
-- Admin console navigation (single active section + dropdown).
-- English UI copy (admin + client).
-- Separate admin design system from the public portal.
-- Headless UI navigation for the admin workspace.
-- Skeleton loading states on admin login and dashboard.
-- Theme switcher available inside the admin experience.
-- Neutral admin typography for console readability. Implemented.
+### Phase 3 - Extended Content and Operations (Done / Stabilized)
+- Multiple galleries.
+- Advanced gallery editor.
+- Advanced post editor.
+- Public posts feed.
+- Public gallery listing and detail pages.
+- Admin profile and integrations.
+- Homepage composition controls.
+- Public theme switching.
+- Public locale switching (`en`, `es`, `de`).
+- Separate admin design system.
+- Headless UI admin navigation.
+- Admin skeleton loading states.
+- Neutral admin typography.
+- Registration with email confirmation and OAuth sign-up.
 
-### Phase 4 - Scalability and quality (Pending)
-- Tags/collections/styles/locations.
-- Basic analytics.
-- Internationalization.
-- User-selectable site languages: German, English, Spanish. Implemented for public UI preference and routing-level rendering.
-- Admin-managed homepage section ordering. Implemented.
-- Admin-managed homepage section naming. Implemented.
-- Admin-managed homepage section visibility. Implemented.
-- Security and performance hardening.
-- Admin typography QA sweep after neutral font rollout.
-- SDLC standard + PR manual security review.
-- Upgrade dependency baseline during pre-prod hardening. In progress.
-- Fix contrast of gallery filter option text across theme modes. Implemented.
-- Add branded OAuth icons for Google and GitHub with theme-aware variants. Implemented.
-- Add registration flow with email confirmation and OAuth sign-up. Implemented.
-- Move focus and scroll to the active admin form when entering edit mode on mobile and desktop. Implemented.
+### Phase 4 - MVP Hardening and Production Verification (Active)
+- Production smoke testing.
+- Final Supabase schema verification.
+- Final OAuth / email flow verification.
+- Final visual QA for admin and public experience.
+- SEO and security hardening.
+- Copy hardening before final indexation.
+- Lighthouse pass and performance cleanup.
 
-### Payments (Last)
-- Payments and webhooks are implemented last, after QA and stability.
+### Phase 5 - MVP Signoff (Pending)
+- Confirm the latest deployed commit in Vercel.
+- Confirm all MVP acceptance criteria in `docs/MVP_STATUS.md`.
+- Close all required external interventions listed in `docs/PENDING_EXTERNAL_INTERVENTIONS.md`.
+- Approve MVP as production-ready for the current single-artist product.
 
-## Deliverables by phase
-- P0: Scope and roadmap document (this file).
-- P1: Specs + Design + Tasks.
-- P2: Admin implementation + baseline tests.
-- P3: Advanced content + storage + admin profile + OAuth.
-- P4: Scalability + QA + observability.
+### Payments (After MVP Signoff)
+- Stripe and PayPal remain intentionally deferred until MVP acceptance.
+- Sandbox-first validation is required before production payment rollout.
 
-## Known blockers
-- Requires keys and credentials (Supabase, Resend, Stripe/PayPal) for full flows.
+### Post-MVP - Product Expansion / SaaS Direction (Planned)
+- Multi-artist / multi-tenant evolution.
+- Sandbox-first Stripe and PayPal validation.
+- Calendar management for appointments.
+- Email reminders and artist notifications.
+- Optional WhatsApp notification when bookings are created.
+- Google Calendar sync for accepted appointments.
+- Chatbot for site guidance and developer ticket escalation.
+- Per-feature toggles so the artist can enable or disable integrations safely.
 
-## Update 2026-03-20
-- Admin experience redesigned with a dedicated visual system separate from the public portal.
-- Headless UI powers focused section navigation in the dashboard.
-- Skeleton loading added to admin login and dashboard routes.
-- Theme controls exposed inside admin login and admin dashboard.
-- Configurable public section order, naming, and visibility implemented from the admin console.
-- Public header navigation now follows configured visible homepage sections.
-- Public locale selector implemented with persistent German, English, and Spanish preference.
-- Homepage composition now fails open in admin with a guided fallback if production schema is behind.
-- Gallery filter dropdown contrast was hardened for theme/native select mismatches.
-- Admin OAuth buttons now use provider iconography aligned with the active theme.
-- Registration route added with email confirmation and OAuth sign-up entry points.
-- SEO baseline added with OpenGraph metadata, robots, sitemap, and structured data.
-- Branded Open Graph and Twitter image endpoints were added for the home page and gallery detail routes.
-- Public gallery and editorial images now use `next/image` for the first performance pass.
-- SEO/security audit review from `docs/reports/akemi-seo-security-audit-2026-03-24.pdf` is now part of the backlog and implementation order.
-- Canonical metadata baseline implemented for current public routes.
-- Locale preference cookie is now written server-side with production-aware attributes.
-- Route-level SEO descriptions were strengthened for the homepage and gallery detail pages.
-- Gallery detail pages now include stronger standalone descriptive content and summary chips.
-- Public homepage tattoo payload was trimmed to the fields required for the public filter/grid.
-- Abuse protection now includes a honeypot + rate-limit layer across public submission flows.
-- Next.js powered-by fingerprinting is disabled in production responses.
-- Public auth and admin auth utility routes are marked as non-indexable.
-- Public empty states and fallback copy were upgraded to more editorial, client-facing language.
+## Deliverables by Phase
+- P0: `docs/ROADMAP.md`, `docs/PROJECT_OVERVIEW.md`
+- P1: `openspec/changes/admin-content-management/*`
+- P2: protected admin panel + CRUD APIs + RLS
+- P3: advanced content tooling + composition controls + locale controls + registration
+- P4: production verification + SEO/security hardening + QA
+- P5: MVP signoff package
 
-### Audit Follow-up Backlog
-- Add canonical tags across public routes.
-- Strengthen search-oriented metadata and page descriptions beyond brand-only copy.
-- Replace placeholder/low-trust public copy before final indexation.
-- Improve gallery detail pages with stronger standalone ranking content.
-- Reduce public page payload where possible.
-- Tighten CSP over time by reducing inline allowances and narrowing `connect-src`.
-- Reduce stack fingerprinting where practical.
-- Make abuse protection consistent across all public write endpoints.
-- Evolve multilingual SEO beyond cookie-only switching when route-based locale architecture is introduced.
-- Standardize locale cookie production attributes.
+## Known Blockers
+- Requires production verification in Vercel and Supabase before declaring MVP complete.
+- Requires working third-party configuration for OAuth and email flows.
+- Requires final editorial review for public SEO-facing content.
+- Post-MVP integrations will require provider credentials and business rules.
+
+## Current Roadmap Focus
+1. Keep the current MVP stable.
+2. Document all user-dependent actions without blocking autonomous work.
+3. Avoid starting provider-dependent integrations before MVP signoff.
+4. Preserve a safe path toward optional, configurable post-MVP modules.
+
+## Audit Follow-up Backlog
+Source of record: `docs/reports/akemi-seo-security-audit-2026-03-24.pdf`
+- [x] Canonical metadata baseline.
+- [x] Social metadata / OG / Twitter images.
+- [x] Sitemap and robots.
+- [x] JSON-LD baseline.
+- [x] Public payload trimming.
+- [x] Anti-abuse normalization.
+- [x] Powered-by fingerprint reduction.
+- [ ] Final placeholder / low-trust copy replacement before indexation.
+- [ ] Additional CSP tightening without breaking Next/Vercel runtime.
+- [ ] Route-based multilingual SEO strategy beyond cookie-only locale switching.
+- [ ] Final Lighthouse pass after production verification.
+
+## MVP Context
+- MVP status and acceptance gate: `docs/MVP_STATUS.md`
+- User-dependent items: `docs/PENDING_EXTERNAL_INTERVENTIONS.md`
+- Post-MVP expansion backlog: `docs/POST_MVP_BACKLOG.md`
+- Production readiness checklist: `docs/PRE_PROD_CHECKLIST.md`

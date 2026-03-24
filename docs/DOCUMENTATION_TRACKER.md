@@ -1,73 +1,51 @@
 ﻿# Documentation by Process
 
 ## Goal
-Ensure each roadmap phase has associated documentation and is kept up to date.
+Ensure each roadmap phase has associated documentation and that handoff context survives beyond the current chat/session.
 
-## Status by Phase
+## Status by Area
 
 ### Phase 0 - Discovery and scope
-- Document: `docs/ROADMAP.md`
-- Document: `docs/PROJECT_OVERVIEW.md`
+- Documents: `docs/ROADMAP.md`, `docs/PROJECT_OVERVIEW.md`
 - Status: Complete
 
 ### Phase 1 - Formal specs (SDD)
-- Document: `openspec/changes/<change-name>/specs/*/spec.md`
-- Status: Complete (change: admin-content-management)
+- Documents: `openspec/changes/admin-content-management/specs/*/spec.md`
+- Status: Complete and maintained
 
 ### Technical design (SDD)
 - Document: `openspec/changes/admin-content-management/design.md`
-- Status: Complete
+- Status: Complete and updated with SEO/security + post-MVP context
 
 ### Tasks (SDD)
 - Document: `openspec/changes/admin-content-management/tasks.md`
-- Status: Complete
+- Status: Complete and maintained
 
-### Phase 2 - Core admin implementation
+### Admin operations
 - Document: `docs/ADMIN_MANUAL.md`
-- Status: In progress (UI and base flows implemented)
+- Status: Updated with current admin UX and smoke-test guidance
 
-### Pre-production checklist
-- Document: `docs/PRE_PROD_CHECKLIST.md`
-- Status: Started
+### Pre-production readiness
+- Documents: `docs/PRE_PROD_CHECKLIST.md`, `docs/MVP_STATUS.md`, `docs/PENDING_EXTERNAL_INTERVENTIONS.md`
+- Status: Active / current source of truth for MVP closure
 
-### UX validations
-- Document: `docs/VALIDATION_UX.md`
-- Status: Complete
+### Product master summary
+- Documents: `docs/MASTER_DOCUMENT.md`, `docs/NOTEBOOKLM.md`, `docs/NOTEBOOKLM_SOURCE.md`
+- Status: Refreshed for cross-session continuity and PDF/export use
 
-### Updated specs
-- Document: `openspec/changes/admin-content-management/specs/*/spec.md`
-- Status: Updated with validations and admin guards
-
-### Public site specs
-- Document: `openspec/changes/admin-content-management/specs/public-site/spec.md`
-- Status: Complete
-
-### Phase 3 - Extended content and operations
-- Document: `docs/ADMIN_MANUAL.md`
-- Status: Updated with advanced posts, integrations, and dedicated admin design system
-
-### Phase 4 - Scalability and quality
-- Document: `docs/PROJECT_OVERVIEW.md`
-- Status: In progress (configurable page composition and public locale preference implemented; deeper localization still pending)
+### Scalability and post-MVP planning
+- Documents: `docs/POST_MVP_BACKLOG.md`, `docs/ROADMAP.md`, `docs/PROJECT_OVERVIEW.md`
+- Status: Tracked, intentionally not implemented before MVP signoff
 
 ### Security
-- Document: `docs/SECURITY_REVIEW.md`
-- Status: Initial review applied (hardening pending)
+- Documents: `docs/SECURITY_REVIEW.md`, `docs/SDLC_QUALITY_STANDARD.md`, `docs/PR_PROCESS.md`
+- Status: Active standards
 
-### SDLC Standard
-- Document: `docs/SDLC_QUALITY_STANDARD.md`
-- Status: Complete
-
-### PR Process
-- Document: `docs/PR_PROCESS.md`
-- Status: Complete
-
-## Change log
-- 2026-03-12: Roadmap and baseline documentation initialized.
-- 2026-03-13: Public galleries detail, admin login fixes, seed data added.
-- 2026-03-15: Admin console navigation update + English UI copy documented.
-- 2026-03-19: Admin design system, Headless UI navigation, and skeleton loading documented.
-- 2026-03-20: Added pending documentation for public section composition and multilingual site support.
-- 2026-03-20: Documented implemented homepage composition controls and public navigation sync.
-- 2026-03-20: Documented public locale selector and server-rendered locale preference.
-- 2026-03-24: Added pre-production checklist and admin typography follow-up.
+## Changelog
+- 2026-03-12: Baseline roadmap and scope documentation created.
+- 2026-03-13: Admin and data-model implementation docs expanded.
+- 2026-03-15: Admin navigation and auth fixes documented.
+- 2026-03-19: Admin design system and loading states documented.
+- 2026-03-20: Homepage composition and locale controls documented.
+- 2026-03-24: SEO/security audit actions documented.
+- 2026-03-24: MVP status, external-intervention tracking, and post-MVP backlog formalized.

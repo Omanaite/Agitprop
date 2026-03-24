@@ -86,6 +86,11 @@ Applied baseline improvements:
 - public write flows use rate limiting, same-origin checks, and honeypot fields
 - `X-Powered-By` exposure is disabled through Next.js configuration
 
+### Decision: MVP-first external integration gating
+**Choice**: Keep provider-dependent features that require external credentials or business-rule confirmation documented, but blocked from implementation until MVP signoff unless they can degrade safely without affecting current production flows.
+**Alternatives considered**: Start implementing all planned integrations before MVP acceptance.
+**Rationale**: The project is close to MVP. Adding provider-heavy features (payments, calendar sync, WhatsApp delivery, chatbot escalation) before production verification would increase regression risk and blur release readiness.
+
 ## Data Flow
 
 Admin Login -> Supabase Auth -> Admin Session
@@ -192,6 +197,31 @@ Future iteration for editor UX:
   sections so navigation order stays aligned with homepage composition.
 - Language preference should be stored independently from theme preference, but
   exposed with a similarly lightweight selector UX.
+
+## Post-MVP Expansion Architecture
+- Payments, calendar sync, reminders, chatbot support, and WhatsApp delivery
+  should all be modeled as optional modules.
+- Each optional module should support three states:
+  - disabled
+  - configured but disconnected / degraded
+  - enabled and healthy
+- Artist-controlled toggles should live in the admin workspace and must not
+  require redeploys for routine enable/disable operations.
+- Booking and public contact flows must continue working even if post-MVP
+  integrations are absent or misconfigured.
+- Notification and calendar features should evolve behind clear service
+  boundaries so future SaaS tenancy does not require rewriting core booking
+  logic.
+
+Planned post-MVP themes now tracked in product docs:
+- sandbox Stripe / PayPal completion
+- appointment calendar management
+- email reminders
+- WhatsApp booking notification
+- Google Calendar sync
+- chatbot guidance + developer ticket routing
+- per-feature toggles controlled by the artist
+- future multi-tenant / SaaS exploration
 
 ## Knowledge Capture & Skills
 Maintain SDD artifacts in `openspec/` and keep skill registry updated so

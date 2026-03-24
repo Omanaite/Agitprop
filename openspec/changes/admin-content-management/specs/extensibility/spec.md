@@ -73,3 +73,27 @@ The system **SHOULD** allow the admin visual system to evolve independently from
 - WHEN the UI for that feature is implemented
 - THEN it follows the admin design system and navigation model
 - AND it does not require changes to the public site design language
+
+### Requirement: Optional Integration Modules
+The system **SHALL** keep advanced external integrations optional and safe to disable, especially for post-MVP capabilities.
+
+#### Scenario: Disabled integration
+- GIVEN an optional integration is turned off
+- WHEN a visitor or artist uses the core site
+- THEN the core portfolio, booking, and admin flows continue to function
+- AND the disabled integration does not surface blocking errors
+
+#### Scenario: Misconfigured integration
+- GIVEN an optional integration is enabled but not fully configured
+- WHEN the related feature is reached
+- THEN the system degrades safely
+- AND the admin sees actionable configuration guidance
+
+### Requirement: Artist-Controlled Feature Toggles
+The system **SHOULD** allow the artist/admin to enable or disable advanced modules without redeploying the application.
+
+#### Scenario: Artist disables a module
+- GIVEN an artist disables an advanced module such as reminders or calendar sync
+- WHEN the public or admin experience renders
+- THEN the module is hidden or inactive
+- AND the rest of the product remains stable

@@ -69,3 +69,24 @@ Nota: solo los posts `published` se muestran en el sitio publico.
 - Si no tienes permisos: validar rol `admin` en Supabase Auth.
 - Si `Homepage sections` carga en modo fallback: aplicar el ultimo `schema.sql`
   en Supabase para habilitar persistencia real de composicion.
+
+## Checklist de smoke test manual
+
+### Admin
+- Login con email/password.
+- Login con OAuth habilitado.
+- Guardar cambios en Perfil Admin.
+- Cargar pantalla de Integraciones.
+- Crear, editar y eliminar una galeria.
+- Crear, editar y eliminar una pieza.
+- Crear, editar y eliminar un post.
+- Abrir `Home Composition`, validar carga real y guardar cambios.
+
+### Publico
+- Cambiar tema entre normal, eye-rest y dark.
+- Cambiar idioma entre ingles, espanol y aleman.
+- Abrir home, galerias y detalle de galeria.
+- Verificar que posts publicados se vean.
+- Probar registro con email y con OAuth.
+- Probar formulario de booking.
+- Probar formulario de contacto.

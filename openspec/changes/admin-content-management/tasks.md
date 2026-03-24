@@ -21,7 +21,7 @@
 ## Phase 4: Testing / Verification
 - [ ] 4.1 Add unit tests for new validation schemas in `lib/validators.ts`.
 - [ ] 4.2 Add integration tests for admin API routes (CRUD scenarios).
-- [ ] 4.3 Add manual test checklist for admin flow in `docs/ADMIN_MANUAL.md`.
+- [x] 4.3 Add manual test checklist for admin flow in `docs/ADMIN_MANUAL.md`.
 
 ## Phase 5: Security Review
 - [x] 5.1 Run a security review against OWASP Top 10 for admin routes and public APIs.
@@ -98,3 +98,14 @@
 - [ ] 11.1 Implement payments (Stripe/PayPal) after QA signoff.
 - [ ] 11.2 Add webhook handling and audit logging.
 - [ ] 11.3 Add admin profile payment settings.
+
+## Phase 15: MVP Signoff Preparation
+- [ ] 15.1 Validate `docs/MVP_STATUS.md` against the deployed production build.
+- [ ] 15.2 Close or confirm each item in `docs/PENDING_EXTERNAL_INTERVENTIONS.md`.
+- [ ] 15.3 Record final smoke-test results in `docs/PRE_PROD_CHECKLIST.md`.
+
+## Phase 16: Post-MVP Discovery Backlog
+- [ ] 16.1 Design sandbox-first Stripe and PayPal rollout after MVP signoff.
+- [ ] 16.2 Design appointment calendar + reminder architecture with graceful degradation.
+- [ ] 16.3 Design optional WhatsApp, Google Calendar, and chatbot modules behind artist-controlled feature toggles.
+- [ ] 16.4 Document SaaS / multi-tenant exploration boundaries before implementation.

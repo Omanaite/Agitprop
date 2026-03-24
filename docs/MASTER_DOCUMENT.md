@@ -1,133 +1,134 @@
-# Documento Maestro - Akemi Tattoo Portfolio
+ï»¿# Master Document - Akemi Tattoo Portfolio
 
-Fecha: 2026-03-14
-Version: 1.0
+Date: 2026-03-24
+Version: 2.0
+Status: MVP hardening and production verification
 
-## 1. Roadmap
+## 1. Product Summary
+Akemi Tattoo Portfolio is a tattoo artist web application that combines:
+- a public portfolio and discovery experience
+- operational admin tooling for content management
+- a documented path toward configurable, optional post-MVP integrations
 
-### Fase 0 – Descubrimiento (Completa)
-- Inventario de funcionalidades
-- Casos de uso
-- Alcance inicial
+The product is intentionally finishing as a strong single-artist MVP before broader SaaS expansion.
 
-### Fase 1 – SDD (Completa)
-- Specs, Design, Tasks
-- Reglas de calidad y PR
+## 2. MVP Definition
+The MVP is complete only when:
+- production deploy is confirmed on the latest commit
+- public theme and locale switching work in production
+- galleries and posts render correctly in production
+- booking and contact flows work end-to-end
+- admin login works with email/password and configured OAuth
+- admin CRUD works in production
+- registration works with email confirmation and OAuth sign-up
+- baseline SEO/security hardening is active
+- no blocking Vercel/Supabase issues remain
 
-### Fase 2 – Nucleo Admin (Completa)
-- Login admin
-- CRUD galerias, piezas y posts
-- Validaciones UX
-- RLS + Storage
+Reference: `docs/MVP_STATUS.md`
 
-### Fase 3 – Contenido Avanzado (Actual)
-- Editor avanzado (bulk upload, reorder, preview, scheduling)
-- Galerias multiples y detalle publico
-- Perfil admin (datos personales + pagos + direcciones)
-- Conexion a nube
-- OAuth (Google/GitHub/Facebook)
+## 3. Current Product Scope
+### Public
+- homepage
+- configurable homepage section order/naming/visibility
+- gallery browsing and detail pages
+- public posts feed
+- booking and contact forms
+- registration and locale preference
+- theme switching
 
-### Fase 4 – Escalabilidad y Calidad (Pendiente)
-- Tags / colecciones / estilos
-- Analitica basica
-- i18n
-- Hardening + performance
+### Admin
+- protected admin console
+- gallery CRUD
+- piece CRUD
+- posts CRUD
+- profile and integrations views
+- homepage composition manager
+- dedicated admin design system
 
-### Pagos (Final)
-- Stripe/PayPal al final, despues de QA y estabilidad
-
----
-
-## 2. Arquitectura del Proyecto
-
+## 4. Architecture
 ### Frontend
 - Next.js App Router
-- Rutas publicas + panel admin
-- UI brutalista + temas (light/dark/eye)
+- SSR/server-rendered public pages
+- interactive admin client components
+- distinct public vs admin UX systems
 
 ### Backend
-- Supabase (Postgres + RLS + Storage)
-- Auth con roles (app_metadata.role=admin)
-- API routes en Next.js
+- Supabase Postgres
+- Supabase Auth
+- Supabase Storage
+- Next.js route handlers for privileged operations
 
-### Seguridad
-- CSP + headers
-- RLS en tablas
-- Rate limit en endpoints
+### Security
+- role-based admin gating
+- RLS policies
+- rate limiting
+- same-origin enforcement
+- honeypot anti-abuse fields
+- CSP baseline
+- reduced fingerprinting
 
-### Extensibilidad
-- Nuevos tipos de contenido sin romper vistas
-- OAuth + integraciones cloud planeadas
-- Admin Profile planeado
+### SEO
+- metadata and canonical baseline
+- sitemap and robots
+- JSON-LD
+- OG/Twitter images
+- route-level descriptive copy improvements
 
----
+## 5. MVP Readiness
+### Stable locally
+- lint/build/audit pass
+- admin UI stable
+- public UI stable
+- registration and OAuth flows implemented
+- locale and theme preference implemented
 
-## 3. Alcance del Proyecto
+### Still requiring production confirmation
+- latest deploy confirmation
+- Supabase schema alignment
+- OAuth production checks
+- email delivery checks
+- homepage composition persistence verification
 
-### Alcance Actual
-- Portfolio publico
-- Booking + contacto
-- Admin CMS (galerias + posts)
-- Temas UI
-- Seguridad base
+Reference: `docs/PENDING_EXTERNAL_INTERVENTIONS.md`
 
-### Alcance Proximo
-- Perfil admin
-- OAuth
-- Conexion cloud
-- Analitica
-- i18n
+## 6. Roadmap Summary
+- Phase 0: discovery and scope
+- Phase 1: SDD
+- Phase 2: core admin
+- Phase 3: extended content and operations
+- Phase 4: MVP hardening and production verification
+- Phase 5: MVP signoff
+- Payments: after MVP signoff
+- Post-MVP: SaaS expansion themes
 
----
+Reference: `docs/ROADMAP.md`
 
-## 4. Escalabilidad
+## 7. Post-MVP Direction
+Planned only after MVP acceptance:
+- Stripe and PayPal sandbox validation
+- appointment calendar and booking management
+- email reminders
+- WhatsApp notifications
+- Google Calendar sync
+- chatbot guidance and developer ticket routing
+- artist-configurable feature toggles
+- multi-tenant exploration
 
-El sistema esta preparado para:
-- Agregar nuevas entidades (colecciones, estilos, servicios)
-- Multi-admin
-- Integraciones externas
-- Escalar contenido sin romper UX
+Reference: `docs/POST_MVP_BACKLOG.md`
 
----
+## 8. Operational Rules
+- Review skills before implementation.
+- Persist context in Engram when available.
+- Keep roadmap, state, and openspec aligned after significant changes.
+- Keep external-provider requirements documented without blocking autonomous work.
+- Do not release provider-dependent features without graceful fallback.
 
-## 5. SEO
-
-### Implementado
-- Metadata base
-- URLs limpias
-- Contenido SSR
-
-### Pendiente
-- OpenGraph completo
-- Sitemap dinamico
-- Schema.org
-- Optimizacion de imagenes
-
----
-
-## 6. Estado Actual (Snapshot)
-
-- Admin CMS funcional
-- Deploy en Vercel
-- Auth con Supabase
-- Roadmap y specs actualizados
-
----
-
-## 7. Archivos clave
-
+## 9. Key Files
 - `docs/ROADMAP.md`
 - `docs/STATE.md`
-- `docs/PROJECT_OVERVIEW.md`
+- `docs/MVP_STATUS.md`
+- `docs/PENDING_EXTERNAL_INTERVENTIONS.md`
+- `docs/POST_MVP_BACKLOG.md`
+- `docs/PRE_PROD_CHECKLIST.md`
 - `openspec/changes/admin-content-management/design.md`
-- `supabase/schema.sql`
-- `supabase/seed.sql`
-
----
-
-## 8. Notas finales
-
-- Pagos se implementan al final del ciclo
-- QA antes de producción
-- Mantener SDLC y PR process activos
-
+- `openspec/changes/admin-content-management/tasks.md`

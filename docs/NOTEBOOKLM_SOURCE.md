@@ -1,60 +1,38 @@
-# NotebookLM Source - Akemi Tattoo Portfolio
+﻿# NotebookLM Source - Akemi Tattoo Portfolio
 
 ## Snapshot
-- Fecha: 2026-03-15
-- Entorno: Produccion (Vercel)
+- Date: 2026-03-24
+- Status: MVP hardening and production verification
 - Stack: Next.js App Router + Supabase (Postgres, Auth, Storage)
-- Estado: Admin CMS funcional, roadmap actualizado, pagos al final.
+- Branch target: `vercel`
 
-## Roadmap (resumen)
-- Fase 0: Descubrimiento (Completa)
-- Fase 1: SDD Specs/Design/Tasks (Completa)
-- Fase 2: Nucleo Admin (Completa)
-- Fase 3: Contenido avanzado (Actual)
-  - Editor avanzado (bulk upload, reorder, preview, scheduling)
-  - Galerias multiples y detalle publico
-  - Perfil admin (datos, direcciones, pagos)
-  - Conexion a nube
-  - OAuth (Google/GitHub/Facebook)
-- Fase 4: Escalabilidad y calidad (Pendiente)
-  - Tags/colecciones/estilos
-  - Analitica basica
-  - i18n
-  - Hardening + performance
-- Pagos: ultimo paso (post QA)
+## Roadmap Summary
+- Phase 0: Discovery and scope (done)
+- Phase 1: Formal SDD (done)
+- Phase 2: Core admin (done)
+- Phase 3: Extended content and operations (done / stabilized)
+- Phase 4: MVP hardening and production verification (active)
+- Phase 5: MVP signoff (pending)
+- Post-MVP: SaaS direction and optional integrations (planned)
 
-## Arquitectura (resumen)
-- Frontend: Next.js App Router, SSR/ISR, UI brutalista, temas light/dark/eye.
-- Backend: Supabase Auth + RLS + Storage, CRUD via API routes.
-- Seguridad: CSP, headers, rate limiting, RLS en tablas.
-- Extensibilidad: nuevos tipos, OAuth, integraciones cloud, admin profile.
+## Current Capabilities
+- Public homepage with configurable section composition.
+- Theme switching and locale preference.
+- Galleries, gallery detail, and published content.
+- Booking and contact flows.
+- Registration with email confirmation and OAuth sign-up.
+- Admin console with content CRUD, profile, and integrations screens.
 
-## Funcionalidades actuales
-- Publico: galeria, detalle de galerias, posts publicados, booking, contacto.
-- Admin: login, CRUD galerias/piezas/posts, validaciones UX.
+## Current Risks / Dependencies
+- Needs production smoke testing.
+- Needs Supabase schema confirmation in the target project.
+- Needs OAuth and email verification in production.
+- Needs final SEO/copy approval before full indexation.
 
-## Pendientes priorizados
-- QA completo con seed
-- Perfil admin
-- OAuth providers
-- Conexiones cloud
-- SEO avanzado (OG, sitemap, schema.org)
-- Pagos al final
-
-## Datos de prueba
-- Archivo: supabase/seed.sql
-- Incluye: galleries, tattoos, posts, bookings, audit_logs
-- Pendientes: oauth identities, admin profile, cloud connections, payments
-
-## Documentos clave
-- docs/MASTER_DOCUMENT.md
-- docs/ROADMAP.md
-- docs/PROJECT_OVERVIEW.md
-- docs/STATE.md
-- openspec/changes/admin-content-management/design.md
-
-## Notas operativas
-- Deploy en Vercel con branch vercel.
-- Supabase auth con app_metadata.role=admin.
-- Temas UI habilitados.
-- CSP ajustado para compatibilidad con Next.
+## Key Documents
+- `docs/ROADMAP.md`
+- `docs/STATE.md`
+- `docs/MVP_STATUS.md`
+- `docs/PENDING_EXTERNAL_INTERVENTIONS.md`
+- `docs/POST_MVP_BACKLOG.md`
+- `openspec/changes/admin-content-management/design.md`
