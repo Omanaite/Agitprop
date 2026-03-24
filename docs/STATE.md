@@ -13,6 +13,7 @@ Keep a single, persistent summary of project status, decisions, pending work, an
 - Themes: light, dark, eye (eye rest).
 - Documentation: roadmap, admin manual, validation UX, security, SDLC, PR process.
 - Engram: active in Codex (config in AppData\Roaming\codex\config.toml).
+- Local dependency baseline updated to Next.js 16.2.1 with clean `npm audit`.
 
 ## Recent Key Changes
 - proxy.ts active (middleware migration) for Next 16.
@@ -31,6 +32,8 @@ Keep a single, persistent summary of project status, decisions, pending work, an
   server-rendered locale-aware homepage copy for English, Spanish, and German.
 - Admin now uses a neutral operations-oriented font stack separate from the
   public brutalist typography.
+- Homepage composition save is now automatically disabled during production
+  schema fallback so admins are not exposed to failing writes.
 - Gitignore: engram/ ignored to avoid build failures.
 
 ## Current Blocker (Vercel)

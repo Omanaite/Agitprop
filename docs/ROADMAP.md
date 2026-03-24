@@ -60,6 +60,7 @@ Goal: evolve into an artist-managed platform with login, content CRUD, and scala
 - Security and performance hardening.
 - Admin typography QA sweep after neutral font rollout.
 - SDLC standard + PR manual security review.
+- Upgrade dependency baseline during pre-prod hardening. In progress.
 
 ### Payments (Last)
 - Payments and webhooks are implemented last, after QA and stability.

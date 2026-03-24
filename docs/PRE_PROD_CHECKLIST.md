@@ -8,6 +8,7 @@ Provide a single operational checklist before declaring the product ready for pr
 
 ## Build and Deploy
 - [x] `npm run build` passes locally.
+- [x] `npm audit` reports `0 vulnerabilities` locally.
 - [ ] Latest `vercel` commit deployed successfully in Vercel.
 - [ ] No runtime 5xx errors in Vercel logs after smoke test.
 
@@ -42,6 +43,10 @@ Provide a single operational checklist before declaring the product ready for pr
 - [ ] Accessibility spot check completed for keyboard navigation and focus states.
 - [ ] Copy review completed for English public UI and admin UI.
 - [ ] Admin typography sweep completed after neutral font rollout.
+
+## Notes
+- Local dependency baseline updated to `next@16.2.1` and matching `eslint-config-next@16.2.1`.
+- Homepage composition persistence still depends on applying the latest Supabase schema in production.
 
 ## Release Decision
 - [ ] Product accepted for next production hardening step.
