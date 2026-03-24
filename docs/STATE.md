@@ -35,6 +35,11 @@ Keep a single, persistent summary of project status, decisions, pending work, an
 - Homepage composition save is now automatically disabled during production
   schema fallback so admins are not exposed to failing writes.
 - Gitignore: engram/ ignored to avoid build failures.
+- Gallery filter contrast is now hardened for native dropdown rendering in dark mode.
+- Admin OAuth buttons now include provider iconography with theme-aware presentation.
+- Registration flow now exists with email confirmation and OAuth sign-up.
+- Edit actions now move focus and scroll to the active form on mobile and desktop.
+- SEO baseline now includes metadata, sitemap, robots, and structured data.
 
 ## Current Blocker (Vercel)
 None reported after latest redeploys, but keep verifying the build uses the latest commit.
@@ -45,10 +50,7 @@ None reported after latest redeploys, but keep verifying the build uses the late
 - Pre-prod checklist + manual testing.
 - Complete deeper localization for admin-managed custom section labels.
 - Final admin typography QA sweep after neutral font rollout.
-- Fix the selected-work filter dropdown option contrast in theme variants.
-- Add theme-aware OAuth icons for Google and GitHub on the admin login screen.
-- Add public/admin registration flow with email confirmation and OAuth sign-up.
-- Move focus and scroll to the active admin edit form when an item enters edit mode.
+- Lighthouse QA pass and performance fixes.
 
 ## Pending Tasks (Medium)
 - Full English copy audit in docs and remaining strings.

@@ -61,14 +61,14 @@
 - [x] 12.4 Expose theme controls in admin login and admin console.
 - [x] 12.5 Complete responsive QA pass for mobile/tablet/desktop admin views.
 - [x] 12.6 Update roadmap, architecture, and specs for the admin design system.
-- [ ] 12.7 Fix contrast of selected-work filter option text across theme modes.
-- [ ] 12.8 Add theme-aware OAuth icons to admin login providers.
-- [ ] 12.9 Move focus and scroll to the active edit form when admin editing begins.
+- [x] 12.7 Fix contrast of selected-work filter option text across theme modes.
+- [x] 12.8 Add theme-aware OAuth icons to admin login providers.
+- [x] 12.9 Move focus and scroll to the active edit form when admin editing begins.
 
 ## Phase 10: SEO + Quality
-- [ ] 10.1 Add OpenGraph metadata and social previews.
-- [ ] 10.2 Add sitemap and robots.
-- [ ] 10.3 Add schema.org structured data.
+- [x] 10.1 Add OpenGraph metadata and social previews.
+- [x] 10.2 Add sitemap and robots.
+- [x] 10.3 Add schema.org structured data.
 - [ ] 10.4 Lighthouse QA pass and performance fixes.
 
 ## Phase 13: Public Composition + Localization
@@ -78,12 +78,12 @@
 - [x] 13.4 Add locale model and preference handling for German, English, and Spanish.
 - [x] 13.5 Add public language selector with persistent preference.
 - [ ] 13.6 Localize public UI copy and admin-controlled section labels.
-- [ ] 13.7 Update roadmap, design, specs, and manuals for public composition + i18n.
+- [x] 13.7 Update roadmap, design, specs, and manuals for public composition + i18n.
 
 ## Phase 14: Registration Flow
-- [ ] 14.1 Define registration UX for email/password sign-up with email confirmation.
-- [ ] 14.2 Add OAuth sign-up entry points aligned with the admin/public auth model.
-- [ ] 14.3 Document registration flow, confirmation states, and guardrails.
+- [x] 14.1 Define registration UX for email/password sign-up with email confirmation.
+- [x] 14.2 Add OAuth sign-up entry points aligned with the admin/public auth model.
+- [x] 14.3 Document registration flow, confirmation states, and guardrails.
 
 ## Phase 11: Payments (Final)
 - [ ] 11.1 Implement payments (Stripe/PayPal) after QA signoff.

@@ -61,10 +61,10 @@ Goal: evolve into an artist-managed platform with login, content CRUD, and scala
 - Admin typography QA sweep after neutral font rollout.
 - SDLC standard + PR manual security review.
 - Upgrade dependency baseline during pre-prod hardening. In progress.
-- Fix contrast of gallery filter option text across theme modes.
-- Add branded OAuth icons for Google and GitHub with theme-aware variants.
-- Add registration flow with email confirmation and OAuth sign-up.
-- Move focus and scroll to the active admin form when entering edit mode on mobile and desktop.
+- Fix contrast of gallery filter option text across theme modes. Implemented.
+- Add branded OAuth icons for Google and GitHub with theme-aware variants. Implemented.
+- Add registration flow with email confirmation and OAuth sign-up. Implemented.
+- Move focus and scroll to the active admin form when entering edit mode on mobile and desktop. Implemented.
 
 ### Payments (Last)
 - Payments and webhooks are implemented last, after QA and stability.
@@ -88,3 +88,7 @@ Goal: evolve into an artist-managed platform with login, content CRUD, and scala
 - Public header navigation now follows configured visible homepage sections.
 - Public locale selector implemented with persistent German, English, and Spanish preference.
 - Homepage composition now fails open in admin with a guided fallback if production schema is behind.
+- Gallery filter dropdown contrast was hardened for theme/native select mismatches.
+- Admin OAuth buttons now use provider iconography aligned with the active theme.
+- Registration route added with email confirmation and OAuth sign-up entry points.
+- SEO baseline added with OpenGraph metadata, robots, sitemap, and structured data.

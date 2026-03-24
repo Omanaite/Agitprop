@@ -16,6 +16,7 @@ import { getRequestLocale } from "@/lib/request-locale";
 import { getPublishedPosts } from "@/lib/data/posts";
 import { getTattooGallery } from "@/lib/data/tattoos";
 import type { HomepageSection } from "@/types";
+import { getSiteUrl } from "@/lib/site-url";
 
 type SectionRenderer = {
   render: (section: HomepageSection) => ReactNode;
@@ -223,9 +224,34 @@ export default async function Home() {
   ]);
 
   const visibleSections = homepageSections.filter((section) => section.is_visible);
+  const siteUrl = getSiteUrl();
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: dictionary.brand.title,
+    alternateName: "Akemi Tattoo",
+    url: siteUrl,
+    inLanguage: locale,
+    description:
+      "Tattoo portfolio, booking portal, and studio notes for Akemi.",
+    publisher: {
+      "@type": "Person",
+      name: "Akemi",
+      jobTitle: "Tattoo Artist",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Berlin",
+        addressCountry: "DE",
+      },
+    },
+  };
 
   return (
     <div className="min-h-screen bg-[var(--bg)] p-4 text-[var(--fg)] md:p-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <NoiseOverlay />
       <div className="mx-auto flex max-w-6xl flex-col gap-6">
         <Header

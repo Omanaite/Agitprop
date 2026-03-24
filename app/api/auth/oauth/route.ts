@@ -1,20 +1,22 @@
 import { NextResponse } from "next/server";
-import { createSupabaseServerClient } from "@/lib/supabase/ssr";
-import type { Provider } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
+import type { Provider } from "@supabase/supabase-js";
+import { createSupabaseServerClient } from "@/lib/supabase/ssr";
 
-const allowedProviders: Provider[] = ["google", "github", "facebook"];
+const allowedProviders: Provider[] = ["google", "github"];
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const provider = url.searchParams.get("provider") || "";
-  const isProvider = (value: string): value is Provider =>
+  const next = url.searchParams.get("next") || "/register/complete?source=oauth";
+  const isAllowedProvider = (value: string): value is Provider =>
     allowedProviders.includes(value as Provider);
 
-  if (!isProvider(provider)) {
+  if (!isAllowedProvider(provider)) {
     return NextResponse.json({ message: "Invalid provider." }, { status: 400 });
   }
 
+  const safeNext = next.startsWith("/") ? next : "/register/complete?source=oauth";
   const cookieStore = await cookies();
   const supabase = createSupabaseServerClient({
     getAll: () => cookieStore.getAll(),
@@ -23,7 +25,7 @@ export async function GET(request: Request) {
     },
   });
 
-  const redirectTo = `${url.origin}/api/admin/integrations/callback?provider=${provider}`;
+  const redirectTo = `${url.origin}/auth/callback?next=${encodeURIComponent(safeNext)}`;
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
@@ -32,9 +34,8 @@ export async function GET(request: Request) {
   });
 
   if (error || !data?.url) {
-    return NextResponse.json(
-      { message: "Failed to start OAuth." },
-      { status: 500 }
+    return NextResponse.redirect(
+      new URL("/register?error=oauth_start_failed", url.origin)
     );
   }
 

@@ -53,3 +53,20 @@ The system **SHOULD** support OAuth providers (Google, GitHub, Facebook, or othe
 - GIVEN OAuth is not configured
 - WHEN the admin selects a provider
 - THEN the system shows a configuration error and blocks the flow
+
+### Requirement: Account Registration
+The system **SHOULD** provide a registration flow for standard accounts with email confirmation and OAuth sign-up options.
+
+#### Scenario: Email sign-up succeeds
+- GIVEN a visitor opens the registration page
+- WHEN the visitor submits a valid email/password form
+- THEN the system creates the account
+- AND sends a confirmation email
+- AND explains that admin access requires separate approval
+
+#### Scenario: OAuth sign-up succeeds
+- GIVEN a supported OAuth provider is configured
+- WHEN the visitor chooses Google or GitHub on the registration page
+- THEN the system authenticates through Supabase OAuth
+- AND redirects the visitor to a completion page
+- AND keeps admin-only access restricted unless the admin role exists

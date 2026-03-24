@@ -29,7 +29,7 @@ export function GalleryFilter({
       <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.2em]">
         <span>{filterLabel}</span>
         <select
-          className="theme-border p-2"
+          className="gallery-filter-select theme-border p-2"
           value={selected}
           onChange={(e) => setSelected(e.target.value)}
         >

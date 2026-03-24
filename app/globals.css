@@ -343,3 +343,53 @@ a {
   width: 100%;
   background: var(--admin-border);
 }
+
+.oauth-provider-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 48px;
+  border: 1px solid var(--admin-border);
+  border-radius: 16px;
+  background: var(--admin-surface-strong);
+  color: var(--admin-title);
+  padding: 0.8rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.oauth-provider-button:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--admin-accent) 30%, var(--admin-border));
+}
+
+.oauth-provider-button-register {
+  min-width: 220px;
+}
+
+.oauth-provider-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--admin-accent-soft) 75%, white);
+}
+
+.gallery-filter-select {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.gallery-filter-select option {
+  background: #ffffff;
+  color: #000000;
+}
+
+html[data-theme="dark"] .gallery-filter-select {
+  color-scheme: light;
+  background: #ffffff;
+  color: #000000;
+}

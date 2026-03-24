@@ -1,5 +1,6 @@
 import { AdminLoginForm } from "@/components/admin/AdminLoginForm";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
+import { OAuthProviderButton } from "@/components/auth/OAuthProviderButton";
 import { signInAdmin } from "./actions";
 
 type LoginPageProps = {
@@ -101,20 +102,29 @@ export default function AdminLoginPage({ searchParams }: LoginPageProps) {
                 OAuth sign in
               </p>
               <div className="flex flex-wrap gap-3">
-                <a
-                  className="admin-button"
+                <OAuthProviderButton
+                  provider="google"
                   href="/api/admin/integrations/oauth?provider=google"
-                >
-                  Continue with Google
-                </a>
-                <a
-                  className="admin-button"
+                  label="Continue with Google"
+                />
+                <OAuthProviderButton
+                  provider="github"
                   href="/api/admin/integrations/oauth?provider=github"
-                >
-                  Continue with GitHub
-                </a>
+                  label="Continue with GitHub"
+                />
               </div>
             </div>
+
+            <p className="admin-muted mt-6 text-sm leading-6">
+              Need a standard account first?{" "}
+              <a
+                href="/register"
+                className="font-semibold text-[var(--admin-accent)]"
+              >
+                Create one here
+              </a>
+              .
+            </p>
           </section>
         </div>
       </div>

@@ -31,6 +31,8 @@ Future UX refinement:
   sign-up without fragmenting the auth model.
 - Admin edit actions should move viewport and focus directly to the edit form,
   especially on mobile where the editable form can sit far above the tapped item.
+- Public gallery filtering should preserve clear select/option contrast in every
+  theme mode, including dark theme native dropdown rendering.
 
 ### Decision: Admin profile + cloud storage connections (planned)
 **Choice**: Add a profile view for the admin to manage payment data, addresses, email, nickname, and cloud storage connections. Editors should only enable cloud upload when connected.
@@ -147,6 +149,9 @@ Future iteration for editor UX:
   light, eye-rest, and dark modes without leaving the workspace.
 - Future admin controls include homepage section ordering, section renaming,
   and locale configuration for the public site.
+- Registration should live on a dedicated route with email confirmation,
+  reusable OAuth provider buttons, and a completion state that explains the
+  difference between a standard account and admin approval.
 
 ## Public Composition Architecture
 - Public homepage sections should move from fixed layout definition to a

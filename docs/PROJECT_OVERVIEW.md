@@ -36,6 +36,10 @@ Webapp de portfolio para artista tatuador con estetica brutalista. Incluye galer
 - Proxy middleware: Migrado a `proxy.ts`.
 - Composicion de home publica: implementada desde admin (orden, nombre, eyebrow, visibilidad).
 - Idioma publico: implementado con selector persistente para ingles, espanol y aleman.
+- Contraste del filtro de galeria: corregido para dropdown nativo y dark mode.
+- Botones OAuth: implementados con iconografia para Google y GitHub.
+- Registro: implementado con confirmacion por email y opcion OAuth.
+- SEO base: implementado con metadata OpenGraph, sitemap, robots y JSON-LD.
 
 ## Casos de Uso
 - Visitantes exploran la galeria y contenido publico.
