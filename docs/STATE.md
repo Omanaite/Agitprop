@@ -45,6 +45,9 @@ None reported after latest redeploys, but keep verifying the build uses the late
 - Pre-prod checklist + manual testing.
 - Complete deeper localization for admin-managed custom section labels.
 - Final admin typography QA sweep after neutral font rollout.
+- Fix the selected-work filter dropdown option contrast in theme variants.
+- Add theme-aware OAuth icons for Google and GitHub on the admin login screen.
+- Add public/admin registration flow with email confirmation and OAuth sign-up.
 
 ## Pending Tasks (Medium)
 - Full English copy audit in docs and remaining strings.

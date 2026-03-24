@@ -24,6 +24,12 @@ Add an admin-only content management layer using Supabase Auth for authenticatio
 **Choice**: Support OAuth providers (Google, GitHub, Facebook, others as needed).
 **Rationale**: Artists often already use these identities; reduces friction and supports future multi-admin.
 
+Future UX refinement:
+- OAuth entry points should include provider iconography that remains legible in
+  light, eye-rest, and dark admin themes.
+- Registration should support both confirmed email/password sign-up and OAuth
+  sign-up without fragmenting the auth model.
+
 ### Decision: Admin profile + cloud storage connections (planned)
 **Choice**: Add a profile view for the admin to manage payment data, addresses, email, nickname, and cloud storage connections. Editors should only enable cloud upload when connected.
 **Rationale**: Keeps account management centralized and reduces broken upload flows.

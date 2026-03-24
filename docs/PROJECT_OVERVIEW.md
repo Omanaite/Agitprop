@@ -23,6 +23,8 @@ Webapp de portfolio para artista tatuador con estetica brutalista. Incluye galer
 - Perfil administrador (datos de pago, direcciones, email, apodo).
 - Conexion a nube para cargar imagenes (habilita editor si esta conectado).
 - OAuth con GitHub/Google/Facebook u otros usados por artistas.
+- Botones OAuth con iconografia visible y coherente por tema visual.
+- Registro con confirmacion por email y opcion de registro mediante OAuth.
 
 ## Estado de Implementacion
 - Admin login y panel: Implementado.

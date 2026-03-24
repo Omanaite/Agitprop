@@ -61,6 +61,9 @@ Goal: evolve into an artist-managed platform with login, content CRUD, and scala
 - Admin typography QA sweep after neutral font rollout.
 - SDLC standard + PR manual security review.
 - Upgrade dependency baseline during pre-prod hardening. In progress.
+- Fix contrast of gallery filter option text across theme modes.
+- Add branded OAuth icons for Google and GitHub with theme-aware variants.
+- Add registration flow with email confirmation and OAuth sign-up.
 
 ### Payments (Last)
 - Payments and webhooks are implemented last, after QA and stability.

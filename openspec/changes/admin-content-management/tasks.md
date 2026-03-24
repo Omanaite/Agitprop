@@ -61,6 +61,8 @@
 - [x] 12.4 Expose theme controls in admin login and admin console.
 - [x] 12.5 Complete responsive QA pass for mobile/tablet/desktop admin views.
 - [x] 12.6 Update roadmap, architecture, and specs for the admin design system.
+- [ ] 12.7 Fix contrast of selected-work filter option text across theme modes.
+- [ ] 12.8 Add theme-aware OAuth icons to admin login providers.
 
 ## Phase 10: SEO + Quality
 - [ ] 10.1 Add OpenGraph metadata and social previews.
@@ -76,6 +78,11 @@
 - [x] 13.5 Add public language selector with persistent preference.
 - [ ] 13.6 Localize public UI copy and admin-controlled section labels.
 - [ ] 13.7 Update roadmap, design, specs, and manuals for public composition + i18n.
+
+## Phase 14: Registration Flow
+- [ ] 14.1 Define registration UX for email/password sign-up with email confirmation.
+- [ ] 14.2 Add OAuth sign-up entry points aligned with the admin/public auth model.
+- [ ] 14.3 Document registration flow, confirmation states, and guardrails.
 
 ## Phase 11: Payments (Final)
 - [ ] 11.1 Implement payments (Stripe/PayPal) after QA signoff.
