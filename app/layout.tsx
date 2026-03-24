@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, Space_Mono } from "next/font/google";
+import { Bebas_Neue, Manrope, Space_Mono } from "next/font/google";
 import { getRequestLocale } from "@/lib/request-locale";
 import "./globals.css";
 
@@ -17,6 +17,12 @@ const bodyFont = Space_Mono({
   weight: ["400", "700"],
 });
 
+const adminFont = Manrope({
+  variable: "--font-admin",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
 export const metadata: Metadata = {
   title: "Akemi Tattoo Manifesto",
   description:
@@ -32,7 +38,9 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={`${headingFont.variable} ${bodyFont.variable}`}>
+      <body
+        className={`${headingFont.variable} ${bodyFont.variable} ${adminFont.variable}`}
+      >
         {children}
       </body>
     </html>

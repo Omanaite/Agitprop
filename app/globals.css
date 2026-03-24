@@ -14,6 +14,7 @@
   --font-heading: "Druk Wide", "Founders Grotesk Condensed", var(--font-heading),
     sans-serif;
   --font-body: "JetBrains Mono", "Space Mono", var(--font-body), monospace;
+  --font-admin: "Manrope", "Suisse Int'l", "Neue Haas Grotesk", sans-serif;
   --admin-bg: #f4f1ea;
   --admin-surface: rgba(255, 255, 255, 0.88);
   --admin-surface-strong: #ffffff;
@@ -196,6 +197,8 @@ a {
     radial-gradient(circle at top right, rgba(15, 23, 42, 0.06), transparent 24%),
     var(--admin-bg);
   color: var(--admin-title);
+  font-family: var(--font-admin);
+  letter-spacing: -0.015em;
 }
 
 .admin-card {
@@ -312,6 +315,12 @@ a {
   border-color: color-mix(in srgb, var(--admin-success) 30%, var(--admin-border));
   color: var(--admin-success);
   background: color-mix(in srgb, var(--admin-success) 8%, var(--admin-surface-strong));
+}
+
+.admin-validation[data-variant="warning"] {
+  border-color: color-mix(in srgb, var(--admin-accent) 28%, var(--admin-border));
+  color: var(--admin-title);
+  background: color-mix(in srgb, var(--admin-accent) 10%, var(--admin-surface-strong));
 }
 
 .admin-field-error {

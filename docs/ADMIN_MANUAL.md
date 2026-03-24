@@ -18,6 +18,7 @@ Nota: el usuario debe tener el rol `admin` en `app_metadata` de Supabase Auth.
 
 ## UI del Admin
 - El panel usa una identidad visual separada del portal publico.
+- El panel usa una tipografia neutral separada de la tipografia brutalista publica.
 - Solo se muestra una seccion principal a la vez.
 - En desktop la navegacion vive en la columna lateral.
 - En mobile la navegacion se resuelve mediante menu desplegable.
@@ -66,3 +67,5 @@ Nota: solo los posts `published` se muestran en el sitio publico.
 - Si no puedes iniciar sesion: verificar credenciales.
 - Si no aparece una pieza: revisar el estado del registro y conexion.
 - Si no tienes permisos: validar rol `admin` en Supabase Auth.
+- Si `Homepage sections` carga en modo fallback: aplicar el ultimo `schema.sql`
+  en Supabase para habilitar persistencia real de composicion.

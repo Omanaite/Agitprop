@@ -32,6 +32,12 @@ export function HomepageSectionsManager() {
 
     const data = await res.json();
     setItems((data.items ?? []) as HomepageSection[]);
+    if (data.degraded) {
+      setStatus(
+        data.message ??
+          "Fallback composition loaded. Apply the latest schema to persist changes."
+      );
+    }
     setIsLoading(false);
   }
 
@@ -250,7 +256,11 @@ export function HomepageSectionsManager() {
       {status ? (
         <p
           className="admin-validation mt-4"
-          data-variant={errors.length ? "error" : "success"}
+          data-variant={
+            errors.length ? "error" : status.toLowerCase().includes("fallback")
+              ? "warning"
+              : "success"
+          }
           aria-live="polite"
         >
           {status}

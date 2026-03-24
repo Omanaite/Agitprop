@@ -29,6 +29,8 @@ Keep a single, persistent summary of project status, decisions, pending work, an
 - Public header navigation now follows visible configured homepage sections.
 - Public locale preference is now persisted with a lightweight selector and
   server-rendered locale-aware homepage copy for English, Spanish, and German.
+- Admin now uses a neutral operations-oriented font stack separate from the
+  public brutalist typography.
 - Gitignore: engram/ ignored to avoid build failures.
 
 ## Current Blocker (Vercel)
@@ -39,6 +41,7 @@ None reported after latest redeploys, but keep verifying the build uses the late
 - Final UX/UI sweep (admin + client) per validation guide.
 - Pre-prod checklist + manual testing.
 - Complete deeper localization for admin-managed custom section labels.
+- Final admin typography QA sweep after neutral font rollout.
 
 ## Pending Tasks (Medium)
 - Full English copy audit in docs and remaining strings.
@@ -61,6 +64,7 @@ None reported after latest redeploys, but keep verifying the build uses the late
 - Data: lib/data/*
 - Homepage composition: lib/data/homepage-sections.ts, app/api/admin/homepage-sections/route.ts
 - Locale system: lib/i18n.ts, lib/request-locale.ts, components/PublicLocaleToggle.tsx
+- Pre-prod runbook: docs/PRE_PROD_CHECKLIST.md
 - Security: lib/security.ts, lib/rate-limit.ts, docs/SECURITY_REVIEW.md
 - Specs: openspec/changes/admin-content-management/*
 

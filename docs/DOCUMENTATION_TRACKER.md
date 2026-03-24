@@ -26,6 +26,10 @@ Ensure each roadmap phase has associated documentation and is kept up to date.
 - Document: `docs/ADMIN_MANUAL.md`
 - Status: In progress (UI and base flows implemented)
 
+### Pre-production checklist
+- Document: `docs/PRE_PROD_CHECKLIST.md`
+- Status: Started
+
 ### UX validations
 - Document: `docs/VALIDATION_UX.md`
 - Status: Complete
@@ -66,3 +70,4 @@ Ensure each roadmap phase has associated documentation and is kept up to date.
 - 2026-03-20: Added pending documentation for public section composition and multilingual site support.
 - 2026-03-20: Documented implemented homepage composition controls and public navigation sync.
 - 2026-03-20: Documented public locale selector and server-rendered locale preference.
+- 2026-03-24: Added pre-production checklist and admin typography follow-up.

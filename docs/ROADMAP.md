@@ -47,6 +47,7 @@ Goal: evolve into an artist-managed platform with login, content CRUD, and scala
 - Headless UI navigation for the admin workspace.
 - Skeleton loading states on admin login and dashboard.
 - Theme switcher available inside the admin experience.
+- Neutral admin typography for console readability. Implemented.
 
 ### Phase 4 - Scalability and quality (Pending)
 - Tags/collections/styles/locations.
@@ -57,6 +58,7 @@ Goal: evolve into an artist-managed platform with login, content CRUD, and scala
 - Admin-managed homepage section naming. Implemented.
 - Admin-managed homepage section visibility. Implemented.
 - Security and performance hardening.
+- Admin typography QA sweep after neutral font rollout.
 - SDLC standard + PR manual security review.
 
 ### Payments (Last)
@@ -80,3 +82,4 @@ Goal: evolve into an artist-managed platform with login, content CRUD, and scala
 - Configurable public section order, naming, and visibility implemented from the admin console.
 - Public header navigation now follows configured visible homepage sections.
 - Public locale selector implemented with persistent German, English, and Spanish preference.
+- Homepage composition now fails open in admin with a guided fallback if production schema is behind.

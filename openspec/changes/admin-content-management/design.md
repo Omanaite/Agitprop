@@ -33,6 +33,11 @@ Add an admin-only content management layer using Supabase Auth for authenticatio
 **Alternatives considered**: Reuse the public brutalist styling across admin, or create a completely separate application.
 **Rationale**: The public site optimizes for brand expression, while the admin optimizes for clarity, speed, and repeat operational tasks. A separate admin visual language reduces cognitive friction without requiring a second application.
 
+### Decision: Neutral typography for admin operations
+**Choice**: Use a neutral sans-serif font stack for the admin shell instead of the public mono/brutalist body font.
+**Alternatives considered**: Reuse the public typography across the full product.
+**Rationale**: Operational screens benefit from higher readability, denser forms, and more standard scanning behavior. Typography separation reinforces the different purpose of the admin workspace.
+
 ### Decision: Public section configuration managed by admin
 **Choice**: Introduce a configurable page section model so the admin can reorder public sections, rename them, and hide/show them without code changes.
 **Alternatives considered**: Hardcode section order and labels in the homepage, or expose only a subset of sections as configurable.

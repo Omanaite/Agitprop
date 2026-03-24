@@ -35,10 +35,13 @@ export async function GET(request: Request) {
   if (error) {
     return NextResponse.json(
       {
-        message: "Failed to load homepage sections.",
+        items: mergeSections([]),
+        degraded: true,
+        message:
+          "Homepage composition fallback loaded. Apply the latest Supabase schema to enable persistence.",
         detail: process.env.NODE_ENV === "production" ? undefined : error.message,
       },
-      { status: 500 }
+      { status: 200 }
     );
   }
 
