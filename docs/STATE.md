@@ -48,6 +48,7 @@ None reported after latest redeploys, but keep verifying the build uses the late
 - Fix the selected-work filter dropdown option contrast in theme variants.
 - Add theme-aware OAuth icons for Google and GitHub on the admin login screen.
 - Add public/admin registration flow with email confirmation and OAuth sign-up.
+- Move focus and scroll to the active admin edit form when an item enters edit mode.
 
 ## Pending Tasks (Medium)
 - Full English copy audit in docs and remaining strings.

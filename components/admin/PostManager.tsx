@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AdminSectionSkeleton } from "@/components/admin/AdminSectionSkeleton";
 
 type Post = {
@@ -58,6 +58,8 @@ export function PostManager() {
   const [isSaving, setIsSaving] = useState(false);
   const [hasIntegration, setHasIntegration] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const titleInputRef = useRef<HTMLInputElement | null>(null);
 
   async function load() {
     setStatus("");
@@ -88,6 +90,15 @@ export function PostManager() {
   useEffect(() => {
     void load();
   }, []);
+
+  useEffect(() => {
+    if (!form.id) return;
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.setTimeout(() => {
+      titleInputRef.current?.focus();
+      titleInputRef.current?.select();
+    }, 120);
+  }, [form.id]);
 
   if (isLoading) {
     return <AdminSectionSkeleton fields={5} cards={4} />;
@@ -195,8 +206,9 @@ export function PostManager() {
           No active integration. Remote uploads are blocked.
         </p>
       ) : null}
-      <form onSubmit={handleSubmit} className="grid gap-3">
+      <form ref={formRef} onSubmit={handleSubmit} className="grid gap-3">
         <input
+          ref={titleInputRef}
           className={`admin-input ${
             errorMap.get("title") ? "admin-field-error" : ""
           }`}

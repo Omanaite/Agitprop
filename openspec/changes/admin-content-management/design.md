@@ -29,6 +29,8 @@ Future UX refinement:
   light, eye-rest, and dark admin themes.
 - Registration should support both confirmed email/password sign-up and OAuth
   sign-up without fragmenting the auth model.
+- Admin edit actions should move viewport and focus directly to the edit form,
+  especially on mobile where the editable form can sit far above the tapped item.
 
 ### Decision: Admin profile + cloud storage connections (planned)
 **Choice**: Add a profile view for the admin to manage payment data, addresses, email, nickname, and cloud storage connections. Editors should only enable cloud upload when connected.

@@ -63,6 +63,7 @@
 - [x] 12.6 Update roadmap, architecture, and specs for the admin design system.
 - [ ] 12.7 Fix contrast of selected-work filter option text across theme modes.
 - [ ] 12.8 Add theme-aware OAuth icons to admin login providers.
+- [ ] 12.9 Move focus and scroll to the active edit form when admin editing begins.
 
 ## Phase 10: SEO + Quality
 - [ ] 10.1 Add OpenGraph metadata and social previews.

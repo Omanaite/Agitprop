@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AdminSectionSkeleton } from "@/components/admin/AdminSectionSkeleton";
 
 type Gallery = {
@@ -30,6 +30,8 @@ export function GalleriesManager() {
   );
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const titleInputRef = useRef<HTMLInputElement | null>(null);
 
   async function load() {
     setStatus("");
@@ -49,6 +51,15 @@ export function GalleriesManager() {
   useEffect(() => {
     void load();
   }, []);
+
+  useEffect(() => {
+    if (!form.id) return;
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.setTimeout(() => {
+      titleInputRef.current?.focus();
+      titleInputRef.current?.select();
+    }, 120);
+  }, [form.id]);
 
   if (isLoading) {
     return <AdminSectionSkeleton fields={3} cards={4} />;
@@ -145,8 +156,9 @@ export function GalleriesManager() {
       <p className="admin-muted mt-2 mb-4 text-sm leading-6">
         Create galleries first. Then assign pieces from the gallery editor.
       </p>
-      <form onSubmit={handleSubmit} className="grid gap-3 md:grid-cols-2">
+      <form ref={formRef} onSubmit={handleSubmit} className="grid gap-3 md:grid-cols-2">
         <input
+          ref={titleInputRef}
           className={`admin-input ${
             errorMap.get("title") ? "admin-field-error" : ""
           }`}

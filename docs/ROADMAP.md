@@ -64,6 +64,7 @@ Goal: evolve into an artist-managed platform with login, content CRUD, and scala
 - Fix contrast of gallery filter option text across theme modes.
 - Add branded OAuth icons for Google and GitHub with theme-aware variants.
 - Add registration flow with email confirmation and OAuth sign-up.
+- Move focus and scroll to the active admin form when entering edit mode on mobile and desktop.
 
 ### Payments (Last)
 - Payments and webhooks are implemented last, after QA and stability.
