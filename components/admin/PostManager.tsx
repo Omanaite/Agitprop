@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AdminSectionSkeleton } from "@/components/admin/AdminSectionSkeleton";
 
@@ -316,10 +317,13 @@ export function PostManager() {
             Preview
           </p>
           {form.cover_image_url ? (
-            <img
+            <Image
               className="mt-3 h-56 w-full rounded-2xl object-cover"
               src={form.cover_image_url}
               alt={form.title || "Post cover"}
+              width={1200}
+              height={800}
+              sizes="(max-width: 768px) 100vw, 40vw"
             />
           ) : null}
           <h3 className="admin-title mt-4 text-xl font-semibold">

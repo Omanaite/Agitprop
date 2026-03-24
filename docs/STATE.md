@@ -40,6 +40,7 @@ Keep a single, persistent summary of project status, decisions, pending work, an
 - Registration flow now exists with email confirmation and OAuth sign-up.
 - Edit actions now move focus and scroll to the active form on mobile and desktop.
 - SEO baseline now includes metadata, sitemap, robots, and structured data.
+- Public gallery and post imagery now use `next/image` in the first performance pass.
 
 ## Current Blocker (Vercel)
 None reported after latest redeploys, but keep verifying the build uses the latest commit.

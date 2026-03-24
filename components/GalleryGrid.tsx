@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Tattoo } from "@/types";
 
 type GalleryGridProps = {
@@ -21,11 +22,13 @@ export function GalleryGrid({ tattoos }: GalleryGridProps) {
           key={tattoo.id}
           className="hard-border flex flex-col gap-3 bg-[var(--bg)] p-3"
         >
-          <img
+          <Image
             className="tattoo-image h-64 w-full object-cover"
             src={tattoo.image_url}
             alt={tattoo.title}
-            loading="lazy"
+            width={960}
+            height={720}
+            sizes="(max-width: 768px) 100vw, 33vw"
           />
           <div>
             <h3 className="font-[var(--font-heading)] text-xl uppercase">

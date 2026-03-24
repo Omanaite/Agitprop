@@ -92,3 +92,4 @@ Goal: evolve into an artist-managed platform with login, content CRUD, and scala
 - Admin OAuth buttons now use provider iconography aligned with the active theme.
 - Registration route added with email confirmation and OAuth sign-up entry points.
 - SEO baseline added with OpenGraph metadata, robots, sitemap, and structured data.
+- Public gallery and editorial images now use `next/image` for the first performance pass.

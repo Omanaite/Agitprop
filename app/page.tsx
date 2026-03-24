@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Image from "next/image";
 import { BookingForm } from "@/components/BookingForm";
 import { ContactForm } from "@/components/ContactForm";
 import { Footer } from "@/components/Footer";
@@ -200,10 +201,13 @@ export default async function Home() {
                   {posts.map((post) => (
                     <article key={post.id} className="hard-border p-4">
                       {post.cover_image_url ? (
-                        <img
+                        <Image
                           className="mb-3 w-full object-cover"
                           src={post.cover_image_url}
                           alt={post.title}
+                          width={1200}
+                          height={800}
+                          sizes="(max-width: 768px) 100vw, 50vw"
                         />
                       ) : null}
                       <h3 className="text-lg uppercase">{post.title}</h3>

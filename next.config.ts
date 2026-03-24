@@ -1,6 +1,23 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: (() => {
+      const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      if (!url) {
+        return [];
+      }
+
+      const hostname = new URL(url).hostname;
+      return [
+        {
+          protocol: "https",
+          hostname,
+          pathname: "/storage/v1/object/public/**",
+        },
+      ];
+    })(),
+  },
   async headers() {
     const isDev = process.env.NODE_ENV !== "production";
     const scriptSrc = isDev
