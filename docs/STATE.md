@@ -41,6 +41,9 @@ Keep a single, persistent summary of project status, decisions, pending work, an
 - Edit actions now move focus and scroll to the active form on mobile and desktop.
 - SEO baseline now includes metadata, sitemap, robots, and structured data.
 - Public gallery and post imagery now use `next/image` in the first performance pass.
+- Audit report `docs/reports/akemi-seo-security-audit-2026-03-24.pdf` reviewed and converted into tracked remediation backlog.
+- Canonical metadata baseline implemented on current public routes.
+- Locale preference cookie now writes server-side with production-aware attributes.
 
 ## Current Blocker (Vercel)
 None reported after latest redeploys, but keep verifying the build uses the latest commit.
@@ -52,6 +55,16 @@ None reported after latest redeploys, but keep verifying the build uses the late
 - Complete deeper localization for admin-managed custom section labels.
 - Final admin typography QA sweep after neutral font rollout.
 - Lighthouse QA pass and performance fixes.
+- Add canonical tags on public routes.
+- Improve SEO copy quality and route-specific descriptions.
+- Replace remaining placeholder/low-trust public copy before enabling final indexation.
+- Enrich gallery detail pages with stronger standalone SEO content.
+- Review and trim public payload size where possible.
+- Harden CSP and narrow broad source allowances over time.
+- Reduce stack fingerprinting where practical.
+- Align abuse protection across all public write endpoints.
+- Plan route-based multilingual SEO beyond cookie-only locale switching.
+- Standardize locale cookie production attributes.
 
 ## Pending Tasks (Medium)
 - Full English copy audit in docs and remaining strings.

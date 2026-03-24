@@ -93,3 +93,18 @@ Goal: evolve into an artist-managed platform with login, content CRUD, and scala
 - Registration route added with email confirmation and OAuth sign-up entry points.
 - SEO baseline added with OpenGraph metadata, robots, sitemap, and structured data.
 - Public gallery and editorial images now use `next/image` for the first performance pass.
+- SEO/security audit review from `docs/reports/akemi-seo-security-audit-2026-03-24.pdf` is now part of the backlog and implementation order.
+- Canonical metadata baseline implemented for current public routes.
+- Locale preference cookie is now written server-side with production-aware attributes.
+
+### Audit Follow-up Backlog
+- Add canonical tags across public routes.
+- Strengthen search-oriented metadata and page descriptions beyond brand-only copy.
+- Replace placeholder/low-trust public copy before final indexation.
+- Improve gallery detail pages with stronger standalone ranking content.
+- Reduce public page payload where possible.
+- Tighten CSP over time by reducing inline allowances and narrowing `connect-src`.
+- Reduce stack fingerprinting where practical.
+- Make abuse protection consistent across all public write endpoints.
+- Evolve multilingual SEO beyond cookie-only switching when route-based locale architecture is introduced.
+- Standardize locale cookie production attributes.

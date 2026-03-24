@@ -32,6 +32,9 @@ export async function generateMetadata({
   return {
     title: `${gallery.title} | Akemi Tattoo`,
     description,
+    alternates: {
+      canonical: `/galleries/${gallery.slug}`,
+    },
     openGraph: {
       title: `${gallery.title} | Akemi Tattoo`,
       description,

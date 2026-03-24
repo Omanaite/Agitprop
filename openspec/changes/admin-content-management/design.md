@@ -63,6 +63,22 @@ Future UX refinement:
 **Alternatives considered**: Client-only locale state, query-string locale switching.
 **Rationale**: Cookie-backed locale preference keeps the selector simple while allowing server-rendered localized content and `html lang` alignment without introducing a full routing-based i18n framework yet.
 
+### Decision: Audit-driven SEO and security hardening backlog
+**Choice**: Treat external audit findings from `docs/reports/akemi-seo-security-audit-2026-03-24.pdf` as first-class roadmap items.
+**Rationale**: This keeps observed live-site weaknesses traceable inside SDD instead of leaving them as a disconnected report artifact.
+
+Current audit follow-up themes:
+- canonical metadata for public routes
+- stronger route-specific SEO descriptions
+- final editorial copy replacement before indexation
+- richer gallery detail SEO content
+- payload trimming on public responses
+- CSP tightening and narrower source policies
+- reduced stack fingerprinting
+- consistent abuse protection across public write endpoints
+- future route-based multilingual SEO architecture
+- production-grade locale cookie attributes
+
 ## Data Flow
 
 Admin Login -> Supabase Auth -> Admin Session

@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { localeCookieName, type Locale } from "@/lib/i18n";
+import { useState } from "react";
+import type { Locale } from "@/lib/i18n";
 
 type PublicLocaleToggleProps = {
   locale: Locale;
@@ -19,14 +19,25 @@ export function PublicLocaleToggle({
   label,
 }: PublicLocaleToggleProps) {
   const [currentLocale, setCurrentLocale] = useState<Locale>(locale);
+  const [isSaving, setIsSaving] = useState(false);
 
-  useEffect(() => {
-    setCurrentLocale(locale);
-  }, [locale]);
-
-  function applyLocale(nextLocale: Locale) {
+  async function applyLocale(nextLocale: Locale) {
+    if (nextLocale === currentLocale || isSaving) return;
     setCurrentLocale(nextLocale);
-    document.cookie = `${localeCookieName}=${nextLocale}; path=/; max-age=31536000; samesite=lax`;
+    setIsSaving(true);
+
+    const response = await fetch("/api/preferences/locale", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ locale: nextLocale }),
+    });
+
+    if (!response.ok) {
+      setCurrentLocale(locale);
+      setIsSaving(false);
+      return;
+    }
+
     window.location.reload();
   }
 
@@ -39,6 +50,7 @@ export function PublicLocaleToggle({
           type="button"
           onClick={() => applyLocale(item.id)}
           aria-pressed={currentLocale === item.id}
+          disabled={isSaving}
           className={`snap-transition theme-border-thin px-2 py-1 ${
             currentLocale === item.id ? "theme-invert" : ""
           }`}

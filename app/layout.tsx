@@ -29,6 +29,9 @@ export const metadata: Metadata = {
   description:
     "Brutalist tattoo portfolio and booking portal for Akemi. Built for Vercel + Supabase.",
   metadataBase: new URL(getSiteUrl()),
+  alternates: {
+    canonical: "/",
+  },
   keywords: [
     "tattoo artist berlin",
     "tattoo portfolio",
