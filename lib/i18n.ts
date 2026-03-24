@@ -111,8 +111,8 @@ export const publicDictionaries: Record<Locale, PublicDictionary> = {
       ],
     },
     work: { filter: "Filter", all: "All" },
-    galleries: { empty: "No galleries published yet." },
-    posts: { empty: "No public posts yet." },
+    galleries: { empty: "Curated galleries are being prepared. Return soon for the next release." },
+    posts: { empty: "Studio notes are offline for editing. New entries will be published soon." },
     footer: {
       studio: "Berlin - Private Studio",
       copyright: "Copyright 2026 Akemi Tattoo",
@@ -169,8 +169,8 @@ export const publicDictionaries: Record<Locale, PublicDictionary> = {
       ],
     },
     work: { filter: "Filtro", all: "Todo" },
-    galleries: { empty: "Aun no hay galerias publicadas." },
-    posts: { empty: "Aun no hay publicaciones publicas." },
+    galleries: { empty: "Las galerias curadas se estan preparando. Vuelve pronto para la siguiente seleccion." },
+    posts: { empty: "Las notas del estudio estan en edicion. Habra nuevas publicaciones pronto." },
     footer: {
       studio: "Berlin - Estudio privado",
       copyright: "Copyright 2026 Akemi Tattoo",
@@ -227,8 +227,8 @@ export const publicDictionaries: Record<Locale, PublicDictionary> = {
       ],
     },
     work: { filter: "Filter", all: "Alle" },
-    galleries: { empty: "Noch keine Galerien veroeffentlicht." },
-    posts: { empty: "Noch keine oeffentlichen Beitraege." },
+    galleries: { empty: "Kurierte Galerien werden gerade vorbereitet. Schau bald wieder vorbei." },
+    posts: { empty: "Studio-Notizen werden gerade ueberarbeitet. Neue Eintraege folgen bald." },
     footer: {
       studio: "Berlin - Privatstudio",
       copyright: "Copyright 2026 Akemi Tattoo",

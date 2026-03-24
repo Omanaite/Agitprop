@@ -98,6 +98,15 @@ export function ContactForm({ copy }: ContactFormProps) {
           required
         />
       </label>
+      <label className="hidden" aria-hidden="true">
+        Website
+        <input
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          className="hidden"
+        />
+      </label>
       {errorMap.get("message") ? (
         <p className="input-helper" data-variant="error">
           message: {errorMap.get("message")}

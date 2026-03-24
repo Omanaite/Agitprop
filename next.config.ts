@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
   images: {
     remotePatterns: (() => {
       const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -20,6 +21,10 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     const isDev = process.env.NODE_ENV !== "production";
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseOrigin = supabaseUrl
+      ? new URL(supabaseUrl).origin
+      : undefined;
     const scriptSrc = isDev
       ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
       : "script-src 'self' 'unsafe-inline'";
@@ -29,14 +34,20 @@ const nextConfig: NextConfig = {
     const styleSrc = isDev
       ? "style-src 'self' 'unsafe-inline'"
       : "style-src 'self' 'unsafe-inline'";
+    const connectSrcValues = ["'self'", "https://vercel.live"];
+    if (supabaseOrigin) {
+      connectSrcValues.push(supabaseOrigin);
+    }
     const csp =
-      "default-src 'self'; img-src 'self' data: https:; " +
+      "default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; img-src 'self' data: https:; " +
       styleSrc +
       "; " +
       scriptSrc +
       "; " +
       scriptSrcElem +
-      "; connect-src 'self' https:; font-src 'self' data: https:; frame-ancestors 'none';";
+      "; connect-src " +
+      connectSrcValues.join(" ") +
+      "; font-src 'self' data: https:; frame-ancestors 'none';";
 
     return [
       {

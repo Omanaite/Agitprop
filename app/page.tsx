@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Image from "next/image";
 import { BookingForm } from "@/components/BookingForm";
@@ -18,6 +19,36 @@ import { getPublishedPosts } from "@/lib/data/posts";
 import { getTattooGallery } from "@/lib/data/tattoos";
 import type { HomepageSection } from "@/types";
 import { getSiteUrl } from "@/lib/site-url";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getRequestLocale();
+  const dictionary = getPublicDictionary(locale);
+  const descriptionMap = {
+    en: "Berlin tattoo portfolio, booking portal, curated galleries, and studio notes from Akemi.",
+    es: "Portfolio de tatuajes en Berlin, reservas, galerias curadas y notas de estudio de Akemi.",
+    de: "Tattoo-Portfolio aus Berlin mit Buchung, kuratierten Galerien und Studio-Notizen von Akemi.",
+  } as const;
+
+  return {
+    title: "Akemi Tattoo Manifesto",
+    description: descriptionMap[locale],
+    alternates: {
+      canonical: "/",
+    },
+    openGraph: {
+      title: dictionary.brand.title,
+      description: descriptionMap[locale],
+      url: getSiteUrl(),
+      locale,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: dictionary.brand.title,
+      description: descriptionMap[locale],
+    },
+  };
+}
 
 type SectionRenderer = {
   render: (section: HomepageSection) => ReactNode;

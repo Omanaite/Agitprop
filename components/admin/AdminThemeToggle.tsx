@@ -11,12 +11,13 @@ const themes: { id: Theme; label: string }[] = [
 ];
 
 export function AdminThemeToggle() {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === "undefined") {
+      return "light";
+    }
 
-  useEffect(() => {
-    const saved = (localStorage.getItem("theme") as Theme | null) ?? "light";
-    setTheme(saved);
-  }, []);
+    return (localStorage.getItem("theme") as Theme | null) ?? "light";
+  });
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;

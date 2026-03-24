@@ -1,7 +1,18 @@
+import type { Metadata } from "next";
+import Link from "next/link";
 import { AdminLoginForm } from "@/components/admin/AdminLoginForm";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
 import { OAuthProviderButton } from "@/components/auth/OAuthProviderButton";
 import { signInAdmin } from "./actions";
+
+export const metadata: Metadata = {
+  title: "Admin Login | Akemi Tattoo",
+  description: "Secure admin login for the Akemi Tattoo control room.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 type LoginPageProps = {
   searchParams?: { error?: string; reason?: string };
@@ -117,12 +128,12 @@ export default function AdminLoginPage({ searchParams }: LoginPageProps) {
 
             <p className="admin-muted mt-6 text-sm leading-6">
               Need a standard account first?{" "}
-              <a
+              <Link
                 href="/register"
                 className="font-semibold text-[var(--admin-accent)]"
               >
                 Create one here
-              </a>
+              </Link>
               .
             </p>
           </section>

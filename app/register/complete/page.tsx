@@ -1,5 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
+
+export const metadata: Metadata = {
+  title: "Account Status | Akemi Tattoo",
+  description: "Registration completion and confirmation state for Akemi Tattoo accounts.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 type CompletePageProps = {
   searchParams?: { source?: string };

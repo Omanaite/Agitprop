@@ -79,6 +79,13 @@ Current audit follow-up themes:
 - future route-based multilingual SEO architecture
 - production-grade locale cookie attributes
 
+Applied baseline improvements:
+- current public routes now emit canonical metadata
+- locale preference is persisted server-side with production-aware cookie options
+- homepage payload is reduced to the fields required for public filtering/rendering
+- public write flows use rate limiting, same-origin checks, and honeypot fields
+- `X-Powered-By` exposure is disabled through Next.js configuration
+
 ## Data Flow
 
 Admin Login -> Supabase Auth -> Admin Session

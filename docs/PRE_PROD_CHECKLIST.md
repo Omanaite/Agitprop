@@ -7,6 +7,7 @@ Status: In progress
 Provide a single operational checklist before declaring the product ready for production hardening and release review.
 
 ## Build and Deploy
+- [x] `npm run lint` passes locally.
 - [x] `npm run build` passes locally.
 - [x] `npm audit` reports `0 vulnerabilities` locally.
 - [ ] Latest `vercel` commit deployed successfully in Vercel.
@@ -35,6 +36,8 @@ Provide a single operational checklist before declaring the product ready for pr
 - [ ] Theme switch works for `light`, `eye`, `dark`.
 - [ ] Galleries list and gallery detail load.
 - [ ] Public posts render.
+- [ ] Register flow works with email confirmation.
+- [ ] Register flow works with Google/GitHub OAuth sign-up.
 - [ ] Booking form submit path works.
 - [ ] Contact form submit path works.
 

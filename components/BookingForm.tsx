@@ -128,6 +128,15 @@ export function BookingForm({ copy }: BookingFormProps) {
             required
           />
         </label>
+        <label className="hidden" aria-hidden="true">
+          Website
+          <input
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            className="hidden"
+          />
+        </label>
         {errorMap.get("description") ? (
           <p className="input-helper" data-variant="error">
             description: {errorMap.get("description")}

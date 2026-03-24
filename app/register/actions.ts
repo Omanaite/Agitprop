@@ -1,9 +1,11 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { headers } from "next/headers";
 import { z } from "zod";
 import { createSupabaseServerClient } from "@/lib/supabase/ssr";
 import { getSiteUrl } from "@/lib/site-url";
+import { getClientIpFromHeaders, rateLimit } from "@/lib/rate-limit";
 
 const registerSchema = z
   .object({
@@ -34,6 +36,15 @@ export async function signUpUser(
     confirmPassword: String(formData.get("confirmPassword") || ""),
   });
 
+  const honeypot = String(formData.get("website") || "");
+  if (honeypot.trim()) {
+    return {
+      status: "success",
+      message:
+        "Account created. Check your inbox and confirm the email before signing in.",
+    };
+  }
+
   if (!parsed.success) {
     const errors = parsed.error.flatten().fieldErrors;
     return {
@@ -48,6 +59,16 @@ export async function signUpUser(
   }
 
   try {
+    const headerStore = await headers();
+    const ip = getClientIpFromHeaders(headerStore);
+    const limit = rateLimit(`register:${ip}`, 5, 60_000);
+    if (!limit.allowed) {
+      return {
+        status: "error",
+        message: "Too many attempts. Please try again later.",
+      };
+    }
+
     const cookieStore = await cookies();
     const supabase = createSupabaseServerClient({
       getAll: () => cookieStore.getAll(),

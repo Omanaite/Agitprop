@@ -14,6 +14,7 @@ Keep a single, persistent summary of project status, decisions, pending work, an
 - Documentation: roadmap, admin manual, validation UX, security, SDLC, PR process.
 - Engram: active in Codex (config in AppData\Roaming\codex\config.toml).
 - Local dependency baseline updated to Next.js 16.2.1 with clean `npm audit`.
+- Local `npm run lint` and `npm run build` both pass on the current branch.
 
 ## Recent Key Changes
 - proxy.ts active (middleware migration) for Next 16.
@@ -44,6 +45,13 @@ Keep a single, persistent summary of project status, decisions, pending work, an
 - Audit report `docs/reports/akemi-seo-security-audit-2026-03-24.pdf` reviewed and converted into tracked remediation backlog.
 - Canonical metadata baseline implemented on current public routes.
 - Locale preference cookie now writes server-side with production-aware attributes.
+- Homepage and gallery routes now use stronger route-specific SEO descriptions.
+- Gallery detail pages now render stronger standalone context for search and users.
+- Public homepage tattoo queries now request only fields needed for rendering.
+- Booking, contact, and registration flows now include honeypot anti-abuse checks.
+- `X-Powered-By` fingerprinting is disabled via Next config.
+- Register/admin auth routes are now marked `noindex`.
+- Public empty states were upgraded to remove lower-trust placeholder language.
 
 ## Current Blocker (Vercel)
 None reported after latest redeploys, but keep verifying the build uses the latest commit.
@@ -58,11 +66,8 @@ None reported after latest redeploys, but keep verifying the build uses the late
 - Add canonical tags on public routes.
 - Improve SEO copy quality and route-specific descriptions.
 - Replace remaining placeholder/low-trust public copy before enabling final indexation.
-- Enrich gallery detail pages with stronger standalone SEO content.
-- Review and trim public payload size where possible.
+- Tighten CSP further by removing remaining inline allowances where feasible.
 - Harden CSP and narrow broad source allowances over time.
-- Reduce stack fingerprinting where practical.
-- Align abuse protection across all public write endpoints.
 - Plan route-based multilingual SEO beyond cookie-only locale switching.
 - Standardize locale cookie production attributes.
 

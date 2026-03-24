@@ -42,7 +42,11 @@ export function IntegrationsManager() {
   }
 
   useEffect(() => {
-    void load();
+    const timeoutId = window.setTimeout(() => {
+      void load();
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
   }, []);
 
   if (isLoading) {

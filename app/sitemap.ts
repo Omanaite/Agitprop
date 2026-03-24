@@ -13,12 +13,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly",
       priority: 1,
     },
-    {
-      url: `${siteUrl}/register`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
   ];
 
   const galleryRoutes: MetadataRoute.Sitemap = galleries.map((gallery) => ({

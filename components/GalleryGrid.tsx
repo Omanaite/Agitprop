@@ -10,7 +10,7 @@ export function GalleryGrid({ tattoos }: GalleryGridProps) {
   if (tattoos.length === 0) {
     return (
       <p className="text-sm uppercase tracking-[0.2em]">
-        No works found. Add tattoos in Supabase to populate the gallery.
+        The archive is being updated. Check back soon for new work.
       </p>
     );
   }

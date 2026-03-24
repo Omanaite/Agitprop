@@ -1,8 +1,19 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { RegisterForm } from "@/components/auth/RegisterForm";
 import { OAuthProviderButton } from "@/components/auth/OAuthProviderButton";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
 import { signUpUser } from "./actions";
+
+export const metadata: Metadata = {
+  title: "Create Account | Akemi Tattoo",
+  description:
+    "Create a standard Akemi Tattoo account with email confirmation or OAuth sign-up.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 type RegisterPageProps = {
   searchParams?: { error?: string };

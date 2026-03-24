@@ -96,6 +96,13 @@ Goal: evolve into an artist-managed platform with login, content CRUD, and scala
 - SEO/security audit review from `docs/reports/akemi-seo-security-audit-2026-03-24.pdf` is now part of the backlog and implementation order.
 - Canonical metadata baseline implemented for current public routes.
 - Locale preference cookie is now written server-side with production-aware attributes.
+- Route-level SEO descriptions were strengthened for the homepage and gallery detail pages.
+- Gallery detail pages now include stronger standalone descriptive content and summary chips.
+- Public homepage tattoo payload was trimmed to the fields required for the public filter/grid.
+- Abuse protection now includes a honeypot + rate-limit layer across public submission flows.
+- Next.js powered-by fingerprinting is disabled in production responses.
+- Public auth and admin auth utility routes are marked as non-indexable.
+- Public empty states and fallback copy were upgraded to more editorial, client-facing language.
 
 ### Audit Follow-up Backlog
 - Add canonical tags across public routes.

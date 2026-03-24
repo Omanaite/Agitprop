@@ -94,6 +94,16 @@ export function RegisterForm({ action }: RegisterFormProps) {
         ) : null}
       </label>
 
+      <label className="hidden" aria-hidden="true">
+        Website
+        <input
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          className="hidden"
+        />
+      </label>
+
       {state.message ? (
         <p
           className="admin-validation"

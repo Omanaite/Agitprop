@@ -26,6 +26,9 @@ export async function POST(request: Request) {
       );
     }
     const json = await request.json();
+    if (typeof json?.website === "string" && json.website.trim()) {
+      return NextResponse.json({ ok: true });
+    }
     const parsed = contactSchema.safeParse(json);
     if (!parsed.success) {
       return NextResponse.json(
@@ -50,7 +53,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({ ok: true });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: "Invalid contact payload." },
       { status: 400 }

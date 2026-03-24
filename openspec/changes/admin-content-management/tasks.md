@@ -71,13 +71,13 @@
 - [x] 10.3 Add schema.org structured data.
 - [ ] 10.4 Lighthouse QA pass and performance fixes.
 - [x] 10.5 Add canonical metadata for public routes.
-- [ ] 10.6 Improve route-level SEO descriptions and search-oriented copy.
+- [x] 10.6 Improve route-level SEO descriptions and search-oriented copy.
 - [ ] 10.7 Replace placeholder / low-trust public copy before final indexation.
-- [ ] 10.8 Expand gallery detail pages with stronger standalone ranking content.
-- [ ] 10.9 Review public payload size and trim non-essential data.
+- [x] 10.8 Expand gallery detail pages with stronger standalone ranking content.
+- [x] 10.9 Review public payload size and trim non-essential data.
 - [ ] 10.10 Tighten CSP and reduce broad inline / connection allowances.
-- [ ] 10.11 Reduce stack fingerprinting where feasible in production responses.
-- [ ] 10.12 Normalize abuse protection across all public write endpoints.
+- [x] 10.11 Reduce stack fingerprinting where feasible in production responses.
+- [x] 10.12 Normalize abuse protection across all public write endpoints.
 - [ ] 10.13 Plan route-based multilingual SEO and production cookie hardening.
 
 ## Phase 13: Public Composition + Localization

@@ -15,17 +15,18 @@ type ThemeToggleProps = {
 export function ThemeToggle({
   labels = { light: "Light", eye: "Eye", dark: "Dark" },
 }: ThemeToggleProps) {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === "undefined") {
+      return "light";
+    }
+
+    return (localStorage.getItem("theme") as Theme | null) ?? "light";
+  });
   const themes: { id: Theme; label: string }[] = [
     { id: "light", label: labels.light },
     { id: "eye", label: labels.eye },
     { id: "dark", label: labels.dark },
   ];
-
-  useEffect(() => {
-    const saved = (localStorage.getItem("theme") as Theme | null) ?? "light";
-    setTheme(saved);
-  }, []);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;

@@ -69,7 +69,7 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ id: response.result.id });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { message: "PayPal order failed." },
       { status: 500 }
