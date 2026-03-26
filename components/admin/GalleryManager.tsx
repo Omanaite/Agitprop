@@ -46,7 +46,6 @@ export function GalleryManager() {
   const [bulkGalleryId, setBulkGalleryId] = useState<string>("");
   const [bulkTitlePrefix, setBulkTitlePrefix] = useState<string>("New piece");
   const [bulkUploads, setBulkUploads] = useState<string[]>([]);
-  const [hasIntegration, setHasIntegration] = useState(false);
   const [status, setStatus] = useState<string>("");
   const [errors, setErrors] = useState<ValidationError[]>([]);
   const errorMap = useMemo(
@@ -66,7 +65,6 @@ export function GalleryManager() {
     setIsLoading(true);
     const res = await fetch("/api/admin/gallery-items");
     const galleriesRes = await fetch("/api/admin/galleries");
-    const integrationsRes = await fetch("/api/admin/integrations");
     if (!res.ok) {
       setStatus("Could not load gallery items.");
       setIsLoading(false);
@@ -77,20 +75,10 @@ export function GalleryManager() {
       setIsLoading(false);
       return;
     }
-    if (!integrationsRes.ok) {
-      setStatus("Could not load integrations.");
-      setIsLoading(false);
-      return;
-    }
     const data = await res.json();
     const galleriesData = await galleriesRes.json();
-    const integrationsData = await integrationsRes.json();
     setItems(data.items || []);
     setGalleries(galleriesData.items || []);
-    const connectedCount = (integrationsData.items || []).filter(
-      (item: { status: string }) => item.status === "connected"
-    ).length;
-    setHasIntegration(connectedCount > 0);
     setIsLoading(false);
   }
 
@@ -348,11 +336,6 @@ export function GalleryManager() {
       <p className="admin-muted mt-2 mb-4 text-sm leading-6">
         1) Create galleries. 2) Upload pieces and assign a gallery. 3) Reorder and save.
       </p>
-      {!hasIntegration ? (
-        <p className="admin-validation mb-4" data-variant="error">
-          No active integration. Remote uploads are blocked.
-        </p>
-      ) : null}
       <form ref={formRef} onSubmit={handleSubmit} className="grid gap-3 md:grid-cols-2">
         <input
           ref={titleInputRef}
@@ -472,7 +455,6 @@ export function GalleryManager() {
           <input
             type="file"
             accept="image/*"
-            disabled={!hasIntegration}
             onChange={(e) => {
               const file = e.target.files?.[0];
               if (file) void handleUpload(file);
@@ -599,7 +581,6 @@ export function GalleryManager() {
           type="file"
           accept="image/*"
           multiple
-          disabled={!hasIntegration}
           onChange={(e) => {
             const files = e.target.files;
             if (files && files.length) void handleBulkUpload(files);
@@ -612,7 +593,7 @@ export function GalleryManager() {
           type="button"
           className="admin-button admin-button-primary md:col-span-2"
           onClick={() => void createFromUploads()}
-          disabled={!hasIntegration || !bulkUploads.length}
+          disabled={!bulkUploads.length}
         >
           Create items from uploads ({bulkUploads.length})
         </button>

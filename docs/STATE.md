@@ -42,6 +42,8 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - Final public content / SEO copy approval.
 
 ## Recent Key Changes
+- Fixed production image rendering regressions by broadening remote image host support in Next image config.
+- Removed unintended integration-gating from gallery file inputs so single and bulk uploads remain usable with Supabase Storage.
 - Added formal MVP status tracking.
 - Added explicit external-intervention handoff file.
 - Added post-MVP SaaS/backlog record.

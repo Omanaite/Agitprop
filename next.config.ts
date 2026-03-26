@@ -3,21 +3,18 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
-    remotePatterns: (() => {
-      const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-      if (!url) {
-        return [];
-      }
-
-      const hostname = new URL(url).hostname;
-      return [
-        {
-          protocol: "https",
-          hostname,
-          pathname: "/storage/v1/object/public/**",
-        },
-      ];
-    })(),
+    // Allow legacy and newly uploaded remote images from multiple hosts.
+    // We keep CSP image restrictions separately in headers.
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+      {
+        protocol: "http",
+        hostname: "localhost",
+      },
+    ],
   },
   async headers() {
     const isDev = process.env.NODE_ENV !== "production";

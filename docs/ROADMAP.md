@@ -90,6 +90,10 @@ Current objective: close the MVP safely, verify production, and preserve a clear
 3. Avoid starting provider-dependent integrations before MVP signoff.
 4. Preserve a safe path toward optional, configurable post-MVP modules.
 
+## Update 2026-03-26
+- Fixed broken public image rendering caused by overly strict Next image host restrictions.
+- Restored gallery single-file and bulk-file upload usability in admin by removing unintended integration-based disable logic.
+
 ## Audit Follow-up Backlog
 Source of record: `docs/reports/akemi-seo-security-audit-2026-03-24.pdf`
 - [x] Canonical metadata baseline.
