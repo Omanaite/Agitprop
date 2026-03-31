@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { AdminLoginForm } from "@/components/admin/AdminLoginForm";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
@@ -6,8 +6,8 @@ import { OAuthProviderButton } from "@/components/auth/OAuthProviderButton";
 import { signInAdmin } from "./actions";
 
 export const metadata: Metadata = {
-  title: "Admin Login | Artopia",
-  description: "Secure admin login for the Artopia control room.",
+  title: "Admin Login | Agitprop",
+  description: "Secure admin login for the Agitprop control room.",
   robots: {
     index: false,
     follow: false,
@@ -142,3 +142,4 @@ export default function AdminLoginPage({ searchParams }: LoginPageProps) {
     </div>
   );
 }
+

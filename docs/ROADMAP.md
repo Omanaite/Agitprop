@@ -1,10 +1,10 @@
-﻿# Project Roadmap: Artopia (Akemi Pilot)
+﻿# Project Roadmap: Agitprop (Akemi Pilot)
 
 Date: 2026-03-24
 Current status: Phase 4 - MVP hardening and production verification
 
 ## Executive Summary
-Product: Artopia, a Next.js + Supabase platform for artist websites and operations, currently running with Akemi as the pilot implementation.
+Product: Agitprop, a Next.js + Supabase platform for artist websites and operations, currently running with Akemi as the pilot implementation.
 Current objective: close MVP safely, verify production, and preserve a clear handoff path for post-MVP SaaS expansion.
 
 ## Phases
@@ -49,7 +49,7 @@ Current objective: close MVP safely, verify production, and preserve a clear han
 - SEO and security hardening.
 - Copy hardening before final indexation.
 - Lighthouse pass and performance cleanup.
-- Service page (`/artopia`) validation for product narrative and signup funnel entry.
+- Service page (`/agitprop`) validation for product narrative and signup funnel entry.
 
 ### Phase 5 - MVP Signoff (Pending)
 - Confirm the latest deployed commit in Vercel.
@@ -81,7 +81,7 @@ Current objective: close MVP safely, verify production, and preserve a clear han
 - Feature-flag architecture per artist account.
 
 ### Phase 7.5 - Product Marketing Surface (Planned / In Progress)
-- Build dedicated service page for Artopia value proposition.
+- Build dedicated service page for Agitprop value proposition.
 - Explain Free vs Premium clearly for conversion.
 - Add direct CTAs to registration, login, and pilot public site.
 - Define SEO baseline for service page intent ("tattoo website builder", "artist booking software").
@@ -127,7 +127,7 @@ Current objective: close MVP safely, verify production, and preserve a clear han
 2. Document all user-dependent actions without blocking autonomous work.
 3. Avoid starting provider-dependent integrations before MVP signoff.
 4. Preserve a safe path toward optional, configurable post-MVP modules.
-5. Keep Artopia service narrative clear while preserving Akemi pilot brand identity.
+5. Keep Agitprop service narrative clear while preserving Akemi pilot brand identity.
 
 ## Update 2026-03-26
 - Fixed broken public image rendering caused by overly strict Next image host restrictions.
@@ -152,4 +152,5 @@ Source of record: `docs/reports/akemi-seo-security-audit-2026-03-24.pdf`
 - User-dependent items: `docs/PENDING_EXTERNAL_INTERVENTIONS.md`
 - Post-MVP expansion backlog: `docs/POST_MVP_BACKLOG.md`
 - Production readiness checklist: `docs/PRE_PROD_CHECKLIST.md`
+
 

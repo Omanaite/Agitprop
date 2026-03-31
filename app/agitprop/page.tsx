@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
 
 export const metadata: Metadata = {
-  title: "Artopia | Build your artist website and booking system",
+  title: "Agitprop | Build your artist website and booking system",
   description:
-    "Artopia helps tattoo artists launch a portfolio site, publish updates, and manage bookings from one admin console.",
+    "Agitprop helps tattoo artists launch a portfolio site, publish updates, and manage bookings from one admin console.",
 };
 
-export default function ArtopiaPage() {
+export default function AgitpropPage() {
   return (
     <div className="admin-shell px-6 py-8 md:px-10 md:py-10">
       <div className="mx-auto max-w-6xl">
@@ -16,12 +16,12 @@ export default function ArtopiaPage() {
           <AdminThemeToggle />
         </div>
         <section className="admin-card p-6 md:p-8">
-          <p className="admin-chip">Artopia</p>
+          <p className="admin-chip">Agitprop</p>
           <h1 className="admin-title mt-5 text-4xl font-semibold md:text-5xl">
             Launch your artist website, portfolio, and booking flow.
           </h1>
           <p className="admin-muted mt-4 max-w-3xl text-base leading-7">
-            Artopia is a platform for tattoo artists who want a production-ready
+            Agitprop is a platform for tattoo artists who want a production-ready
             web presence without building infrastructure from scratch.
             Showcase galleries, publish updates, and manage client requests from
             one control room.
@@ -98,3 +98,4 @@ export default function ArtopiaPage() {
     </div>
   );
 }
+

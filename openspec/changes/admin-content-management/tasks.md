@@ -1,4 +1,4 @@
-# Tasks: Admin Content Management
+﻿# Tasks: Admin Content Management
 
 ## Phase 1: Foundation
 - [x] 1.0 Review relevant skills from `C:\GitHub\akemi\.atl\skill-registry.md` before implementation.
@@ -124,9 +124,10 @@
 - [ ] 18.5 Design `Scheduling & Availability` domain for artist slot management and booking constraints.
 - [ ] 18.6 Add platform-admin actions for artist tenant lifecycle (edit, activate/deactivate, delete with audit).
 
-## Phase 19: Artopia Service Page and Conversion Funnel
-- [x] 19.1 Create `/artopia` public product page with value proposition and CTA flow.
+## Phase 19: Agitprop Service Page and Conversion Funnel
+- [x] 19.1 Create `/agitprop` public product page with value proposition and CTA flow.
 - [ ] 19.2 Add localized copy (`en`, `es`, `de`) for service page sections.
 - [ ] 19.3 Add conversion telemetry plan (`service_view`, `register_click`, `login_click`).
-- [ ] 19.4 Add smoke tests for `/artopia` -> `/register` -> `/admin/login`.
+- [ ] 19.4 Add smoke tests for `/agitprop` -> `/register` -> `/admin/login`.
 - [ ] 19.5 Add SEO-focused service-page copy review before production indexation.
+

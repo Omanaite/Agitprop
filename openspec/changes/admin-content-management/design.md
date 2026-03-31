@@ -1,4 +1,4 @@
-# Design: Admin Content Management
+﻿# Design: Admin Content Management
 
 ## Technical Approach
 Add an admin-only content management layer using Supabase Auth for authentication, Next.js App Router for protected admin routes, and Supabase RLS for data access control. Extend the data model with admin-managed tables (posts, galleries, tattoos) and wire CRUD via server routes using the existing Supabase server client pattern. Public reads remain via the public client to avoid regressions.
@@ -91,10 +91,10 @@ Applied baseline improvements:
 **Alternatives considered**: Start implementing all planned integrations before MVP acceptance.
 **Rationale**: The project is close to MVP. Adding provider-heavy features (payments, calendar sync, WhatsApp delivery, chatbot escalation) before production verification would increase regression risk and blur release readiness.
 
-### Decision: Introduce Artopia service landing as a separate product surface
-**Choice**: Add a dedicated route (`/artopia`) to communicate the software offer and route visitors into signup/login without replacing the Akemi pilot homepage.
+### Decision: Introduce Agitprop service landing as a separate product surface
+**Choice**: Add a dedicated route (`/agitprop`) to communicate the software offer and route visitors into signup/login without replacing the Akemi pilot homepage.
 **Alternatives considered**: Rebrand the pilot homepage directly, or defer service marketing until post-MVP.
-**Rationale**: The product now has two valid narratives: pilot artist site (Akemi) and SaaS platform (Artopia). A dedicated service page enables go-to-market messaging immediately while preserving pilot brand continuity and lowering release risk.
+**Rationale**: The product now has two valid narratives: pilot artist site (Akemi) and SaaS platform (Agitprop). A dedicated service page enables go-to-market messaging immediately while preserving pilot brand continuity and lowering release risk.
 
 ## Data Flow
 
@@ -253,3 +253,4 @@ gates in `docs/SDLC_QUALITY_STANDARD.md` and `docs/PR_PROCESS.md`.
 - [ ] Exact admin roles and number of admin users?
 - [ ] Should posts be public immediately or require a publish workflow?
 - [ ] Which OAuth providers are required first (Google/GitHub/Facebook)?
+

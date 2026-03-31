@@ -1,10 +1,10 @@
-# Artopia Service Page Plan
+﻿# Agitprop Service Page Plan
 
 ## Objective
-Build a dedicated page that explains the software product (Artopia), separates this message from the Akemi pilot portfolio, and drives users into account creation.
+Build a dedicated page that explains the software product (Agitprop), separates this message from the Akemi pilot portfolio, and drives users into account creation.
 
 ## Route
-- `/artopia`
+- `/agitprop`
 
 ## Target User
 - Tattoo artist or studio owner evaluating a ready-to-use website + operations product.
@@ -30,7 +30,7 @@ Build a dedicated page that explains the software product (Artopia), separates t
 - Structured FAQ section for onboarding objections.
 
 ## Smoke Test
-1. Open `/artopia` on mobile and desktop.
+1. Open `/agitprop` on mobile and desktop.
 2. Verify all CTA links navigate correctly.
 3. Verify theme switch persists and keeps contrast/readability.
 4. Verify `/register` flow still works from service-page entry.
@@ -40,3 +40,4 @@ Build a dedicated page that explains the software product (Artopia), separates t
 - The service narrative is distinct from the pilot portfolio.
 - A new user can discover the product and start account creation in <= 2 clicks.
 - No regressions in current pilot public pages.
+

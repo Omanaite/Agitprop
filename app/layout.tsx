@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Bebas_Neue, Manrope, Space_Mono } from "next/font/google";
 import { getRequestLocale } from "@/lib/request-locale";
 import { getSiteUrl } from "@/lib/site-url";
@@ -26,11 +26,11 @@ const adminFont = Manrope({
 
 export const metadata: Metadata = {
   title: {
-    default: "Artopia | Akemi Tattoo Pilot",
-    template: "%s | Artopia",
+    default: "Agitprop | Akemi Tattoo Pilot",
+    template: "%s | Agitprop",
   },
   description:
-    "Artopia platform pilot: brutalist tattoo portfolio and booking portal for Akemi.",
+    "Agitprop platform pilot: brutalist tattoo portfolio and booking portal for Akemi.",
   metadataBase: new URL(getSiteUrl()),
   alternates: {
     canonical: "/",
@@ -43,17 +43,17 @@ export const metadata: Metadata = {
     "akemi tattoo",
   ],
   openGraph: {
-    title: "Artopia | Akemi Tattoo Pilot",
+    title: "Agitprop | Akemi Tattoo Pilot",
     description:
       "Brutalist tattoo portfolio and booking portal for Akemi. Built for Vercel + Supabase.",
     url: "/",
-    siteName: "Artopia",
+    siteName: "Agitprop",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Artopia | Akemi Tattoo Pilot",
+    title: "Agitprop | Akemi Tattoo Pilot",
     description:
       "Brutalist tattoo portfolio and booking portal for Akemi. Built for Vercel + Supabase.",
   },
@@ -76,4 +76,5 @@ export default async function RootLayout({
     </html>
   );
 }
+
 

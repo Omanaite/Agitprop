@@ -1,4 +1,4 @@
-# Devlog
+﻿# Devlog
 
 Purpose: chronological project progress log to preserve context across sessions.
 
@@ -27,8 +27,8 @@ Purpose: chronological project progress log to preserve context across sessions.
   - payments sandbox progression
   - SaaS foundation (platform admin, plan gating)
   - scheduling and availability module.
-- Started product rebrand from project-level naming to **Artopia** while preserving Akemi as pilot tenant.
-- Added new public service route `/artopia` with:
+- Started product rebrand from project-level naming to **Agitprop** while preserving Akemi as pilot tenant.
+- Added new public service route `/agitprop` with:
   - value proposition blocks
   - Free vs Premium framing
   - CTA flow to `/register`, `/admin/login`, and pilot homepage.
@@ -42,3 +42,4 @@ Purpose: chronological project progress log to preserve context across sessions.
   - edit
   - activate/deactivate
   - delete with audit trail
+

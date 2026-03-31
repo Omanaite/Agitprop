@@ -1,4 +1,4 @@
-﻿# State Snapshot - Artopia (Akemi Pilot)
+﻿# State Snapshot - Agitprop (Akemi Pilot)
 
 Date: 2026-03-24
 Branch target: `vercel`
@@ -20,7 +20,7 @@ Keep one current snapshot of implementation state, blockers, and next actions so
   - `npm audit`
 - Formal MVP, handoff, and post-MVP backlog documents now exist.
 - Payments settings module added in admin (API + UI), pending schema rollout in production.
-- Public service page `/artopia` added as product-marketing entrypoint with direct signup/login CTAs.
+- Public service page `/agitprop` added as product-marketing entrypoint with direct signup/login CTAs.
 
 ## What Is Stable Locally
 - Gallery CRUD.
@@ -34,7 +34,7 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - Registration flow.
 - Locale preference persistence.
 - Theme switching.
-- Product marketing page for Artopia service narrative.
+- Product marketing page for Agitprop service narrative.
 
 ## What Still Depends on Production / External Verification
 - Latest Vercel deploy confirmation.
@@ -56,11 +56,11 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - Added homepage composition fallback behavior and guarded save path.
 - Added edit-form focus/scroll improvements in admin.
 - Added admin-neutral typography and distinct admin visual system.
-- Added Artopia service page foundation for onboarding and conversion flow.
+- Added Agitprop service page foundation for onboarding and conversion flow.
 
 ## High-Priority Pending Work
 - Fix production auth instability (OAuth + admin role checks + profile/integrations schema alignment).
-- Validate service-page SEO and conversion flow (`/artopia` -> `/register` -> `/admin/login`).
+- Validate service-page SEO and conversion flow (`/agitprop` -> `/register` -> `/admin/login`).
 - Run production smoke test and check Vercel logs.
 - Verify `homepage_sections` is fully active in production.
 - Confirm OAuth flows in production.
@@ -100,6 +100,7 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - Use prefixed commits.
 - No PR is eligible for merge without satisfying internal manual security review requirements.
 - External-provider features must degrade safely when not configured.
+
 
 
 

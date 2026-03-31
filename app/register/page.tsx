@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { RegisterForm } from "@/components/auth/RegisterForm";
 import { OAuthProviderButton } from "@/components/auth/OAuthProviderButton";
@@ -6,9 +6,9 @@ import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
 import { signUpUser } from "./actions";
 
 export const metadata: Metadata = {
-  title: "Create Account | Artopia",
+  title: "Create Account | Agitprop",
   description:
-    "Create a standard Artopia account with email confirmation or OAuth sign-up.",
+    "Create a standard Agitprop account with email confirmation or OAuth sign-up.",
   robots: {
     index: false,
     follow: false,
@@ -114,8 +114,8 @@ export default function RegisterPage({ searchParams }: RegisterPageProps) {
 
             <p className="admin-muted mt-6 text-sm leading-6">
               Looking for the software overview?{" "}
-              <Link href="/artopia" className="font-semibold text-[var(--admin-accent)]">
-                Visit Artopia
+              <Link href="/agitprop" className="font-semibold text-[var(--admin-accent)]">
+                Visit Agitprop
               </Link>
               .{" "}
             </p>
@@ -133,3 +133,4 @@ export default function RegisterPage({ searchParams }: RegisterPageProps) {
     </div>
   );
 }
+
