@@ -249,6 +249,18 @@ Pilot extension assumptions now recorded:
 - Platform admin (developer-side) needs activation/deactivation control per artist page.
 - New domain naming for scheduling module: `Scheduling & Availability`.
 
+## Role-Split Implementation Status (2026-04-01)
+- Private surface split is implemented:
+  - Platform Admin Console: `/admin`
+  - Artist Workspace: `/studio`
+- Artist workspace settings baseline is migrated to artist-scoped APIs:
+  - `/api/studio/profile`
+  - `/api/studio/payment-settings`
+  - `/api/studio/integrations`
+- Next architectural step:
+  - migrate artist content modules from `/api/admin/*` to `/api/studio/*`
+  - enforce tenant-scoped reads/writes for galleries, pieces, posts, and homepage composition.
+
 ## Knowledge Capture & Skills
 Maintain SDD artifacts in `openspec/` and keep skill registry updated so
 future changes stay aligned with existing standards.

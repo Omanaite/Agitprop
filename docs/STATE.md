@@ -105,6 +105,7 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - `docs/PENDING_EXTERNAL_INTERVENTIONS.md`
 - `docs/POST_MVP_BACKLOG.md`
 - `docs/PRE_PROD_CHECKLIST.md`
+- `docs/ENGINEERING_CONTEXT.md`
 - `openspec/changes/admin-content-management/design.md`
 - `openspec/changes/admin-content-management/tasks.md`
 

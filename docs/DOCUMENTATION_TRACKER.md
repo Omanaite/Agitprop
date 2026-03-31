@@ -54,3 +54,5 @@ Ensure each roadmap phase has associated documentation and that handoff context 
 - 2026-03-24: SEO/security audit actions documented.
 - 2026-03-24: MVP status, external-intervention tracking, and post-MVP backlog formalized.
 - 2026-03-31: Added persistent devlog for cross-session continuity and release traceability.
+- 2026-04-01: Documented studio API split (`/api/studio/profile`, `/api/studio/payment-settings`, `/api/studio/integrations`) and role-boundary hardening.
+- 2026-04-01: Updated roadmap, overview, state, and specs task tracking for Platform Admin vs Artist Workspace execution model.

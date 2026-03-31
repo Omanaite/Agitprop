@@ -144,6 +144,7 @@ Current objective: close MVP safely, verify production, and preserve a clear han
 3. Avoid starting provider-dependent integrations before MVP signoff.
 4. Preserve a safe path toward optional, configurable post-MVP modules.
 5. Keep Agitprop service narrative clear while preserving Akemi pilot brand identity.
+6. Enforce documentation persistence protocol so context survives compaction/handoff (`docs/ENGINEERING_CONTEXT.md`).
 
 ## Update 2026-03-26
 - Fixed broken public image rendering caused by overly strict Next image host restrictions.

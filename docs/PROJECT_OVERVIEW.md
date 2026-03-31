@@ -20,12 +20,13 @@ Agitprop is a Next.js App Router + Supabase product for artist websites and oper
 - Booking and contact forms.
 - Registration with email confirmation and OAuth sign-up.
 
-### Admin Experience
-- Email/password admin login.
-- Platform admin console (SaaS governance scope).
-- Artist workspace for galleries, pieces, posts, and homepage composition.
-- Profile and payment settings in role-appropriate workspace scope.
-- Dedicated admin design system, separate from the public site.
+### Private Experience
+- Platform admin login (email/password).
+- Artist login (email/password and OAuth in studio flow).
+- Platform admin console (SaaS governance scope only).
+- Artist workspace (`/studio`) for artist operations.
+- Profile, integrations, and payment settings in artist-scoped endpoints (`/api/studio/*`).
+- Dedicated private design system, separate from the public site.
 
 ## Architecture Summary
 ### Frontend
@@ -34,9 +35,9 @@ Agitprop is a Next.js App Router + Supabase product for artist websites and oper
 - Client components for interactive admin tooling.
 - Separate visual systems for public vs admin.
 - Dedicated Agitprop service page for product positioning and onboarding entry (`/agitprop`).
-- Pending split into two private surfaces:
-  - Platform Admin Console (SaaS governance)
-  - Artist Workspace (tenant content and operations)
+- Private surfaces split is active:
+  - Platform Admin Console (`/admin`) for tenant lifecycle and global controls.
+  - Artist Workspace (`/studio`) for artist-level operations.
 
 ### Backend
 - Supabase Postgres with RLS.
@@ -46,12 +47,15 @@ Agitprop is a Next.js App Router + Supabase product for artist websites and oper
 - Tenant bootstrap hook on auth flows to create initial SaaS records for artist users.
 
 ### Security Baseline
-- Role-based access through `app_metadata.role = admin`.
+- Role-based access with explicit console routing:
+  - platform admin users -> `/admin`
+  - artist users -> `/studio`
 - RLS on protected tables.
 - Rate limiting on public write flows.
 - Same-origin enforcement on public submissions.
 - Honeypot fields on public forms.
 - Reduced stack fingerprinting.
+- Studio settings endpoints now validate artist auth first and persist via server-side privileged client to avoid cross-role RLS mismatch.
 
 ### SEO Baseline
 - Route metadata.
