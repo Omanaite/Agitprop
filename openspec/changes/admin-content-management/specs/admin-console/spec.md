@@ -85,6 +85,21 @@ The system **SHOULD** allow platform admins to enable/disable integration availa
 - THEN the integration is shown as unavailable
 - AND the UI explains it is under platform maintenance
 
+### Requirement: Tenant Lifecycle Governance
+The system **MUST** allow platform admins to manage tenant status and plan at platform scope.
+
+#### Scenario: Platform admin changes tenant status
+- GIVEN a platform admin user is in platform console
+- WHEN the admin updates a tenant status (active/inactive/suspended)
+- THEN the system persists the new status
+- AND the change is written to the audit log
+
+#### Scenario: Platform admin changes tenant plan
+- GIVEN a platform admin user is in platform console
+- WHEN the admin updates a tenant plan (free/premium)
+- THEN the system persists the plan code
+- AND future feature gating reads from the updated plan
+
 ### Requirement: Public Section Configuration
 The system **SHOULD** allow the artist to manage the order and display names of public homepage sections.
 

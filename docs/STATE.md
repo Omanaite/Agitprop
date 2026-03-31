@@ -24,6 +24,9 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - Role-scoped private surfaces are now bootstrapped:
   - `/admin` for platform governance
   - `/studio` for artist operations
+- Platform governance baseline now implemented:
+  - tenant lifecycle API surface
+  - global integration toggle API surface
 
 ## What Is Stable Locally
 - Gallery CRUD.
@@ -74,6 +77,7 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - Complete final admin/public visual QA.
 - Validate MVP acceptance against `docs/MVP_STATUS.md`.
 - Expand role boundary from route level into full data-level tenancy and permission model.
+- Apply latest Supabase schema to production for tenant governance tables.
 
 ## New Backlog Registered (Platform / SaaS)
 - Platform-level SaaS admin workspace.

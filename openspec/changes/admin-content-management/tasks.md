@@ -136,6 +136,12 @@
   - pieces
   - posts
   - artist-level integrations
+- [x] 18.10 Add platform governance APIs and schema foundation:
+  - `artist_tenants`
+  - `tenant_memberships`
+  - `platform_integrations`
+  - `/api/admin/platform-tenants`
+  - `/api/admin/platform-integrations`
 
 ## Phase 19: Agitprop Service Page and Conversion Funnel
 - [x] 19.1 Create `/agitprop` public product page with value proposition and CTA flow.

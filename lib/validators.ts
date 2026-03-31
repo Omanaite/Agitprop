@@ -79,3 +79,16 @@ export const homepageSectionSchema = z.object({
 export const homepageSectionsSchema = z.object({
   items: z.array(homepageSectionSchema),
 });
+
+export const platformTenantUpdateSchema = z.object({
+  tenant_id: z.string().uuid(),
+  studio_name: z.string().min(2).max(120).optional(),
+  status: z.enum(["active", "inactive", "suspended"]).optional(),
+  plan_code: z.enum(["free", "premium"]).optional(),
+});
+
+export const platformIntegrationToggleSchema = z.object({
+  provider: z.string().min(2),
+  is_enabled: z.boolean(),
+  maintenance_message: z.string().max(240).optional(),
+});

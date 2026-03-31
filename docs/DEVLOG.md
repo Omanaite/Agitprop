@@ -66,3 +66,15 @@ Purpose: chronological project progress log to preserve context across sessions.
   - proxy enforces route access by role and prevents cross-scope access.
 - Kept platform console intentionally free of artist content modules to align with SaaS governance model.
 
+## 2026-03-31 (platform governance foundation)
+- Added SaaS schema foundation in `supabase/schema.sql`:
+  - `artist_tenants`
+  - `tenant_memberships`
+  - `platform_integrations`
+- Added platform admin APIs:
+  - `GET/PUT /api/admin/platform-tenants`
+  - `GET/PUT /api/admin/platform-integrations`
+- Added platform governance UI module in platform console for:
+  - tenant status and plan control
+  - global integration maintenance switches
+
