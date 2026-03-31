@@ -16,6 +16,22 @@ function isMissingProfileTable(error: { code?: string; message?: string } | null
   );
 }
 
+function isRecoverableProfileReadError(error: {
+  code?: string;
+  message?: string;
+} | null) {
+  const code = String(error?.code ?? "");
+  const message = String(error?.message ?? "").toLowerCase();
+  return (
+    isMissingProfileTable(error) ||
+    code === "42703" || // undefined_column
+    code === "42501" || // insufficient_privilege / RLS mismatch
+    message.includes("permission denied") ||
+    message.includes("insufficient privilege") ||
+    message.includes("column")
+  );
+}
+
 export async function GET(request: Request) {
   const originCheck = enforceSameOrigin(request);
   if (!originCheck.ok) {
@@ -44,12 +60,12 @@ export async function GET(request: Request) {
 
   const { data, error } = await auth.supabase
     .from("admin_profiles")
-    .select("id,email,nickname,shipping_address,billing_address,payment_notes")
+    .select("email,nickname,shipping_address,billing_address,payment_notes")
     .eq("user_id", user.id)
     .maybeSingle();
 
   if (error) {
-    if (isMissingProfileTable(error)) {
+    if (isRecoverableProfileReadError(error)) {
       return NextResponse.json({
         profile: {
           email: user.email ?? "",
@@ -59,7 +75,8 @@ export async function GET(request: Request) {
           payment_notes: "",
         },
         fallback: true,
-        warning: "admin_profiles table missing in target environment.",
+        warning:
+          "Profile table or policy mismatch in target environment. Returning safe fallback profile.",
       });
     }
     return NextResponse.json(

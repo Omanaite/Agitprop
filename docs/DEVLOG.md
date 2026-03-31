@@ -33,3 +33,12 @@ Purpose: chronological project progress log to preserve context across sessions.
   - Free vs Premium framing
   - CTA flow to `/register`, `/admin/login`, and pilot homepage.
 - Updated roadmap/spec artifacts to include service-page conversion funnel and pending SEO/localization tasks for this surface.
+
+## 2026-03-31 (follow-up)
+- Hardened `GET /api/admin/profile` to avoid hard 500 for recoverable schema/policy drift:
+  - removed strict dependency on `id` column in select projection
+  - added fallback behavior for missing-column / privilege mismatch cases
+- Added SaaS foundation backlog item for full artist-tenant lifecycle controls in platform admin:
+  - edit
+  - activate/deactivate
+  - delete with audit trail

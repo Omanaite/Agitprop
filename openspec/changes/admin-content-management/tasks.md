@@ -122,6 +122,7 @@
 - [ ] 18.3 Add feature gating model for free vs premium capabilities.
 - [ ] 18.4 Reserve pilot mapping for `akemi@tattoo.ink` as premium with custom brutalist style.
 - [ ] 18.5 Design `Scheduling & Availability` domain for artist slot management and booking constraints.
+- [ ] 18.6 Add platform-admin actions for artist tenant lifecycle (edit, activate/deactivate, delete with audit).
 
 ## Phase 19: Artopia Service Page and Conversion Funnel
 - [x] 19.1 Create `/artopia` public product page with value proposition and CTA flow.

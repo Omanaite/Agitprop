@@ -68,6 +68,10 @@ Current objective: close MVP safely, verify production, and preserve a clear han
 - Developer SaaS admin workspace (platform-level controls).
 - Artist auto-provisioning on account creation.
 - Artist page activation/deactivation by platform admin.
+- Platform admin operations for artist pages:
+  - activate/deactivate artist site
+  - edit artist metadata and plan
+  - soft-delete / hard-delete artist tenant with audit trail
 - Plan model:
   - free plan with limited feature set
   - premium plan with full feature set
