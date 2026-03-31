@@ -3,8 +3,8 @@ import Link from "next/link";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
 
 export const metadata: Metadata = {
-  title: "Account Status | Akemi Tattoo",
-  description: "Registration completion and confirmation state for Akemi Tattoo accounts.",
+  title: "Account Status | Agitprop",
+  description: "Registration completion and confirmation state for Agitprop accounts.",
   robots: {
     index: false,
     follow: false,
@@ -19,13 +19,13 @@ function getMessage(source?: string) {
   if (source?.startsWith("oauth")) {
     return {
       title: "OAuth account ready",
-      body: "Your account is connected. If you need admin access, an admin role must still be granted separately.",
+      body: "Your account is connected. Continue to your studio workspace to manage your site.",
     };
   }
 
   return {
     title: "Email confirmed",
-    body: "Your email confirmation is complete. You can return to the site or continue to the admin login if you already have admin approval.",
+    body: "Your email confirmation is complete. You can return to the site or continue to your studio workspace.",
   };
 }
 
@@ -46,8 +46,8 @@ export default function RegisterCompletePage({ searchParams }: CompletePageProps
             <Link href="/" className="admin-button admin-button-primary">
               Return to home
             </Link>
-            <Link href="/admin/login" className="admin-button">
-              Open admin login
+            <Link href="/studio" className="admin-button">
+              Open studio workspace
             </Link>
           </div>
         </section>

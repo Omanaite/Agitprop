@@ -41,12 +41,18 @@ export function isPlatformAdmin(user: User) {
 }
 
 export function isArtistOperator(user: User) {
+  if (isPlatformAdmin(user)) return false;
   const roles = getUserRoles(user);
-  return (
+  if (
     roles.includes("artist") ||
     roles.includes("artist_admin") ||
     roles.includes("studio_manager")
-  );
+  ) {
+    return true;
+  }
+
+  // Default for authenticated non-platform users during SaaS bootstrap.
+  return true;
 }
 
 export function getUserConsoleRoute(user: User) {

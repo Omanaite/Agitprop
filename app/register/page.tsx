@@ -99,13 +99,13 @@ export default function RegisterPage({ searchParams }: RegisterPageProps) {
               <div className="flex flex-wrap gap-3">
                 <OAuthProviderButton
                   provider="google"
-                  href="/api/auth/oauth?provider=google&next=/register/complete?source=oauth-google"
+                  href="/api/auth/oauth?provider=google&next=/studio"
                   label="Sign up with Google"
                   variant="register"
                 />
                 <OAuthProviderButton
                   provider="github"
-                  href="/api/auth/oauth?provider=github&next=/register/complete?source=oauth-github"
+                  href="/api/auth/oauth?provider=github&next=/studio"
                   label="Sign up with GitHub"
                   variant="register"
                 />
