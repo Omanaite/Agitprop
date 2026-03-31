@@ -59,6 +59,15 @@ export const adminIntegrationSchema = z.object({
   external_user_id: z.string().optional(),
 });
 
+export const adminPaymentSettingsSchema = z.object({
+  mode: z.enum(["test", "live"]).default("test"),
+  stripe_account_id: z.string().optional(),
+  stripe_public_reference: z.string().optional(),
+  paypal_merchant_email: z.string().email().optional().or(z.literal("")),
+  paypal_merchant_id: z.string().optional(),
+  notes: z.string().optional(),
+});
+
 export const homepageSectionSchema = z.object({
   section_key: z.string().min(2),
   title: z.string().min(2),

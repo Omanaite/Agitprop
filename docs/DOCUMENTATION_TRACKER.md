@@ -33,6 +33,10 @@ Ensure each roadmap phase has associated documentation and that handoff context 
 - Documents: `docs/MASTER_DOCUMENT.md`, `docs/NOTEBOOKLM.md`, `docs/NOTEBOOKLM_SOURCE.md`
 - Status: Refreshed for cross-session continuity and PDF/export use
 
+### Progress log / Vitacora
+- Document: `docs/DEVLOG.md`
+- Status: Active
+
 ### Scalability and post-MVP planning
 - Documents: `docs/POST_MVP_BACKLOG.md`, `docs/ROADMAP.md`, `docs/PROJECT_OVERVIEW.md`
 - Status: Tracked, intentionally not implemented before MVP signoff
@@ -49,3 +53,4 @@ Ensure each roadmap phase has associated documentation and that handoff context 
 - 2026-03-20: Homepage composition and locale controls documented.
 - 2026-03-24: SEO/security audit actions documented.
 - 2026-03-24: MVP status, external-intervention tracking, and post-MVP backlog formalized.
+- 2026-03-31: Added persistent devlog for cross-session continuity and release traceability.

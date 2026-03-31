@@ -31,7 +31,13 @@ const nextConfig: NextConfig = {
     const styleSrc = isDev
       ? "style-src 'self' 'unsafe-inline'"
       : "style-src 'self' 'unsafe-inline'";
-    const connectSrcValues = ["'self'", "https://vercel.live"];
+    const connectSrcValues = [
+      "'self'",
+      "https://vercel.live",
+      "https://github.com",
+      "https://accounts.google.com",
+      "https://oauth2.googleapis.com",
+    ];
     if (supabaseOrigin) {
       connectSrcValues.push(supabaseOrigin);
     }

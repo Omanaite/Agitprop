@@ -66,6 +66,44 @@ create table if not exists homepage_sections (
   updated_at timestamptz not null default now()
 );
 
+create table if not exists admin_profiles (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null unique references auth.users(id) on delete cascade,
+  email text not null,
+  nickname text,
+  shipping_address text,
+  billing_address text,
+  payment_notes text,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists admin_integrations (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  provider text not null,
+  status text not null default 'disconnected',
+  external_user_id text,
+  connected_at timestamptz,
+  last_checked_at timestamptz,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  unique (user_id, provider)
+);
+
+create table if not exists admin_payment_settings (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null unique references auth.users(id) on delete cascade,
+  mode text not null default 'test',
+  stripe_account_id text,
+  stripe_public_reference text,
+  paypal_merchant_email text,
+  paypal_merchant_id text,
+  notes text,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
 alter table tattoos
   add constraint tattoos_gallery_fk
   foreign key (gallery_id) references galleries(id)
@@ -78,6 +116,9 @@ alter table posts enable row level security;
 alter table galleries enable row level security;
 alter table audit_logs enable row level security;
 alter table homepage_sections enable row level security;
+alter table admin_profiles enable row level security;
+alter table admin_integrations enable row level security;
+alter table admin_payment_settings enable row level security;
 
 -- Public read access for tattoos.
 create policy "Public read tattoos" on tattoos
@@ -122,6 +163,45 @@ create policy "Admin manage homepage sections" on homepage_sections
   for all
   using (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin')
   with check (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin');
+
+do $$
+begin
+  if not exists (
+    select 1 from pg_policies
+    where schemaname = 'public'
+      and tablename = 'admin_profiles'
+      and policyname = 'Admin manage admin profiles'
+  ) then
+    create policy "Admin manage admin profiles" on admin_profiles
+      for all
+      using (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin')
+      with check (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin');
+  end if;
+
+  if not exists (
+    select 1 from pg_policies
+    where schemaname = 'public'
+      and tablename = 'admin_integrations'
+      and policyname = 'Admin manage admin integrations'
+  ) then
+    create policy "Admin manage admin integrations" on admin_integrations
+      for all
+      using (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin')
+      with check (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin');
+  end if;
+
+  if not exists (
+    select 1 from pg_policies
+    where schemaname = 'public'
+      and tablename = 'admin_payment_settings'
+      and policyname = 'Admin manage admin payment settings'
+  ) then
+    create policy "Admin manage admin payment settings" on admin_payment_settings
+      for all
+      using (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin')
+      with check (auth.jwt() -> 'app_metadata' ->> 'role' = 'admin');
+  end if;
+end $$;
 
 insert into homepage_sections (section_key, title, eyebrow, sort_order, is_visible)
 values

@@ -56,9 +56,32 @@ Current objective: close the MVP safely, verify production, and preserve a clear
 - Close all required external interventions listed in `docs/PENDING_EXTERNAL_INTERVENTIONS.md`.
 - Approve MVP as production-ready for the current single-artist product.
 
-### Payments (After MVP Signoff)
-- Stripe and PayPal remain intentionally deferred until MVP acceptance.
-- Sandbox-first validation is required before production payment rollout.
+### Phase 6 - Payments Foundation (Sandbox) (Planned, can start after auth stability)
+- Stripe checkout in test mode end-to-end.
+- PayPal order flow in sandbox end-to-end.
+- Admin payment settings menu for Stripe/PayPal references and mode (`test` / `live`).
+- Provider fallback behavior if credentials are missing.
+- Legal/compliance checklist before switching to live payments.
+
+### Phase 7 - SaaS Foundation (Planned)
+- Developer SaaS admin workspace (platform-level controls).
+- Artist auto-provisioning on account creation.
+- Artist page activation/deactivation by platform admin.
+- Plan model:
+  - free plan with limited feature set
+  - premium plan with full feature set
+- Theme model:
+  - free plan: 3 selectable default styles
+  - Akemi pilot: premium + custom brutalist style (email anchor: `akemi@tattoo.ink`)
+- Feature-flag architecture per artist account.
+
+### Phase 8 - Scheduling and Availability (Planned)
+- New menu: **Scheduling & Availability**.
+- Artist calendar view of bookings.
+- Availability slots by weekday/time windows.
+- Customer booking limited to available slots.
+- Admin schedule board for booked/pending/reschedule states.
+- Extension hooks for reminders, WhatsApp, and Google Calendar sync.
 
 ### Post-MVP - Product Expansion / SaaS Direction (Planned)
 - Multi-artist / multi-tenant evolution.
@@ -69,6 +92,8 @@ Current objective: close the MVP safely, verify production, and preserve a clear
 - Google Calendar sync for accepted appointments.
 - Chatbot for site guidance and developer ticket escalation.
 - Per-feature toggles so the artist can enable or disable integrations safely.
+- Platform admin can activate/deactivate artist pages.
+- Free vs premium plan enforcement with feature gating.
 
 ## Deliverables by Phase
 - P0: `docs/ROADMAP.md`, `docs/PROJECT_OVERVIEW.md`

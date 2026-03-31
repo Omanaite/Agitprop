@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { OAuthProviderIcon } from "@/components/auth/OAuthProviderIcon";
 
 type OAuthProvider = "google" | "github";
@@ -17,7 +16,7 @@ export function OAuthProviderButton({
   variant = "admin",
 }: OAuthProviderButtonProps) {
   return (
-    <Link
+    <a
       href={href}
       className={`oauth-provider-button ${variant === "register" ? "oauth-provider-button-register" : ""}`.trim()}
     >
@@ -25,6 +24,6 @@ export function OAuthProviderButton({
         <OAuthProviderIcon provider={provider} />
       </span>
       <span>{label}</span>
-    </Link>
+    </a>
   );
 }

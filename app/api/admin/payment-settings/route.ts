@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import { adminIntegrationSchema } from "@/lib/validators";
+import { adminPaymentSettingsSchema } from "@/lib/validators";
 import { requireAdmin } from "@/lib/supabase/auth";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import { enforceSameOrigin } from "@/lib/security";
 import { logAuditEvent } from "@/lib/audit";
 
-function isMissingIntegrationsTable(error: {
+function isMissingPaymentSettingsTable(error: {
   code?: string;
   message?: string;
 } | null) {
@@ -14,10 +14,19 @@ function isMissingIntegrationsTable(error: {
   return (
     code === "42P01" ||
     code === "PGRST205" ||
-    message.includes("admin_integrations") ||
+    message.includes("admin_payment_settings") ||
     (message.includes("relation") && message.includes("does not exist"))
   );
 }
+
+const emptySettings = {
+  mode: "test",
+  stripe_account_id: "",
+  stripe_public_reference: "",
+  paypal_merchant_email: "",
+  paypal_merchant_id: "",
+  notes: "",
+};
 
 export async function GET(request: Request) {
   const originCheck = enforceSameOrigin(request);
@@ -25,14 +34,13 @@ export async function GET(request: Request) {
     return NextResponse.json({ message: "Invalid origin." }, { status: 403 });
   }
   const ip = getClientIp(request);
-  const limit = rateLimit(`admin-integrations:get:${ip}`, 60, 60_000);
+  const limit = rateLimit(`admin-payment-settings:get:${ip}`, 60, 60_000);
   if (!limit.allowed) {
     return NextResponse.json(
       { message: "Too many requests. Try again later." },
       { status: 429 }
     );
   }
-
   const auth = await requireAdmin();
   if (!auth.ok) {
     return NextResponse.json(
@@ -43,48 +51,48 @@ export async function GET(request: Request) {
   if (!auth.user) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
-  const user = auth.user;
 
   const { data, error } = await auth.supabase
-    .from("admin_integrations")
-    .select("id,provider,status,external_user_id,connected_at,last_checked_at")
-    .eq("user_id", user.id)
-    .order("provider", { ascending: true });
+    .from("admin_payment_settings")
+    .select(
+      "mode,stripe_account_id,stripe_public_reference,paypal_merchant_email,paypal_merchant_id,notes"
+    )
+    .eq("user_id", auth.user.id)
+    .maybeSingle();
 
   if (error) {
-    if (isMissingIntegrationsTable(error)) {
+    if (isMissingPaymentSettingsTable(error)) {
       return NextResponse.json({
-        items: [],
+        settings: emptySettings,
         fallback: true,
-        warning: "admin_integrations table missing in target environment.",
+        warning: "admin_payment_settings table missing in target environment.",
       });
     }
     return NextResponse.json(
       {
-        message: "Failed to load integrations.",
+        message: "Failed to load payment settings.",
         detail: process.env.NODE_ENV === "production" ? undefined : error.message,
       },
       { status: 500 }
     );
   }
 
-  return NextResponse.json({ items: data ?? [] });
+  return NextResponse.json({ settings: data ?? emptySettings });
 }
 
-export async function POST(request: Request) {
+export async function PUT(request: Request) {
   const originCheck = enforceSameOrigin(request);
   if (!originCheck.ok) {
     return NextResponse.json({ message: "Invalid origin." }, { status: 403 });
   }
   const ip = getClientIp(request);
-  const limit = rateLimit(`admin-integrations:update:${ip}`, 30, 60_000);
+  const limit = rateLimit(`admin-payment-settings:update:${ip}`, 30, 60_000);
   if (!limit.allowed) {
     return NextResponse.json(
       { message: "Too many requests. Try again later." },
       { status: 429 }
     );
   }
-
   const auth = await requireAdmin();
   if (!auth.ok) {
     return NextResponse.json(
@@ -95,11 +103,10 @@ export async function POST(request: Request) {
   if (!auth.user) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
-  const user = auth.user;
 
   try {
     const json = await request.json();
-    const parsed = adminIntegrationSchema.safeParse(json);
+    const parsed = adminPaymentSettingsSchema.safeParse(json);
     if (!parsed.success) {
       return NextResponse.json(
         {
@@ -115,24 +122,25 @@ export async function POST(request: Request) {
 
     const payload = parsed.data;
     const { error } = await auth.supabase
-      .from("admin_integrations")
+      .from("admin_payment_settings")
       .upsert({
-        user_id: user.id,
-        provider: payload.provider,
-        status: payload.status,
-        external_user_id: payload.external_user_id ?? null,
-        connected_at: payload.status === "connected" ? new Date().toISOString() : null,
+        user_id: auth.user.id,
+        mode: payload.mode,
+        stripe_account_id: payload.stripe_account_id ?? null,
+        stripe_public_reference: payload.stripe_public_reference ?? null,
+        paypal_merchant_email: payload.paypal_merchant_email ?? null,
+        paypal_merchant_id: payload.paypal_merchant_id ?? null,
+        notes: payload.notes ?? null,
         updated_at: new Date().toISOString(),
       })
-      .eq("user_id", user.id)
-      .eq("provider", payload.provider);
+      .eq("user_id", auth.user.id);
 
     if (error) {
-      if (isMissingIntegrationsTable(error)) {
+      if (isMissingPaymentSettingsTable(error)) {
         return NextResponse.json(
           {
             message:
-              "Integrations storage is not ready. Run the latest Supabase schema first.",
+              "Payment settings storage is not ready. Run the latest Supabase schema first.",
             code: "schema_missing",
           },
           { status: 503 }
@@ -140,19 +148,18 @@ export async function POST(request: Request) {
       }
       return NextResponse.json(
         {
-          message: "Failed to update integration.",
-          detail:
-            process.env.NODE_ENV === "production" ? undefined : error.message,
+          message: "Failed to update payment settings.",
+          detail: process.env.NODE_ENV === "production" ? undefined : error.message,
         },
         { status: 500 }
       );
     }
 
     await logAuditEvent({
-      actor_email: user.email ?? null,
+      actor_email: auth.user.email ?? null,
       action: "update",
-      entity: "admin_integrations",
-      entity_id: user.id,
+      entity: "admin_payment_settings",
+      entity_id: auth.user.id,
     });
 
     return NextResponse.json({ ok: true });

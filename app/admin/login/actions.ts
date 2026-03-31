@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/ssr";
+import { isAdminUser } from "@/lib/supabase/auth";
 
 export async function signInAdmin(formData: FormData) {
   const email = String(formData.get("email") || "");
@@ -41,7 +42,7 @@ export async function signInAdmin(formData: FormData) {
       redirect("/admin/login?error=invalid");
     }
 
-    if (data.user.app_metadata?.role !== "admin") {
+    if (!isAdminUser(data.user)) {
       await supabase.auth.signOut();
       redirect("/admin/login?error=forbidden");
     }

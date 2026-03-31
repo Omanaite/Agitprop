@@ -17,6 +17,10 @@ Capture the next evolution of the product after MVP is accepted, with a path tow
 - Tenant-aware branding, themes, and content boundaries.
 - Role expansion beyond a single admin.
 - Configurable feature modules per tenant.
+- Platform admin controls to activate/deactivate artist pages.
+- Auto-provision artist workspace on registration.
+- Plan model with `free` and `premium` capabilities.
+- Pilot rule: `akemi@tattoo.ink` mapped to premium baseline and custom brutalist theme.
 
 ## Theme 2 - Payments (Sandbox First)
 - Stripe integration completed with sandbox validation.
@@ -32,6 +36,7 @@ Capture the next evolution of the product after MVP is accepted, with a path tow
 - Artist-configurable availability windows.
 - Google Calendar sync for accepted appointments.
 - Feature toggle so calendar sync can be enabled or disabled.
+- Product naming candidate for menu: `Scheduling & Availability`.
 
 ## Theme 4 - Reminders and Notifications
 - Reminder emails before appointments.

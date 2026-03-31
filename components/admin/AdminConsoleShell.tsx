@@ -16,6 +16,7 @@ import { GalleriesManager } from "@/components/admin/GalleriesManager";
 import { GalleryManager } from "@/components/admin/GalleryManager";
 import { HomepageSectionsManager } from "@/components/admin/HomepageSectionsManager";
 import { IntegrationsManager } from "@/components/admin/IntegrationsManager";
+import { PaymentSettingsManager } from "@/components/admin/PaymentSettingsManager";
 import { PostManager } from "@/components/admin/PostManager";
 import { ProfileManager } from "@/components/admin/ProfileManager";
 
@@ -41,6 +42,13 @@ const sections: Section[] = [
     eyebrow: "Connections",
     description: "OAuth providers and cloud upload readiness.",
     content: <IntegrationsManager />,
+  },
+  {
+    id: "payments",
+    label: "Payments",
+    eyebrow: "Billing",
+    description: "Configure Stripe and PayPal references and mode.",
+    content: <PaymentSettingsManager />,
   },
   {
     id: "homepage",

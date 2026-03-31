@@ -109,3 +109,16 @@
 - [ ] 16.2 Design appointment calendar + reminder architecture with graceful degradation.
 - [ ] 16.3 Design optional WhatsApp, Google Calendar, and chatbot modules behind artist-controlled feature toggles.
 - [ ] 16.4 Document SaaS / multi-tenant exploration boundaries before implementation.
+
+## Phase 17: Payments Sandbox Hardening
+- [x] 17.1 Add admin payment settings API and UI section for Stripe/PayPal references.
+- [ ] 17.2 Wire payment settings into checkout behavior for tenant-aware routing.
+- [ ] 17.3 Add payment webhook audit flow and replay-safe handling.
+- [ ] 17.4 Publish legal/compliance checklist before moving from test to live mode.
+
+## Phase 18: SaaS Pilot Foundation
+- [ ] 18.1 Define platform admin model for developer-level control of artist pages.
+- [ ] 18.2 Add artist provisioning model for new registrations (free plan defaults).
+- [ ] 18.3 Add feature gating model for free vs premium capabilities.
+- [ ] 18.4 Reserve pilot mapping for `akemi@tattoo.ink` as premium with custom brutalist style.
+- [ ] 18.5 Design `Scheduling & Availability` domain for artist slot management and booking constraints.

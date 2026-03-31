@@ -19,6 +19,7 @@ Keep one current snapshot of implementation state, blockers, and next actions so
   - `npm run build`
   - `npm audit`
 - Formal MVP, handoff, and post-MVP backlog documents now exist.
+- Payments settings module added in admin (API + UI), pending schema rollout in production.
 
 ## What Is Stable Locally
 - Gallery CRUD.
@@ -55,6 +56,7 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - Added admin-neutral typography and distinct admin visual system.
 
 ## High-Priority Pending Work
+- Fix production auth instability (OAuth + admin role checks + profile/integrations schema alignment).
 - Run production smoke test and check Vercel logs.
 - Verify `homepage_sections` is fully active in production.
 - Confirm OAuth flows in production.
@@ -64,6 +66,14 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - Define route-based multilingual SEO strategy.
 - Complete final admin/public visual QA.
 - Validate MVP acceptance against `docs/MVP_STATUS.md`.
+
+## New Backlog Registered (Platform / SaaS)
+- Platform-level SaaS admin workspace.
+- Auto-provision artist site on account creation.
+- Free plan (limited features) vs premium plan (full features).
+- Akemi pilot as premium with custom brutalist style.
+- New artist scheduling module: `Scheduling & Availability`.
+- Booking bound to artist availability windows.
 
 ## Medium-Priority Pending Work
 - Deeper localization of admin-managed labels.

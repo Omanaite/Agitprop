@@ -5,6 +5,17 @@ import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import { enforceSameOrigin } from "@/lib/security";
 import { logAuditEvent } from "@/lib/audit";
 
+function isMissingProfileTable(error: { code?: string; message?: string } | null) {
+  const code = String(error?.code ?? "");
+  const message = String(error?.message ?? "").toLowerCase();
+  return (
+    code === "42P01" ||
+    code === "PGRST205" ||
+    message.includes("admin_profiles") ||
+    message.includes("relation") && message.includes("does not exist")
+  );
+}
+
 export async function GET(request: Request) {
   const originCheck = enforceSameOrigin(request);
   if (!originCheck.ok) {
@@ -38,6 +49,19 @@ export async function GET(request: Request) {
     .maybeSingle();
 
   if (error) {
+    if (isMissingProfileTable(error)) {
+      return NextResponse.json({
+        profile: {
+          email: user.email ?? "",
+          nickname: "",
+          shipping_address: "",
+          billing_address: "",
+          payment_notes: "",
+        },
+        fallback: true,
+        warning: "admin_profiles table missing in target environment.",
+      });
+    }
     return NextResponse.json(
       {
         message: "Failed to load profile.",
@@ -115,6 +139,16 @@ export async function PUT(request: Request) {
       .eq("user_id", user.id);
 
     if (error) {
+      if (isMissingProfileTable(error)) {
+        return NextResponse.json(
+          {
+            message:
+              "Profile storage is not ready. Run the latest Supabase schema first.",
+            code: "schema_missing",
+          },
+          { status: 503 }
+        );
+      }
       return NextResponse.json(
         {
           message: "Failed to update profile.",

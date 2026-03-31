@@ -223,6 +223,13 @@ Planned post-MVP themes now tracked in product docs:
 - per-feature toggles controlled by the artist
 - future multi-tenant / SaaS exploration
 
+Pilot extension assumptions now recorded:
+- `akemi@tattoo.ink` is treated as the premium pilot tenant with custom brutalist styling.
+- New artist accounts should default to a free plan baseline with limited features.
+- Free plan should expose only a small predefined theme set (target: three selectable styles).
+- Platform admin (developer-side) needs activation/deactivation control per artist page.
+- New domain naming for scheduling module: `Scheduling & Availability`.
+
 ## Knowledge Capture & Skills
 Maintain SDD artifacts in `openspec/` and keep skill registry updated so
 future changes stay aligned with existing standards.
