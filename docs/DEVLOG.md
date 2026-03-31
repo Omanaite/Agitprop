@@ -92,4 +92,7 @@ Purpose: chronological project progress log to preserve context across sessions.
 - Updated service page CTAs to expose:
   - Artist login (`/studio/login`)
   - Platform admin login (`/admin/login`)
+- Updated registration policy:
+  - register page now supports email/password only
+  - OAuth entry moved to artist login to avoid duplicate sign-up surfaces
 

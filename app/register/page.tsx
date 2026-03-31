@@ -1,14 +1,12 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { RegisterForm } from "@/components/auth/RegisterForm";
-import { OAuthProviderButton } from "@/components/auth/OAuthProviderButton";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
 import { signUpUser } from "./actions";
 
 export const metadata: Metadata = {
   title: "Create Account | Agitprop",
-  description:
-    "Create a standard Agitprop account with email confirmation or OAuth sign-up.",
+  description: "Create a standard Agitprop account with email confirmation.",
   robots: {
     index: false,
     follow: false,
@@ -45,8 +43,8 @@ export default function RegisterPage({ searchParams }: RegisterPageProps) {
             </h1>
             <p className="admin-muted mt-5 max-w-xl text-base leading-7">
               New accounts receive a confirmation email before they can be used.
-              OAuth sign-up is available for faster onboarding, but admin access
-              still requires a separate role approval.
+              OAuth account creation is handled through artist login so sign-in
+              and identity linking stay in one place.
             </p>
             <div className="mt-8 space-y-3">
               <div className="admin-card-soft p-4">
@@ -60,11 +58,11 @@ export default function RegisterPage({ searchParams }: RegisterPageProps) {
               </div>
               <div className="admin-card-soft p-4">
                 <p className="text-sm font-semibold text-[var(--admin-title)]">
-                  OAuth supported
+                  OAuth via artist login
                 </p>
                 <p className="admin-muted mt-2 text-sm leading-6">
-                  Google and GitHub sign-up stay available with theme-aware brand
-                  buttons.
+                  Use Google or GitHub from artist login to auto-create or link
+                  your account.
                 </p>
               </div>
             </div>
@@ -73,11 +71,11 @@ export default function RegisterPage({ searchParams }: RegisterPageProps) {
           <section className="admin-card p-6 md:p-8">
             <p className="admin-chip">Create account</p>
             <h1 className="admin-title mt-5 text-3xl font-semibold">
-              Start with email or OAuth
+              Start with email
             </h1>
             <p className="admin-muted mt-3 text-sm leading-6">
-              This creates a standard account for the product. Admin privileges
-              are granted separately.
+              This creates a standard account for the product. Platform admin
+              privileges are managed separately.
             </p>
 
             {errorMessage ? (
@@ -90,28 +88,6 @@ export default function RegisterPage({ searchParams }: RegisterPageProps) {
               <RegisterForm action={signUpUser} />
             </div>
 
-            <div className="admin-divider my-6" />
-
-            <div className="space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--admin-muted)]">
-                OAuth sign up
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <OAuthProviderButton
-                  provider="google"
-                  href="/api/auth/oauth?provider=google&next=/studio"
-                  label="Sign up with Google"
-                  variant="register"
-                />
-                <OAuthProviderButton
-                  provider="github"
-                  href="/api/auth/oauth?provider=github&next=/studio"
-                  label="Sign up with GitHub"
-                  variant="register"
-                />
-              </div>
-            </div>
-
             <p className="admin-muted mt-6 text-sm leading-6">
               Looking for the software overview?{" "}
               <Link href="/agitprop" className="font-semibold text-[var(--admin-accent)]">
@@ -121,7 +97,15 @@ export default function RegisterPage({ searchParams }: RegisterPageProps) {
             </p>
 
             <p className="admin-muted mt-2 text-sm leading-6">
-              Already have admin access?{" "}
+              Want OAuth access?{" "}
+              <Link href="/studio/login" className="font-semibold text-[var(--admin-accent)]">
+                Go to artist login
+              </Link>
+              .{" "}
+            </p>
+
+            <p className="admin-muted mt-2 text-sm leading-6">
+              Already have platform admin access?{" "}
               <Link href="/admin/login" className="font-semibold text-[var(--admin-accent)]">
                 Go to admin login
               </Link>
@@ -133,4 +117,3 @@ export default function RegisterPage({ searchParams }: RegisterPageProps) {
     </div>
   );
 }
-

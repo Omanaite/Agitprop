@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AdminLoginForm } from "@/components/admin/AdminLoginForm";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
+import { OAuthProviderButton } from "@/components/auth/OAuthProviderButton";
 import { signInAdmin } from "@/app/admin/login/actions";
 
 export const metadata: Metadata = {
@@ -76,10 +77,29 @@ export default function StudioLoginPage({ searchParams }: LoginPageProps) {
             <div className="mt-6">
               <AdminLoginForm action={signInAdmin} />
             </div>
+
+            <div className="admin-divider my-6" />
+
+            <div className="space-y-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--admin-muted)]">
+                OAuth sign in
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <OAuthProviderButton
+                  provider="google"
+                  href="/api/auth/oauth?provider=google&next=/studio"
+                  label="Continue with Google"
+                />
+                <OAuthProviderButton
+                  provider="github"
+                  href="/api/auth/oauth?provider=github&next=/studio"
+                  label="Continue with GitHub"
+                />
+              </div>
+            </div>
           </section>
         </div>
       </div>
     </div>
   );
 }
-
