@@ -80,6 +80,10 @@ Current objective: close MVP safely, verify production, and preserve a clear han
   - roles and permissions
   - global integration availability (maintenance switch)
   - plan feature bundles by tenant
+- First implementation status:
+  - platform console route in place (`/admin`)
+  - artist workspace route in place (`/studio`)
+  - role-based routing and access guard wired
 - Plan model:
   - free plan with limited feature set
   - premium plan with full feature set

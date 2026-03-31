@@ -22,10 +22,9 @@ Agitprop is a Next.js App Router + Supabase product for artist websites and oper
 
 ### Admin Experience
 - Email/password admin login.
-- CRUD for galleries, pieces, and posts.
-- Homepage composition manager.
-- Admin profile.
-- Integrations view.
+- Platform admin console (SaaS governance scope).
+- Artist workspace for galleries, pieces, posts, and homepage composition.
+- Profile and payment settings in role-appropriate workspace scope.
 - Dedicated admin design system, separate from the public site.
 
 ## Architecture Summary

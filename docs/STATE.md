@@ -21,6 +21,9 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - Formal MVP, handoff, and post-MVP backlog documents now exist.
 - Payments settings module added in admin (API + UI), pending schema rollout in production.
 - Public service page `/agitprop` added as product-marketing entrypoint with direct signup/login CTAs.
+- Role-scoped private surfaces are now bootstrapped:
+  - `/admin` for platform governance
+  - `/studio` for artist operations
 
 ## What Is Stable Locally
 - Gallery CRUD.
@@ -70,7 +73,7 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - Define route-based multilingual SEO strategy.
 - Complete final admin/public visual QA.
 - Validate MVP acceptance against `docs/MVP_STATUS.md`.
-- Define and implement hard boundary between Platform Admin Console and Artist Workspace.
+- Expand role boundary from route level into full data-level tenancy and permission model.
 
 ## New Backlog Registered (Platform / SaaS)
 - Platform-level SaaS admin workspace.

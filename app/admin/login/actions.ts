@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/ssr";
-import { isAdminUser } from "@/lib/supabase/auth";
+import { getUserConsoleRoute } from "@/lib/supabase/auth";
 
 export async function signInAdmin(formData: FormData) {
   const email = String(formData.get("email") || "");
@@ -42,12 +42,13 @@ export async function signInAdmin(formData: FormData) {
       redirect("/admin/login?error=invalid");
     }
 
-    if (!isAdminUser(data.user)) {
+    const consoleRoute = getUserConsoleRoute(data.user);
+    if (!consoleRoute) {
       await supabase.auth.signOut();
       redirect("/admin/login?error=forbidden");
     }
 
-    redirect("/admin");
+    redirect(consoleRoute);
   } catch (err) {
     const digest = (err as { digest?: string } | null)?.digest ?? "";
     if (digest.startsWith("NEXT_REDIRECT")) {

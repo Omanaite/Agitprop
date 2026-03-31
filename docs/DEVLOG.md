@@ -57,3 +57,12 @@ Purpose: chronological project progress log to preserve context across sessions.
   - tenant lifecycle controls
   - global integration enable/disable switches for maintenance windows
 
+## 2026-03-31 (role-scoped console implementation)
+- Implemented first UI split:
+  - `/admin` now serves Platform Admin Console scope only.
+  - `/studio` now serves artist content workspace.
+- Updated auth routing:
+  - login redirects users to role-appropriate console (`/admin` or `/studio`).
+  - proxy enforces route access by role and prevents cross-scope access.
+- Kept platform console intentionally free of artist content modules to align with SaaS governance model.
+
