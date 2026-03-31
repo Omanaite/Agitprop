@@ -118,3 +118,9 @@ Purpose: chronological project progress log to preserve context across sessions.
 - Replaced transitional studio placeholder with functional settings workspace backed by `/api/studio/*`.
 - Result: artist `/studio` no longer depends on platform-admin APIs for profile/payment operations.
 
+## 2026-04-01 (studio integrations API baseline)
+- Added `GET/POST /api/studio/integrations` with artist auth guard and user-scoped storage access.
+- Added `StudioIntegrationsManager` to artist workspace navigation.
+- Wired studio OAuth connect action to `/api/auth/oauth?provider=...&next=/studio`.
+- Strengthened studio profile/payment endpoints to use server-side service-role client after artist auth validation, avoiding admin-RLS dependency for artist users.
+

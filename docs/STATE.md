@@ -65,6 +65,7 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - Added admin-neutral typography and distinct admin visual system.
 - Added Agitprop service page foundation for onboarding and conversion flow.
 - Added artist-scoped settings APIs (`/api/studio/profile`, `/api/studio/payment-settings`) and wired studio workspace settings tabs to avoid platform-admin API coupling.
+- Added artist-scoped integrations API (`/api/studio/integrations`) and wired studio OAuth connect path to `/api/auth/oauth` with studio callback intent.
 
 ## High-Priority Pending Work
 - Fix production auth instability (OAuth + admin role checks + profile/integrations schema alignment).

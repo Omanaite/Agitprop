@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { adminPaymentSettingsSchema } from "@/lib/validators";
 import { requireArtistOperator } from "@/lib/supabase/auth";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import { enforceSameOrigin } from "@/lib/security";
 import { logAuditEvent } from "@/lib/audit";
@@ -51,8 +52,9 @@ export async function GET(request: Request) {
   if (!auth.user) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
+  const adminClient = createSupabaseServerClient();
 
-  const { data, error } = await auth.supabase
+  const { data, error } = await adminClient
     .from("admin_payment_settings")
     .select(
       "mode,stripe_account_id,stripe_public_reference,paypal_merchant_email,paypal_merchant_id,notes"
@@ -121,7 +123,8 @@ export async function PUT(request: Request) {
     }
 
     const payload = parsed.data;
-    const { error } = await auth.supabase
+    const adminClient = createSupabaseServerClient();
+    const { error } = await adminClient
       .from("admin_payment_settings")
       .upsert(
         {

@@ -150,6 +150,9 @@
   - `GET/PUT /api/studio/profile`
   - `GET/PUT /api/studio/payment-settings`
   - Studio workspace tabs wired to artist endpoints (no `/api/admin/*` dependency for settings)
+- [x] 18.13 Add artist integrations baseline:
+  - `GET/POST /api/studio/integrations`
+  - Studio integrations module wired to `/api/auth/oauth` with `next=/studio`
 
 ## Phase 19: Agitprop Service Page and Conversion Funnel
 - [x] 19.1 Create `/agitprop` public product page with value proposition and CTA flow.

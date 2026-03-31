@@ -14,6 +14,7 @@ import {
 import { useState } from "react";
 import { StudioProfileManager } from "@/components/studio/StudioProfileManager";
 import { StudioPaymentSettingsManager } from "@/components/studio/StudioPaymentSettingsManager";
+import { StudioIntegrationsManager } from "@/components/studio/StudioIntegrationsManager";
 
 type Section = {
   id: string;
@@ -30,6 +31,13 @@ const sections: Section[] = [
     eyebrow: "Identity",
     description: "Billing, contact details, and studio preferences.",
     content: <StudioProfileManager />,
+  },
+  {
+    id: "integrations",
+    label: "Integrations",
+    eyebrow: "Connections",
+    description: "OAuth providers and cloud upload readiness.",
+    content: <StudioIntegrationsManager />,
   },
   {
     id: "payments",
