@@ -107,3 +107,14 @@ Purpose: chronological project progress log to preserve context across sessions.
 - Fixed artist workspace 403 noise by removing direct dependency on `/api/admin/*` endpoints from `/studio`.
 - Added `StudioWorkspaceShell` as transition-safe role-scoped surface while artist-scoped API layer is implemented.
 
+## 2026-03-31 (artist-scoped settings APIs)
+- Implemented artist-specific endpoints:
+  - `GET/PUT /api/studio/profile`
+  - `GET/PUT /api/studio/payment-settings`
+- Added artist workspace modules:
+  - `StudioConsoleShell`
+  - `StudioProfileManager`
+  - `StudioPaymentSettingsManager`
+- Replaced transitional studio placeholder with functional settings workspace backed by `/api/studio/*`.
+- Result: artist `/studio` no longer depends on platform-admin APIs for profile/payment operations.
+

@@ -1,7 +1,7 @@
 ﻿# Project Roadmap: Agitprop (Akemi Pilot)
 
-Date: 2026-03-24
-Current status: Phase 4 - MVP hardening and production verification
+Date: 2026-03-31
+Current status: Phase 4 + Phase 7 bridge (MVP hardening + SaaS role split stabilization)
 
 ## Executive Summary
 Product: Agitprop, a Next.js + Supabase platform for artist websites and operations, currently running with Akemi as the pilot implementation.
@@ -86,6 +86,7 @@ Current objective: close MVP safely, verify production, and preserve a clear han
   - role-based routing and access guard wired
   - platform governance APIs in place for tenant lifecycle baseline and global integration toggles
   - tenant auto-provisioning wired into registration and OAuth callback
+  - artist workspace now uses artist-scoped settings APIs (`/api/studio/profile`, `/api/studio/payment-settings`) instead of platform admin endpoints
 - Plan model:
   - free plan with limited feature set
   - premium plan with full feature set

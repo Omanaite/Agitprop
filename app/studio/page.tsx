@@ -1,6 +1,6 @@
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
 import { signOutAdmin } from "@/app/admin/actions";
-import { StudioWorkspaceShell } from "@/components/studio/StudioWorkspaceShell";
+import { StudioConsoleShell } from "@/components/studio/StudioConsoleShell";
 
 export default function StudioPage() {
   return (
@@ -13,8 +13,8 @@ export default function StudioPage() {
               Studio operations dashboard
             </h1>
             <p className="admin-muted mt-2 max-w-2xl text-sm leading-6">
-              Manage artist content, uploads, profile settings, and studio-level
-              operations in your dedicated workspace.
+              Manage studio settings in a workspace isolated from platform
+              administration.
             </p>
           </div>
 
@@ -28,7 +28,7 @@ export default function StudioPage() {
           </div>
         </header>
 
-        <StudioWorkspaceShell />
+        <StudioConsoleShell />
       </div>
     </div>
   );

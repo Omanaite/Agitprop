@@ -146,6 +146,10 @@
   - create `artist_tenants` record for non-platform users
   - create `tenant_memberships` owner role (`artist_admin`)
   - preserve signup flow even when provisioning storage is unavailable
+- [x] 18.12 Add artist-scoped settings API baseline and workspace shell:
+  - `GET/PUT /api/studio/profile`
+  - `GET/PUT /api/studio/payment-settings`
+  - Studio workspace tabs wired to artist endpoints (no `/api/admin/*` dependency for settings)
 
 ## Phase 19: Agitprop Service Page and Conversion Funnel
 - [x] 19.1 Create `/agitprop` public product page with value proposition and CTA flow.
