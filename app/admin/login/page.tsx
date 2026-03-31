@@ -1,5 +1,4 @@
 ﻿import type { Metadata } from "next";
-import Link from "next/link";
 import { AdminLoginForm } from "@/components/admin/AdminLoginForm";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
 import { OAuthProviderButton } from "@/components/auth/OAuthProviderButton";
@@ -126,16 +125,6 @@ export default function AdminLoginPage({ searchParams }: LoginPageProps) {
               </div>
             </div>
 
-            <p className="admin-muted mt-6 text-sm leading-6">
-              Need a standard account first?{" "}
-              <Link
-                href="/register"
-                className="font-semibold text-[var(--admin-accent)]"
-              >
-                Create one here
-              </Link>
-              .
-            </p>
           </section>
         </div>
       </div>

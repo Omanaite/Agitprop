@@ -11,7 +11,7 @@ function isMissingProfileTable(error: { code?: string; message?: string } | null
   return (
     code === "42P01" ||
     code === "PGRST205" ||
-    message.includes("admin_profiles") ||
+    message.includes("relation \"admin_profiles\"") ||
     message.includes("relation") && message.includes("does not exist")
   );
 }
@@ -152,8 +152,9 @@ export async function PUT(request: Request) {
         billing_address: payload.billing_address ?? null,
         payment_notes: payload.payment_notes ?? null,
         updated_at: new Date().toISOString(),
-      })
-      .eq("user_id", user.id);
+      }, {
+        onConflict: "user_id",
+      });
 
     if (error) {
       if (isMissingProfileTable(error)) {
