@@ -14,7 +14,7 @@ function isMissingPaymentSettingsTable(error: {
   return (
     code === "42P01" ||
     code === "PGRST205" ||
-    message.includes("admin_payment_settings") ||
+    message.includes("relation \"admin_payment_settings\"") ||
     (message.includes("relation") && message.includes("does not exist"))
   );
 }
@@ -132,8 +132,9 @@ export async function PUT(request: Request) {
         paypal_merchant_id: payload.paypal_merchant_id ?? null,
         notes: payload.notes ?? null,
         updated_at: new Date().toISOString(),
-      })
-      .eq("user_id", auth.user.id);
+      }, {
+        onConflict: "user_id",
+      });
 
     if (error) {
       if (isMissingPaymentSettingsTable(error)) {

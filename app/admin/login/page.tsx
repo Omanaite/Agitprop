@@ -1,7 +1,6 @@
 ﻿import type { Metadata } from "next";
 import { AdminLoginForm } from "@/components/admin/AdminLoginForm";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
-import { OAuthProviderButton } from "@/components/auth/OAuthProviderButton";
 import { signInAdmin } from "./actions";
 
 export const metadata: Metadata = {
@@ -88,7 +87,7 @@ export default function AdminLoginPage({ searchParams }: LoginPageProps) {
               Sign in to the control room
             </h1>
             <p className="admin-muted mt-3 text-sm leading-6">
-              Use email and password or continue with an approved OAuth provider.
+              Use email and password to access the admin control room.
             </p>
 
             {errorMessage ? (
@@ -104,31 +103,9 @@ export default function AdminLoginPage({ searchParams }: LoginPageProps) {
             <div className="mt-6">
               <AdminLoginForm action={signInAdmin} />
             </div>
-
-            <div className="admin-divider my-6" />
-
-            <div className="space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--admin-muted)]">
-                OAuth sign in
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <OAuthProviderButton
-                  provider="google"
-                  href="/api/admin/integrations/oauth?provider=google"
-                  label="Continue with Google"
-                />
-                <OAuthProviderButton
-                  provider="github"
-                  href="/api/admin/integrations/oauth?provider=github"
-                  label="Continue with GitHub"
-                />
-              </div>
-            </div>
-
           </section>
         </div>
       </div>
     </div>
   );
 }
-
