@@ -123,6 +123,19 @@
 - [ ] 18.4 Reserve pilot mapping for `akemi@tattoo.ink` as premium with custom brutalist style.
 - [ ] 18.5 Design `Scheduling & Availability` domain for artist slot management and booking constraints.
 - [ ] 18.6 Add platform-admin actions for artist tenant lifecycle (edit, activate/deactivate, delete with audit).
+- [ ] 18.7 Split current admin UI into:
+  - platform admin console (SaaS governance)
+  - artist workspace (content and artist operations)
+- [ ] 18.8 Remove artist modules from platform admin:
+  - homepage
+  - galleries
+  - pieces
+  - posts
+  - artist-level integrations
+- [ ] 18.9 Add platform-level role/permission module:
+  - grant/revoke artist roles
+  - grant/revoke staff roles
+  - assign feature bundles by plan
 
 ## Phase 19: Agitprop Service Page and Conversion Funnel
 - [x] 19.1 Create `/agitprop` public product page with value proposition and CTA flow.

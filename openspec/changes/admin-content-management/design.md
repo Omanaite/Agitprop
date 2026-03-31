@@ -96,15 +96,29 @@ Applied baseline improvements:
 **Alternatives considered**: Rebrand the pilot homepage directly, or defer service marketing until post-MVP.
 **Rationale**: The product now has two valid narratives: pilot artist site (Akemi) and SaaS platform (Agitprop). A dedicated service page enables go-to-market messaging immediately while preserving pilot brand continuity and lowering release risk.
 
+### Decision: Split Platform Admin and Artist Workspace
+**Choice**: Separate back-office capabilities into two explicit surfaces:
+- **Platform Admin (SaaS operator)**: tenant governance, plans, feature flags, role management, site lifecycle.
+- **Artist Workspace (tenant operator)**: galleries, pieces, posts, homepage composition, artist integrations, scheduling.
+**Alternatives considered**: Single mixed admin panel for all roles.
+**Rationale**: Mixing platform and artist operations is confusing and unsafe at scale. Separation reduces accidental cross-tenant edits and aligns permissions with business responsibilities.
+
 ## Data Flow
 
-Admin Login -> Supabase Auth -> Admin Session
+Platform Admin Login -> Supabase Auth -> Platform Admin Session
   |
-  |-- Admin Console (protected route)
+  |-- Platform Console (protected route)
+  |   |-- Tenant lifecycle (activate/deactivate/delete) -> API route -> Supabase
+  |   |-- Plan & feature toggles per tenant -> API route -> Supabase
+  |   |-- Role management (artist/staff) -> API route -> Supabase
+  |
+Artist Login -> Supabase Auth -> Artist Session
+  |
+  |-- Artist Workspace (protected route)
   |   |-- Create/Update/Delete gallery items -> API route -> Supabase
   |   |-- Create/Update/Delete posts -> API route -> Supabase
-  |   |-- Manage admin profile -> API route -> Supabase (planned)
-  |   |-- Connect OAuth / cloud storage -> Supabase Auth + provider (planned)
+  |   |-- Manage artist profile -> API route -> Supabase
+  |   |-- Connect artist integrations -> Supabase Auth + provider
   |
 Public Pages -> Server components -> Supabase public client (read-only)
 

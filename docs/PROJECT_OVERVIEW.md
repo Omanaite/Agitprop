@@ -22,7 +22,6 @@ Agitprop is a Next.js App Router + Supabase product for artist websites and oper
 
 ### Admin Experience
 - Email/password admin login.
-- OAuth admin login.
 - CRUD for galleries, pieces, and posts.
 - Homepage composition manager.
 - Admin profile.
@@ -36,6 +35,9 @@ Agitprop is a Next.js App Router + Supabase product for artist websites and oper
 - Client components for interactive admin tooling.
 - Separate visual systems for public vs admin.
 - Dedicated Agitprop service page for product positioning and onboarding entry (`/agitprop`).
+- Pending split into two private surfaces:
+  - Platform Admin Console (SaaS governance)
+  - Artist Workspace (tenant content and operations)
 
 ### Backend
 - Supabase Postgres with RLS.
@@ -66,6 +68,7 @@ The current architecture is intentionally single-artist for MVP, but it is being
 - future calendar/notification modules
 - future multi-tenant exploration
 - safe degradation when providers are disconnected
+- strict role boundaries between platform governance and artist content operations
 
 ## Current MVP Blockers
 The MVP is functionally close, but still depends on:

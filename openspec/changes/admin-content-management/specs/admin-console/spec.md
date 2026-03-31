@@ -1,21 +1,26 @@
 # Admin Console Specification
 
 ## Purpose
-Provide a private admin console for managing content.
+Provide role-scoped private consoles, separating platform administration from artist operations.
 
 ## Requirements
 
 ### Requirement: Admin Console Entry
-The system **SHALL** provide an admin console entry point accessible only to authenticated admins.
+The system **SHALL** provide protected entry points for platform admins and artist operators with role-based access.
 
-#### Scenario: Admin enters console
-- GIVEN an authenticated admin user
-- WHEN the user navigates to the admin console
-- THEN the system shows the admin dashboard
+#### Scenario: Platform admin enters platform console
+- GIVEN an authenticated user with platform-admin role
+- WHEN the user navigates to the platform console
+- THEN the system shows platform governance modules
 
-#### Scenario: Non-admin access
-- GIVEN a user without admin role
-- WHEN the user attempts to access the admin console
+#### Scenario: Artist enters artist workspace
+- GIVEN an authenticated user with artist role
+- WHEN the user navigates to the artist workspace
+- THEN the system shows artist content and operational modules
+
+#### Scenario: Cross-role access denied
+- GIVEN a user with artist role
+- WHEN the user attempts to access platform-admin modules
 - THEN the system denies access
 
 ### Requirement: Distinct Admin Experience
@@ -58,17 +63,39 @@ The system **SHOULD** show skeleton loading states while the admin login and adm
 - WHEN the dashboard or a management section is still loading
 - THEN the system renders a skeleton state aligned with the admin layout
 
-### Requirement: Public Section Configuration
-The system **SHOULD** allow the admin to manage the order and display names of public homepage sections.
+### Requirement: Artist-Only Content Modules
+The system **MUST** keep content modules scoped to artist workspaces, not platform admin.
 
-#### Scenario: Admin reorders sections
-- GIVEN an authenticated admin user in the console
+#### Scenario: Platform admin opens console
+- GIVEN a platform admin session
+- WHEN the console loads
+- THEN content modules (galleries, pieces, posts, homepage composition) are not shown
+
+#### Scenario: Artist opens workspace
+- GIVEN an artist session
+- WHEN the workspace loads
+- THEN content modules are available according to tenant plan and feature flags
+
+### Requirement: Platform Integrations Governance
+The system **SHOULD** allow platform admins to enable/disable integration availability globally.
+
+#### Scenario: Integration temporarily disabled by platform admin
+- GIVEN an integration is disabled globally
+- WHEN an artist opens integration settings
+- THEN the integration is shown as unavailable
+- AND the UI explains it is under platform maintenance
+
+### Requirement: Public Section Configuration
+The system **SHOULD** allow the artist to manage the order and display names of public homepage sections.
+
+#### Scenario: Artist reorders sections
+- GIVEN an authenticated artist user in the workspace
 - WHEN the user changes the position of homepage sections
 - THEN the system stores the new order
 - AND the public site renders sections in that order
 
-#### Scenario: Admin renames a section
-- GIVEN an authenticated admin user in the console
+#### Scenario: Artist renames a section
+- GIVEN an authenticated artist user in the workspace
 - WHEN the user updates the display name of a homepage section
 - THEN the system stores the new label
 - AND the public site renders the updated section name

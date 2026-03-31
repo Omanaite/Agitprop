@@ -70,6 +70,7 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - Define route-based multilingual SEO strategy.
 - Complete final admin/public visual QA.
 - Validate MVP acceptance against `docs/MVP_STATUS.md`.
+- Define and implement hard boundary between Platform Admin Console and Artist Workspace.
 
 ## New Backlog Registered (Platform / SaaS)
 - Platform-level SaaS admin workspace.
@@ -78,6 +79,9 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - Akemi pilot as premium with custom brutalist style.
 - New artist scheduling module: `Scheduling & Availability`.
 - Booking bound to artist availability windows.
+- Platform admin scope refinement:
+  - manage tenants, plans, roles, lifecycle
+  - do not own artist content modules (posts/galleries/homepage)
 
 ## Medium-Priority Pending Work
 - Deeper localization of admin-managed labels.

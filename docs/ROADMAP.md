@@ -72,6 +72,14 @@ Current objective: close MVP safely, verify production, and preserve a clear han
   - activate/deactivate artist site
   - edit artist metadata and plan
   - soft-delete / hard-delete artist tenant with audit trail
+- Explicit console separation:
+  - Platform Admin Console (SaaS governance only)
+  - Artist Workspace (content + site operations)
+- Platform admin must not manage artist content directly (no posts/galleries/homepage editor in platform console).
+- Platform admin controls:
+  - roles and permissions
+  - global integration availability (maintenance switch)
+  - plan feature bundles by tenant
 - Plan model:
   - free plan with limited feature set
   - premium plan with full feature set

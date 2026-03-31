@@ -43,3 +43,17 @@ Purpose: chronological project progress log to preserve context across sessions.
   - activate/deactivate
   - delete with audit trail
 
+## 2026-03-31 (platform scope clarification)
+- Registered product decision: split current mixed admin into two role-scoped consoles.
+  - Platform Admin Console (SaaS operations)
+  - Artist Workspace (content/site management)
+- Recorded that platform admin should not directly manage artist content modules:
+  - homepage
+  - posts
+  - galleries
+  - pieces
+- Added platform-governance requirements:
+  - role and permission management
+  - tenant lifecycle controls
+  - global integration enable/disable switches for maintenance windows
+
