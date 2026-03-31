@@ -27,3 +27,9 @@ Purpose: chronological project progress log to preserve context across sessions.
   - payments sandbox progression
   - SaaS foundation (platform admin, plan gating)
   - scheduling and availability module.
+- Started product rebrand from project-level naming to **Artopia** while preserving Akemi as pilot tenant.
+- Added new public service route `/artopia` with:
+  - value proposition blocks
+  - Free vs Premium framing
+  - CTA flow to `/register`, `/admin/login`, and pilot homepage.
+- Updated roadmap/spec artifacts to include service-page conversion funnel and pending SEO/localization tasks for this surface.

@@ -6,8 +6,8 @@ import { OAuthProviderButton } from "@/components/auth/OAuthProviderButton";
 import { signInAdmin } from "./actions";
 
 export const metadata: Metadata = {
-  title: "Admin Login | Akemi Tattoo",
-  description: "Secure admin login for the Akemi Tattoo control room.",
+  title: "Admin Login | Artopia",
+  description: "Secure admin login for the Artopia control room.",
   robots: {
     index: false,
     follow: false,

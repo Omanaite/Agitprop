@@ -25,9 +25,12 @@ const adminFont = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Akemi Tattoo Manifesto",
+  title: {
+    default: "Artopia | Akemi Tattoo Pilot",
+    template: "%s | Artopia",
+  },
   description:
-    "Brutalist tattoo portfolio and booking portal for Akemi. Built for Vercel + Supabase.",
+    "Artopia platform pilot: brutalist tattoo portfolio and booking portal for Akemi.",
   metadataBase: new URL(getSiteUrl()),
   alternates: {
     canonical: "/",
@@ -40,17 +43,17 @@ export const metadata: Metadata = {
     "akemi tattoo",
   ],
   openGraph: {
-    title: "Akemi Tattoo Manifesto",
+    title: "Artopia | Akemi Tattoo Pilot",
     description:
       "Brutalist tattoo portfolio and booking portal for Akemi. Built for Vercel + Supabase.",
     url: "/",
-    siteName: "Akemi Tattoo Manifesto",
+    siteName: "Artopia",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Akemi Tattoo Manifesto",
+    title: "Artopia | Akemi Tattoo Pilot",
     description:
       "Brutalist tattoo portfolio and booking portal for Akemi. Built for Vercel + Supabase.",
   },

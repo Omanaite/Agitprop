@@ -1,11 +1,11 @@
-﻿# Project Roadmap: Akemi Tattoo Portfolio
+﻿# Project Roadmap: Artopia (Akemi Pilot)
 
 Date: 2026-03-24
 Current status: Phase 4 - MVP hardening and production verification
 
 ## Executive Summary
-Product: a Next.js + Supabase tattoo portfolio for a single artist, with a brutalist public experience and a separate admin console for operational work.
-Current objective: close the MVP safely, verify production, and preserve a clear handoff path for post-MVP SaaS expansion.
+Product: Artopia, a Next.js + Supabase platform for artist websites and operations, currently running with Akemi as the pilot implementation.
+Current objective: close MVP safely, verify production, and preserve a clear handoff path for post-MVP SaaS expansion.
 
 ## Phases
 
@@ -49,6 +49,7 @@ Current objective: close the MVP safely, verify production, and preserve a clear
 - SEO and security hardening.
 - Copy hardening before final indexation.
 - Lighthouse pass and performance cleanup.
+- Service page (`/artopia`) validation for product narrative and signup funnel entry.
 
 ### Phase 5 - MVP Signoff (Pending)
 - Confirm the latest deployed commit in Vercel.
@@ -74,6 +75,13 @@ Current objective: close the MVP safely, verify production, and preserve a clear
   - free plan: 3 selectable default styles
   - Akemi pilot: premium + custom brutalist style (email anchor: `akemi@tattoo.ink`)
 - Feature-flag architecture per artist account.
+
+### Phase 7.5 - Product Marketing Surface (Planned / In Progress)
+- Build dedicated service page for Artopia value proposition.
+- Explain Free vs Premium clearly for conversion.
+- Add direct CTAs to registration, login, and pilot public site.
+- Define SEO baseline for service page intent ("tattoo website builder", "artist booking software").
+- Add instrumentation plan for conversion tracking (view -> register -> first login).
 
 ### Phase 8 - Scheduling and Availability (Planned)
 - New menu: **Scheduling & Availability**.
@@ -101,6 +109,7 @@ Current objective: close the MVP safely, verify production, and preserve a clear
 - P2: protected admin panel + CRUD APIs + RLS
 - P3: advanced content tooling + composition controls + locale controls + registration
 - P4: production verification + SEO/security hardening + QA
+- P4.1: service page + signup funnel entrypoint
 - P5: MVP signoff package
 
 ## Known Blockers
@@ -114,6 +123,7 @@ Current objective: close the MVP safely, verify production, and preserve a clear
 2. Document all user-dependent actions without blocking autonomous work.
 3. Avoid starting provider-dependent integrations before MVP signoff.
 4. Preserve a safe path toward optional, configurable post-MVP modules.
+5. Keep Artopia service narrative clear while preserving Akemi pilot brand identity.
 
 ## Update 2026-03-26
 - Fixed broken public image rendering caused by overly strict Next image host restrictions.
@@ -138,3 +148,4 @@ Source of record: `docs/reports/akemi-seo-security-audit-2026-03-24.pdf`
 - User-dependent items: `docs/PENDING_EXTERNAL_INTERVENTIONS.md`
 - Post-MVP expansion backlog: `docs/POST_MVP_BACKLOG.md`
 - Production readiness checklist: `docs/PRE_PROD_CHECKLIST.md`
+

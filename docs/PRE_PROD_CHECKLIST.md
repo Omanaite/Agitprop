@@ -35,6 +35,8 @@ Provide a single operational checklist before declaring the current MVP ready fo
 
 ## Public Smoke Test
 - [ ] Home loads in production.
+- [ ] `/artopia` service page loads in production.
+- [ ] `/artopia` CTAs route correctly to `/register` and `/admin/login`.
 - [ ] Locale switch works for `en`, `es`, `de`.
 - [ ] Theme switch works for `light`, `eye`, `dark`.
 - [ ] Galleries list and gallery detail load.

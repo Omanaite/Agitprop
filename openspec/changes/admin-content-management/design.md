@@ -91,6 +91,11 @@ Applied baseline improvements:
 **Alternatives considered**: Start implementing all planned integrations before MVP acceptance.
 **Rationale**: The project is close to MVP. Adding provider-heavy features (payments, calendar sync, WhatsApp delivery, chatbot escalation) before production verification would increase regression risk and blur release readiness.
 
+### Decision: Introduce Artopia service landing as a separate product surface
+**Choice**: Add a dedicated route (`/artopia`) to communicate the software offer and route visitors into signup/login without replacing the Akemi pilot homepage.
+**Alternatives considered**: Rebrand the pilot homepage directly, or defer service marketing until post-MVP.
+**Rationale**: The product now has two valid narratives: pilot artist site (Akemi) and SaaS platform (Artopia). A dedicated service page enables go-to-market messaging immediately while preserving pilot brand continuity and lowering release risk.
+
 ## Data Flow
 
 Admin Login -> Supabase Auth -> Admin Session

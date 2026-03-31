@@ -1,14 +1,14 @@
-﻿# Project Overview - Akemi Tattoo Portfolio
+﻿# Project Overview - Artopia (Akemi Pilot)
 
 ## Product
-Akemi Tattoo Portfolio is a single-artist web application built with Next.js App Router and Supabase. It combines a public, brand-forward portfolio experience with a dedicated operational admin console.
+Artopia is a Next.js App Router + Supabase product for artist websites and operations. The current production pilot is Akemi Tattoo, combining a brand-forward public portfolio with a dedicated operational admin console.
 
 ## Core Product Goals
 - Showcase tattoo work in a strong editorial format.
 - Allow visitors to browse galleries and published updates.
 - Let visitors request bookings and contact the artist.
 - Give the artist a private workspace to manage public content.
-- Prepare the codebase for safe expansion after MVP.
+- Prepare the codebase for safe expansion after MVP into a SaaS-ready multi-artist platform.
 
 ## Current MVP Scope
 ### Public Experience
@@ -35,6 +35,7 @@ Akemi Tattoo Portfolio is a single-artist web application built with Next.js App
 - Server components for public rendering.
 - Client components for interactive admin tooling.
 - Separate visual systems for public vs admin.
+- Dedicated Artopia service page for product positioning and onboarding entry (`/artopia`).
 
 ### Backend
 - Supabase Postgres with RLS.
@@ -80,3 +81,5 @@ The MVP is functionally close, but still depends on:
 - `docs/PENDING_EXTERNAL_INTERVENTIONS.md`
 - `docs/POST_MVP_BACKLOG.md`
 - `openspec/changes/admin-content-management/*`
+
+

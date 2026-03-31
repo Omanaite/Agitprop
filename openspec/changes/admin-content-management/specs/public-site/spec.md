@@ -84,3 +84,18 @@ The system **SHOULD** allow visitors to select between German, English, and Span
 - GIVEN no valid language preference is available
 - WHEN a visitor loads the public site
 - THEN the system falls back to the default locale
+
+### Requirement: Public Service Landing for Artopia
+The system **MUST** provide a public service page that explains the software offer and routes users to account creation and login.
+
+#### Scenario: Visitor opens service page
+- GIVEN a visitor wants to learn about the software itself
+- WHEN the visitor navigates to `/artopia`
+- THEN the page explains platform value, plan framing, and onboarding path
+- AND the page includes CTAs to registration and admin login
+
+#### Scenario: Visitor enters account flow from service page
+- GIVEN a visitor is on `/artopia`
+- WHEN the visitor clicks create account
+- THEN the visitor is routed to `/register`
+- AND the flow remains usable on mobile and desktop layouts
