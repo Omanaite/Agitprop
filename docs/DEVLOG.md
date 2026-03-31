@@ -96,3 +96,10 @@ Purpose: chronological project progress log to preserve context across sessions.
   - register page now supports email/password only
   - OAuth entry moved to artist login to avoid duplicate sign-up surfaces
 
+## 2026-03-31 (oauth documentation)
+- Added `docs/OAUTH_GOOGLE_SETUP.md` with:
+  - required Google redirect URI for Supabase callback
+  - Supabase provider and URL configuration checklist
+  - smoke-test steps
+  - security guidance for client secret handling/rotation
+
