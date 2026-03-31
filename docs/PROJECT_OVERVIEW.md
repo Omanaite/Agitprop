@@ -43,6 +43,7 @@ Agitprop is a Next.js App Router + Supabase product for artist websites and oper
 - Supabase Auth for admin auth and standard account registration.
 - Supabase Storage for gallery media.
 - Next.js route handlers for privileged mutations.
+- Tenant bootstrap hook on auth flows to create initial SaaS records for artist users.
 
 ### Security Baseline
 - Role-based access through `app_metadata.role = admin`.

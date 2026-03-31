@@ -78,3 +78,10 @@ Purpose: chronological project progress log to preserve context across sessions.
   - tenant status and plan control
   - global integration maintenance switches
 
+## 2026-03-31 (tenant auto-provisioning)
+- Added tenant bootstrap service (`lib/tenants/provision.ts`).
+- Registration and OAuth callback now attempt to provision tenant records automatically for non-platform users:
+  - create tenant in `artist_tenants`
+  - create owner membership in `tenant_memberships` with `artist_admin` role
+- Provisioning failures are intentionally non-blocking for auth flow continuity.
+

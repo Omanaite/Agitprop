@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { createSupabaseServerClient } from "@/lib/supabase/ssr";
+import { ensureArtistTenantProvisioned } from "@/lib/tenants/provision";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -18,6 +19,19 @@ export async function GET(request: Request) {
 
   if (code) {
     await supabase.auth.exchangeCodeForSession(code);
+  }
+
+  const { data } = await supabase.auth.getUser();
+  if (data.user?.id && data.user.email) {
+    try {
+      await ensureArtistTenantProvisioned({
+        userId: data.user.id,
+        email: data.user.email,
+        appMetadata: data.user.app_metadata,
+      });
+    } catch {
+      // Do not block OAuth callback redirect on tenant bootstrap issues.
+    }
   }
 
   return NextResponse.redirect(new URL(safeNext, url.origin));

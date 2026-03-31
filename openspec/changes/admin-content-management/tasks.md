@@ -142,6 +142,10 @@
   - `platform_integrations`
   - `/api/admin/platform-tenants`
   - `/api/admin/platform-integrations`
+- [x] 18.11 Auto-provision tenant baseline on user registration/OAuth callback:
+  - create `artist_tenants` record for non-platform users
+  - create `tenant_memberships` owner role (`artist_admin`)
+  - preserve signup flow even when provisioning storage is unavailable
 
 ## Phase 19: Agitprop Service Page and Conversion Funnel
 - [x] 19.1 Create `/agitprop` public product page with value proposition and CTA flow.

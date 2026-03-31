@@ -6,6 +6,7 @@ import { z } from "zod";
 import { createSupabaseServerClient } from "@/lib/supabase/ssr";
 import { getSiteUrl } from "@/lib/site-url";
 import { getClientIpFromHeaders, rateLimit } from "@/lib/rate-limit";
+import { ensureArtistTenantProvisioned } from "@/lib/tenants/provision";
 
 const registerSchema = z
   .object({
@@ -112,6 +113,18 @@ export async function signUpUser(
 
     if (data.session) {
       await supabase.auth.signOut();
+    }
+
+    if (data.user?.id && data.user.email) {
+      try {
+        await ensureArtistTenantProvisioned({
+          userId: data.user.id,
+          email: data.user.email,
+          appMetadata: data.user.app_metadata,
+        });
+      } catch {
+        // Do not block account creation if tenant bootstrap fails.
+      }
     }
 
     return {

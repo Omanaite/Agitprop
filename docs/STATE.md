@@ -27,6 +27,7 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - Platform governance baseline now implemented:
   - tenant lifecycle API surface
   - global integration toggle API surface
+- Tenant auto-provisioning baseline implemented in auth flows (register + OAuth callback).
 
 ## What Is Stable Locally
 - Gallery CRUD.

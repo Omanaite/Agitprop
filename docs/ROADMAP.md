@@ -85,6 +85,7 @@ Current objective: close MVP safely, verify production, and preserve a clear han
   - artist workspace route in place (`/studio`)
   - role-based routing and access guard wired
   - platform governance APIs in place for tenant lifecycle baseline and global integration toggles
+  - tenant auto-provisioning wired into registration and OAuth callback
 - Plan model:
   - free plan with limited feature set
   - premium plan with full feature set
