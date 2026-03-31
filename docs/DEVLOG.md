@@ -86,3 +86,10 @@ Purpose: chronological project progress log to preserve context across sessions.
 - Provisioning failures are intentionally non-blocking for auth flow continuity.
 - Added reusable SQL patch at `docs/sql/SAAS_FOUNDATION_PATCH.sql` for idempotent rollout in Supabase.
 
+## 2026-03-31 (artist login visibility)
+- Added dedicated artist login route: `/studio/login`.
+- Updated proxy behavior so unauthenticated `/studio/*` requests redirect to `/studio/login`.
+- Updated service page CTAs to expose:
+  - Artist login (`/studio/login`)
+  - Platform admin login (`/admin/login`)
+

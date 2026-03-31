@@ -34,10 +34,14 @@ export async function proxy(request: NextRequest) {
   }
 
   if (request.nextUrl.pathname.startsWith("/studio")) {
+    const isStudioLogin = request.nextUrl.pathname.startsWith("/studio/login");
     if (!user) {
-      return NextResponse.redirect(new URL("/admin/login", request.url));
+      if (!isStudioLogin) {
+        return NextResponse.redirect(new URL("/studio/login", request.url));
+      }
+      return response;
     }
-    if (!isArtist) {
+    if (!isArtist && !isStudioLogin) {
       if (consoleRoute) {
         return NextResponse.redirect(new URL(consoleRoute, request.url));
       }

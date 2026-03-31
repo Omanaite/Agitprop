@@ -5,7 +5,7 @@ import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
 export const metadata: Metadata = {
   title: "Agitprop | Build your artist website and booking system",
   description:
-    "Agitprop helps tattoo artists launch a portfolio site, publish updates, and manage bookings from one admin console.",
+    "Agitprop helps tattoo artists launch a portfolio site, publish updates, and manage bookings from one studio workspace.",
 };
 
 export default function AgitpropPage() {
@@ -86,8 +86,11 @@ export default function AgitpropPage() {
             <Link href="/register" className="admin-button admin-button-primary">
               Create account
             </Link>
+            <Link href="/studio/login" className="admin-button">
+              Artist login
+            </Link>
             <Link href="/admin/login" className="admin-button">
-              Admin login
+              Platform admin login
             </Link>
             <Link href="/" className="admin-button admin-button-ghost">
               View pilot site
