@@ -84,4 +84,5 @@ Purpose: chronological project progress log to preserve context across sessions.
   - create tenant in `artist_tenants`
   - create owner membership in `tenant_memberships` with `artist_admin` role
 - Provisioning failures are intentionally non-blocking for auth flow continuity.
+- Added reusable SQL patch at `docs/sql/SAAS_FOUNDATION_PATCH.sql` for idempotent rollout in Supabase.
 
