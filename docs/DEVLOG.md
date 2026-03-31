@@ -103,3 +103,7 @@ Purpose: chronological project progress log to preserve context across sessions.
   - smoke-test steps
   - security guidance for client secret handling/rotation
 
+## 2026-03-31 (studio 403 hotfix)
+- Fixed artist workspace 403 noise by removing direct dependency on `/api/admin/*` endpoints from `/studio`.
+- Added `StudioWorkspaceShell` as transition-safe role-scoped surface while artist-scoped API layer is implemented.
+

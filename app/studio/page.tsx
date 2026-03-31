@@ -1,6 +1,6 @@
-import { AdminConsoleShell } from "@/components/admin/AdminConsoleShell";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
 import { signOutAdmin } from "@/app/admin/actions";
+import { StudioWorkspaceShell } from "@/components/studio/StudioWorkspaceShell";
 
 export default function StudioPage() {
   return (
@@ -28,9 +28,8 @@ export default function StudioPage() {
           </div>
         </header>
 
-        <AdminConsoleShell />
+        <StudioWorkspaceShell />
       </div>
     </div>
   );
 }
-
