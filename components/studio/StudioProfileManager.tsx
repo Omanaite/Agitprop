@@ -9,6 +9,7 @@ type Profile = {
   shipping_address?: string;
   billing_address?: string;
   payment_notes?: string;
+  slug?: string;
 };
 
 type ValidationError = { path: string; message: string };
@@ -19,10 +20,21 @@ const emptyProfile: Profile = {
   shipping_address: "",
   billing_address: "",
   payment_notes: "",
+  slug: "",
 };
+
+const PLATFORM_HOST =
+  typeof window !== "undefined" ? window.location.host : "agitpropstudio.vercel.app";
+
+function sanitizeSlugInput(value: string) {
+  return value.toLowerCase().replace(/[^a-z0-9-]/g, "").replace(/^-+/, "");
+}
 
 export function StudioProfileManager() {
   const [profile, setProfile] = useState<Profile>(emptyProfile);
+  const [slugInput, setSlugInput] = useState("");
+  const [slugStatus, setSlugStatus] = useState("");
+  const [isSavingSlug, setIsSavingSlug] = useState(false);
   const [status, setStatus] = useState("");
   const [errors, setErrors] = useState<ValidationError[]>([]);
   const [isSaving, setIsSaving] = useState(false);
@@ -43,7 +55,9 @@ export function StudioProfileManager() {
       return;
     }
     const data = await res.json();
-    setProfile(data.profile || emptyProfile);
+    const p = data.profile || emptyProfile;
+    setProfile(p);
+    setSlugInput(p.slug || "");
     setIsLoading(false);
   }
 
@@ -53,6 +67,30 @@ export function StudioProfileManager() {
     }, 0);
     return () => window.clearTimeout(timeoutId);
   }, []);
+
+  async function handleSlugSave() {
+    setSlugStatus("");
+    const trimmed = slugInput.trim().replace(/-+$/, "");
+    if (!trimmed || trimmed.length < 2) {
+      setSlugStatus("Page name must be at least 2 characters.");
+      return;
+    }
+    setIsSavingSlug(true);
+    const res = await fetch("/api/studio/profile", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ slug: trimmed }),
+    });
+    const data = await res.json().catch(() => null);
+    if (!res.ok) {
+      setSlugStatus(data?.message ?? "Failed to save page name.");
+    } else {
+      setProfile((p) => ({ ...p, slug: data.slug }));
+      setSlugInput(data.slug);
+      setSlugStatus("Page name saved.");
+    }
+    setIsSavingSlug(false);
+  }
 
   if (isLoading) {
     return <AdminSectionSkeleton fields={4} cards={0} />;
@@ -160,6 +198,83 @@ export function StudioProfileManager() {
           {status}
         </p>
       ) : null}
+
+      <div className="mt-8 border-t border-[var(--admin-border)] pt-6">
+        <p className="text-xs uppercase tracking-[0.2em] text-[var(--admin-muted)]">
+          Page name
+        </p>
+        <p className="admin-muted mt-2 text-sm leading-6">
+          Choose the URL for your public artist site. Only lowercase letters,
+          numbers, and hyphens.
+        </p>
+        <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end">
+          <div className="flex-1">
+            <div className="flex items-center rounded-2xl border border-[var(--admin-border)] bg-[var(--admin-input-bg)] px-4 py-3 focus-within:border-[var(--admin-accent)] focus-within:ring-1 focus-within:ring-[var(--admin-accent)]">
+              <span className="admin-muted shrink-0 select-none text-sm">
+                {PLATFORM_HOST}/
+              </span>
+              <input
+                className="min-w-0 flex-1 bg-transparent text-sm text-[var(--admin-title)] outline-none placeholder:text-[var(--admin-muted)]"
+                placeholder="your-studio-name"
+                value={slugInput}
+                maxLength={50}
+                onChange={(e) =>
+                  setSlugInput(sanitizeSlugInput(e.target.value))
+                }
+              />
+            </div>
+            {slugInput && (
+              <p className="admin-muted mt-1 text-xs">
+                {PLATFORM_HOST}/{slugInput || "…"}
+              </p>
+            )}
+          </div>
+          <button
+            type="button"
+            className="admin-button admin-button-primary shrink-0"
+            disabled={isSavingSlug || slugInput === (profile.slug ?? "")}
+            onClick={handleSlugSave}
+          >
+            {isSavingSlug ? "Saving…" : "Save page name"}
+          </button>
+        </div>
+        {profile.slug && (
+          <a
+            href={`/${profile.slug}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--admin-accent)] hover:underline"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="h-3.5 w-3.5"
+            >
+              <path
+                fillRule="evenodd"
+                d="M4.5 11.5a.75.75 0 0 1-.75-.75V4.56L2.28 6.03a.75.75 0 0 1-1.06-1.06l2.5-2.5a.75.75 0 0 1 1.06 0l2.5 2.5a.75.75 0 0 1-1.06 1.06L4.75 4.56v6.19a.75.75 0 0 1-.75.75Z"
+                clipRule="evenodd"
+              />
+              <path
+                fillRule="evenodd"
+                d="M9.5 4.5a.75.75 0 0 1 .75.75v6.19l1.47-1.47a.75.75 0 1 1 1.06 1.06l-2.5 2.5a.75.75 0 0 1-1.06 0l-2.5-2.5a.75.75 0 1 1 1.06-1.06l1.47 1.47V5.25A.75.75 0 0 1 9.5 4.5Z"
+                clipRule="evenodd"
+              />
+            </svg>
+            Open {PLATFORM_HOST}/{profile.slug}
+          </a>
+        )}
+        {slugStatus ? (
+          <p
+            className="admin-validation mt-3"
+            data-variant={slugStatus.includes("saved") ? "success" : "error"}
+            aria-live="polite"
+          >
+            {slugStatus}
+          </p>
+        ) : null}
+      </div>
     </section>
   );
 }

@@ -146,6 +146,56 @@ export async function PATCH(request: Request) {
   try {
     const json = await request.json();
 
+    if (typeof json.slug === "string") {
+      const raw = json.slug.trim().toLowerCase();
+      const slugRe = /^[a-z0-9][a-z0-9-]{0,48}[a-z0-9]$|^[a-z0-9]{2,50}$/;
+      if (!slugRe.test(raw)) {
+        return NextResponse.json(
+          { message: "Page name must be 2–50 characters: lowercase letters, numbers, and hyphens only (no leading/trailing hyphens)." },
+          { status: 400 }
+        );
+      }
+
+      const adminClient = createSupabaseServerClient();
+
+      // Uniqueness check — exclude current user's own tenant.
+      const { data: existing } = await adminClient
+        .from("artist_tenants")
+        .select("owner_user_id")
+        .eq("slug", raw)
+        .neq("owner_user_id", user.id)
+        .maybeSingle();
+
+      if (existing) {
+        return NextResponse.json(
+          { message: "That page name is already taken. Choose a different one." },
+          { status: 409 }
+        );
+      }
+
+      const { error } = await adminClient
+        .from("artist_tenants")
+        .update({ slug: raw })
+        .eq("owner_user_id", user.id);
+
+      if (error) {
+        return NextResponse.json(
+          { message: "Failed to update page name.", detail: process.env.NODE_ENV === "production" ? undefined : error.message },
+          { status: 500 }
+        );
+      }
+
+      await logAuditEvent({
+        actor_email: user.email ?? null,
+        action: "update",
+        entity: "artist_tenants",
+        entity_id: user.id,
+        metadata: { slug: raw },
+      });
+
+      return NextResponse.json({ ok: true, slug: raw });
+    }
+
     if (typeof json.site_theme === "string") {
       const adminClient = createSupabaseServerClient();
 
