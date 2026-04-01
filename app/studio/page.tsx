@@ -1,9 +1,38 @@
+import { cookies } from "next/headers";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
 import { signOutAdmin } from "@/app/admin/actions";
 import { StudioConsoleShell } from "@/components/studio/StudioConsoleShell";
 import { StudioSiteLink } from "@/components/studio/StudioSiteLink";
+import { createSupabaseServerClient } from "@/lib/supabase/ssr";
+import { createSupabaseServerClient as createAdminClient } from "@/lib/supabase/server";
 
-export default function StudioPage() {
+async function getTenantInfo() {
+  try {
+    const cookieStore = await cookies();
+    const supabase = createSupabaseServerClient({
+      getAll: () => cookieStore.getAll(),
+      setAll: () => {},
+    });
+    const { data } = await supabase.auth.getUser();
+    if (!data.user) return null;
+
+    const adminClient = createAdminClient();
+    const { data: tenant } = await adminClient
+      .from("artist_tenants")
+      .select("studio_name,slug")
+      .eq("owner_user_id", data.user.id)
+      .maybeSingle();
+
+    return tenant ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export default async function StudioPage() {
+  const tenant = await getTenantInfo();
+  const studioTitle = tenant?.studio_name ?? "Your studio";
+
   return (
     <div className="admin-shell px-6 py-8 md:px-10 md:py-10">
       <div className="mx-auto flex max-w-7xl flex-col gap-6">
@@ -11,11 +40,10 @@ export default function StudioPage() {
           <div>
             <p className="admin-chip">Artist workspace</p>
             <h1 className="admin-title mt-4 text-4xl font-semibold">
-              Studio operations dashboard
+              {studioTitle}
             </h1>
             <p className="admin-muted mt-2 max-w-2xl text-sm leading-6">
-              Manage studio settings in a workspace isolated from platform
-              administration.
+              Manage your galleries, posts, bookings, and site settings.
             </p>
           </div>
 
