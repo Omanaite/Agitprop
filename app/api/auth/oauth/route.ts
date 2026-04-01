@@ -18,6 +18,17 @@ export async function GET(request: Request) {
 
   const safeNext = next.startsWith("/") ? next : "/register/complete?source=oauth";
   const cookieStore = await cookies();
+
+  // Persist the intended destination in a cookie so it survives the OAuth
+  // round-trip — Supabase may strip query params from the redirectTo URL.
+  cookieStore.set("oauth_next", safeNext, {
+    path: "/",
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 600, // 10 min — more than enough for the OAuth flow
+  });
+
   const supabase = createSupabaseServerClient({
     getAll: () => cookieStore.getAll(),
     setAll: (cookiesToSet) => {

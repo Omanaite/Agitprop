@@ -7,11 +7,22 @@ import { getUserConsoleRoute } from "@/lib/supabase/auth";
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
-  const next = url.searchParams.get("next") || "/agitprop";
-  const safeNext = next.startsWith("/") ? next : "/agitprop";
-  const isOAuth = next?.includes("register/complete") ?? false;
 
+  // The `next` query-param may be stripped by Supabase during the OAuth
+  // round-trip, so we also check the `oauth_next` cookie set by
+  // /api/auth/oauth before initiating the flow.
   const cookieStore = await cookies();
+  const cookieNext = cookieStore.get("oauth_next")?.value;
+  const queryNext = url.searchParams.get("next");
+  const next = cookieNext || queryNext || "/agitprop";
+  const safeNext = next.startsWith("/") ? next : "/agitprop";
+  const isOAuth = next.includes("register/complete");
+
+  // Clear the one-time cookie.
+  if (cookieNext) {
+    cookieStore.delete("oauth_next");
+  }
+
   const supabase = createSupabaseServerClient({
     getAll: () => cookieStore.getAll(),
     setAll: (cookiesToSet) => {
