@@ -1,6 +1,6 @@
 ﻿# State Snapshot - Agitprop (Akemi Pilot)
 
-Date: 2026-03-24
+Date: 2026-04-01
 Branch target: `vercel`
 
 ## Purpose
@@ -42,6 +42,8 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - Locale preference persistence.
 - Theme switching.
 - Product marketing page for Agitprop service narrative.
+- Tenant public sites (`/{slug}`) with owner-isolated content and theme entitlement.
+- Tenant gallery detail pages (`/{slug}/gallery/{gallerySlug}`) with owner isolation.
 
 ## What Still Depends on Production / External Verification
 - Latest Vercel deploy confirmation.
@@ -50,6 +52,8 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - OAuth production verification.
 - Email delivery verification.
 - Final public content / SEO copy approval.
+- Apply `ARTIST_SITE_THEMES_PATCH.sql` in Supabase prod/preview to activate `site_theme` and `custom_domain` columns.
+- Set `NEXT_PUBLIC_PLATFORM_HOST` env var in Vercel for custom domain resolution to function correctly.
 
 ## Recent Key Changes
 - Fixed production image rendering regressions by broadening remote image host support in Next image config.
@@ -76,6 +80,8 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - Added tenant theme policy foundation:
   - allowed defaults for non-Akemi: `atelier`, `mono`, `ink`
   - reserved premium pilot theme: `akemi_brutalist`
+- Added tenant theme entitlement policy with centralized sanitizer (`lib/tenants/theme.ts`), `site_theme`/`custom_domain` DB fields, SQL patch (`docs/sql/ARTIST_SITE_THEMES_PATCH.sql`), sitemap tenant slug inclusion, platform admin UI for theme/domain, and per-tenant SEO/canonical metadata.
+- Added tenant gallery detail route (`/{slug}/gallery/{gallerySlug}`) with owner isolation; fixed cross-route gallery link bug in slug page; extended proxy with custom domain resolution (non-platform hostnames rewritten to `/{slug}`).
 
 ## High-Priority Pending Work
 - Fix production auth instability (OAuth + admin role checks + profile/integrations schema alignment).

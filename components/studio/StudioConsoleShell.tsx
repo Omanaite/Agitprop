@@ -19,6 +19,7 @@ import { StudioHomepageSectionsManager } from "@/components/studio/StudioHomepag
 import { StudioGalleriesManager } from "@/components/studio/StudioGalleriesManager";
 import { StudioGalleryManager } from "@/components/studio/StudioGalleryManager";
 import { StudioPostManager } from "@/components/studio/StudioPostManager";
+import { StudioSiteSettings } from "@/components/studio/StudioSiteSettings";
 
 type Section = {
   id: string;
@@ -77,6 +78,13 @@ const sections: Section[] = [
     eyebrow: "Editorial",
     description: "Draft stories, notes, and scheduled studio updates.",
     content: <StudioPostManager />,
+  },
+  {
+    id: "site",
+    label: "Site",
+    eyebrow: "Appearance",
+    description: "Choose the visual theme for your public artist site.",
+    content: <StudioSiteSettings />,
   },
 ];
 

@@ -5,6 +5,10 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import { enforceSameOrigin } from "@/lib/security";
 import { logAuditEvent } from "@/lib/audit";
+import {
+  sanitizeTenantTheme,
+  isAkemiTenantIdentity,
+} from "@/lib/tenants/theme";
 
 function isMissingProfileTable(error: { code?: string; message?: string } | null) {
   const code = String(error?.code ?? "");
@@ -75,6 +79,7 @@ export async function GET(request: Request) {
           shipping_address: "",
           billing_address: "",
           payment_notes: "",
+          site_theme: "atelier",
         },
         fallback: true,
       });
@@ -88,15 +93,105 @@ export async function GET(request: Request) {
     );
   }
 
+  const { data: tenantData } = await adminClient
+    .from("artist_tenants")
+    .select("site_theme,slug")
+    .eq("owner_user_id", user.id)
+    .maybeSingle();
+
+  const siteTheme = tenantData?.site_theme ?? "atelier";
+
   return NextResponse.json({
-    profile: data ?? {
-      email: user.email ?? "",
-      nickname: "",
-      shipping_address: "",
-      billing_address: "",
-      payment_notes: "",
+    profile: {
+      ...(data ?? {
+        email: user.email ?? "",
+        nickname: "",
+        shipping_address: "",
+        billing_address: "",
+        payment_notes: "",
+      }),
+      site_theme: siteTheme,
     },
   });
+}
+
+export async function PATCH(request: Request) {
+  const originCheck = enforceSameOrigin(request);
+  if (!originCheck.ok) {
+    return NextResponse.json({ message: "Invalid origin." }, { status: 403 });
+  }
+  const ip = getClientIp(request);
+  const limit = rateLimit(`studio-profile:patch:${ip}`, 30, 60_000);
+  if (!limit.allowed) {
+    return NextResponse.json(
+      { message: "Too many requests. Try again later." },
+      { status: 429 }
+    );
+  }
+
+  const auth = await requireArtistOperator();
+  if (!auth.ok) {
+    return NextResponse.json(
+      { message: auth.reason === "forbidden" ? "Forbidden" : "Unauthorized" },
+      { status: auth.reason === "forbidden" ? 403 : 401 }
+    );
+  }
+  if (!auth.user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+  const user = auth.user;
+
+  try {
+    const json = await request.json();
+
+    if (typeof json.site_theme === "string") {
+      const adminClient = createSupabaseServerClient();
+
+      const { data: tenantData } = await adminClient
+        .from("artist_tenants")
+        .select("slug")
+        .eq("owner_user_id", user.id)
+        .maybeSingle();
+
+      const isAkemi = isAkemiTenantIdentity(
+        user.email ?? "",
+        tenantData?.slug ?? ""
+      );
+      const safeTheme = sanitizeTenantTheme(json.site_theme, isAkemi);
+
+      const { error } = await adminClient
+        .from("artist_tenants")
+        .update({ site_theme: safeTheme })
+        .eq("owner_user_id", user.id);
+
+      if (error) {
+        return NextResponse.json(
+          {
+            message: "Failed to update site theme.",
+            detail:
+              process.env.NODE_ENV === "production" ? undefined : error.message,
+          },
+          { status: 500 }
+        );
+      }
+
+      await logAuditEvent({
+        actor_email: user.email ?? null,
+        action: "update",
+        entity: "artist_tenants",
+        entity_id: user.id,
+      });
+
+      return NextResponse.json({ ok: true, site_theme: safeTheme });
+    }
+
+    return NextResponse.json(
+      { message: "No recognized fields to update." },
+      { status: 400 }
+    );
+  } catch {
+    return NextResponse.json({ message: "Invalid payload." }, { status: 400 });
+  }
 }
 
 export async function PUT(request: Request) {

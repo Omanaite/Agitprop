@@ -160,17 +160,29 @@ Purpose: chronological project progress log to preserve context across sessions.
   - robots now allows `/agitprop`, `/akemi`, `/galleries` and disallows `/studio`
 
 
-## 2026-04-01
+## 2026-04-01 (tenant slug public sites and theme entitlement policy)
 - Added tenant public slug-site foundation:
-  - new route `/{slug}` resolves active tenant and renders isolated public site by `owner_user_id`.
+  - new route `app/[slug]/page.tsx` resolves active tenant and renders isolated public site by `owner_user_id`.
   - tenant-aware reads now supported in public data loaders (`galleries`, `tattoos`, `posts`, `homepage_sections`).
-- Added tenant theme policy primitives:
+- Added tenant theme entitlement policy:
   - shared sanitizer in `lib/tenants/theme.ts`.
-  - reserved `akemi_brutalist` for Akemi pilot identity.
-  - non-Akemi tenants restricted to `atelier`, `mono`, `ink`.
+  - reserved `akemi_brutalist` for Akemi pilot identity exclusively.
+  - non-Akemi tenants restricted to allowed defaults: `atelier`, `mono`, `ink`.
 - Extended platform tenant schema surface in code:
-  - `site_theme` and `custom_domain` fields in validator/API payloads.
+  - `site_theme` and `custom_domain` fields now supported in validator and API payloads.
+  - Platform admin tenant create/edit UI now accepts `site_theme` and `custom_domain`.
 - Added schema updates in `supabase/schema.sql` for:
   - `artist_tenants.site_theme`
   - `artist_tenants.custom_domain`
   - site-theme constraint and idempotent FK creation guards.
+- Added SQL rollout patch: `docs/sql/ARTIST_SITE_THEMES_PATCH.sql`.
+- Sitemap now includes active tenant slugs for public indexing.
+- Per-tenant SEO: metadata and canonical tags now scoped to the resolved tenant slug.
+
+## 2026-04-01 (tenant gallery detail route and custom domain resolution)
+- Added tenant-scoped gallery detail route `app/[slug]/gallery/[gallerySlug]/page.tsx`:
+  - content isolation enforced by `owner_user_id` matching the resolved tenant.
+- Fixed bug in `app/[slug]/page.tsx` where gallery links pointed to `/galleries/:slug` (Akemi-global route) instead of the correct `/${slug}/gallery/:gallerySlug` tenant-scoped path.
+- Extended `proxy.ts` with custom domain resolution:
+  - non-platform hostnames are looked up against `artist_tenants.custom_domain` and transparently rewritten to `/{slug}`.
+  - proxy matcher expanded to cover all non-asset paths.
