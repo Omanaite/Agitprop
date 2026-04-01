@@ -3,7 +3,7 @@ import Link from "next/link";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
 
 export const metadata: Metadata = {
-  title: "Account Status | Agitprop",
+  title: "Account Ready | Agitprop",
   description: "Registration completion and confirmation state for Agitprop accounts.",
   robots: {
     index: false,
@@ -15,22 +15,39 @@ type CompletePageProps = {
   searchParams?: { source?: string };
 };
 
-function getMessage(source?: string) {
+function getContent(source?: string) {
   if (source?.startsWith("oauth")) {
     return {
-      title: "OAuth account ready",
-      body: "Your account is connected. Continue to your studio workspace to manage your site.",
+      chip: "Account ready",
+      title: "You're in.",
+      body: "Your account is connected via OAuth. Head to your studio workspace to set up your portfolio, choose a theme, and pick your page name.",
+      primaryLabel: "Open studio workspace",
+      primaryHref: "/studio",
+      secondaryLabel: "Go to homepage",
+      secondaryHref: "/agitprop",
     };
   }
 
   return {
-    title: "Email confirmed",
-    body: "Your email confirmation is complete. You can return to the site or continue to your studio workspace.",
+    chip: "Email confirmed",
+    title: "Your email is confirmed.",
+    body: "Your account is active. Open your studio workspace to start building your artist site — add galleries, upload work, and go live.",
+    primaryLabel: "Open studio workspace",
+    primaryHref: "/studio",
+    secondaryLabel: "Go to homepage",
+    secondaryHref: "/agitprop",
   };
 }
 
+const nextSteps = [
+  { label: "Set your page name", detail: "Profile → Page name section" },
+  { label: "Pick a visual theme", detail: "Site → Appearance tab" },
+  { label: "Create your first gallery", detail: "Galleries → Create" },
+  { label: "Upload portfolio pieces", detail: "Pieces → Library" },
+];
+
 export default function RegisterCompletePage({ searchParams }: CompletePageProps) {
-  const message = getMessage(searchParams?.source);
+  const content = getContent(searchParams?.source);
 
   return (
     <div className="admin-shell px-6 py-8 md:px-10 md:py-10">
@@ -39,17 +56,39 @@ export default function RegisterCompletePage({ searchParams }: CompletePageProps
           <AdminThemeToggle />
         </div>
         <section className="admin-card p-6 md:p-8">
-          <p className="admin-chip">Account status</p>
-          <h1 className="admin-title mt-5 text-3xl font-semibold">{message.title}</h1>
-          <p className="admin-muted mt-4 text-sm leading-7">{message.body}</p>
+          <p className="admin-chip">{content.chip}</p>
+          <h1 className="admin-title mt-5 text-3xl font-semibold md:text-4xl">
+            {content.title}
+          </h1>
+          <p className="admin-muted mt-4 text-sm leading-7">{content.body}</p>
+
           <div className="mt-6 flex flex-wrap gap-3">
-            <Link href="/" className="admin-button admin-button-primary">
-              Return to home
+            <Link href={content.primaryHref} className="admin-button admin-button-primary">
+              {content.primaryLabel}
             </Link>
-            <Link href="/studio" className="admin-button">
-              Open studio workspace
+            <Link href={content.secondaryHref} className="admin-button admin-button-ghost">
+              {content.secondaryLabel}
             </Link>
           </div>
+        </section>
+
+        <section className="admin-card mt-4 p-6 md:p-7">
+          <p className="text-xs uppercase tracking-[0.2em] text-[var(--admin-muted)]">
+            Suggested next steps
+          </p>
+          <ul className="mt-4 space-y-3">
+            {nextSteps.map((s, i) => (
+              <li key={s.label} className="flex items-start gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--admin-accent-soft)] text-xs font-bold text-[var(--admin-accent)]">
+                  {i + 1}
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-[var(--admin-title)]">{s.label}</p>
+                  <p className="admin-muted text-xs leading-5">{s.detail}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </section>
       </div>
     </div>

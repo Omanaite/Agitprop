@@ -347,6 +347,14 @@ export function StudioPostManager() {
           ))}
         </ul>
       ) : null}
+      {items.length === 0 ? (
+        <div className="admin-card-soft mt-6 p-6 text-center">
+          <p className="text-sm font-semibold text-[var(--admin-title)]">No posts yet</p>
+          <p className="admin-muted mt-1 text-xs leading-5">
+            Write your first post above — aftercare guides, studio news, or anything you want clients to read.
+          </p>
+        </div>
+      ) : null}
       <ul className="mt-6 grid gap-4 md:grid-cols-2">
         {items.map((item) => (
           <li key={item.id} className="admin-card-soft p-4">

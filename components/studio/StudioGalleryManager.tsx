@@ -505,6 +505,14 @@ export function StudioGalleryManager() {
           ))}
         </ul>
       ) : null}
+      {items.length === 0 ? (
+        <div className="admin-card-soft mt-6 p-6 text-center">
+          <p className="text-sm font-semibold text-[var(--admin-title)]">No pieces yet</p>
+          <p className="admin-muted mt-1 text-xs leading-5">
+            Add your first piece using the form above or bulk upload below.
+          </p>
+        </div>
+      ) : null}
       <ul className="mt-6 grid gap-4 md:grid-cols-2">
         {items.map((item) => (
           <li

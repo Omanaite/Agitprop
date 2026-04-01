@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Akemi Tattoo SEO and Security Audit - March 24, 2026</title>
+    <style>
+      :root {
+        --ink: #1a1a1a;
+        --muted: #5b5b5b;
+        --line: #d9d4cc;
+        --panel: #f6f2eb;
+        --high: #8f1d1d;
+        --medium: #9c5a00;
+        --low: #245f35;
+        --accent: #2b2b2b;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 15px;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        font-family: "Segoe UI", Arial, sans-serif;
+        line-height: 1.55;
+        background: white;
+      }
+
+      main {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px 44px 64px;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: Georgia, "Times New Roman", serif;
+        margin: 0 0 12px;
+        line-height: 1.15;
+      }
+
+      h1 {
+        font-size: 2.3rem;
+        letter-spacing: 0.01em;
+      }
+
+      h2 {
+        font-size: 1.45rem;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+      }
+
+      h3 {
+        font-size: 1.05rem;
+      }
+
+      p {
+        margin: 0 0 12px;
+      }
+
+      ul {
+        margin: 8px 0 16px 20px;
+      }
+
+      li {
+        margin: 0 0 8px;
+      }
+
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        font-size: 0.76rem;
+        color: var(--muted);
+        margin-bottom: 10px;
+      }
+
+      .subtle {
+        color: var(--muted);
+      }
+
+      .cover {
+        padding: 8px 0 26px;
+      }
+
+      .meta-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin: 28px 0 20px;
+      }
+
+      .meta-card {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        padding: 16px;
+      }
+
+      .meta-card strong {
+        display: block;
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 6px;
+      }
+
+      .summary-box {
+        border-left: 4px solid var(--accent);
+        background: #faf8f4;
+        padding: 16px 18px;
+        margin: 18px 0 12px;
+      }
+
+      .finding {
+        border: 1px solid var(--line);
+        padding: 18px 18px 8px;
+        margin: 0 0 16px;
+        page-break-inside: avoid;
+      }
+
+      .tag {
+        display: inline-block;
+        padding: 4px 8px;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        border-radius: 999px;
+        margin-bottom: 10px;
+        color: white;
+      }
+
+      .high {
+        background: var(--high);
+      }
+
+      .medium {
+        background: var(--medium);
+      }
+
+      .low {
+        background: var(--low);
+      }
+
+      .label {
+        font-weight: 700;
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 14px 0 18px;
+      }
+
+      .table th,
+      .table td {
+        text-align: left;
+        vertical-align: top;
+        padding: 10px 12px;
+        border: 1px solid var(--line);
+      }
+
+      .table th {
+        background: var(--panel);
+      }
+
+      .page-break {
+        page-break-before: always;
+      }
+
+      code {
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 0.92em;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+        border-bottom: 1px solid #9d978d;
+      }
+
+      @page {
+        size: A4;
+        margin: 16mm;
+      }
+
+      @media print {
+        main {
+          max-width: none;
+          padding: 0;
+        }
+
+        a {
+          border-bottom: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="cover">
+        <div class="eyebrow">Independent Audit Report</div>
+        <h1>Akemi Tattoo SEO and Security Audit</h1>
+        <p class="subtle">
+          Prepared for the public website at
+          <a href="https://akemiontattoo.vercel.app/">akemiontattoo.vercel.app</a>
+        </p>
+        <div class="meta-grid">
+          <div class="meta-card">
+            <strong>Audit Date</strong>
+            <span>March 24, 2026</span>
+          </div>
+          <div class="meta-card">
+            <strong>Scope</strong>
+            <span>Live public pages, headers, metadata, and exposed public endpoints</span>
+          </div>
+          <div class="meta-card">
+            <strong>Status</strong>
+            <span>Assessment only. No fixes applied.</span>
+          </div>
+        </div>
+        <div class="summary-box">
+          <p>
+            The site has a solid baseline transport setup: HTTPS redirect, HSTS,
+            <code>X-Frame-Options</code>, <code>X-Content-Type-Options</code>,
+            <code>Referrer-Policy</code>, and <code>Permissions-Policy</code> are
+            present. The main gaps are SEO fundamentals, content quality, metadata
+            completeness, and a few hardening improvements around CSP and public
+            write endpoints.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Executive Summary</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Priority</th>
+              <th>Theme</th>
+              <th>Main Problem</th>
+              <th>Recommended Direction</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>High</td>
+              <td>Crawlability</td>
+              <td><code>robots.txt</code> and <code>sitemap.xml</code> return 404</td>
+              <td>Add crawler guidance and generate an indexable sitemap</td>
+            </tr>
+            <tr>
+              <td>High</td>
+              <td>Metadata</td>
+              <td>Homepage and gallery pages reuse the same core metadata</td>
+              <td>Create route-specific title, description, and canonical tags</td>
+            </tr>
+            <tr>
+              <td>Medium</td>
+              <td>Content Quality</td>
+              <td>Placeholder-like text is live on public pages</td>
+              <td>Replace with polished, descriptive, location-aware copy</td>
+            </tr>
+            <tr>
+              <td>Medium</td>
+              <td>Social SEO</td>
+              <td>No Open Graph, Twitter Card, or structured data</td>
+              <td>Add social metadata and JSON-LD</td>
+            </tr>
+            <tr>
+              <td>Low</td>
+              <td>Security Hardening</td>
+              <td>CSP is present but permissive</td>
+              <td>Tighten sources and remove inline allowances over time</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="page-break">
+        <h2>Detailed Findings And Improvement Guidance</h2>
+
+        <article class="finding">
+          <div class="tag high">High Priority</div>
+          <h3>1. Missing crawl discovery endpoints</h3>
+          <p><span class="label">Observation:</span> Both <code>/robots.txt</code> and <code>/sitemap.xml</code> return 404.</p>
+          <p><span class="label">Why it matters:</span> Search engines have no explicit crawl map or sitemap hint for the homepage, galleries, and future content pages.</p>
+          <p><span class="label">How to improve:</span></p>
+          <ul>
+            <li>Add a public <code>robots.txt</code> file that allows crawling of public content and points to the sitemap URL.</li>
+            <li>Generate a real XML sitemap containing every indexable route, including the homepage, gallery pages, and post pages.</li>
+            <li>Update the sitemap automatically whenever a new gallery or post becomes public.</li>
+          </ul>
+        </article>
+
+        <article class="finding">
+          <div class="tag high">High Priority</div>
+          <h3>2. Duplicate metadata across public routes</h3>
+          <p><span class="label">Observation:</span> The homepage and gallery pages present the same core page title and description instead of route-specific metadata.</p>
+          <p><span class="label">Why it matters:</span> Search results become repetitive, weaker pages compete with each other, and gallery pages lose the chance to rank for their own styles or themes.</p>
+          <p><span class="label">How to improve:</span></p>
+          <ul>
+            <li>Assign every public route its own <code>title</code>, <code>description</code>, and <code>canonical</code>.</li>
+            <li>For gallery pages, include the gallery name, tattoo style, artist name, and city in the metadata.</li>
+            <li>Keep titles distinct and concise, ideally centered around service + artist + location.</li>
+          </ul>
+        </article>
+
+        <article class="finding">
+          <div class="tag high">High Priority</div>
+          <h3>3. Meta descriptions are brand-forward but search-light</h3>
+          <p><span class="label">Observation:</span> The public description focuses on the site being "built for Vercel + Supabase" rather than client-facing search intent.</p>
+          <p><span class="label">Why it matters:</span> Technical stack language does not help attract tattoo clients and uses valuable metadata space for information users do not search for.</p>
+          <p><span class="label">How to improve:</span></p>
+          <ul>
+            <li>Rewrite descriptions around what a potential client would search for: Berlin tattoo artist, blackwork, fine line, custom tattoo booking, private studio.</li>
+            <li>Make the homepage description service-oriented and gallery descriptions style-oriented.</li>
+            <li>Keep descriptions readable and specific rather than keyword-stuffed.</li>
+          </ul>
+        </article>
+
+        <article class="finding">
+          <div class="tag medium">Medium Priority</div>
+          <h3>4. Canonical tags are missing</h3>
+          <p><span class="label">Observation:</span> Canonical URLs were not present on the live pages reviewed.</p>
+          <p><span class="label">Why it matters:</span> Canonicals help search engines understand the preferred URL for each page and reduce ambiguity around duplicate or alternate views.</p>
+          <p><span class="label">How to improve:</span></p>
+          <ul>
+            <li>Add one canonical URL per indexable route.</li>
+            <li>Ensure canonicals always reference the public production domain.</li>
+            <li>If a route should not rank, use <code>noindex</code> instead of giving it a ranking canonical.</li>
+          </ul>
+        </article>
+
+        <article class="finding">
+          <div class="tag medium">Medium Priority</div>
+          <h3>5. Social sharing metadata is absent</h3>
+          <p><span class="label">Observation:</span> No Open Graph or Twitter Card metadata was found on the reviewed pages.</p>
+          <p><span class="label">Why it matters:</span> Shared links will have weaker previews and less control over title, description, and image appearance.</p>
+          <p><span class="label">How to improve:</span></p>
+          <ul>
+            <li>Add <code>og:title</code>, <code>og:description</code>, <code>og:url</code>, and <code>og:image</code> tags.</li>
+            <li>Add a <code>twitter:card</code> tag, usually a large summary card for portfolio sharing.</li>
+            <li>Create one branded preview image template for homepage shares and one adaptable template for galleries.</li>
+          </ul>
+        </article>
+
+        <article class="finding">
+          <div class="tag medium">Medium Priority</div>
+          <h3>6. Structured data is missing</h3>
+          <p><span class="label">Observation:</span> No JSON-LD structured data was visible in the live markup reviewed.</p>
+          <p><span class="label">Why it matters:</span> Search engines receive less explicit information about the artist, business context, location, and booking intent.</p>
+          <p><span class="label">How to improve:</span></p>
+          <ul>
+            <li>Add JSON-LD for a <code>Person</code> or <code>LocalBusiness</code> style entity, depending on how the brand is positioned.</li>
+            <li>Include artist name, city, site URL, contact or booking URL, service type, and public social profiles if available.</li>
+            <li>Add route-level structured data to gallery pages only if the content is unique enough to justify it.</li>
+          </ul>
+        </article>
+
+        <article class="finding">
+          <div class="tag medium">Medium Priority</div>
+          <h3>7. Public content contains placeholder or low-trust copy</h3>
+          <p><span class="label">Observation:</span> Strings such as <code>asdasadasdasdasdasdsadsa</code>, <code>:;!</code>, <code>galeria 1</code>, and <code>galeria 2</code> appear on live pages.</p>
+          <p><span class="label">Why it matters:</span> Placeholder text lowers perceived quality, weakens keyword relevance, and can make search engines treat content as thin or unpolished.</p>
+          <p><span class="label">How to improve:</span></p>
+          <ul>
+            <li>Replace all temporary text with final editorial copy before allowing indexation.</li>
+            <li>Use gallery names that are stylistically consistent and meaningful to visitors.</li>
+            <li>Add short, descriptive summaries that explain what each gallery or post represents.</li>
+          </ul>
+        </article>
+
+        <article class="finding">
+          <div class="tag medium">Medium Priority</div>
+          <h3>8. Gallery pages need stronger standalone ranking content</h3>
+          <p><span class="label">Observation:</span> Gallery pages appear to function mainly as filtered or repeated portfolio views.</p>
+          <p><span class="label">Why it matters:</span> Thin pages rarely rank well without a distinct headline, intro copy, and page-specific metadata.</p>
+          <p><span class="label">How to improve:</span></p>
+          <ul>
+            <li>Give each gallery page a unique intro paragraph that explains style, subject matter, and fit for prospective clients.</li>
+            <li>Add one clear H1 per gallery page that differs from the homepage framing.</li>
+            <li>Consider adding a short FAQ or booking CTA section tailored to the gallery style.</li>
+          </ul>
+        </article>
+
+        <article class="finding">
+          <div class="tag medium">Medium Priority</div>
+          <h3>9. Image delivery is not fully optimized</h3>
+          <p><span class="label">Observation:</span> The site uses plain <code>&lt;img&gt;</code> tags without explicit dimensions, and one image URL points to a Getty search-results page rather than a stable media asset.</p>
+          <p><span class="label">Why it matters:</span> This can hurt layout stability, performance, maintainability, and image indexing quality.</p>
+          <p><span class="label">How to improve:</span></p>
+          <ul>
+            <li>Use stable direct image assets only.</li>
+            <li>Set explicit width and height values for public images.</li>
+            <li>Keep alt text descriptive and specific to the visible work, not generic labels.</li>
+            <li>Prefer responsive image optimization through the framework when practical.</li>
+          </ul>
+        </article>
+
+        <article class="finding">
+          <div class="tag low">Low Priority</div>
+          <h3>10. Public page payload appears to include more data than necessary</h3>
+          <p><span class="label">Observation:</span> The public HTML source exposes record IDs and additional fields such as created timestamps and other item metadata that may not be needed for first paint.</p>
+          <p><span class="label">Why it matters:</span> This is not a critical vulnerability, but reducing public payloads improves data minimization and can slightly reduce unnecessary exposure.</p>
+          <p><span class="label">How to improve:</span></p>
+          <ul>
+            <li>Return only the fields required to render the public UI.</li>
+            <li>Keep administrative, internal, or non-essential descriptive fields out of public route payloads when they do not support rendering.</li>
+            <li>Review public selectors whenever content models expand.</li>
+          </ul>
+        </article>
+
+        <article class="finding">
+          <div class="tag low">Low Priority</div>
+          <h3>11. Content Security Policy is present but permissive</h3>
+          <p><span class="label">Observation:</span> The current CSP includes <code>'unsafe-inline'</code> for scripts and styles, and <code>connect-src</code> allows broad <code>https:</code> access.</p>
+          <p><span class="label">Why it matters:</span> The policy still provides protection, but it allows a wider execution and connection surface than necessary.</p>
+          <p><span class="label">How to improve:</span></p>
+          <ul>
+            <li>Move toward nonces or hashes for inline scripts and styles where feasible.</li>
+            <li>Restrict <code>connect-src</code> to only the exact domains required by the app.</li>
+            <li>Roll out stricter CSP changes in report-only mode first to catch breakage safely.</li>
+          </ul>
+        </article>
+
+        <article class="finding">
+          <div class="tag low">Low Priority</div>
+          <h3>12. Stack fingerprinting can be reduced</h3>
+          <p><span class="label">Observation:</span> The live response exposes <code>X-Powered-By: Next.js</code> and <code>Server: Vercel</code>.</p>
+          <p><span class="label">Why it matters:</span> This is not a direct vulnerability, but reducing unnecessary fingerprinting is a reasonable hardening practice.</p>
+          <p><span class="label">How to improve:</span></p>
+          <ul>
+            <li>Disable the framework-powered-by header where supported.</li>
+            <li>Treat this as a cleanup task rather than a primary risk item.</li>
+          </ul>
+        </article>
+
+        <article class="finding">
+          <div class="tag medium">Medium Priority</div>
+          <h3>13. Abuse protection should be consistent across public write endpoints</h3>
+          <p><span class="label">Observation:</span> Public client code references booking, contact, and payment endpoints. Invalid payloads were rejected and rate limiting was observed on the contact endpoint after repeated bad requests.</p>
+          <p><span class="label">Why it matters:</span> Public forms and payment initiators are common spam and abuse targets even when they are not fully exploitable.</p>
+          <p><span class="label">How to improve:</span></p>
+          <ul>
+            <li>Apply consistent rate limiting to all public write endpoints, not just selected ones.</li>
+            <li>Add a bot-friction control such as a honeypot field or a CAPTCHA alternative like Turnstile.</li>
+            <li>Monitor repeated failures, bursts, and abnormal geographies in logs.</li>
+          </ul>
+        </article>
+
+        <article class="finding">
+          <div class="tag medium">Medium Priority</div>
+          <h3>14. Multilingual SEO appears limited to cookie-based switching</h3>
+          <p><span class="label">Observation:</span> The public interface offers EN, ES, and DE language buttons, but the behavior appears to rely on a locale cookie and page reload rather than separate language URLs. This is an inference from client behavior and public source.</p>
+          <p><span class="label">Why it matters:</span> Search engines usually need stable language-specific URLs and <code>hreflang</code> signals to index multilingual variants effectively.</p>
+          <p><span class="label">How to improve:</span></p>
+          <ul>
+            <li>If multilingual SEO matters, expose language-specific routes such as path-based or subpath-based variants.</li>
+            <li>Add <code>hreflang</code> annotations between language versions.</li>
+            <li>If multilingual indexing is not a goal yet, keep only one public language version indexable until localization is complete.</li>
+          </ul>
+        </article>
+
+        <article class="finding">
+          <div class="tag low">Low Priority</div>
+          <h3>15. Locale cookie can be made more production-consistent</h3>
+          <p><span class="label">Observation:</span> The public locale cookie appears to be set client-side with <code>SameSite=Lax</code>. Because it is client-written, it cannot be <code>HttpOnly</code>, but it can still be treated more strictly.</p>
+          <p><span class="label">Why it matters:</span> This is a low-risk preference because the cookie appears to be non-sensitive, but production cookie hygiene is worth standardizing.</p>
+          <p><span class="label">How to improve:</span></p>
+          <ul>
+            <li>Add the <code>Secure</code> attribute when writing the cookie in production over HTTPS.</li>
+            <li>If locale handling moves server-side later, consider centralizing cookie policy there.</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="page-break">
+        <h2>What Already Looks Good</h2>
+        <ul>
+          <li>HTTP requests redirect to HTTPS using a permanent <code>308</code> redirect.</li>
+          <li><code>Strict-Transport-Security</code>, <code>X-Frame-Options</code>, <code>X-Content-Type-Options</code>, <code>Referrer-Policy</code>, and <code>Permissions-Policy</code> are present.</li>
+          <li>No obvious client-side secrets or API keys were found in the public HTML reviewed.</li>
+          <li>Invalid form payloads for booking and contact were rejected with <code>400</code> responses.</li>
+          <li>Rate limiting was observed on the contact endpoint after repeated bad requests, which indicates at least some abuse protection exists today.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Recommended Implementation Order</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Phase</th>
+              <th>Focus</th>
+              <th>Recommended Work</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Phase 1</td>
+              <td>Indexing basics</td>
+              <td>Add <code>robots.txt</code>, generate <code>sitemap.xml</code>, and define unique page metadata and canonicals.</td>
+            </tr>
+            <tr>
+              <td>Phase 2</td>
+              <td>Content quality</td>
+              <td>Replace placeholder text, strengthen gallery copy, and improve descriptions for client search intent.</td>
+            </tr>
+            <tr>
+              <td>Phase 3</td>
+              <td>Rich search presentation</td>
+              <td>Add Open Graph, Twitter Card metadata, and JSON-LD structured data.</td>
+            </tr>
+            <tr>
+              <td>Phase 4</td>
+              <td>Performance and resilience</td>
+              <td>Improve image delivery, reduce unnecessary payload data, and review multilingual URL strategy.</td>
+            </tr>
+            <tr>
+              <td>Phase 5</td>
+              <td>Security hardening</td>
+              <td>Tighten CSP, standardize endpoint abuse protection, and reduce unnecessary stack disclosure.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Audit Sources</h2>
+        <ul>
+          <li><a href="https://akemiontattoo.vercel.app/">Homepage</a></li>
+          <li><a href="https://akemiontattoo.vercel.app/galleries/blackwork-rituals">Gallery route</a></li>
+          <li><a href="https://akemiontattoo.vercel.app/robots.txt">robots.txt</a></li>
+          <li><a href="https://akemiontattoo.vercel.app/sitemap.xml">sitemap.xml</a></li>
+        </ul>
+        <p class="subtle">
+          This report reflects the live site behavior observed on March 24, 2026.
+          It is an implementation guidance document only. No code, content, or
+          infrastructure changes were made as part of this audit.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
