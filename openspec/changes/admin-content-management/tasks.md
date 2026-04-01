@@ -153,6 +153,13 @@
 - [x] 18.13 Add artist integrations baseline:
   - `GET/POST /api/studio/integrations`
   - Studio integrations module wired to `/api/auth/oauth` with `next=/studio`
+- [x] 18.14 Migrate artist content modules to artist-scoped APIs:
+  - `/api/studio/galleries` + `/api/studio/galleries/[id]`
+  - `/api/studio/gallery-items` + `/api/studio/gallery-items/[id]`
+  - `/api/studio/posts` + `/api/studio/posts/[id]`
+  - `/api/studio/homepage-sections`
+  - `/api/studio/uploads`
+  - Studio UI tabs wired to these endpoints
 
 ## Phase 19: Agitprop Service Page and Conversion Funnel
 - [x] 19.1 Create `/agitprop` public product page with value proposition and CTA flow.

@@ -88,6 +88,7 @@ Current objective: close MVP safely, verify production, and preserve a clear han
   - tenant auto-provisioning wired into registration and OAuth callback
   - artist workspace now uses artist-scoped settings APIs (`/api/studio/profile`, `/api/studio/payment-settings`) instead of platform admin endpoints
   - artist integrations baseline now available at `/api/studio/integrations` and connected to OAuth flow via `/api/auth/oauth`
+  - artist content modules now migrated to `/api/studio/*` routes (galleries, pieces, posts, homepage composition, uploads)
 - Plan model:
   - free plan with limited feature set
   - premium plan with full feature set

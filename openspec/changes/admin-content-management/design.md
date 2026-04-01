@@ -257,8 +257,13 @@ Pilot extension assumptions now recorded:
   - `/api/studio/profile`
   - `/api/studio/payment-settings`
   - `/api/studio/integrations`
+- Artist workspace content baseline is migrated to artist-scoped APIs:
+  - `/api/studio/galleries`, `/api/studio/galleries/[id]`
+  - `/api/studio/gallery-items`, `/api/studio/gallery-items/[id]`
+  - `/api/studio/posts`, `/api/studio/posts/[id]`
+  - `/api/studio/homepage-sections`
+  - `/api/studio/uploads`
 - Next architectural step:
-  - migrate artist content modules from `/api/admin/*` to `/api/studio/*`
   - enforce tenant-scoped reads/writes for galleries, pieces, posts, and homepage composition.
 
 ## Knowledge Capture & Skills

@@ -66,6 +66,7 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - Added Agitprop service page foundation for onboarding and conversion flow.
 - Added artist-scoped settings APIs (`/api/studio/profile`, `/api/studio/payment-settings`) and wired studio workspace settings tabs to avoid platform-admin API coupling.
 - Added artist-scoped integrations API (`/api/studio/integrations`) and wired studio OAuth connect path to `/api/auth/oauth` with studio callback intent.
+- Added artist-scoped content API baseline (`/api/studio/galleries`, `/api/studio/gallery-items`, `/api/studio/posts`, `/api/studio/homepage-sections`, `/api/studio/uploads`) and wired studio content tabs to those routes.
 
 ## High-Priority Pending Work
 - Fix production auth instability (OAuth + admin role checks + profile/integrations schema alignment).

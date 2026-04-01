@@ -124,3 +124,16 @@ Purpose: chronological project progress log to preserve context across sessions.
 - Wired studio OAuth connect action to `/api/auth/oauth?provider=...&next=/studio`.
 - Strengthened studio profile/payment endpoints to use server-side service-role client after artist auth validation, avoiding admin-RLS dependency for artist users.
 
+## 2026-04-01 (studio content API migration baseline)
+- Added artist-scoped content endpoints:
+  - `GET/POST /api/studio/galleries`
+  - `PUT/DELETE /api/studio/galleries/[id]`
+  - `GET/POST /api/studio/gallery-items`
+  - `PUT/DELETE /api/studio/gallery-items/[id]`
+  - `GET/POST /api/studio/posts`
+  - `PUT/DELETE /api/studio/posts/[id]`
+  - `GET/PUT /api/studio/homepage-sections`
+  - `POST /api/studio/uploads`
+- Added studio UI modules for homepage, galleries, pieces, and posts using `/api/studio/*` paths.
+- Studio now runs with artist-scoped routes end-to-end for settings + content baseline.
+

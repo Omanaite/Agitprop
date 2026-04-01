@@ -15,6 +15,10 @@ import { useState } from "react";
 import { StudioProfileManager } from "@/components/studio/StudioProfileManager";
 import { StudioPaymentSettingsManager } from "@/components/studio/StudioPaymentSettingsManager";
 import { StudioIntegrationsManager } from "@/components/studio/StudioIntegrationsManager";
+import { StudioHomepageSectionsManager } from "@/components/studio/StudioHomepageSectionsManager";
+import { StudioGalleriesManager } from "@/components/studio/StudioGalleriesManager";
+import { StudioGalleryManager } from "@/components/studio/StudioGalleryManager";
+import { StudioPostManager } from "@/components/studio/StudioPostManager";
 
 type Section = {
   id: string;
@@ -45,6 +49,34 @@ const sections: Section[] = [
     eyebrow: "Billing",
     description: "Configure Stripe and PayPal references and mode.",
     content: <StudioPaymentSettingsManager />,
+  },
+  {
+    id: "homepage",
+    label: "Homepage",
+    eyebrow: "Composition",
+    description: "Control section order, naming, and public visibility.",
+    content: <StudioHomepageSectionsManager />,
+  },
+  {
+    id: "galleries",
+    label: "Galleries",
+    eyebrow: "Collections",
+    description: "Curate gallery groups before assigning individual pieces.",
+    content: <StudioGalleriesManager />,
+  },
+  {
+    id: "pieces",
+    label: "Pieces",
+    eyebrow: "Library",
+    description: "Upload, reorder, and enrich tattoo portfolio entries.",
+    content: <StudioGalleryManager />,
+  },
+  {
+    id: "posts",
+    label: "Posts",
+    eyebrow: "Editorial",
+    description: "Draft stories, notes, and scheduled studio updates.",
+    content: <StudioPostManager />,
   },
 ];
 
