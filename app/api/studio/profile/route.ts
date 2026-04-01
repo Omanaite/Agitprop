@@ -100,6 +100,7 @@ export async function GET(request: Request) {
     .maybeSingle();
 
   const siteTheme = tenantData?.site_theme ?? "atelier";
+  const tenantSlug = tenantData?.slug ?? null;
 
   return NextResponse.json({
     profile: {
@@ -111,6 +112,7 @@ export async function GET(request: Request) {
         payment_notes: "",
       }),
       site_theme: siteTheme,
+      slug: tenantSlug,
     },
   });
 }

@@ -1,6 +1,7 @@
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
 import { signOutAdmin } from "@/app/admin/actions";
 import { StudioConsoleShell } from "@/components/studio/StudioConsoleShell";
+import { StudioSiteLink } from "@/components/studio/StudioSiteLink";
 
 export default function StudioPage() {
   return (
@@ -19,6 +20,7 @@ export default function StudioPage() {
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <StudioSiteLink />
             <AdminThemeToggle />
             <form action={signOutAdmin}>
               <button type="submit" className="admin-button admin-button-ghost">
