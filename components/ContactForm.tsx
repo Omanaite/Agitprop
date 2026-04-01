@@ -15,10 +15,11 @@ type ContactFormProps = {
     errorFallback: string;
     unexpected: string;
   };
+  tenantSlug?: string;
 };
 
 // Lightweight contact form that posts to the contact API route.
-export function ContactForm({ copy }: ContactFormProps) {
+export function ContactForm({ copy, tenantSlug }: ContactFormProps) {
   const [state, setState] = useState<ContactFormState>("idle");
   const [message, setMessage] = useState<string>("");
   const [errors, setErrors] = useState<{ path: string; message: string }[]>([]);
@@ -31,6 +32,7 @@ export function ContactForm({ copy }: ContactFormProps) {
 
     const formData = new FormData(event.currentTarget);
     const payload = Object.fromEntries(formData.entries());
+    if (tenantSlug) Object.assign(payload, { tenantSlug });
 
     try {
       const response = await fetch("/api/contact", {

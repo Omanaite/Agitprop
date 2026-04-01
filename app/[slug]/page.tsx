@@ -142,7 +142,7 @@ export default async function ArtistSitePage({
         </Section>
 
         <Section id="contact" title="Contact" eyebrow="Signal">
-          <ContactForm copy={dictionary.contact} />
+          <ContactForm copy={dictionary.contact} tenantSlug={tenant.slug} />
         </Section>
 
         <Footer

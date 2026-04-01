@@ -3,6 +3,7 @@ import { contactSchema } from "@/lib/validators";
 import { sendNotificationEmail } from "@/lib/email/resend";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import { enforceSameOrigin } from "@/lib/security";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 // Ensure Node.js runtime for Resend SDK in Vercel.
 export const runtime = "nodejs";
@@ -45,9 +46,30 @@ export async function POST(request: Request) {
     const payload = parsed.data;
 
     if (process.env.RESEND_API_KEY) {
+      let toEmail = process.env.RESEND_TO_EMAIL || "studio@akemi.tattoo";
+
+      if (typeof json.tenantSlug === "string" && json.tenantSlug.trim()) {
+        const adminClient = createSupabaseServerClient();
+        const { data: tenantRow } = await adminClient
+          .from("artist_tenants")
+          .select("owner_user_id")
+          .eq("slug", json.tenantSlug.trim())
+          .eq("status", "active")
+          .maybeSingle();
+        if (tenantRow?.owner_user_id) {
+          const { data: profileRow } = await adminClient
+            .from("admin_profiles")
+            .select("email")
+            .eq("user_id", tenantRow.owner_user_id)
+            .maybeSingle();
+          if (profileRow?.email) toEmail = profileRow.email;
+        }
+      }
+
+      const senderName = payload.name ?? payload.email;
       await sendNotificationEmail({
-        to: process.env.RESEND_TO_EMAIL || "studio@akemi.tattoo",
-        subject: "New contact message",
+        to: toEmail,
+        subject: `New contact message from ${senderName}`,
         html: `<strong>${payload.email}</strong><br/>${payload.message}`,
       });
     }
