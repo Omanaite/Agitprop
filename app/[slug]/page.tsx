@@ -61,6 +61,12 @@ export default async function ArtistSitePage({
   const posts = await getPublishedPosts(tenant.owner_user_id);
   const themeClass = getThemeClass(tenant.site_theme);
 
+  // Build a quick piece-count lookup from the already-fetched tattoos.
+  const pieceCountByGallery = tattoos.reduce<Record<string, number>>((acc, t) => {
+    if (t.gallery_id) acc[t.gallery_id] = (acc[t.gallery_id] ?? 0) + 1;
+    return acc;
+  }, {});
+
   return (
     <div className={`min-h-screen p-4 md:p-8 ${themeClass}`}>
       <div className="mx-auto flex max-w-6xl flex-col gap-6">
@@ -83,27 +89,46 @@ export default async function ArtistSitePage({
         </Section>
 
         <Section id="galleries" title="Galleries" eyebrow="Collections">
-          <div className="grid gap-4 md:grid-cols-2">
-            {galleries.map((gallery) => (
-              <Link
-                key={gallery.id}
-                className="theme-border rounded-xl p-4 hover:opacity-80"
-                href={`/${slug}/gallery/${gallery.slug}`}
-              >
-                <p className="text-xs uppercase tracking-[0.2em]">{gallery.slug}</p>
-                <h3 className="mt-2 text-lg">{gallery.title}</h3>
-              </Link>
-            ))}
-          </div>
+          {galleries.length === 0 ? (
+            <p className="text-sm opacity-70">No galleries published yet.</p>
+          ) : (
+            <div className="grid gap-4 md:grid-cols-2">
+              {galleries.map((gallery) => {
+                const count = pieceCountByGallery[gallery.id] ?? 0;
+                return (
+                  <Link
+                    key={gallery.id}
+                    className="theme-border block rounded-xl p-5 transition-opacity hover:opacity-75"
+                    href={`/${slug}/gallery/${gallery.slug}`}
+                  >
+                    <p className="text-xs uppercase tracking-[0.2em] opacity-60">
+                      {gallery.slug}
+                    </p>
+                    <h3 className="mt-2 text-lg font-semibold">{gallery.title}</h3>
+                    {gallery.description ? (
+                      <p className="mt-1 text-sm opacity-70 line-clamp-2">
+                        {gallery.description}
+                      </p>
+                    ) : null}
+                    <p className="mt-3 text-xs uppercase tracking-[0.18em] opacity-50">
+                      {count} {count === 1 ? "piece" : "pieces"}
+                    </p>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
         </Section>
 
         <Section id="posts" title="Posts" eyebrow="Updates">
           {posts.length ? (
             <div className="grid gap-4 md:grid-cols-2">
               {posts.map((post) => (
-                <article key={post.id} className="theme-border rounded-xl p-4">
-                  <h3 className="text-lg">{post.title}</h3>
-                  <p className="text-sm opacity-80">{post.excerpt || post.body}</p>
+                <article key={post.id} className="theme-border rounded-xl p-5">
+                  <h3 className="text-lg font-semibold">{post.title}</h3>
+                  <p className="mt-2 text-sm opacity-75 line-clamp-3">
+                    {post.excerpt || post.body}
+                  </p>
                 </article>
               ))}
             </div>
