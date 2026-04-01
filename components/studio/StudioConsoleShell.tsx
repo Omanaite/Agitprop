@@ -20,6 +20,7 @@ import { StudioGalleriesManager } from "@/components/studio/StudioGalleriesManag
 import { StudioGalleryManager } from "@/components/studio/StudioGalleryManager";
 import { StudioPostManager } from "@/components/studio/StudioPostManager";
 import { StudioSiteSettings } from "@/components/studio/StudioSiteSettings";
+import { StudioBookingsManager } from "@/components/studio/StudioBookingsManager";
 
 type Section = {
   id: string;
@@ -78,6 +79,13 @@ const sections: Section[] = [
     eyebrow: "Editorial",
     description: "Draft stories, notes, and scheduled studio updates.",
     content: <StudioPostManager />,
+  },
+  {
+    id: "bookings",
+    label: "Bookings",
+    eyebrow: "Requests",
+    description: "Client session requests submitted through your public site.",
+    content: <StudioBookingsManager />,
   },
   {
     id: "site",

@@ -55,6 +55,18 @@ export async function POST(request: Request) {
     }
     const client = createSupabaseServerClient();
 
+    // Resolve owner_user_id from tenantSlug when provided.
+    let ownerUserId: string | null = null;
+    if (typeof json.tenantSlug === "string" && json.tenantSlug.trim()) {
+      const { data: tenantRow } = await client
+        .from("artist_tenants")
+        .select("owner_user_id")
+        .eq("slug", json.tenantSlug.trim())
+        .eq("status", "active")
+        .maybeSingle();
+      ownerUserId = tenantRow?.owner_user_id ?? null;
+    }
+
     const { error } = await client.from("bookings").insert({
       name: payload.name,
       email: payload.email,
@@ -62,6 +74,7 @@ export async function POST(request: Request) {
       placement: payload.placement,
       description: payload.description,
       status: "pending",
+      owner_user_id: ownerUserId,
     });
 
     if (error) {

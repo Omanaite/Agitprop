@@ -17,10 +17,11 @@ type BookingFormProps = {
     errorFallback: string;
     unexpected: string;
   };
+  tenantSlug?: string;
 };
 
 // Client booking form that posts to the booking API route.
-export function BookingForm({ copy }: BookingFormProps) {
+export function BookingForm({ copy, tenantSlug }: BookingFormProps) {
   const [state, setState] = useState<BookingFormState>("idle");
   const [message, setMessage] = useState<string>("");
   const [errors, setErrors] = useState<{ path: string; message: string }[]>([]);
@@ -33,6 +34,7 @@ export function BookingForm({ copy }: BookingFormProps) {
 
     const formData = new FormData(event.currentTarget);
     const payload = Object.fromEntries(formData.entries());
+    if (tenantSlug) Object.assign(payload, { tenantSlug });
 
     try {
       const response = await fetch("/api/bookings", {

@@ -296,7 +296,16 @@ export function PlatformGovernanceManager() {
                   <p className="text-sm font-semibold text-[var(--admin-title)]">
                     {tenant.studio_name}
                   </p>
-                  <p className="admin-muted text-xs">{tenant.slug}</p>
+                  <p className="admin-muted text-xs">
+                    <a
+                      href={`/${tenant.slug}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline"
+                    >
+                      /{tenant.slug} ↗
+                    </a>
+                  </p>
                   <p className="admin-muted text-xs">theme: {tenant.site_theme}</p>
                   <p className="admin-muted text-xs">owner: {tenant.owner_user_id}</p>
                 </div>

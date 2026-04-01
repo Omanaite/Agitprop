@@ -138,7 +138,7 @@ export default async function ArtistSitePage({
         </Section>
 
         <Section id="booking" title="Booking" eyebrow="Session">
-          <BookingForm copy={dictionary.booking} />
+          <BookingForm copy={dictionary.booking} tenantSlug={tenant.slug} />
         </Section>
 
         <Section id="contact" title="Contact" eyebrow="Signal">
