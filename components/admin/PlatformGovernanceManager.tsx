@@ -129,7 +129,14 @@ export function PlatformGovernanceManager() {
     });
     const data = await res.json().catch(() => null);
     if (!res.ok) {
-      setStatus(data?.message ?? "Failed to create tenant.");
+      const fieldErrors: string[] = (data?.errors ?? []).map(
+        (e: { path: string; message: string }) => `${e.path}: ${e.message}`
+      );
+      setStatus(
+        fieldErrors.length
+          ? fieldErrors.join(" · ")
+          : (data?.message ?? "Failed to create tenant.")
+      );
       setIsCreatingTenant(false);
       return;
     }
