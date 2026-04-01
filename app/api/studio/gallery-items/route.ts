@@ -5,6 +5,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import { enforceSameOrigin } from "@/lib/security";
 import { logAuditEvent } from "@/lib/audit";
+import { canAddGalleryItem } from "@/lib/tenants/plan";
 
 function isStudioOwnershipSchemaMissing(error: { code?: string; message?: string } | null) {
   const code = String(error?.code ?? "");
@@ -95,21 +96,41 @@ export async function POST(request: Request) {
   }
   const adminClient = createSupabaseServerClient();
 
+  // Plan enforcement: check gallery item limit per gallery before insert.
+  const { data: tenantData } = await adminClient
+    .from("artist_tenants")
+    .select("plan_code")
+    .eq("owner_user_id", auth.user.id)
+    .maybeSingle();
+
+  const planCode = (tenantData as { plan_code?: string } | null)?.plan_code ?? "free";
+
   try {
     const json = await request.json();
     const parsed = galleryItemSchema.safeParse(json);
     if (!parsed.success) {
       return NextResponse.json(
-        {
-          message: "Invalid payload.",
-          errors: parsed.error.issues.map((issue) => ({
-            path: issue.path.join("."),
-            message: issue.message,
-          })),
-        },
+        { message: "Invalid payload.", errors: parsed.error.issues.map((i) => ({ path: i.path.join("."), message: i.message })) },
         { status: 400 }
       );
     }
+
+    // Count items in the target gallery for per-gallery limit enforcement.
+    if (parsed.data.gallery_id) {
+      const { count: itemCount } = await adminClient
+        .from("tattoos")
+        .select("id", { count: "exact", head: true })
+        .eq("gallery_id", parsed.data.gallery_id)
+        .eq("owner_user_id", auth.user.id);
+
+      if (!canAddGalleryItem(planCode, itemCount ?? 0)) {
+        return NextResponse.json(
+          { message: "Gallery item limit reached for your plan. Upgrade to premium to add more.", code: "plan_limit_exceeded" },
+          { status: 403 }
+        );
+      }
+    }
+
     const payload = parsed.data;
     const { error } = await adminClient.from("tattoos").insert({
       title: payload.title,

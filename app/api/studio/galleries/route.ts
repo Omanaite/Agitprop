@@ -5,6 +5,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import { enforceSameOrigin } from "@/lib/security";
 import { logAuditEvent } from "@/lib/audit";
+import { canAddGallery } from "@/lib/tenants/plan";
 
 function isStudioOwnershipSchemaMissing(error: { code?: string; message?: string } | null) {
   const code = String(error?.code ?? "");
@@ -95,6 +96,30 @@ export async function POST(request: Request) {
   }
   const adminClient = createSupabaseServerClient();
 
+  // Plan enforcement: check gallery limit before insert.
+  const { data: tenantData } = await adminClient
+    .from("artist_tenants")
+    .select("plan_code")
+    .eq("owner_user_id", auth.user.id)
+    .maybeSingle();
+
+  const planCode = (tenantData as { plan_code?: string } | null)?.plan_code ?? "free";
+
+  const { count: galleryCount } = await adminClient
+    .from("galleries")
+    .select("id", { count: "exact", head: true })
+    .eq("owner_user_id", auth.user.id);
+
+  if (!canAddGallery(planCode, galleryCount ?? 0)) {
+    return NextResponse.json(
+      {
+        message: "Gallery limit reached for your plan. Upgrade to premium to add more.",
+        code: "plan_limit_exceeded",
+      },
+      { status: 403 }
+    );
+  }
+
   try {
     const json = await request.json();
     const parsed = gallerySchema.safeParse(json);
@@ -155,5 +180,3 @@ export async function POST(request: Request) {
     );
   }
 }
-
-

@@ -5,6 +5,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import { enforceSameOrigin } from "@/lib/security";
 import { logAuditEvent } from "@/lib/audit";
+import { canAddPost } from "@/lib/tenants/plan";
 
 function isStudioOwnershipSchemaMissing(error: { code?: string; message?: string } | null) {
   const code = String(error?.code ?? "");
@@ -22,10 +23,7 @@ export async function GET(request: Request) {
   const ip = getClientIp(request);
   const limit = rateLimit(`studio-posts:list:${ip}`, 60, 60_000);
   if (!limit.allowed) {
-    return NextResponse.json(
-      { message: "Too many requests. Try again later." },
-      { status: 429 }
-    );
+    return NextResponse.json({ message: "Too many requests. Try again later." }, { status: 429 });
   }
   const auth = await requireArtistOperator();
   if (!auth.ok) {
@@ -34,9 +32,7 @@ export async function GET(request: Request) {
       { status: auth.reason === "forbidden" ? 403 : 401 }
     );
   }
-  if (!auth.user) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-  }
+  if (!auth.user) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   const adminClient = createSupabaseServerClient();
 
   const { data, error } = await adminClient
@@ -47,22 +43,9 @@ export async function GET(request: Request) {
 
   if (error) {
     if (isStudioOwnershipSchemaMissing(error)) {
-      return NextResponse.json(
-        {
-          message:
-            "Studio posts storage is not ready. Run the latest Supabase schema patch.",
-          code: "schema_missing",
-        },
-        { status: 503 }
-      );
+      return NextResponse.json({ message: "Studio posts storage is not ready. Run the latest Supabase schema patch.", code: "schema_missing" }, { status: 503 });
     }
-    return NextResponse.json(
-      {
-        message: "Failed to load posts.",
-        detail: process.env.NODE_ENV === "production" ? undefined : error.message,
-      },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Failed to load posts.", detail: process.env.NODE_ENV === "production" ? undefined : error.message }, { status: 500 });
   }
 
   return NextResponse.json({ items: data ?? [] });
@@ -70,17 +53,11 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const originCheck = enforceSameOrigin(request);
-  if (!originCheck.ok) {
-    return NextResponse.json({ message: "Invalid origin." }, { status: 403 });
-  }
+  if (!originCheck.ok) return NextResponse.json({ message: "Invalid origin." }, { status: 403 });
   const ip = getClientIp(request);
   const limit = rateLimit(`studio-posts:create:${ip}`, 20, 60_000);
-  if (!limit.allowed) {
-    return NextResponse.json(
-      { message: "Too many requests. Try again later." },
-      { status: 429 }
-    );
-  }
+  if (!limit.allowed) return NextResponse.json({ message: "Too many requests. Try again later." }, { status: 429 });
+
   const auth = await requireArtistOperator();
   if (!auth.ok) {
     return NextResponse.json(
@@ -88,23 +65,36 @@ export async function POST(request: Request) {
       { status: auth.reason === "forbidden" ? 403 : 401 }
     );
   }
-  if (!auth.user) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-  }
+  if (!auth.user) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   const adminClient = createSupabaseServerClient();
+
+  // Plan enforcement: check post limit before insert.
+  const { data: tenantData } = await adminClient
+    .from("artist_tenants")
+    .select("plan_code")
+    .eq("owner_user_id", auth.user.id)
+    .maybeSingle();
+
+  const planCode = (tenantData as { plan_code?: string } | null)?.plan_code ?? "free";
+
+  const { count: postCount } = await adminClient
+    .from("posts")
+    .select("id", { count: "exact", head: true })
+    .eq("owner_user_id", auth.user.id);
+
+  if (!canAddPost(planCode, postCount ?? 0)) {
+    return NextResponse.json(
+      { message: "Post limit reached for your plan. Upgrade to premium to add more.", code: "plan_limit_exceeded" },
+      { status: 403 }
+    );
+  }
 
   try {
     const json = await request.json();
     const parsed = postSchema.safeParse(json);
     if (!parsed.success) {
       return NextResponse.json(
-        {
-          message: "Invalid payload.",
-          errors: parsed.error.issues.map((issue) => ({
-            path: issue.path.join("."),
-            message: issue.message,
-          })),
-        },
+        { message: "Invalid payload.", errors: parsed.error.issues.map((i) => ({ path: i.path.join("."), message: i.message })) },
         { status: 400 }
       );
     }
@@ -121,39 +111,14 @@ export async function POST(request: Request) {
 
     if (error) {
       if (isStudioOwnershipSchemaMissing(error)) {
-        return NextResponse.json(
-          {
-            message:
-              "Studio posts storage is not ready. Run the latest Supabase schema patch.",
-            code: "schema_missing",
-          },
-          { status: 503 }
-        );
+        return NextResponse.json({ message: "Studio posts storage is not ready. Run the latest Supabase schema patch.", code: "schema_missing" }, { status: 503 });
       }
-      return NextResponse.json(
-        {
-          message: "Failed to create post.",
-          detail:
-            process.env.NODE_ENV === "production" ? undefined : error.message,
-        },
-        { status: 500 }
-      );
+      return NextResponse.json({ message: "Failed to create post.", detail: process.env.NODE_ENV === "production" ? undefined : error.message }, { status: 500 });
     }
 
-    await logAuditEvent({
-      actor_email: auth.user?.email ?? null,
-      action: "create",
-      entity: "posts",
-      metadata: { title: payload.title },
-    });
-
+    await logAuditEvent({ actor_email: auth.user?.email ?? null, action: "create", entity: "posts", metadata: { title: payload.title } });
     return NextResponse.json({ ok: true });
   } catch {
-    return NextResponse.json(
-      { message: "Invalid payload." },
-      { status: 400 }
-    );
+    return NextResponse.json({ message: "Invalid payload." }, { status: 400 });
   }
 }
-
-
