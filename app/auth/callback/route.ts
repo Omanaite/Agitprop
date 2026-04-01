@@ -9,6 +9,7 @@ export async function GET(request: Request) {
   const code = url.searchParams.get("code");
   const next = url.searchParams.get("next") || "/agitprop";
   const safeNext = next.startsWith("/") ? next : "/agitprop";
+  const isOAuth = next?.includes("register/complete") ?? false;
 
   const cookieStore = await cookies();
   const supabase = createSupabaseServerClient({
@@ -35,9 +36,15 @@ export async function GET(request: Request) {
     }
   }
 
-  // Resolve the correct console for this user so OAuth never lands on the
-  // wrong workspace (e.g. an admin hitting /studio gets bounced by proxy).
-  if (data.user) {
+  // OAuth flows: always go to /register/complete?source=oauth so new users
+  // see the onboarding page. Existing users can return to home/workspace from there.
+  if (isOAuth) {
+    return NextResponse.redirect(new URL("/register/complete?source=oauth", url.origin));
+  }
+
+  // Explicit next param (e.g., /studio): resolve the correct console for this user
+  // so OAuth never lands on the wrong workspace.
+  if (data.user && next !== "/agitprop") {
     const consoleRoute = getUserConsoleRoute(data.user);
     if (consoleRoute) {
       return NextResponse.redirect(new URL(consoleRoute, url.origin));

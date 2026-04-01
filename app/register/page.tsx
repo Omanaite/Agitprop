@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { RegisterForm } from "@/components/auth/RegisterForm";
+import { OAuthProviderButton } from "@/components/auth/OAuthProviderButton";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
 import { signUpUser } from "./actions";
 
@@ -88,18 +89,31 @@ export default function RegisterPage({ searchParams }: RegisterPageProps) {
               <RegisterForm action={signUpUser} />
             </div>
 
+            <div className="mt-8 border-t border-[var(--admin-border)] pt-6">
+              <p className="text-xs uppercase tracking-[0.2em] text-[var(--admin-muted)]">
+                OAuth sign up
+              </p>
+              <p className="admin-muted mt-3 text-sm leading-6">
+                Use Google or GitHub to create your artist account automatically.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-3">
+                <OAuthProviderButton
+                  provider="google"
+                  href="/api/auth/oauth?provider=google&next=/register/complete?source=oauth"
+                  label="Sign up with Google"
+                />
+                <OAuthProviderButton
+                  provider="github"
+                  href="/api/auth/oauth?provider=github&next=/register/complete?source=oauth"
+                  label="Sign up with GitHub"
+                />
+              </div>
+            </div>
+
             <p className="admin-muted mt-6 text-sm leading-6">
               Looking for the software overview?{" "}
               <Link href="/agitprop" className="font-semibold text-[var(--admin-accent)]">
                 Visit Agitprop
-              </Link>
-              .{" "}
-            </p>
-
-            <p className="admin-muted mt-2 text-sm leading-6">
-              Want OAuth access?{" "}
-              <Link href="/studio/login" className="font-semibold text-[var(--admin-accent)]">
-                Go to artist login
               </Link>
               .{" "}
             </p>
