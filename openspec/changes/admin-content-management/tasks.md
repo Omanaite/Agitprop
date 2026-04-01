@@ -164,6 +164,10 @@
   - `owner_user_id`-scoped reads/writes in `/api/studio/*` content endpoints
   - explicit schema-missing fallback responses (`503 schema_missing`) when ownership columns are unavailable
   - SQL patch prepared at `docs/sql/STUDIO_TENANT_OWNERSHIP_PATCH.sql`
+- [x] 18.16 Expand platform tenant operations baseline:
+  - `POST /api/admin/platform-tenants` (create tenant + owner membership)
+  - `DELETE /api/admin/platform-tenants` (delete tenant)
+  - platform governance UI supports create/delete lifecycle actions
 
 ## Phase 19: Agitprop Service Page and Conversion Funnel
 - [x] 19.1 Create `/agitprop` public product page with value proposition and CTA flow.

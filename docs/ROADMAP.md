@@ -90,6 +90,7 @@ Current objective: close MVP safely, verify production, and preserve a clear han
   - artist integrations baseline now available at `/api/studio/integrations` and connected to OAuth flow via `/api/auth/oauth`
   - artist content modules now migrated to `/api/studio/*` routes (galleries, pieces, posts, homepage composition, uploads)
   - ownership-isolation hardening in progress: studio content routes now enforce `owner_user_id` scoping with SQL patch requirement tracking
+  - platform tenant lifecycle baseline expanded: create/delete operations now available in platform admin governance module
 - Plan model:
   - free plan with limited feature set
   - premium plan with full feature set

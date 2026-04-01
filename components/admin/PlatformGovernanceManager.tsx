@@ -27,6 +27,13 @@ export function PlatformGovernanceManager() {
   const [isSavingIntegration, setIsSavingIntegration] = useState<string | null>(
     null
   );
+  const [isCreatingTenant, setIsCreatingTenant] = useState(false);
+  const [newTenant, setNewTenant] = useState({
+    owner_user_id: "",
+    studio_name: "",
+    slug: "",
+    plan_code: "free" as Tenant["plan_code"],
+  });
 
   async function load() {
     setIsLoading(true);
@@ -96,6 +103,58 @@ export function PlatformGovernanceManager() {
     setIsSavingTenant(null);
   }
 
+  async function createTenant(event: React.FormEvent) {
+    event.preventDefault();
+    setIsCreatingTenant(true);
+    setStatus("");
+    const res = await fetch("/api/admin/platform-tenants", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        owner_user_id: newTenant.owner_user_id.trim(),
+        studio_name: newTenant.studio_name.trim(),
+        slug: newTenant.slug.trim(),
+        plan_code: newTenant.plan_code,
+        status: "active",
+      }),
+    });
+    const data = await res.json().catch(() => null);
+    if (!res.ok) {
+      setStatus(data?.message ?? "Failed to create tenant.");
+      setIsCreatingTenant(false);
+      return;
+    }
+    setNewTenant({
+      owner_user_id: "",
+      studio_name: "",
+      slug: "",
+      plan_code: "free",
+    });
+    await load();
+    setStatus("Tenant created.");
+    setIsCreatingTenant(false);
+  }
+
+  async function deleteTenant(tenantId: string) {
+    if (!confirm("Delete this tenant and memberships?")) return;
+    setIsSavingTenant(tenantId);
+    setStatus("");
+    const res = await fetch("/api/admin/platform-tenants", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ tenant_id: tenantId }),
+    });
+    const data = await res.json().catch(() => null);
+    if (!res.ok) {
+      setStatus(data?.message ?? "Failed to delete tenant.");
+      setIsSavingTenant(null);
+      return;
+    }
+    await load();
+    setStatus("Tenant deleted.");
+    setIsSavingTenant(null);
+  }
+
   async function updateIntegration(
     provider: string,
     payload: { is_enabled: boolean; maintenance_message?: string | null }
@@ -141,6 +200,67 @@ export function PlatformGovernanceManager() {
           Control lifecycle and plan access for each artist tenant.
         </p>
 
+        <form onSubmit={createTenant} className="mt-4 grid gap-3 md:grid-cols-2">
+          <input
+            className="admin-input"
+            placeholder="Owner user UUID"
+            value={newTenant.owner_user_id}
+            onChange={(event) =>
+              setNewTenant((current) => ({
+                ...current,
+                owner_user_id: event.target.value,
+              }))
+            }
+            required
+          />
+          <input
+            className="admin-input"
+            placeholder="Studio name"
+            value={newTenant.studio_name}
+            onChange={(event) =>
+              setNewTenant((current) => ({
+                ...current,
+                studio_name: event.target.value,
+              }))
+            }
+            required
+          />
+          <input
+            className="admin-input"
+            placeholder="Slug"
+            value={newTenant.slug}
+            onChange={(event) =>
+              setNewTenant((current) => ({
+                ...current,
+                slug: event.target.value,
+              }))
+            }
+            required
+          />
+          <div className="flex gap-2">
+            <select
+              className="admin-input min-w-[120px]"
+              value={newTenant.plan_code}
+              onChange={(event) =>
+                setNewTenant((current) => ({
+                  ...current,
+                  plan_code: event.target.value as Tenant["plan_code"],
+                }))
+              }
+            >
+              <option value="free">free</option>
+              <option value="premium">premium</option>
+            </select>
+            <button
+              type="submit"
+              className="admin-button admin-button-primary"
+              disabled={isCreatingTenant}
+            >
+              {isCreatingTenant ? "Creating..." : "Create tenant"}
+            </button>
+          </div>
+        </form>
+
         <div className="mt-4 space-y-3">
           {tenants.length ? (
             tenants.map((tenant) => (
@@ -153,6 +273,7 @@ export function PlatformGovernanceManager() {
                     {tenant.studio_name}
                   </p>
                   <p className="admin-muted text-xs">{tenant.slug}</p>
+                  <p className="admin-muted text-xs">owner: {tenant.owner_user_id}</p>
                 </div>
 
                 <select
@@ -183,6 +304,14 @@ export function PlatformGovernanceManager() {
                   <option value="free">free</option>
                   <option value="premium">premium</option>
                 </select>
+                <button
+                  type="button"
+                  className="admin-button admin-button-danger"
+                  onClick={() => void deleteTenant(tenant.id)}
+                  disabled={isSavingTenant === tenant.id}
+                >
+                  Delete
+                </button>
               </article>
             ))
           ) : (

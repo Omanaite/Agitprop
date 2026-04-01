@@ -87,6 +87,18 @@ export const platformTenantUpdateSchema = z.object({
   plan_code: z.enum(["free", "premium"]).optional(),
 });
 
+export const platformTenantCreateSchema = z.object({
+  owner_user_id: z.string().uuid(),
+  studio_name: z.string().min(2).max(120),
+  slug: z.string().min(2).max(120),
+  status: z.enum(["active", "inactive", "suspended"]).default("active"),
+  plan_code: z.enum(["free", "premium"]).default("free"),
+});
+
+export const platformTenantDeleteSchema = z.object({
+  tenant_id: z.string().uuid(),
+});
+
 export const platformIntegrationToggleSchema = z.object({
   provider: z.string().min(2),
   is_enabled: z.boolean(),

@@ -143,3 +143,12 @@ Purpose: chronological project progress log to preserve context across sessions.
 - Added schema-guarded fallback behavior when ownership columns are not present (`code: schema_missing`, HTTP 503 for write-sensitive routes).
 - Added SQL rollout patch: `docs/sql/STUDIO_TENANT_OWNERSHIP_PATCH.sql`.
 
+## 2026-04-01 (platform tenant lifecycle baseline)
+- Expanded platform tenant API with:
+  - `POST /api/admin/platform-tenants` for tenant creation
+  - `DELETE /api/admin/platform-tenants` for tenant deletion
+- Tenant creation now also upserts owner membership (`tenant_memberships`) with `artist_admin` role.
+- Platform governance UI now supports:
+  - create tenant (owner UUID + studio name + slug + plan)
+  - delete tenant from admin console
+

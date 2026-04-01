@@ -1,8 +1,13 @@
 import { NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/supabase/auth";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import { enforceSameOrigin } from "@/lib/security";
-import { platformTenantUpdateSchema } from "@/lib/validators";
+import {
+  platformTenantCreateSchema,
+  platformTenantDeleteSchema,
+  platformTenantUpdateSchema,
+} from "@/lib/validators";
 import { logAuditEvent } from "@/lib/audit";
 
 function isMissingTenantSchema(error: { code?: string; message?: string } | null) {
@@ -155,6 +160,177 @@ export async function PUT(request: Request) {
       entity: "artist_tenants",
       entity_id: payload.tenant_id,
       metadata: updates,
+    });
+
+    return NextResponse.json({ ok: true });
+  } catch {
+    return NextResponse.json({ message: "Invalid payload." }, { status: 400 });
+  }
+}
+
+export async function POST(request: Request) {
+  const originCheck = enforceSameOrigin(request);
+  if (!originCheck.ok) {
+    return NextResponse.json({ message: "Invalid origin." }, { status: 403 });
+  }
+  const ip = getClientIp(request);
+  const limit = rateLimit(`admin-platform-tenants:create:${ip}`, 20, 60_000);
+  if (!limit.allowed) {
+    return NextResponse.json(
+      { message: "Too many requests. Try again later." },
+      { status: 429 }
+    );
+  }
+
+  const auth = await requireAdmin();
+  if (!auth.ok || !auth.user) {
+    return NextResponse.json(
+      { message: auth.reason === "forbidden" ? "Forbidden" : "Unauthorized" },
+      { status: auth.reason === "forbidden" ? 403 : 401 }
+    );
+  }
+
+  try {
+    const json = await request.json();
+    const parsed = platformTenantCreateSchema.safeParse(json);
+    if (!parsed.success) {
+      return NextResponse.json(
+        {
+          message: "Invalid payload.",
+          errors: parsed.error.issues.map((issue) => ({
+            path: issue.path.join("."),
+            message: issue.message,
+          })),
+        },
+        { status: 400 }
+      );
+    }
+    const payload = parsed.data;
+    const adminClient = createSupabaseServerClient();
+
+    const { data, error } = await adminClient
+      .from("artist_tenants")
+      .insert({
+        owner_user_id: payload.owner_user_id,
+        studio_name: payload.studio_name,
+        slug: payload.slug,
+        status: payload.status,
+        plan_code: payload.plan_code,
+      })
+      .select("id")
+      .single();
+
+    if (error) {
+      if (isMissingTenantSchema(error)) {
+        return NextResponse.json(
+          {
+            message: "Tenant storage is not ready. Run the latest Supabase schema first.",
+            code: "schema_missing",
+          },
+          { status: 503 }
+        );
+      }
+      return NextResponse.json(
+        {
+          message: "Failed to create tenant.",
+          detail: process.env.NODE_ENV === "production" ? undefined : error.message,
+        },
+        { status: 500 }
+      );
+    }
+
+    await adminClient.from("tenant_memberships").upsert(
+      {
+        tenant_id: data.id,
+        user_id: payload.owner_user_id,
+        role: "artist_admin",
+        status: "active",
+      },
+      { onConflict: "tenant_id,user_id" }
+    );
+
+    await logAuditEvent({
+      actor_email: auth.user.email ?? null,
+      action: "create",
+      entity: "artist_tenants",
+      entity_id: data.id,
+      metadata: payload,
+    });
+
+    return NextResponse.json({ ok: true, tenant_id: data.id });
+  } catch {
+    return NextResponse.json({ message: "Invalid payload." }, { status: 400 });
+  }
+}
+
+export async function DELETE(request: Request) {
+  const originCheck = enforceSameOrigin(request);
+  if (!originCheck.ok) {
+    return NextResponse.json({ message: "Invalid origin." }, { status: 403 });
+  }
+  const ip = getClientIp(request);
+  const limit = rateLimit(`admin-platform-tenants:delete:${ip}`, 20, 60_000);
+  if (!limit.allowed) {
+    return NextResponse.json(
+      { message: "Too many requests. Try again later." },
+      { status: 429 }
+    );
+  }
+
+  const auth = await requireAdmin();
+  if (!auth.ok || !auth.user) {
+    return NextResponse.json(
+      { message: auth.reason === "forbidden" ? "Forbidden" : "Unauthorized" },
+      { status: auth.reason === "forbidden" ? 403 : 401 }
+    );
+  }
+
+  try {
+    const json = await request.json();
+    const parsed = platformTenantDeleteSchema.safeParse(json);
+    if (!parsed.success) {
+      return NextResponse.json(
+        {
+          message: "Invalid payload.",
+          errors: parsed.error.issues.map((issue) => ({
+            path: issue.path.join("."),
+            message: issue.message,
+          })),
+        },
+        { status: 400 }
+      );
+    }
+
+    const adminClient = createSupabaseServerClient();
+    const { error } = await adminClient
+      .from("artist_tenants")
+      .delete()
+      .eq("id", parsed.data.tenant_id);
+
+    if (error) {
+      if (isMissingTenantSchema(error)) {
+        return NextResponse.json(
+          {
+            message: "Tenant storage is not ready. Run the latest Supabase schema first.",
+            code: "schema_missing",
+          },
+          { status: 503 }
+        );
+      }
+      return NextResponse.json(
+        {
+          message: "Failed to delete tenant.",
+          detail: process.env.NODE_ENV === "production" ? undefined : error.message,
+        },
+        { status: 500 }
+      );
+    }
+
+    await logAuditEvent({
+      actor_email: auth.user.email ?? null,
+      action: "delete",
+      entity: "artist_tenants",
+      entity_id: parsed.data.tenant_id,
     });
 
     return NextResponse.json({ ok: true });
