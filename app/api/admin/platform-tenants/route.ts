@@ -9,6 +9,10 @@ import {
   platformTenantUpdateSchema,
 } from "@/lib/validators";
 import { logAuditEvent } from "@/lib/audit";
+import {
+  isAkemiTenantIdentity,
+  sanitizeTenantTheme,
+} from "@/lib/tenants/theme";
 
 function isMissingTenantSchema(error: { code?: string; message?: string } | null) {
   const code = String(error?.code ?? "");
@@ -50,7 +54,9 @@ export async function GET(request: Request) {
 
   const { data, error } = await auth.supabase
     .from("artist_tenants")
-    .select("id,studio_name,slug,status,plan_code,owner_user_id,created_at,updated_at")
+    .select(
+      "id,studio_name,slug,status,plan_code,site_theme,custom_domain,owner_user_id,created_at,updated_at"
+    )
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -128,6 +134,18 @@ export async function PUT(request: Request) {
     }
     if (payload.plan_code !== undefined) {
       updates.plan_code = payload.plan_code;
+    }
+    if (payload.site_theme !== undefined) {
+      const { data: tenantInfo } = await auth.supabase
+        .from("artist_tenants")
+        .select("slug")
+        .eq("id", payload.tenant_id)
+        .maybeSingle();
+      const isAkemiTenant = isAkemiTenantIdentity("", tenantInfo?.slug ?? "");
+      updates.site_theme = sanitizeTenantTheme(payload.site_theme, isAkemiTenant);
+    }
+    if (payload.custom_domain !== undefined) {
+      updates.custom_domain = payload.custom_domain.trim().toLowerCase();
     }
 
     const { error } = await auth.supabase
@@ -207,6 +225,8 @@ export async function POST(request: Request) {
     }
     const payload = parsed.data;
     const adminClient = createSupabaseServerClient();
+    const isAkemiTenant = isAkemiTenantIdentity("", payload.slug);
+    const siteTheme = sanitizeTenantTheme(payload.site_theme, isAkemiTenant);
 
     const { data, error } = await adminClient
       .from("artist_tenants")
@@ -216,6 +236,8 @@ export async function POST(request: Request) {
         slug: payload.slug,
         status: payload.status,
         plan_code: payload.plan_code,
+        site_theme: siteTheme,
+        custom_domain: payload.custom_domain?.trim().toLowerCase() || null,
       })
       .select("id")
       .single();

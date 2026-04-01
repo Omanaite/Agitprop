@@ -97,6 +97,11 @@ Current objective: close MVP safely, verify production, and preserve a clear han
 - Theme model:
   - free plan: 3 selectable default styles
   - Akemi pilot: premium + custom brutalist style (email anchor: `akemi@tattoo.ink`)
+- Tenant public surface model:
+  - platform entry remains separate (`/agitprop`, `/studio/login`, `/admin/login`)
+  - each artist gets an isolated public slug route (`/{artist-slug}`)
+  - Akemi remains reserved as premium pilot (`/akemi`) with brutalist-only theme
+  - non-Akemi tenants cannot use `akemi_brutalist`
 - Feature-flag architecture per artist account.
 
 ### Phase 7.5 - Product Marketing Surface (Planned / In Progress)
@@ -148,7 +153,7 @@ Current objective: close MVP safely, verify production, and preserve a clear han
 4. Preserve a safe path toward optional, configurable post-MVP modules.
 5. Keep Agitprop service narrative clear while preserving Akemi pilot brand identity.
 6. Enforce documentation persistence protocol so context survives compaction/handoff (`docs/ENGINEERING_CONTEXT.md`).
-7. Keep SaaS-first navigation: `/` as platform entry, tenant pilot pages on dedicated routes (current pilot: `/akemi`).
+7. Keep SaaS-first navigation: `/` as platform entry and isolated tenant public pages on slug routes.
 
 ## Update 2026-03-26
 - Fixed broken public image rendering caused by overly strict Next image host restrictions.

@@ -1,4 +1,5 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { isAkemiTenantIdentity, sanitizeTenantTheme } from "@/lib/tenants/theme";
 
 type ProvisionInput = {
   userId: string;
@@ -84,8 +85,10 @@ export async function ensureArtistTenantProvisioned(input: ProvisionInput) {
     const slug = await getUniqueSlug(supabase, emailPrefix);
     if (!slug) return { ok: false, schemaMissing: true as const };
 
-    const planCode = input.email.toLowerCase() === "akemi@tattoo.ink" ? "premium" : "free";
-    const studioName = input.email.toLowerCase() === "akemi@tattoo.ink" ? "Akemi Tattoo" : `${emailPrefix} Studio`;
+    const isAkemiTenant = isAkemiTenantIdentity(input.email, slug);
+    const planCode = isAkemiTenant ? "premium" : "free";
+    const studioName = isAkemiTenant ? "Akemi Tattoo" : `${emailPrefix} Studio`;
+    const siteTheme = sanitizeTenantTheme(undefined, isAkemiTenant);
 
     const { data: insertedTenant, error: createTenantError } = await supabase
       .from("artist_tenants")
@@ -95,6 +98,7 @@ export async function ensureArtistTenantProvisioned(input: ProvisionInput) {
         slug,
         status: "active",
         plan_code: planCode,
+        site_theme: siteTheme,
       })
       .select("id")
       .single();
@@ -133,4 +137,3 @@ export async function ensureArtistTenantProvisioned(input: ProvisionInput) {
 
   return { ok: true, tenantId };
 }
-

@@ -1,10 +1,14 @@
 import type { MetadataRoute } from "next";
 import { getSiteUrl } from "@/lib/site-url";
 import { getGalleries } from "@/lib/data/galleries";
+import { getActiveArtistSlugs } from "@/lib/data/artist-tenants";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = getSiteUrl();
-  const galleries = await getGalleries();
+  const [galleries, artistSlugs] = await Promise.all([
+    getGalleries(),
+    getActiveArtistSlugs(),
+  ]);
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
@@ -28,5 +32,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  return [...staticRoutes, ...galleryRoutes];
+  const artistRoutes: MetadataRoute.Sitemap = artistSlugs.map((slug) => ({
+    url: `${siteUrl}/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly",
+    priority: 0.85,
+  }));
+
+  return [...staticRoutes, ...artistRoutes, ...galleryRoutes];
 }

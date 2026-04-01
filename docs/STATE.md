@@ -72,12 +72,17 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - Updated SaaS entrypoint routing:
   - `/` redirects to `/studio/login`
   - pilot public site served from `/akemi`
+- Added tenant public slug route foundation (`/{slug}`) for artist-isolated sites.
+- Added tenant theme policy foundation:
+  - allowed defaults for non-Akemi: `atelier`, `mono`, `ink`
+  - reserved premium pilot theme: `akemi_brutalist`
 
 ## High-Priority Pending Work
 - Fix production auth instability (OAuth + admin role checks + profile/integrations schema alignment).
 - Validate service-page SEO and conversion flow (`/agitprop` -> `/register` -> `/admin/login`).
 - Run production smoke test and check Vercel logs.
 - Verify `homepage_sections` is fully active in production.
+- Apply latest tenant theme/domain schema patch in production Supabase.
 - Confirm OAuth flows in production.
 - Confirm booking/contact/registration email delivery.
 - Replace any remaining low-trust public copy before final indexation.

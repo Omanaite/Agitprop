@@ -81,16 +81,21 @@ export function mergeSections(
 }
 
 export async function getHomepageSections(
-  locale: Locale = "en"
+  locale: Locale = "en",
+  ownerUserId?: string | null
 ): Promise<HomepageSection[]> {
   try {
     const client = createSupabasePublicClient();
-    const { data, error } = await client
+    let query = client
       .from("homepage_sections")
       .select(
         "id,section_key,title,eyebrow,sort_order,is_visible,created_at,updated_at"
       )
       .order("sort_order", { ascending: true });
+    if (ownerUserId) {
+      query = query.eq("owner_user_id", ownerUserId);
+    }
+    const { data, error } = await query;
 
     if (error) {
       throw error;

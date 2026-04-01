@@ -9,6 +9,8 @@ type Tenant = {
   slug: string;
   status: "active" | "inactive" | "suspended";
   plan_code: "free" | "premium";
+  site_theme: "atelier" | "mono" | "ink" | "akemi_brutalist";
+  custom_domain?: string | null;
   owner_user_id: string;
 };
 
@@ -33,6 +35,7 @@ export function PlatformGovernanceManager() {
     studio_name: "",
     slug: "",
     plan_code: "free" as Tenant["plan_code"],
+    site_theme: "atelier" as Tenant["site_theme"],
   });
 
   async function load() {
@@ -73,7 +76,12 @@ export function PlatformGovernanceManager() {
 
   async function updateTenant(
     tenantId: string,
-    payload: { status?: Tenant["status"]; plan_code?: Tenant["plan_code"] }
+    payload: {
+      status?: Tenant["status"];
+      plan_code?: Tenant["plan_code"];
+      site_theme?: Tenant["site_theme"];
+      custom_domain?: string;
+    }
   ) {
     setIsSavingTenant(tenantId);
     setStatus("");
@@ -115,6 +123,7 @@ export function PlatformGovernanceManager() {
         studio_name: newTenant.studio_name.trim(),
         slug: newTenant.slug.trim(),
         plan_code: newTenant.plan_code,
+        site_theme: newTenant.site_theme,
         status: "active",
       }),
     });
@@ -129,6 +138,7 @@ export function PlatformGovernanceManager() {
       studio_name: "",
       slug: "",
       plan_code: "free",
+      site_theme: "atelier",
     });
     await load();
     setStatus("Tenant created.");
@@ -259,6 +269,20 @@ export function PlatformGovernanceManager() {
               {isCreatingTenant ? "Creating..." : "Create tenant"}
             </button>
           </div>
+          <select
+            className="admin-input min-w-[140px]"
+            value={newTenant.site_theme}
+            onChange={(event) =>
+              setNewTenant((current) => ({
+                ...current,
+                site_theme: event.target.value as Tenant["site_theme"],
+              }))
+            }
+          >
+            <option value="atelier">atelier</option>
+            <option value="mono">mono</option>
+            <option value="ink">ink</option>
+          </select>
         </form>
 
         <div className="mt-4 space-y-3">
@@ -273,6 +297,7 @@ export function PlatformGovernanceManager() {
                     {tenant.studio_name}
                   </p>
                   <p className="admin-muted text-xs">{tenant.slug}</p>
+                  <p className="admin-muted text-xs">theme: {tenant.site_theme}</p>
                   <p className="admin-muted text-xs">owner: {tenant.owner_user_id}</p>
                 </div>
 
@@ -303,6 +328,21 @@ export function PlatformGovernanceManager() {
                 >
                   <option value="free">free</option>
                   <option value="premium">premium</option>
+                </select>
+                <select
+                  className="admin-input min-w-[140px]"
+                  value={tenant.site_theme}
+                  onChange={(event) =>
+                    void updateTenant(tenant.id, {
+                      site_theme: event.target.value as Tenant["site_theme"],
+                    })
+                  }
+                  disabled={isSavingTenant === tenant.id}
+                >
+                  <option value="atelier">atelier</option>
+                  <option value="mono">mono</option>
+                  <option value="ink">ink</option>
+                  <option value="akemi_brutalist">akemi_brutalist</option>
                 </select>
                 <button
                   type="button"

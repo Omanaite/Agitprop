@@ -58,3 +58,16 @@ export type HomepageSection = {
   created_at?: string;
   updated_at?: string;
 };
+
+export type ArtistTenant = {
+  id: string;
+  owner_user_id: string;
+  studio_name: string;
+  slug: string;
+  status: "active" | "inactive" | "suspended";
+  plan_code: "free" | "premium";
+  site_theme: "atelier" | "mono" | "ink" | "akemi_brutalist";
+  custom_domain?: string | null;
+  created_at: string;
+  updated_at: string;
+};

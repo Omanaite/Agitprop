@@ -159,3 +159,18 @@ Purpose: chronological project progress log to preserve context across sessions.
   - sitemap now prioritizes `/agitprop` and includes `/akemi`
   - robots now allows `/agitprop`, `/akemi`, `/galleries` and disallows `/studio`
 
+
+## 2026-04-01
+- Added tenant public slug-site foundation:
+  - new route `/{slug}` resolves active tenant and renders isolated public site by `owner_user_id`.
+  - tenant-aware reads now supported in public data loaders (`galleries`, `tattoos`, `posts`, `homepage_sections`).
+- Added tenant theme policy primitives:
+  - shared sanitizer in `lib/tenants/theme.ts`.
+  - reserved `akemi_brutalist` for Akemi pilot identity.
+  - non-Akemi tenants restricted to `atelier`, `mono`, `ink`.
+- Extended platform tenant schema surface in code:
+  - `site_theme` and `custom_domain` fields in validator/API payloads.
+- Added schema updates in `supabase/schema.sql` for:
+  - `artist_tenants.site_theme`
+  - `artist_tenants.custom_domain`
+  - site-theme constraint and idempotent FK creation guards.

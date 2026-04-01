@@ -115,6 +115,8 @@ create table if not exists artist_tenants (
   slug text not null unique,
   status text not null default 'active',
   plan_code text not null default 'free',
+  site_theme text not null default 'atelier',
+  custom_domain text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -159,9 +161,47 @@ create unique index if not exists homepage_sections_owner_section_key_uidx
   on homepage_sections(owner_user_id, section_key);
 
 alter table tattoos
-  add constraint tattoos_gallery_fk
-  foreign key (gallery_id) references galleries(id)
-  on delete set null;
+  add column if not exists owner_user_id uuid references auth.users(id) on delete cascade;
+
+alter table posts
+  add column if not exists owner_user_id uuid references auth.users(id) on delete cascade;
+
+alter table galleries
+  add column if not exists owner_user_id uuid references auth.users(id) on delete cascade;
+
+alter table homepage_sections
+  add column if not exists owner_user_id uuid references auth.users(id) on delete cascade;
+
+alter table artist_tenants
+  add column if not exists site_theme text not null default 'atelier';
+
+alter table artist_tenants
+  add column if not exists custom_domain text;
+
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint
+    where conname = 'artist_tenants_site_theme_chk'
+  ) then
+    alter table artist_tenants
+      add constraint artist_tenants_site_theme_chk
+      check (site_theme in ('atelier', 'mono', 'ink', 'akemi_brutalist'));
+  end if;
+end $$;
+
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint
+    where conname = 'tattoos_gallery_fk'
+  ) then
+    alter table tattoos
+      add constraint tattoos_gallery_fk
+      foreign key (gallery_id) references galleries(id)
+      on delete set null;
+  end if;
+end $$;
 
 -- Enable RLS for public safety.
 alter table tattoos enable row level security;

@@ -2,13 +2,17 @@ import type { Gallery } from "@/types";
 import { createSupabasePublicClient } from "@/lib/supabase/public";
 
 // Fetch galleries from Supabase.
-export async function getGalleries(): Promise<Gallery[]> {
+export async function getGalleries(ownerUserId?: string | null): Promise<Gallery[]> {
   try {
     const client = createSupabasePublicClient();
-    const { data, error } = await client
+    let query = client
       .from("galleries")
       .select("id,title,description,slug,created_at")
       .order("created_at", { ascending: false });
+    if (ownerUserId) {
+      query = query.eq("owner_user_id", ownerUserId);
+    }
+    const { data, error } = await query;
 
     if (error) {
       throw error;
@@ -20,14 +24,20 @@ export async function getGalleries(): Promise<Gallery[]> {
   }
 }
 
-export async function getGalleryBySlug(slug: string): Promise<Gallery | null> {
+export async function getGalleryBySlug(
+  slug: string,
+  ownerUserId?: string | null
+): Promise<Gallery | null> {
   try {
     const client = createSupabasePublicClient();
-    const { data, error } = await client
+    let query = client
       .from("galleries")
       .select("id,title,description,slug,created_at")
-      .eq("slug", slug)
-      .maybeSingle();
+      .eq("slug", slug);
+    if (ownerUserId) {
+      query = query.eq("owner_user_id", ownerUserId);
+    }
+    const { data, error } = await query.maybeSingle();
 
     if (error) {
       throw error;

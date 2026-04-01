@@ -14,6 +14,7 @@ Agitprop is a Next.js App Router + Supabase product for artist websites and oper
 ### Public Experience
 - SaaS-first entry at `/` (redirect to `/studio/login`).
 - Pilot artist site at `/akemi` with configurable section order and labels.
+- Tenant public slug routes at `/{artist-slug}` for artist-isolated public sites.
 - Theme switching (`light`, `eye`, `dark`).
 - Locale switching (`en`, `es`, `de`).
 - Public galleries and gallery detail pages.
@@ -46,6 +47,9 @@ Agitprop is a Next.js App Router + Supabase product for artist websites and oper
 - Supabase Storage for gallery media.
 - Next.js route handlers for privileged mutations.
 - Tenant bootstrap hook on auth flows to create initial SaaS records for artist users.
+- Tenant policy controls in `artist_tenants` now include:
+  - `site_theme` (`atelier`, `mono`, `ink`, `akemi_brutalist`)
+  - `custom_domain` (reserved for domain mapping rollout)
 
 ### Security Baseline
 - Role-based access with explicit console routing:
@@ -71,7 +75,8 @@ The current architecture is intentionally single-artist for MVP, but it is being
 - optional integrations
 - feature toggles
 - future calendar/notification modules
-- future multi-tenant exploration
+- multi-tenant slug/domain routing with artist data isolation
+- theme entitlement policy (Akemi custom brutalist reserved, base templates for others)
 - safe degradation when providers are disconnected
 - strict role boundaries between platform governance and artist content operations
 
