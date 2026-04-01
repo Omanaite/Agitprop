@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getSiteUrl } from "@/lib/site-url";
 import { getGalleries } from "@/lib/data/galleries";
-import { getActiveArtistSlugs } from "@/lib/data/artist-tenants";
+import { getActiveArtistSlugs, getArtistTenantBySlug } from "@/lib/data/artist-tenants";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = getSiteUrl();
@@ -39,5 +39,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.85,
   }));
 
-  return [...staticRoutes, ...artistRoutes, ...galleryRoutes];
+  // Fetch each tenant's galleries in parallel; skip tenants that fail.
+  const tenantGalleryResults = await Promise.all(
+    artistSlugs.map(async (tenantSlug) => {
+      try {
+        const tenant = await getArtistTenantBySlug(tenantSlug);
+        if (!tenant?.owner_user_id) return [];
+        const tenantGalleries = await getGalleries(tenant.owner_user_id);
+        return tenantGalleries.map((gallery) => ({
+          url: `${siteUrl}/${tenantSlug}/gallery/${gallery.slug}`,
+          lastModified: gallery.created_at ? new Date(gallery.created_at) : new Date(),
+          changeFrequency: "weekly" as const,
+          priority: 0.7,
+        }));
+      } catch {
+        return [];
+      }
+    })
+  );
+
+  const tenantGalleryRoutes: MetadataRoute.Sitemap = tenantGalleryResults.flat();
+
+  return [...staticRoutes, ...artistRoutes, ...galleryRoutes, ...tenantGalleryRoutes];
 }
