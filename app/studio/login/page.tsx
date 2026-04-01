@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { AdminLoginForm } from "@/components/admin/AdminLoginForm";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
 import { OAuthProviderButton } from "@/components/auth/OAuthProviderButton";
+import { ResendConfirmationForm } from "@/components/auth/ResendConfirmationForm";
 import { signInAdmin } from "@/app/admin/login/actions";
 
 export const metadata: Metadata = {
@@ -72,6 +73,10 @@ export default function StudioLoginPage({ searchParams }: LoginPageProps) {
               <p className="admin-validation mt-5" data-variant="error" aria-live="polite">
                 {errorMessage}
               </p>
+            ) : null}
+
+            {searchParams?.error === "unconfirmed" ? (
+              <ResendConfirmationForm />
             ) : null}
 
             <div className="mt-6">

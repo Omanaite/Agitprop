@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { RegisterForm } from "@/components/auth/RegisterForm";
 import { OAuthProviderButton } from "@/components/auth/OAuthProviderButton";
+import { ResendConfirmationForm } from "@/components/auth/ResendConfirmationForm";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
 import { signUpUser } from "./actions";
 
@@ -108,6 +109,13 @@ export default function RegisterPage({ searchParams }: RegisterPageProps) {
                   label="Sign up with GitHub"
                 />
               </div>
+            </div>
+
+            <div className="mt-6 border-t border-[var(--admin-border)] pt-5">
+              <p className="admin-muted text-xs leading-5">
+                Already registered but did not receive the confirmation email?
+              </p>
+              <ResendConfirmationForm />
             </div>
 
             <p className="admin-muted mt-6 text-sm leading-6">
