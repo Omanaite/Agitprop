@@ -95,12 +95,13 @@ export async function GET(request: Request) {
 
   const { data: tenantData } = await adminClient
     .from("artist_tenants")
-    .select("site_theme,slug")
+    .select("site_theme,slug,studio_name")
     .eq("owner_user_id", user.id)
     .maybeSingle();
 
   const siteTheme = tenantData?.site_theme ?? "atelier";
   const tenantSlug = tenantData?.slug ?? null;
+  const studioName = tenantData?.studio_name ?? null;
 
   return NextResponse.json({
     profile: {
@@ -113,6 +114,7 @@ export async function GET(request: Request) {
       }),
       site_theme: siteTheme,
       slug: tenantSlug,
+      studio_name: studioName,
     },
   });
 }
@@ -145,6 +147,39 @@ export async function PATCH(request: Request) {
 
   try {
     const json = await request.json();
+
+    if (typeof json.studio_name === "string") {
+      const name = json.studio_name.trim();
+      if (!name || name.length < 2 || name.length > 80) {
+        return NextResponse.json(
+          { message: "Studio name must be between 2 and 80 characters." },
+          { status: 400 }
+        );
+      }
+
+      const adminClient = createSupabaseServerClient();
+      const { error } = await adminClient
+        .from("artist_tenants")
+        .update({ studio_name: name })
+        .eq("owner_user_id", user.id);
+
+      if (error) {
+        return NextResponse.json(
+          { message: "Failed to update studio name.", detail: process.env.NODE_ENV === "production" ? undefined : error.message },
+          { status: 500 }
+        );
+      }
+
+      await logAuditEvent({
+        actor_email: user.email ?? null,
+        action: "update",
+        entity: "artist_tenants",
+        entity_id: user.id,
+        metadata: { studio_name: name },
+      });
+
+      return NextResponse.json({ ok: true, studio_name: name });
+    }
 
     if (typeof json.slug === "string") {
       const raw = json.slug.trim().toLowerCase();

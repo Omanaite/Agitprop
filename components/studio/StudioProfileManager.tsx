@@ -10,6 +10,7 @@ type Profile = {
   billing_address?: string;
   payment_notes?: string;
   slug?: string;
+  studio_name?: string;
 };
 
 type ValidationError = { path: string; message: string };
@@ -21,6 +22,7 @@ const emptyProfile: Profile = {
   billing_address: "",
   payment_notes: "",
   slug: "",
+  studio_name: "",
 };
 
 const PLATFORM_HOST =
@@ -35,6 +37,9 @@ export function StudioProfileManager() {
   const [slugInput, setSlugInput] = useState("");
   const [slugStatus, setSlugStatus] = useState("");
   const [isSavingSlug, setIsSavingSlug] = useState(false);
+  const [studioNameInput, setStudioNameInput] = useState("");
+  const [studioNameStatus, setStudioNameStatus] = useState("");
+  const [isSavingStudioName, setIsSavingStudioName] = useState(false);
   const [status, setStatus] = useState("");
   const [errors, setErrors] = useState<ValidationError[]>([]);
   const [isSaving, setIsSaving] = useState(false);
@@ -58,6 +63,7 @@ export function StudioProfileManager() {
     const p = data.profile || emptyProfile;
     setProfile(p);
     setSlugInput(p.slug || "");
+    setStudioNameInput(p.studio_name || "");
     setIsLoading(false);
   }
 
@@ -90,6 +96,30 @@ export function StudioProfileManager() {
       setSlugStatus("Page name saved.");
     }
     setIsSavingSlug(false);
+  }
+
+  async function handleStudioNameSave() {
+    setStudioNameStatus("");
+    const trimmed = studioNameInput.trim();
+    if (!trimmed || trimmed.length < 2) {
+      setStudioNameStatus("Studio name must be at least 2 characters.");
+      return;
+    }
+    setIsSavingStudioName(true);
+    const res = await fetch("/api/studio/profile", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ studio_name: trimmed }),
+    });
+    const data = await res.json().catch(() => null);
+    if (!res.ok) {
+      setStudioNameStatus(data?.message ?? "Failed to save studio name.");
+    } else {
+      setProfile((p) => ({ ...p, studio_name: data.studio_name }));
+      setStudioNameInput(data.studio_name);
+      setStudioNameStatus("Studio name saved.");
+    }
+    setIsSavingStudioName(false);
   }
 
   if (isLoading) {
@@ -200,6 +230,41 @@ export function StudioProfileManager() {
       ) : null}
 
       <div className="mt-8 border-t border-[var(--admin-border)] pt-6">
+        <p className="text-xs uppercase tracking-[0.2em] text-[var(--admin-muted)]">
+          Studio name
+        </p>
+        <p className="admin-muted mt-2 text-sm leading-6">
+          This is the name that appears as the title on your public artist site.
+        </p>
+        <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end">
+          <input
+            className="admin-input flex-1"
+            placeholder="e.g. Black Serpent Studio"
+            value={studioNameInput}
+            maxLength={80}
+            onChange={(e) => setStudioNameInput(e.target.value)}
+          />
+          <button
+            type="button"
+            className="admin-button admin-button-primary shrink-0"
+            disabled={isSavingStudioName || studioNameInput.trim() === (profile.studio_name ?? "")}
+            onClick={handleStudioNameSave}
+          >
+            {isSavingStudioName ? "Saving…" : "Save studio name"}
+          </button>
+        </div>
+        {studioNameStatus ? (
+          <p
+            className="admin-validation mt-3"
+            data-variant={studioNameStatus.includes("saved") ? "success" : "error"}
+            aria-live="polite"
+          >
+            {studioNameStatus}
+          </p>
+        ) : null}
+      </div>
+
+      <div className="mt-6 border-t border-[var(--admin-border)] pt-6">
         <p className="text-xs uppercase tracking-[0.2em] text-[var(--admin-muted)]">
           Page name
         </p>
