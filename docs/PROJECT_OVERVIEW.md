@@ -12,7 +12,8 @@ Agitprop is a Next.js App Router + Supabase product for artist websites and oper
 
 ## Current MVP Scope
 ### Public Experience
-- Homepage with configurable section order and labels.
+- SaaS-first entry at `/` (redirect to `/studio/login`).
+- Pilot artist site at `/akemi` with configurable section order and labels.
 - Theme switching (`light`, `eye`, `dark`).
 - Locale switching (`en`, `es`, `de`).
 - Public galleries and gallery detail pages.

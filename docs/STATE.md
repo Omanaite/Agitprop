@@ -69,6 +69,9 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - Added artist-scoped content API baseline (`/api/studio/galleries`, `/api/studio/gallery-items`, `/api/studio/posts`, `/api/studio/homepage-sections`, `/api/studio/uploads`) and wired studio content tabs to those routes.
 - Added ownership filtering (`owner_user_id`) on studio content APIs; rollout SQL patch prepared at `docs/sql/STUDIO_TENANT_OWNERSHIP_PATCH.sql`.
 - Expanded platform-governance module with tenant create/delete controls backed by API (`POST/DELETE /api/admin/platform-tenants`).
+- Updated SaaS entrypoint routing:
+  - `/` redirects to `/studio/login`
+  - pilot public site served from `/akemi`
 
 ## High-Priority Pending Work
 - Fix production auth instability (OAuth + admin role checks + profile/integrations schema alignment).

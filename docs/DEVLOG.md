@@ -152,3 +152,10 @@ Purpose: chronological project progress log to preserve context across sessions.
   - create tenant (owner UUID + studio name + slug + plan)
   - delete tenant from admin console
 
+## 2026-04-01 (entrypoint routing update)
+- Root route `/` now redirects to `/studio/login` to match SaaS-first navigation.
+- Akemi pilot public site moved to dedicated route `/akemi`.
+- SEO surface updated:
+  - sitemap now prioritizes `/agitprop` and includes `/akemi`
+  - robots now allows `/agitprop`, `/akemi`, `/galleries` and disallows `/studio`
+
