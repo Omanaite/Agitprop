@@ -160,6 +160,10 @@
   - `/api/studio/homepage-sections`
   - `/api/studio/uploads`
   - Studio UI tabs wired to these endpoints
+- [x] 18.15 Add ownership isolation layer for studio content baseline:
+  - `owner_user_id`-scoped reads/writes in `/api/studio/*` content endpoints
+  - explicit schema-missing fallback responses (`503 schema_missing`) when ownership columns are unavailable
+  - SQL patch prepared at `docs/sql/STUDIO_TENANT_OWNERSHIP_PATCH.sql`
 
 ## Phase 19: Agitprop Service Page and Conversion Funnel
 - [x] 19.1 Create `/agitprop` public product page with value proposition and CTA flow.

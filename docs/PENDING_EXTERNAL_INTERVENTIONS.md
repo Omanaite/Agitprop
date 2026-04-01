@@ -11,6 +11,7 @@ Purpose: Track every item that requires user action, external credentials, or pr
 
 ### Supabase
 - Confirm latest `supabase/schema.sql` changes are applied in production.
+- Apply `docs/sql/STUDIO_TENANT_OWNERSHIP_PATCH.sql` in production and preview to enable `owner_user_id` isolation for studio content endpoints.
 - Confirm `homepage_sections` exists and policies are active.
 - Confirm admin users still have `app_metadata.role = admin`.
 - Confirm auth email templates and redirect URLs behave correctly in production.

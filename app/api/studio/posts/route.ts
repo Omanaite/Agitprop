@@ -6,6 +6,18 @@ import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import { enforceSameOrigin } from "@/lib/security";
 import { logAuditEvent } from "@/lib/audit";
 
+function isStudioOwnershipSchemaMissing(error: { code?: string; message?: string } | null) {
+  const code = String(error?.code ?? "");
+  const message = String(error?.message ?? "").toLowerCase();
+  return (
+    code === "42703" ||
+    code === "42P01" ||
+    code === "PGRST204" ||
+    message.includes("owner_user_id") ||
+    message.includes("does not exist")
+  );
+}
+
 export async function GET(request: Request) {
   const ip = getClientIp(request);
   const limit = rateLimit(`studio-posts:list:${ip}`, 60, 60_000);
@@ -22,14 +34,28 @@ export async function GET(request: Request) {
       { status: auth.reason === "forbidden" ? 403 : 401 }
     );
   }
+  if (!auth.user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
   const adminClient = createSupabaseServerClient();
 
   const { data, error } = await adminClient
     .from("posts")
     .select("id,title,body,excerpt,cover_image_url,status,publish_at,created_at,updated_at")
+    .eq("owner_user_id", auth.user.id)
     .order("created_at", { ascending: false });
 
   if (error) {
+    if (isStudioOwnershipSchemaMissing(error)) {
+      return NextResponse.json(
+        {
+          message:
+            "Studio posts storage is not ready. Run the latest Supabase schema patch.",
+          code: "schema_missing",
+        },
+        { status: 503 }
+      );
+    }
     return NextResponse.json(
       {
         message: "Failed to load posts.",
@@ -62,6 +88,9 @@ export async function POST(request: Request) {
       { status: auth.reason === "forbidden" ? 403 : 401 }
     );
   }
+  if (!auth.user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
   const adminClient = createSupabaseServerClient();
 
   try {
@@ -87,9 +116,20 @@ export async function POST(request: Request) {
       excerpt: payload.excerpt ?? null,
       cover_image_url: payload.cover_image_url ?? null,
       publish_at: payload.publish_at ? new Date(payload.publish_at) : null,
+      owner_user_id: auth.user.id,
     });
 
     if (error) {
+      if (isStudioOwnershipSchemaMissing(error)) {
+        return NextResponse.json(
+          {
+            message:
+              "Studio posts storage is not ready. Run the latest Supabase schema patch.",
+            code: "schema_missing",
+          },
+          { status: 503 }
+        );
+      }
       return NextResponse.json(
         {
           message: "Failed to create post.",

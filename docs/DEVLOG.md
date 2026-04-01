@@ -137,3 +137,9 @@ Purpose: chronological project progress log to preserve context across sessions.
 - Added studio UI modules for homepage, galleries, pieces, and posts using `/api/studio/*` paths.
 - Studio now runs with artist-scoped routes end-to-end for settings + content baseline.
 
+## 2026-04-01 (studio ownership isolation hardening)
+- Added owner-scoped filtering on studio content endpoints (`galleries`, `tattoos`, `posts`, `homepage_sections`).
+- Writes now attach `owner_user_id` in studio content mutations to avoid cross-artist visibility.
+- Added schema-guarded fallback behavior when ownership columns are not present (`code: schema_missing`, HTTP 503 for write-sensitive routes).
+- Added SQL rollout patch: `docs/sql/STUDIO_TENANT_OWNERSHIP_PATCH.sql`.
+

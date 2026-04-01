@@ -10,6 +10,7 @@ create table if not exists tattoos (
   location_link text,
   session_length_minutes int,
   aftercare text,
+  owner_user_id uuid references auth.users(id) on delete cascade,
   sort_order int not null default 0,
   created_at timestamptz not null default now()
 );
@@ -31,6 +32,7 @@ create table if not exists posts (
   body text not null,
   excerpt text,
   cover_image_url text,
+  owner_user_id uuid references auth.users(id) on delete cascade,
   status text not null default 'draft',
   publish_at timestamptz,
   created_at timestamptz not null default now(),
@@ -42,6 +44,7 @@ create table if not exists galleries (
   title text not null,
   description text,
   slug text not null unique,
+  owner_user_id uuid references auth.users(id) on delete cascade,
   created_at timestamptz not null default now()
 );
 
@@ -58,6 +61,7 @@ create table if not exists audit_logs (
 create table if not exists homepage_sections (
   id uuid primary key default gen_random_uuid(),
   section_key text not null unique,
+  owner_user_id uuid references auth.users(id) on delete cascade,
   title text not null,
   eyebrow text,
   sort_order int not null default 0,
@@ -132,6 +136,27 @@ create table if not exists platform_integrations (
   maintenance_message text,
   updated_at timestamptz not null default now()
 );
+
+create index if not exists galleries_owner_user_id_idx on galleries(owner_user_id);
+create index if not exists tattoos_owner_user_id_idx on tattoos(owner_user_id);
+create index if not exists posts_owner_user_id_idx on posts(owner_user_id);
+create index if not exists homepage_sections_owner_user_id_idx on homepage_sections(owner_user_id);
+
+do $$
+begin
+  if exists (
+    select 1
+    from pg_indexes
+    where schemaname = 'public'
+      and tablename = 'homepage_sections'
+      and indexname = 'homepage_sections_section_key_key'
+  ) then
+    execute 'drop index if exists public.homepage_sections_section_key_key';
+  end if;
+end $$;
+
+create unique index if not exists homepage_sections_owner_section_key_uidx
+  on homepage_sections(owner_user_id, section_key);
 
 alter table tattoos
   add constraint tattoos_gallery_fk

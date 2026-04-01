@@ -22,6 +22,18 @@ function isSchemaDriftError(message: string | undefined) {
   );
 }
 
+function isStudioOwnershipSchemaMissing(error: { code?: string; message?: string } | null) {
+  const code = String(error?.code ?? "");
+  const message = String(error?.message ?? "").toLowerCase();
+  return (
+    code === "42703" ||
+    code === "42P01" ||
+    code === "PGRST204" ||
+    message.includes("owner_user_id") ||
+    message.includes("does not exist")
+  );
+}
+
 export async function GET(request: Request) {
   const ip = getClientIp(request);
   const limit = rateLimit(`studio-homepage-sections:list:${ip}`, 60, 60_000);
@@ -39,14 +51,30 @@ export async function GET(request: Request) {
       { status: auth.reason === "forbidden" ? 403 : 401 }
     );
   }
+  if (!auth.user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
   const adminClient = createSupabaseServerClient();
 
   const { data, error } = await adminClient
     .from("homepage_sections")
     .select(selection)
+    .eq("owner_user_id", auth.user.id)
     .order("sort_order", { ascending: true });
 
   if (error) {
+    if (isStudioOwnershipSchemaMissing(error)) {
+      return NextResponse.json(
+        {
+          items: mergeSections([]),
+          degraded: true,
+          message:
+            "Studio homepage composition storage is not ready. Run the latest Supabase schema patch.",
+          code: "schema_missing",
+        },
+        { status: 200 }
+      );
+    }
     return NextResponse.json(
       {
         items: mergeSections([]),
@@ -84,6 +112,9 @@ export async function PUT(request: Request) {
       { status: auth.reason === "forbidden" ? 403 : 401 }
     );
   }
+  if (!auth.user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
   const adminClient = createSupabaseServerClient();
 
   try {
@@ -103,6 +134,7 @@ export async function PUT(request: Request) {
     }
 
     const payload = parsed.data.items.map((item, index) => ({
+      owner_user_id: auth.user.id,
       section_key: item.section_key,
       title: item.title.trim(),
       eyebrow: item.eyebrow?.trim() ? item.eyebrow.trim() : null,
@@ -113,10 +145,10 @@ export async function PUT(request: Request) {
 
     const { error } = await adminClient
       .from("homepage_sections")
-      .upsert(payload, { onConflict: "section_key" });
+      .upsert(payload, { onConflict: "owner_user_id,section_key" });
 
     if (error) {
-      if (isSchemaDriftError(error.message)) {
+      if (isSchemaDriftError(error.message) || isStudioOwnershipSchemaMissing(error)) {
         return NextResponse.json(
           {
             items: mergeSections(payload),
@@ -152,6 +184,7 @@ export async function PUT(request: Request) {
     const { data, error: reloadError } = await adminClient
       .from("homepage_sections")
       .select(selection)
+      .eq("owner_user_id", auth.user.id)
       .order("sort_order", { ascending: true });
 
     if (reloadError) {

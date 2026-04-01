@@ -6,6 +6,18 @@ import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import { enforceSameOrigin } from "@/lib/security";
 import { logAuditEvent } from "@/lib/audit";
 
+function isStudioOwnershipSchemaMissing(error: { code?: string; message?: string } | null) {
+  const code = String(error?.code ?? "");
+  const message = String(error?.message ?? "").toLowerCase();
+  return (
+    code === "42703" ||
+    code === "42P01" ||
+    code === "PGRST204" ||
+    message.includes("owner_user_id") ||
+    message.includes("does not exist")
+  );
+}
+
 export async function GET(request: Request) {
   const ip = getClientIp(request);
   const limit = rateLimit(`studio-gallery:list:${ip}`, 60, 60_000);
@@ -22,6 +34,9 @@ export async function GET(request: Request) {
       { status: auth.reason === "forbidden" ? 403 : 401 }
     );
   }
+  if (!auth.user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
   const adminClient = createSupabaseServerClient();
 
   const { data, error } = await adminClient
@@ -29,9 +44,20 @@ export async function GET(request: Request) {
     .select(
       "id,title,description,style,image_url,gallery_id,tags,location_link,session_length_minutes,aftercare,sort_order,created_at"
     )
+    .eq("owner_user_id", auth.user.id)
     .order("created_at", { ascending: false });
 
   if (error) {
+    if (isStudioOwnershipSchemaMissing(error)) {
+      return NextResponse.json(
+        {
+          message:
+            "Studio gallery items storage is not ready. Run the latest Supabase schema patch.",
+          code: "schema_missing",
+        },
+        { status: 503 }
+      );
+    }
     return NextResponse.json(
       {
         message: "Failed to load gallery.",
@@ -64,6 +90,9 @@ export async function POST(request: Request) {
       { status: auth.reason === "forbidden" ? 403 : 401 }
     );
   }
+  if (!auth.user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
   const adminClient = createSupabaseServerClient();
 
   try {
@@ -93,9 +122,20 @@ export async function POST(request: Request) {
       session_length_minutes: payload.session_length_minutes ?? null,
       aftercare: payload.aftercare ?? null,
       sort_order: payload.sort_order ?? 0,
+      owner_user_id: auth.user.id,
     });
 
     if (error) {
+      if (isStudioOwnershipSchemaMissing(error)) {
+        return NextResponse.json(
+          {
+            message:
+              "Studio gallery items storage is not ready. Run the latest Supabase schema patch.",
+            code: "schema_missing",
+          },
+          { status: 503 }
+        );
+      }
       return NextResponse.json(
         {
           message: "Failed to create gallery item.",

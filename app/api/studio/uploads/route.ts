@@ -22,6 +22,9 @@ export async function POST(request: Request) {
   if (!auth.ok) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
+  if (!auth.user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
   const adminClient = createSupabaseServerClient();
 
   const form = await request.formData();
@@ -46,7 +49,7 @@ export async function POST(request: Request) {
   }
 
   const ext = file.name.split(".").pop() || "png";
-  const path = `studio/${Date.now()}-${crypto.randomUUID()}.${ext}`;
+  const path = `studio/${auth.user.id}/${Date.now()}-${crypto.randomUUID()}.${ext}`;
 
   const { error } = await adminClient.storage
     .from("gallery")
