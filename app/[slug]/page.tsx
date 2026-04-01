@@ -88,7 +88,7 @@ export default async function ArtistSitePage({
               <Link
                 key={gallery.id}
                 className="theme-border rounded-xl p-4 hover:opacity-80"
-                href={`/galleries/${gallery.slug}`}
+                href={`/${slug}/gallery/${gallery.slug}`}
               >
                 <p className="text-xs uppercase tracking-[0.2em]">{gallery.slug}</p>
                 <h3 className="mt-2 text-lg">{gallery.title}</h3>
