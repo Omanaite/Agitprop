@@ -37,6 +37,7 @@ export function StudioProfileManager() {
   const [slugInput, setSlugInput] = useState("");
   const [slugStatus, setSlugStatus] = useState("");
   const [isSavingSlug, setIsSavingSlug] = useState(false);
+  const [isNewArtist, setIsNewArtist] = useState(false);
   const [studioNameInput, setStudioNameInput] = useState("");
   const [studioNameStatus, setStudioNameStatus] = useState("");
   const [isSavingStudioName, setIsSavingStudioName] = useState(false);
@@ -64,6 +65,7 @@ export function StudioProfileManager() {
     setProfile(p);
     setSlugInput(p.slug || "");
     setStudioNameInput(p.studio_name || "");
+    setIsNewArtist(!p.slug);
     setIsLoading(false);
   }
 
@@ -77,7 +79,11 @@ export function StudioProfileManager() {
   async function handleSlugSave() {
     setSlugStatus("");
     const trimmed = slugInput.trim().replace(/-+$/, "");
-    if (!trimmed || trimmed.length < 2) {
+    if (!trimmed) {
+      setSlugStatus("Page name cannot be empty.");
+      return;
+    }
+    if (trimmed.length < 2) {
       setSlugStatus("Page name must be at least 2 characters.");
       return;
     }
@@ -94,6 +100,7 @@ export function StudioProfileManager() {
       setProfile((p) => ({ ...p, slug: data.slug }));
       setSlugInput(data.slug);
       setSlugStatus("Page name saved.");
+      setIsNewArtist(false);
     }
     setIsSavingSlug(false);
   }
@@ -141,7 +148,13 @@ export function StudioProfileManager() {
     const res = await fetch("/api/studio/profile", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(profile),
+      body: JSON.stringify({
+        email: profile.email,
+        nickname: profile.nickname,
+        shipping_address: profile.shipping_address,
+        billing_address: profile.billing_address,
+        payment_notes: profile.payment_notes,
+      }),
     });
 
     if (!res.ok) {
@@ -264,9 +277,20 @@ export function StudioProfileManager() {
         ) : null}
       </div>
 
-      <div className="mt-6 border-t border-[var(--admin-border)] pt-6">
-        <p className="text-xs uppercase tracking-[0.2em] text-[var(--admin-muted)]">
-          Page name
+      <div className={[
+        "mt-6 border-t pt-6 transition-all duration-300",
+        isNewArtist
+          ? "border-[var(--admin-accent)] relative"
+          : "border-[var(--admin-border)]",
+      ].join(" ")}>
+        {isNewArtist && (
+          <div className="absolute inset-0 -z-10 rounded-2xl bg-[var(--admin-accent)] opacity-5 pointer-events-none" />
+        )}
+        <p className={[
+          "text-xs uppercase tracking-[0.2em]",
+          isNewArtist ? "text-[var(--admin-accent)] font-semibold" : "text-[var(--admin-muted)]",
+        ].join(" ")}>
+          Page name {isNewArtist && "— set this up to activate your site"}
         </p>
         <p className="admin-muted mt-2 text-sm leading-6">
           Choose the URL for your public artist site. Only lowercase letters,
@@ -274,7 +298,12 @@ export function StudioProfileManager() {
         </p>
         <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end">
           <div className="flex-1">
-            <div className="flex items-center rounded-2xl border border-[var(--admin-border)] bg-[var(--admin-input-bg)] px-4 py-3 focus-within:border-[var(--admin-accent)] focus-within:ring-1 focus-within:ring-[var(--admin-accent)]">
+            <div className={[
+              "flex items-center rounded-2xl border bg-[var(--admin-input-bg)] px-4 py-3 transition-all",
+              isNewArtist
+                ? "border-[var(--admin-accent)] ring-2 ring-[var(--admin-accent)] ring-opacity-40"
+                : "border-[var(--admin-border)] focus-within:border-[var(--admin-accent)] focus-within:ring-1 focus-within:ring-[var(--admin-accent)]",
+            ].join(" ")}>
               <span className="admin-muted shrink-0 select-none text-sm">
                 {PLATFORM_HOST}/
               </span>
@@ -283,6 +312,7 @@ export function StudioProfileManager() {
                 placeholder="your-studio-name"
                 value={slugInput}
                 maxLength={50}
+                autoFocus={isNewArtist}
                 onChange={(e) =>
                   setSlugInput(sanitizeSlugInput(e.target.value))
                 }
@@ -296,7 +326,10 @@ export function StudioProfileManager() {
           </div>
           <button
             type="button"
-            className="admin-button admin-button-primary shrink-0"
+            className={[
+              "admin-button shrink-0 transition-all",
+              isNewArtist ? "admin-button-primary ring-2 ring-[var(--admin-accent)] ring-offset-2" : "admin-button-primary",
+            ].join(" ")}
             disabled={isSavingSlug || slugInput === (profile.slug ?? "")}
             onClick={handleSlugSave}
           >
