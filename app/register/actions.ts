@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { headers } from "next/headers";
 import { z } from "zod";
 import { createSupabaseServerClient } from "@/lib/supabase/ssr";
+import { createSupabaseServerClient as createAdminClient } from "@/lib/supabase/server";
 import { getSiteUrl } from "@/lib/site-url";
 import { getClientIpFromHeaders, rateLimit } from "@/lib/rate-limit";
 import { ensureArtistTenantProvisioned } from "@/lib/tenants/provision";
@@ -41,8 +42,7 @@ export async function signUpUser(
   if (honeypot.trim()) {
     return {
       status: "success",
-      message:
-        "Account created. Check your inbox and confirm the email before signing in.",
+      message: "Account created. You can now sign in.",
     };
   }
 
@@ -115,6 +115,18 @@ export async function signUpUser(
       await supabase.auth.signOut();
     }
 
+    // Auto-confirm email using service role — bypasses SMTP dependency.
+    if (data.user?.id) {
+      try {
+        const adminClient = createAdminClient();
+        await adminClient.auth.admin.updateUser(data.user.id, {
+          email_confirm: true,
+        });
+      } catch {
+        // Non-fatal — user can still confirm via email if SMTP is configured.
+      }
+    }
+
     if (data.user?.id && data.user.email) {
       try {
         await ensureArtistTenantProvisioned({
@@ -129,8 +141,7 @@ export async function signUpUser(
 
     return {
       status: "success",
-      message:
-        "Account created. Check your inbox and confirm the email before signing in.",
+      message: "Account created. You can now sign in.",
     };
   } catch {
     return {
