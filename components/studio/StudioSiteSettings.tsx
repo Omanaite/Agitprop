@@ -18,7 +18,7 @@ const THEME_LABELS: Record<string, string> = {
 const THEME_DESCRIPTIONS: Record<string, string> = {
   atelier: "Warm, gallery-style presentation with editorial spacing.",
   mono: "Clean monochrome aesthetic for a minimal portfolio look.",
-  ink: "Dark, high-contrast layout built for tattoo portfolios.",
+  ink: "Dark, high-contrast layout for bold creative portfolios.",
   akemi_brutalist: "Custom theme. Cannot be changed.",
 };
 

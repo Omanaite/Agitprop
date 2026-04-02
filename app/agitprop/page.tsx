@@ -5,11 +5,11 @@ import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
 export const metadata: Metadata = {
   title: "Agitprop | Artist website, portfolio & booking platform",
   description:
-    "Agitprop helps tattoo artists launch a portfolio site, publish studio updates, and manage client bookings from one workspace. Free to start.",
+    "Agitprop helps artists launch a portfolio site, publish studio updates, and manage client bookings from one workspace. Free to start.",
   openGraph: {
     title: "Agitprop — Artist website, portfolio & booking platform",
     description:
-      "Launch your tattoo artist site in minutes. Portfolio galleries, publishing, and client bookings — all from one control room.",
+      "Launch your artist site in minutes. Portfolio galleries, publishing, and client bookings — all from one control room.",
     type: "website",
   },
 };
@@ -33,7 +33,7 @@ const features = [
   },
   {
     title: "Visual themes",
-    body: "Pick from three built-in styles — Atelier, Mono, and Ink — each tuned for tattoo work. Premium adds the Akemi Brutalist theme.",
+    body: "Pick from three built-in styles — Atelier, Mono, and Ink. Each theme is clean, fast, and built for creative portfolios.",
   },
   {
     title: "Secure by default",
@@ -92,7 +92,7 @@ export default function AgitpropPage() {
             <br className="hidden sm:block" /> portfolio, and booking system.
           </h1>
           <p className="admin-muted mt-5 max-w-2xl text-base leading-7">
-            Agitprop gives tattoo artists a production-ready web presence without
+            Agitprop gives artists a production-ready web presence without
             building infrastructure from scratch. One workspace to showcase galleries,
             publish studio updates, and capture client requests.
           </p>

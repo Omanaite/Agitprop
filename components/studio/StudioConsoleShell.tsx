@@ -70,7 +70,7 @@ const sections: Section[] = [
     id: "pieces",
     label: "Pieces",
     eyebrow: "Library",
-    description: "Upload, reorder, and enrich tattoo portfolio entries.",
+    description: "Upload, reorder, and enrich your portfolio pieces.",
     content: <StudioGalleryManager />,
   },
   {
