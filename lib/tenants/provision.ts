@@ -1,5 +1,6 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { isAkemiTenantIdentity, sanitizeTenantTheme } from "@/lib/tenants/theme";
+import { seedDemoContent } from "@/lib/tenants/demo-content";
 
 type ProvisionInput = {
   userId: string;
@@ -111,6 +112,11 @@ export async function ensureArtistTenantProvisioned(input: ProvisionInput) {
     }
 
     tenantId = insertedTenant.id;
+
+    // Seed demo content for new non-Akemi tenants
+    if (!isAkemiTenant) {
+      await seedDemoContent(supabase, input.userId, studioName);
+    }
   }
 
   if (!tenantId) return { ok: false };
