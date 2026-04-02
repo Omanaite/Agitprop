@@ -44,18 +44,18 @@ export default function RegisterPage({ searchParams }: RegisterPageProps) {
               Create a confirmed studio account.
             </h1>
             <p className="admin-muted mt-5 max-w-xl text-base leading-7">
-              New accounts receive a confirmation email before they can be used.
-              OAuth account creation is handled through artist login so sign-in
-              and identity linking stay in one place.
+              Create your studio account with email and password. OAuth account
+              creation is handled through artist login so sign-in and identity
+              linking stay in one place.
             </p>
             <div className="mt-8 space-y-3">
               <div className="admin-card-soft p-4">
                 <p className="text-sm font-semibold text-[var(--admin-title)]">
-                  Email confirmation
+                  Instant access
                 </p>
                 <p className="admin-muted mt-2 text-sm leading-6">
-                  We send a verification link so the account starts in a trusted
-                  state.
+                  Your account is ready immediately after registration — no
+                  waiting for email confirmation.
                 </p>
               </div>
               <div className="admin-card-soft p-4">
