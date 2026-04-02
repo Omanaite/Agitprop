@@ -1,6 +1,6 @@
 ﻿# State Snapshot - Agitprop (Akemi Pilot)
 
-Date: 2026-04-01
+Date: 2026-04-02
 Branch target: `vercel`
 
 ## Purpose
@@ -54,6 +54,22 @@ Keep one current snapshot of implementation state, blockers, and next actions so
 - Final public content / SEO copy approval.
 - Apply `ARTIST_SITE_THEMES_PATCH.sql` in Supabase prod/preview to activate `site_theme` and `custom_domain` columns.
 - Set `NEXT_PUBLIC_PLATFORM_HOST` env var in Vercel for custom domain resolution to function correctly.
+
+## MVP Closure Batch (2026-04-02)
+- Registration: auto-confirm email via service role — no SMTP dependency.
+- Registration: success state shows direct link to studio login.
+- Studio login: new `signInArtist` action — errors redirect to `/studio/login`, not `/admin/login`.
+- StudioBookingsManager: friendlier schema-pending notice.
+- Register page / complete page: updated copy to reflect instant access.
+- Removed chandiapablo from admin allowlist — only pchandia@hotmail.com remains.
+- Studio Console: removed Integrations and Payments tabs (not MVP-ready).
+- StudioSiteSettings: `akemi_brutalist` now labeled "Custom".
+- Artist logout: redirects to `/agitprop` instead of `/admin/login`.
+
+## SQL Patches Still Pending in Production
+- `BOOKINGS_TENANT_ISOLATION_PATCH.sql` — adds `owner_user_id` to bookings table.
+- `ARTIST_SITE_THEMES_PATCH.sql` — adds `site_theme`, `custom_domain` columns to artist_tenants.
+- `STUDIO_TENANT_OWNERSHIP_PATCH.sql` — adds ownership filtering to studio content.
 
 ## Recent Key Changes
 - Fixed production image rendering regressions by broadening remote image host support in Next image config.
