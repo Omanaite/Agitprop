@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import type { RegisterActionState } from "@/app/register/actions";
@@ -114,7 +115,16 @@ export function RegisterForm({ action }: RegisterFormProps) {
         </p>
       ) : null}
 
-      <SubmitButton />
+      {state.status === "success" ? (
+        <Link
+          href="/studio/login"
+          className="admin-button admin-button-primary w-full justify-center"
+        >
+          Sign in to your workspace
+        </Link>
+      ) : (
+        <SubmitButton />
+      )}
     </form>
   );
 }

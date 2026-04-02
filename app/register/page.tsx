@@ -113,7 +113,11 @@ export default function RegisterPage({ searchParams }: RegisterPageProps) {
 
             <div className="mt-6 border-t border-[var(--admin-border)] pt-5">
               <p className="admin-muted text-xs leading-5">
-                Already registered but did not receive the confirmation email?
+                Already have an account?{" "}
+                <a href="/studio/login" className="font-semibold text-[var(--admin-accent)]">
+                  Sign in here
+                </a>
+                . If you registered before and cannot sign in, request a new confirmation link.
               </p>
               <ResendConfirmationForm />
             </div>

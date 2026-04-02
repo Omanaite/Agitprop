@@ -29,8 +29,8 @@ function getContent(source?: string) {
   }
 
   return {
-    chip: "Email confirmed",
-    title: "Your email is confirmed.",
+    chip: "Account ready",
+    title: "You're confirmed.",
     body: "Your account is active. Open your studio workspace to start building your artist site — add galleries, upload work, and go live.",
     primaryLabel: "Open studio workspace",
     primaryHref: "/studio",

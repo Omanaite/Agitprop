@@ -3,7 +3,7 @@ import { AdminLoginForm } from "@/components/admin/AdminLoginForm";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
 import { OAuthProviderButton } from "@/components/auth/OAuthProviderButton";
 import { ResendConfirmationForm } from "@/components/auth/ResendConfirmationForm";
-import { signInAdmin } from "@/app/admin/login/actions";
+import { signInArtist } from "@/app/studio/login/actions";
 
 export const metadata: Metadata = {
   title: "Artist Login | Agitprop",
@@ -31,7 +31,7 @@ function getErrorMessage(code?: string, reason?: string) {
     case "server":
       return `Server error. ${reason ? `Detail: ${reason}` : ""}`.trim();
     case "unconfirmed":
-      return "Confirm your email in Supabase before signing in.";
+      return "Your account needs to be confirmed before signing in. Request a new confirmation link below.";
     case "rate":
       return "Too many attempts. Please try again later.";
     default:
@@ -80,7 +80,7 @@ export default function StudioLoginPage({ searchParams }: LoginPageProps) {
             ) : null}
 
             <div className="mt-6">
-              <AdminLoginForm action={signInAdmin} />
+              <AdminLoginForm action={signInArtist} />
             </div>
 
             <div className="admin-divider my-6" />

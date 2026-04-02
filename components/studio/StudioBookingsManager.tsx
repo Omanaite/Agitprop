@@ -96,9 +96,12 @@ export function StudioBookingsManager() {
       </p>
 
       {schemaPending ? (
-        <p className="admin-validation mt-4" data-variant="error">
-          Bookings table needs the owner_user_id column. Apply the latest schema patch.
-        </p>
+        <div className="mt-6 rounded-2xl border border-[var(--admin-border)] bg-[var(--admin-accent-soft)] px-5 py-4">
+          <p className="text-sm font-semibold text-[var(--admin-title)]">Database update required</p>
+          <p className="admin-muted mt-1 text-xs leading-5">
+            Run <code className="font-mono text-[var(--admin-accent)]">BOOKINGS_TENANT_ISOLATION_PATCH.sql</code> in your Supabase SQL editor to activate booking isolation. Bookings submitted to your public site are being saved and will appear here once the patch is applied.
+          </p>
+        </div>
       ) : null}
 
       {status ? (
