@@ -394,21 +394,91 @@ html[data-theme="dark"] .gallery-filter-select {
   color: #000000;
 }
 
+/* ─── ARTIST THEMES ──────────────────────────────────────────────────────── */
+/* Each theme resets --fg/--bg and the font so all child utilities inherit  */
+/* the theme look instead of the global brutalist defaults.                 */
+
+/* ATELIER — warm gallery editorial, serif, cream */
 .artist-theme-atelier {
-  background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
-  color: #0f172a;
+  --fg: #1c1410;
+  --bg: #faf7f2;
+  background: linear-gradient(160deg, #faf7f2 0%, #f3ede3 100%);
+  color: var(--fg);
+  font-family: "Georgia", "Times New Roman", serif;
+  letter-spacing: 0;
+}
+.artist-theme-atelier .theme-border {
+  border: 1px solid rgba(28, 20, 16, 0.18);
+}
+.artist-theme-atelier .hard-border {
+  border: 1px solid rgba(28, 20, 16, 0.18);
 }
 
+/* MONO — Swiss clean minimalism, sans-serif, pure white */
 .artist-theme-mono {
-  background: #f5f5f5;
-  color: #111827;
+  --fg: #0a0a0a;
+  --bg: #ffffff;
+  background: #ffffff;
+  color: var(--fg);
+  font-family: "Helvetica Neue", "Arial", system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+.artist-theme-mono .theme-border {
+  border: 1px solid rgba(10, 10, 10, 0.14);
+}
+.artist-theme-mono .hard-border {
+  border: 1px solid rgba(10, 10, 10, 0.14);
 }
 
+/* INK — dark dramatic, violet accent, sans-serif */
 .artist-theme-ink {
-  background: linear-gradient(180deg, #0b1220 0%, #111827 100%);
-  color: #e5e7eb;
+  --fg: #f0eee8;
+  --bg: #0e1017;
+  background: linear-gradient(160deg, #0e1017 0%, #141824 100%);
+  color: var(--fg);
+  font-family: "Helvetica Neue", "Arial", system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+.artist-theme-ink .theme-border {
+  border: 1px solid rgba(240, 238, 232, 0.16);
+}
+.artist-theme-ink .hard-border {
+  border: 1px solid rgba(240, 238, 232, 0.16);
 }
 
+/* VERDURE — organic nature, sage, earthy green */
+.artist-theme-verdure {
+  --fg: #1a2e1c;
+  --bg: #f4f7f1;
+  background: linear-gradient(160deg, #f4f7f1 0%, #e8f0e4 100%);
+  color: var(--fg);
+  font-family: "Georgia", "Times New Roman", serif;
+  letter-spacing: 0;
+}
+.artist-theme-verdure .theme-border {
+  border: 1px solid rgba(26, 46, 28, 0.2);
+}
+.artist-theme-verdure .hard-border {
+  border: 1px solid rgba(26, 46, 28, 0.2);
+}
+
+/* AMBER — warm studio, terracotta accent, editorial */
+.artist-theme-amber {
+  --fg: #2c1a0e;
+  --bg: #fef5e4;
+  background: linear-gradient(160deg, #fef5e4 0%, #fdecc8 100%);
+  color: var(--fg);
+  font-family: "Georgia", "Times New Roman", serif;
+  letter-spacing: 0;
+}
+.artist-theme-amber .theme-border {
+  border: 1px solid rgba(44, 26, 14, 0.18);
+}
+.artist-theme-amber .hard-border {
+  border: 1px solid rgba(44, 26, 14, 0.18);
+}
+
+/* AKEMI BRUTALIST — exclusive pilot theme, full brutalist system */
 .artist-theme-akemi-brutalist {
   background: var(--bg);
   color: var(--fg);

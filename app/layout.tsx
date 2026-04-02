@@ -26,26 +26,26 @@ const adminFont = Manrope({
 
 export const metadata: Metadata = {
   title: {
-    default: "Agitprop | Akemi Tattoo Pilot",
+    default: "Agitprop | Artist Portfolio Platform",
     template: "%s | Agitprop",
   },
   description:
-    "Agitprop platform pilot: brutalist tattoo portfolio and booking portal for Akemi.",
+    "Agitprop — artist portfolio, booking, and studio publishing platform.",
   metadataBase: new URL(getSiteUrl()),
   alternates: {
     canonical: "/",
   },
   keywords: [
-    "tattoo artist berlin",
-    "tattoo portfolio",
-    "blackwork tattoos",
-    "fine line tattoo berlin",
-    "akemi tattoo",
+    "artist portfolio",
+    "tattoo artist website",
+    "artist booking platform",
+    "portfolio builder",
+    "studio website",
   ],
   openGraph: {
-    title: "Agitprop | Akemi Tattoo Pilot",
+    title: "Agitprop | Artist Portfolio Platform",
     description:
-      "Brutalist tattoo portfolio and booking portal for Akemi. Built for Vercel + Supabase.",
+      "Artist portfolio, booking, and studio publishing platform. Built for Vercel + Supabase.",
     url: "/",
     siteName: "Agitprop",
     locale: "en_US",
@@ -53,9 +53,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Agitprop | Akemi Tattoo Pilot",
+    title: "Agitprop | Artist Portfolio Platform",
     description:
-      "Brutalist tattoo portfolio and booking portal for Akemi. Built for Vercel + Supabase.",
+      "Artist portfolio, booking, and studio publishing platform.",
   },
 };
 

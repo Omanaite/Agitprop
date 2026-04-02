@@ -1,4 +1,4 @@
-export const DEFAULT_TENANT_THEMES = ["atelier", "mono", "ink"] as const;
+export const DEFAULT_TENANT_THEMES = ["atelier", "mono", "ink", "verdure", "amber"] as const;
 export const AKEMI_TENANT_THEME = "akemi_brutalist" as const;
 
 export type TenantTheme =

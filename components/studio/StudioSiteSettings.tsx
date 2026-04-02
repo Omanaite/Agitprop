@@ -12,13 +12,17 @@ const THEME_LABELS: Record<string, string> = {
   atelier: "Atelier",
   mono: "Mono",
   ink: "Ink",
+  verdure: "Verdure",
+  amber: "Amber",
   akemi_brutalist: "Custom",
 };
 
 const THEME_DESCRIPTIONS: Record<string, string> = {
-  atelier: "Warm, gallery-style presentation with editorial spacing.",
-  mono: "Clean monochrome aesthetic for a minimal portfolio look.",
-  ink: "Dark, high-contrast layout for bold creative portfolios.",
+  atelier: "Warm gallery editorial. Cream background, serif typography.",
+  mono: "Swiss clean minimalism. Pure white, Helvetica, thin borders.",
+  ink: "Dark dramatic. Deep charcoal background, light text.",
+  verdure: "Organic nature. Sage-green tones, earthy palette, serif.",
+  amber: "Warm studio. Amber-tinted background, editorial serif feel.",
   akemi_brutalist: "Custom theme. Cannot be changed.",
 };
 
@@ -111,7 +115,7 @@ export function StudioSiteSettings() {
           </div>
         </div>
       ) : (
-        <div className="mt-6 grid gap-3 sm:grid-cols-3">
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {DEFAULT_TENANT_THEMES.map((theme) => {
             const isSelected = selectedTheme === theme;
             return (

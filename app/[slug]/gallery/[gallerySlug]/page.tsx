@@ -16,8 +16,10 @@ import { getSiteUrl } from "@/lib/site-url";
 const RESERVED = new Set(["admin", "studio", "api", "register", "agitprop", "akemi", "galleries"]);
 
 function getThemeClass(theme: string) {
-  if (theme === "ink") return "artist-theme-ink";
   if (theme === "mono") return "artist-theme-mono";
+  if (theme === "ink") return "artist-theme-ink";
+  if (theme === "verdure") return "artist-theme-verdure";
+  if (theme === "amber") return "artist-theme-amber";
   if (theme === "akemi_brutalist") return "artist-theme-akemi-brutalist";
   return "artist-theme-atelier";
 }
