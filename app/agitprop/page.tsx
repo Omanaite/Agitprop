@@ -101,11 +101,8 @@ export default function AgitpropPage() {
             <Link href="/register" className="admin-button admin-button-primary">
               Get started free
             </Link>
-            <Link href="/studio/login" className="admin-button">
-              Artist login
-            </Link>
-            <Link href="/admin/login" className="admin-button admin-button-ghost">
-              Platform admin
+            <Link href="/studio/login" className="admin-button admin-button-ghost">
+              I already have an account
             </Link>
           </div>
         </section>
@@ -215,6 +212,18 @@ export default function AgitpropPage() {
             </Link>
           </div>
         </section>
+
+        {/* Footer */}
+        <footer className="mt-10 border-t border-[var(--admin-border)] pt-6 pb-2 text-center text-xs text-[var(--admin-muted)]">
+          © {new Date().getFullYear()} Agitprop Studio. All rights reserved. Built by{" "}
+          <a
+            href="https://agitpropstudio.vercel.app/admin/login"
+            className="underline underline-offset-2 hover:text-[var(--admin-title)] transition-colors"
+          >
+            Pablo Chandía
+          </a>
+          .
+        </footer>
       </div>
     </div>
   );

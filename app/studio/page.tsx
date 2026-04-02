@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
-import { signOutAdmin } from "@/app/admin/actions";
+import { signOutArtist } from "@/app/studio/actions";
 import { StudioConsoleShell } from "@/components/studio/StudioConsoleShell";
 import { StudioSiteLink } from "@/components/studio/StudioSiteLink";
 import { createSupabaseServerClient } from "@/lib/supabase/ssr";
@@ -50,7 +50,7 @@ export default async function StudioPage() {
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <StudioSiteLink />
             <AdminThemeToggle />
-            <form action={signOutAdmin}>
+            <form action={signOutArtist}>
               <button type="submit" className="admin-button admin-button-ghost">
                 Sign out
               </button>
