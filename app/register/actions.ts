@@ -1,11 +1,8 @@
 "use server";
 
-import { cookies } from "next/headers";
 import { headers } from "next/headers";
 import { z } from "zod";
-import { createSupabaseServerClient } from "@/lib/supabase/ssr";
 import { createSupabaseServerClient as createAdminClient } from "@/lib/supabase/server";
-import { getSiteUrl } from "@/lib/site-url";
 import { getClientIpFromHeaders, rateLimit } from "@/lib/rate-limit";
 import { ensureArtistTenantProvisioned } from "@/lib/tenants/provision";
 
@@ -40,10 +37,7 @@ export async function signUpUser(
 
   const honeypot = String(formData.get("website") || "");
   if (honeypot.trim()) {
-    return {
-      status: "success",
-      message: "Account created. You can now sign in.",
-    };
+    return { status: "success", message: "Account created. You can now sign in." };
   }
 
   if (!parsed.success) {
@@ -64,67 +58,43 @@ export async function signUpUser(
     const ip = getClientIpFromHeaders(headerStore);
     const limit = rateLimit(`register:${ip}`, 5, 60_000);
     if (!limit.allowed) {
+      return { status: "error", message: "Too many attempts. Please try again later." };
+    }
+
+    const adminClient = createAdminClient();
+
+    // Check if user already exists before attempting to create.
+    const { data: existing } = await adminClient.auth.admin.listUsers();
+    const alreadyExists = existing?.users?.some(
+      (u) => u.email?.toLowerCase() === parsed.data.email.toLowerCase()
+    );
+    if (alreadyExists) {
       return {
         status: "error",
-        message: "Too many attempts. Please try again later.",
+        message: "This email already has an account. Try signing in instead.",
       };
     }
 
-    const cookieStore = await cookies();
-    const supabase = createSupabaseServerClient({
-      getAll: () => cookieStore.getAll(),
-      setAll: (cookiesToSet) => {
-        cookiesToSet.forEach((cookie) => cookieStore.set(cookie));
-      },
-    });
-
-    const emailRedirectTo = `${getSiteUrl()}/register/complete?source=email`;
-    const { data, error } = await supabase.auth.signUp({
+    // Create user via admin API — no SMTP call, instant email confirmation.
+    const { data, error } = await adminClient.auth.admin.createUser({
       email: parsed.data.email,
       password: parsed.data.password,
-      options: {
-        emailRedirectTo,
-        data: {
-          signup_source: "register_page",
-        },
-      },
+      email_confirm: true,
+      user_metadata: { signup_source: "register_page" },
     });
 
     if (error) {
       const message = error.message.toLowerCase();
-      if (message.includes("already") || message.includes("registered")) {
+      if (message.includes("already") || message.includes("registered") || message.includes("exists")) {
         return {
           status: "error",
-          message: "This email already has an account. Try OAuth or sign in instead.",
+          message: "This email already has an account. Try signing in instead.",
         };
       }
       if (message.includes("rate") || message.includes("too many")) {
-        return {
-          status: "error",
-          message: "Too many attempts. Please try again later.",
-        };
+        return { status: "error", message: "Too many attempts. Please try again later." };
       }
-
-      return {
-        status: "error",
-        message: "We could not create the account right now.",
-      };
-    }
-
-    if (data.session) {
-      await supabase.auth.signOut();
-    }
-
-    // Auto-confirm email using service role — bypasses SMTP dependency.
-    if (data.user?.id) {
-      try {
-        const adminClient = createAdminClient();
-        await adminClient.auth.admin.updateUser(data.user.id, {
-          email_confirm: true,
-        });
-      } catch {
-        // Non-fatal — user can still confirm via email if SMTP is configured.
-      }
+      return { status: "error", message: "We could not create the account right now." };
     }
 
     if (data.user?.id && data.user.email) {
@@ -135,18 +105,12 @@ export async function signUpUser(
           appMetadata: data.user.app_metadata,
         });
       } catch {
-        // Do not block account creation if tenant bootstrap fails.
+        // Non-fatal — tenant can be provisioned on first login.
       }
     }
 
-    return {
-      status: "success",
-      message: "Account created. You can now sign in.",
-    };
+    return { status: "success", message: "Account created. You can now sign in." };
   } catch {
-    return {
-      status: "error",
-      message: "Unexpected server error while creating the account.",
-    };
+    return { status: "error", message: "Unexpected server error while creating the account." };
   }
 }
