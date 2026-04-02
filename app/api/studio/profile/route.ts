@@ -158,10 +158,19 @@ export async function PATCH(request: Request) {
       }
 
       const adminClient = createSupabaseServerClient();
-      const { error } = await adminClient
+      const { data: updated, error } = await adminClient
         .from("artist_tenants")
         .update({ studio_name: name })
-        .eq("owner_user_id", user.id);
+        .eq("owner_user_id", user.id)
+        .select("id")
+        .maybeSingle();
+
+      if (!error && !updated) {
+        return NextResponse.json(
+          { message: "No artist site found for your account. Contact support." },
+          { status: 404 }
+        );
+      }
 
       if (error) {
         return NextResponse.json(
@@ -208,10 +217,19 @@ export async function PATCH(request: Request) {
         );
       }
 
-      const { error } = await adminClient
+      const { data: updated, error } = await adminClient
         .from("artist_tenants")
         .update({ slug: raw })
-        .eq("owner_user_id", user.id);
+        .eq("owner_user_id", user.id)
+        .select("id")
+        .maybeSingle();
+
+      if (!error && !updated) {
+        return NextResponse.json(
+          { message: "No artist site found for your account. Contact support." },
+          { status: 404 }
+        );
+      }
 
       if (error) {
         return NextResponse.json(
