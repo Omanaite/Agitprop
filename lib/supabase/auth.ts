@@ -9,7 +9,6 @@ function getAdminAllowlist() {
     .filter(Boolean);
   const pilotAllowlist = [
     "pchandia@hotmail.com",
-    "chandiapablo@outlook.com",
   ];
   return Array.from(new Set([...envAllowlist, ...pilotAllowlist]));
 }
