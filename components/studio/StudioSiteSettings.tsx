@@ -12,14 +12,14 @@ const THEME_LABELS: Record<string, string> = {
   atelier: "Atelier",
   mono: "Mono",
   ink: "Ink",
-  akemi_brutalist: "Akemi Brutalist",
+  akemi_brutalist: "Custom",
 };
 
 const THEME_DESCRIPTIONS: Record<string, string> = {
   atelier: "Warm, gallery-style presentation with editorial spacing.",
   mono: "Clean monochrome aesthetic for a minimal portfolio look.",
   ink: "Dark, high-contrast layout built for tattoo portfolios.",
-  akemi_brutalist: "Exclusive Akemi pilot theme. Cannot be changed.",
+  akemi_brutalist: "Custom theme. Cannot be changed.",
 };
 
 export function StudioSiteSettings() {
