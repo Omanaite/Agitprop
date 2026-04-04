@@ -19,6 +19,8 @@ import { StudioGalleryManager } from "@/components/studio/StudioGalleryManager";
 import { StudioPostManager } from "@/components/studio/StudioPostManager";
 import { StudioSiteSettings } from "@/components/studio/StudioSiteSettings";
 import { StudioBookingsManager } from "@/components/studio/StudioBookingsManager";
+import { StudioRatesManager } from "@/components/studio/StudioRatesManager";
+import { StudioAvailabilityManager } from "@/components/studio/StudioAvailabilityManager";
 
 type Section = {
   id: string;
@@ -70,6 +72,20 @@ const sections: Section[] = [
     eyebrow: "Requests",
     description: "Client session requests submitted through your public site.",
     content: <StudioBookingsManager />,
+  },
+  {
+    id: "rates",
+    label: "Rates",
+    eyebrow: "Pricing",
+    description: "Define sessions, workshops, classes, and any offering with price.",
+    content: <StudioRatesManager />,
+  },
+  {
+    id: "availability",
+    label: "Availability",
+    eyebrow: "Schedule",
+    description: "Set available days and hours shown in the public booking form.",
+    content: <StudioAvailabilityManager />,
   },
   {
     id: "site",

@@ -146,6 +146,14 @@ Current objective: close MVP safely, verify production, and preserve a clear han
 - Requires final editorial review for public SEO-facing content.
 - Post-MVP integrations will require provider credentials and business rules.
 
+## Decision — 2026-04-02: Freeze expansions, close MVP
+
+**Directive from Pablo Chandía:** Stop all new feature development. Stabilize the current system and close the MVP with akemi as the pilot. No new modules, no payments, no scheduling, no shop until MVP is declared done and working.
+
+Future expansions (scheduling, piece sales, workshops with payment, premium tiers) are recorded in `docs/POST_MVP_BACKLOG.md` and will be evaluated after MVP launch.
+
+A separate product (**Asamblea**) has been defined for left/social organizations at `C:/GitHub/asamblea/SPEC.md`. It will be built as an independent project after Agitprop MVP is stable.
+
 ## Current Roadmap Focus
 1. Keep the current MVP stable.
 2. Document all user-dependent actions without blocking autonomous work.

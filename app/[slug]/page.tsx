@@ -146,26 +146,29 @@ export default async function ArtistSitePage({ params }: { params: Promise<Param
     [
       "rates",
       {
-        render: (section) => (
-          <Section key="rates" id="rates" title={section.title} eyebrow={section.eyebrow ?? undefined}>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {[
-                { label: "Small piece", price: "From €100", detail: "Up to 2h session" },
-                { label: "Medium piece", price: "From €200", detail: "2–4h session" },
-                { label: "Large piece", price: "From €400", detail: "Full day, 6h+" },
-              ].map((card) => (
-                <div key={card.label} className="theme-border rounded-xl p-5">
-                  <p className="text-xs uppercase tracking-[0.2em] opacity-60">{card.label}</p>
-                  <p className="mt-2 text-2xl font-bold">{card.price}</p>
-                  <p className="mt-1 text-sm opacity-60">{card.detail}</p>
+        render: (section) => {
+          const cards = Array.isArray(tenant.rates) ? tenant.rates : [];
+          return (
+            <Section key="rates" id="rates" title={section.title} eyebrow={section.eyebrow ?? undefined}>
+              {cards.length > 0 ? (
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {cards.map((card) => (
+                    <div key={card.id} className="theme-border rounded-xl p-5">
+                      <p className="text-xs uppercase tracking-[0.2em] opacity-60">{card.label}</p>
+                      <p className="mt-2 text-2xl font-bold">{card.price}</p>
+                      {card.description && <p className="mt-2 text-sm opacity-70 leading-6">{card.description}</p>}
+                      {card.capacity != null && (
+                        <p className="mt-3 text-xs uppercase tracking-[0.2em] opacity-50">{card.capacity} spots available</p>
+                      )}
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <p className="mt-4 text-xs uppercase tracking-[0.2em] opacity-60">
-              50% deposit required to confirm booking. Final price agreed at consultation.
-            </p>
-          </Section>
-        ),
+              ) : (
+                <p className="text-sm opacity-60">Rates coming soon. Contact for pricing.</p>
+              )}
+            </Section>
+          );
+        },
       },
     ],
     [

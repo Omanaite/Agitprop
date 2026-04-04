@@ -59,6 +59,14 @@ export type HomepageSection = {
   updated_at?: string;
 };
 
+export type RateCard = {
+  id: string;
+  label: string;
+  price: string;
+  description: string;
+  capacity: number | null;
+};
+
 export type ArtistTenant = {
   id: string;
   owner_user_id: string;
@@ -66,8 +74,9 @@ export type ArtistTenant = {
   slug: string;
   status: "active" | "inactive" | "suspended";
   plan_code: "free" | "premium";
-  site_theme: "atelier" | "mono" | "ink" | "akemi_brutalist";
+  site_theme: "atelier" | "mono" | "ink" | "verdure" | "amber" | "akemi_brutalist";
   custom_domain?: string | null;
+  rates?: RateCard[] | null;
   created_at: string;
   updated_at: string;
 };

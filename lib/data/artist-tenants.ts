@@ -9,7 +9,7 @@ export async function getArtistTenantBySlug(
     const { data, error } = await client
       .from("artist_tenants")
       .select(
-        "id,owner_user_id,studio_name,slug,status,plan_code,site_theme,custom_domain,created_at,updated_at"
+        "id,owner_user_id,studio_name,slug,status,plan_code,site_theme,custom_domain,rates,created_at,updated_at"
       )
       .eq("slug", slug)
       .eq("status", "active")
