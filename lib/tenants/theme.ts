@@ -6,7 +6,7 @@ export type TenantTheme =
   | typeof AKEMI_TENANT_THEME;
 
 const AKEMI_EMAIL = "akemi@tattoo.ink";
-const AKEMI_SLUG = "akemi";
+const AKEMI_SLUG = "akemion-tattoo";
 
 export function isAkemiTenantIdentity(email: string, slug?: string) {
   const normalizedEmail = email.trim().toLowerCase();

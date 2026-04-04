@@ -86,7 +86,7 @@ export const platformTenantUpdateSchema = z.object({
   status: z.enum(["active", "inactive", "suspended"]).optional(),
   plan_code: z.enum(["free", "premium"]).optional(),
   site_theme: z
-    .enum(["atelier", "mono", "ink", "akemi_brutalist"])
+    .enum(["atelier", "mono", "ink", "akemi_brutalist", "verdure", "amber"])
     .optional(),
   custom_domain: z.string().min(3).max(255).optional(),
 });
@@ -98,7 +98,7 @@ export const platformTenantCreateSchema = z.object({
   status: z.enum(["active", "inactive", "suspended"]).default("active"),
   plan_code: z.enum(["free", "premium"]).default("free"),
   site_theme: z
-    .enum(["atelier", "mono", "ink", "akemi_brutalist"])
+    .enum(["atelier", "mono", "ink", "akemi_brutalist", "verdure", "amber"])
     .optional(),
   custom_domain: z.string().min(3).max(255).optional(),
 });

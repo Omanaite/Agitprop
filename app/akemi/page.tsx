@@ -59,7 +59,7 @@ type SectionRenderer = {
 export default async function Home() {
   const locale = await getRequestLocale();
   const dictionary = getPublicDictionary(locale);
-  const akemiTenant = await getArtistTenantBySlug("akemi");
+  const akemiTenant = await getArtistTenantBySlug("akemion-tattoo");
   const ownerUserId = akemiTenant?.owner_user_id ?? null;
   const tattoos = await getTattooGallery(ownerUserId ?? undefined);
   const posts = await getPublishedPosts(ownerUserId ?? undefined);
