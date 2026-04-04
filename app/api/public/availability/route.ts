@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
-import { DEFAULT_AVAILABILITY } from "@/app/api/studio/availability/route";
+import { DEFAULT_AVAILABILITY } from "@/lib/availability";
 
 export async function GET(request: Request) {
   const ip = getClientIp(request);

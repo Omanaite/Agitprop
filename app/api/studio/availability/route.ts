@@ -4,6 +4,8 @@ import { requireArtistOperator } from "@/lib/supabase/auth";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { enforceSameOrigin } from "@/lib/security";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
+import { DEFAULT_AVAILABILITY } from "@/lib/availability";
+export type { ArtistAvailability } from "@/lib/availability";
 
 const availabilitySchema = z.object({
   mon: z.boolean().default(false),
@@ -17,14 +19,6 @@ const availabilitySchema = z.object({
   end_time: z.string().regex(/^\d{2}:\d{2}$/).default("18:00"),
   notes: z.string().max(300).optional().default(""),
 });
-
-export type ArtistAvailability = z.infer<typeof availabilitySchema>;
-
-export const DEFAULT_AVAILABILITY: ArtistAvailability = {
-  mon: true, tue: true, wed: true, thu: true, fri: true,
-  sat: false, sun: false,
-  start_time: "10:00", end_time: "18:00", notes: "",
-};
 
 export async function GET(request: Request) {
   const ip = getClientIp(request);
