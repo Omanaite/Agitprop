@@ -13,6 +13,7 @@ import { Reveal } from "@/components/Reveal";
 import { Section } from "@/components/Section";
 import { getGalleries } from "@/lib/data/galleries";
 import { getHomepageSections } from "@/lib/data/homepage-sections";
+import { getArtistTenantBySlug } from "@/lib/data/artist-tenants";
 import { getPublicDictionary } from "@/lib/i18n";
 import { getRequestLocale } from "@/lib/request-locale";
 import { getPublishedPosts } from "@/lib/data/posts";
@@ -58,10 +59,12 @@ type SectionRenderer = {
 export default async function Home() {
   const locale = await getRequestLocale();
   const dictionary = getPublicDictionary(locale);
-  const tattoos = await getTattooGallery();
-  const posts = await getPublishedPosts();
-  const galleries = await getGalleries();
-  const homepageSections = await getHomepageSections(locale);
+  const akemiTenant = await getArtistTenantBySlug("akemi");
+  const ownerUserId = akemiTenant?.owner_user_id ?? null;
+  const tattoos = await getTattooGallery(ownerUserId ?? undefined);
+  const posts = await getPublishedPosts(ownerUserId ?? undefined);
+  const galleries = await getGalleries(ownerUserId ?? undefined);
+  const homepageSections = await getHomepageSections(locale, ownerUserId ?? undefined);
 
   const renderers = new Map<string, SectionRenderer>([
     [
