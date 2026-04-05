@@ -73,6 +73,12 @@ function PieceModal({ tattoo, onClose }: { tattoo: Tattoo; onClose: () => void }
               </p>
             ) : null}
           </div>
+          {tattoo.aftercare ? (
+            <p className="mt-4 border-t border-current/10 pt-4 text-sm leading-6 opacity-70 normal-case tracking-normal">
+              <span className="text-xs uppercase tracking-[0.18em] opacity-60 block mb-1">Notes</span>
+              {tattoo.aftercare}
+            </p>
+          ) : null}
         </div>
       </div>
     </div>

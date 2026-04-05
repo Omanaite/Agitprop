@@ -456,7 +456,7 @@ export function StudioGalleryManager() {
           />
           <textarea
             className="admin-textarea min-h-[120px]"
-            placeholder="Aftercare notes"
+            placeholder="Notes (optional — shown on public piece detail)"
             value={form.aftercare}
             onChange={(e) => setForm({ ...form, aftercare: e.target.value })}
           />
