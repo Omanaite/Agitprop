@@ -85,11 +85,33 @@ export async function POST(request: Request) {
     }
 
     if (process.env.RESEND_API_KEY) {
-      await sendNotificationEmail({
-        to: process.env.RESEND_TO_EMAIL || "studio@akemi.tattoo",
-        subject: "New booking request",
-        html: `<strong>${payload.name}</strong> requested a session on <strong>${payload.preferredDate}</strong>.`,
-      });
+      // Try to resolve the artist's email so the notification goes to the right inbox.
+      let artistEmail: string | null = null;
+      if (ownerUserId) {
+        const { data: artistUser } = await client.auth.admin.getUserById(ownerUserId);
+        artistEmail = artistUser?.user?.email ?? null;
+      }
+      const notifyTo = artistEmail ?? process.env.RESEND_TO_EMAIL ?? "studio@akemi.tattoo";
+
+      try {
+        await sendNotificationEmail({
+          to: notifyTo,
+          subject: `New booking request from ${payload.name}`,
+          html: `
+            <p>You have a new booking request.</p>
+            <table cellpadding="6" style="font-family:monospace;font-size:14px">
+              <tr><td><strong>Name</strong></td><td>${payload.name}</td></tr>
+              <tr><td><strong>Email</strong></td><td>${payload.email}</td></tr>
+              <tr><td><strong>Preferred date</strong></td><td>${payload.preferredDate}</td></tr>
+              <tr><td><strong>Placement</strong></td><td>${payload.placement}</td></tr>
+              <tr><td><strong>Description</strong></td><td>${payload.description}</td></tr>
+            </table>
+            <p>Log in to your studio to manage this request.</p>
+          `,
+        });
+      } catch {
+        // Notification failure is non-blocking — booking is already saved.
+      }
     }
 
     return NextResponse.json({ ok: true });

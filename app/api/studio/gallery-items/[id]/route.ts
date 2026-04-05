@@ -84,6 +84,7 @@ export async function PUT(request: Request, { params }: Params) {
         gallery_id: payload.gallery_id ?? null,
         tags: payload.tags ?? null,
         location_link: payload.location_link ?? null,
+        location_name: payload.location_name ?? null,
         session_length_minutes: payload.session_length_minutes ?? null,
         aftercare: payload.aftercare ?? null,
         sort_order: payload.sort_order ?? 0,

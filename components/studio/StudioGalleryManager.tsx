@@ -12,6 +12,7 @@ type GalleryItem = {
   gallery_id: string | null;
   tags?: string[] | null;
   location_link?: string | null;
+  location_name?: string | null;
   session_length_minutes?: number | null;
   aftercare?: string | null;
   sort_order?: number | null;
@@ -31,6 +32,7 @@ const emptyItem = {
   gallery_id: "",
   tags: "",
   location_link: "",
+  location_name: "",
   session_length_minutes: "",
   aftercare: "",
   sort_order: "0",
@@ -113,6 +115,7 @@ export function StudioGalleryManager() {
       gallery_id: item.gallery_id ?? "",
       tags: Array.isArray(item.tags) ? item.tags.join(", ") : "",
       location_link: item.location_link ?? "",
+      location_name: item.location_name ?? "",
       session_length_minutes: item.session_length_minutes?.toString() ?? "",
       aftercare: item.aftercare ?? "",
       sort_order: item.sort_order?.toString() ?? "0",
@@ -160,6 +163,7 @@ export function StudioGalleryManager() {
         ? form.tags.split(",").map((t) => t.trim()).filter(Boolean)
         : undefined,
       location_link: form.location_link || undefined,
+      location_name: form.location_name || undefined,
       session_length_minutes: form.session_length_minutes
         ? Number(form.session_length_minutes)
         : undefined,
@@ -313,6 +317,7 @@ export function StudioGalleryManager() {
           gallery_id: item.gallery_id ?? undefined,
           tags: item.tags ?? undefined,
           location_link: item.location_link ?? undefined,
+          location_name: item.location_name ?? undefined,
           session_length_minutes: item.session_length_minutes ?? undefined,
           aftercare: item.aftercare ?? undefined,
           sort_order: index,
@@ -423,6 +428,14 @@ export function StudioGalleryManager() {
               setForm({ ...form, location_link: e.target.value })
             }
             type="url"
+          />
+          <input
+            className="admin-input"
+            placeholder="Location name (e.g. Brooklyn, NY) - optional"
+            value={form.location_name}
+            onChange={(e) =>
+              setForm({ ...form, location_name: e.target.value })
+            }
           />
           <input
             className="admin-input"

@@ -43,7 +43,7 @@ export async function GET(request: Request) {
   const { data, error } = await adminClient
     .from("tattoos")
     .select(
-      "id,title,description,style,image_url,gallery_id,tags,location_link,session_length_minutes,aftercare,sort_order,created_at"
+      "id,title,description,style,image_url,gallery_id,tags,location_link,location_name,session_length_minutes,aftercare,sort_order,created_at"
     )
     .eq("owner_user_id", auth.user.id)
     .order("created_at", { ascending: false });
@@ -140,6 +140,7 @@ export async function POST(request: Request) {
       gallery_id: payload.gallery_id ?? null,
       tags: payload.tags ?? null,
       location_link: payload.location_link ?? null,
+      location_name: payload.location_name ?? null,
       session_length_minutes: payload.session_length_minutes ?? null,
       aftercare: payload.aftercare ?? null,
       sort_order: payload.sort_order ?? 0,

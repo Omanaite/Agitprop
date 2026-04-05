@@ -68,7 +68,7 @@ function PieceModal({ tattoo, onClose }: { tattoo: Tattoo; onClose: () => void }
                   rel="noopener noreferrer"
                   className="underline hover:opacity-100"
                 >
-                  View location ↗
+                  {tattoo.location_name ? tattoo.location_name : "View location"} ↗
                 </a>
               </p>
             ) : null}

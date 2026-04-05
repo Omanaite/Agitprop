@@ -11,7 +11,7 @@ export async function getTattooGallery(
     let query = client
       .from("tattoos")
       .select(
-        "id,title,description,style,image_url,gallery_id,tags,location_link,session_length_minutes,sort_order,created_at"
+        "id,title,description,style,image_url,gallery_id,tags,location_link,location_name,session_length_minutes,sort_order,created_at"
       )
       .order("created_at", { ascending: false });
     if (ownerUserId) {
@@ -38,7 +38,7 @@ export async function getTattoosByGalleryId(
     let query = client
       .from("tattoos")
       .select(
-        "id,title,description,style,image_url,gallery_id,tags,location_link,session_length_minutes,aftercare,sort_order,created_at"
+        "id,title,description,style,image_url,gallery_id,tags,location_link,location_name,session_length_minutes,aftercare,sort_order,created_at"
       )
       .eq("gallery_id", galleryId)
       .order("sort_order", { ascending: true })

@@ -23,6 +23,7 @@ export const galleryItemSchema = z.object({
   gallery_id: z.string().uuid().optional(),
   tags: z.array(z.string().min(1)).optional(),
   location_link: z.string().url().optional(),
+  location_name: z.string().optional(),
   session_length_minutes: z.number().int().positive().optional(),
   aftercare: z.string().optional(),
   sort_order: z.number().int().optional(),

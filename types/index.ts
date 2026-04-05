@@ -8,6 +8,7 @@ export type Tattoo = {
   gallery_id?: string | null;
   tags?: string[] | null;
   location_link?: string | null;
+  location_name?: string | null;
   session_length_minutes?: number | null;
   aftercare?: string | null;
   sort_order?: number | null;
