@@ -136,10 +136,16 @@ export default async function ArtistSitePage({ params }: { params: Promise<Param
       {
         render: (section) => (
           <Section key="about" id="about" title={section.title} eyebrow={section.eyebrow ?? undefined}>
-            <p className="max-w-2xl text-sm leading-7 opacity-80 md:text-base">
-              {tenant.studio_name} — independent artist. Portfolio available here.
-              For commissions, collaborations, and inquiries, use the booking or contact section.
-            </p>
+            {tenant.slug === "akemion-tattoo" && dictionary.about?.body1 ? (
+              <div className="max-w-2xl space-y-4 text-sm leading-7 opacity-80 md:text-base">
+                <p>{dictionary.about.body1}</p>
+                {dictionary.about.body2 ? <p>{dictionary.about.body2}</p> : null}
+              </div>
+            ) : (
+              <p className="max-w-2xl text-sm leading-7 opacity-80 md:text-base">
+                {tenant.studio_name} — independent artist. Portfolio, bookings, and studio updates.
+              </p>
+            )}
           </Section>
         ),
       },
