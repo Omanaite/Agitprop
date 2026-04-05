@@ -47,9 +47,14 @@ export async function GET(request: Request) {
     }
   }
 
-  // OAuth flows: always go to /register/complete?source=oauth so new users
-  // see the onboarding page. Existing users can return to home/workspace from there.
+  // OAuth flows: new users go to onboarding; existing users go to their console.
   if (isOAuth) {
+    if (data.user) {
+      const consoleRoute = getUserConsoleRoute(data.user);
+      if (consoleRoute) {
+        return NextResponse.redirect(new URL(consoleRoute, url.origin));
+      }
+    }
     return NextResponse.redirect(new URL("/register/complete?source=oauth", url.origin));
   }
 

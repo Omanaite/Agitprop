@@ -90,10 +90,11 @@ export async function proxy(request: NextRequest) {
       return response;
     }
     if (!isArtist && !isStudioLogin) {
+      // Platform admins landing on /studio get sent to their console (/admin).
       if (consoleRoute) {
         return NextResponse.redirect(new URL(consoleRoute, request.url));
       }
-      return NextResponse.redirect(new URL("/admin/login?error=forbidden", request.url));
+      return NextResponse.redirect(new URL("/studio/login", request.url));
     }
   }
 
