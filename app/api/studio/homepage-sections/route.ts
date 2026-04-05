@@ -8,7 +8,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { homepageSectionsSchema } from "@/lib/validators";
 
 const selection =
-  "id,section_key,title,eyebrow,sort_order,is_visible,created_at,updated_at";
+  "id,section_key,title,eyebrow,body,sort_order,is_visible,created_at,updated_at";
 
 function isSchemaDriftError(message: string | undefined) {
   const value = (message ?? "").toLowerCase();
@@ -138,6 +138,7 @@ export async function PUT(request: Request) {
       section_key: item.section_key,
       title: item.title.trim(),
       eyebrow: item.eyebrow?.trim() ? item.eyebrow.trim() : null,
+      body: (item as { body?: string }).body?.trim() || null,
       sort_order: index,
       is_visible: item.is_visible,
       updated_at: new Date().toISOString(),

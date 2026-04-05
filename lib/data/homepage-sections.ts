@@ -89,7 +89,7 @@ export async function getHomepageSections(
     let query = client
       .from("homepage_sections")
       .select(
-        "id,section_key,title,eyebrow,sort_order,is_visible,created_at,updated_at"
+        "id,section_key,title,eyebrow,body,sort_order,is_visible,created_at,updated_at"
       )
       .order("sort_order", { ascending: true });
     if (ownerUserId) {

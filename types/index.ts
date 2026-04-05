@@ -53,6 +53,7 @@ export type HomepageSection = {
   section_key: string;
   title: string;
   eyebrow?: string | null;
+  body?: string | null;
   sort_order: number;
   is_visible: boolean;
   created_at?: string;

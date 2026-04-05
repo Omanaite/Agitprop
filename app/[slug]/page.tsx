@@ -76,7 +76,7 @@ export default async function ArtistSitePage({ params }: { params: Promise<Param
             ) : null}
             <h2 className="mb-4 text-3xl font-bold leading-tight md:text-5xl">{section.title}</h2>
             <p className="max-w-2xl text-sm leading-7 opacity-75 md:text-base">
-              {tenant.studio_name} — portfolio, bookings, and studio updates.
+              {section.body || `${tenant.studio_name} — portfolio, bookings, and studio updates.`}
             </p>
           </section>
         ),
@@ -136,16 +136,12 @@ export default async function ArtistSitePage({ params }: { params: Promise<Param
       {
         render: (section) => (
           <Section key="about" id="about" title={section.title} eyebrow={section.eyebrow ?? undefined}>
-            {tenant.slug === "akemion-tattoo" && dictionary.about?.body1 ? (
-              <div className="max-w-2xl space-y-4 text-sm leading-7 opacity-80 md:text-base">
-                <p>{dictionary.about.body1}</p>
-                {dictionary.about.body2 ? <p>{dictionary.about.body2}</p> : null}
-              </div>
-            ) : (
-              <p className="max-w-2xl text-sm leading-7 opacity-80 md:text-base">
-                {tenant.studio_name} — independent artist. Portfolio, bookings, and studio updates.
-              </p>
-            )}
+            <p className="max-w-2xl whitespace-pre-line text-sm leading-7 opacity-80 md:text-base">
+              {section.body ||
+                (tenant.slug === "akemion-tattoo" && dictionary.about?.body1
+                  ? `${dictionary.about.body1}\n\n${dictionary.about.body2 ?? ""}`
+                  : `${tenant.studio_name} — independent artist. Portfolio, bookings, and studio updates.`)}
+            </p>
           </Section>
         ),
       },

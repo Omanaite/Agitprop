@@ -72,6 +72,7 @@ export const homepageSectionSchema = z.object({
   section_key: z.string().min(2),
   title: z.string().min(2),
   eyebrow: z.string().optional(),
+  body: z.string().max(2000).optional(),
   sort_order: z.number().int().min(0),
   is_visible: z.boolean(),
 });

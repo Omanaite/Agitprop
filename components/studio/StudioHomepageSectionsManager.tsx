@@ -111,6 +111,7 @@ export function StudioHomepageSectionsManager() {
         section_key: item.section_key,
         title: item.title.trim(),
         eyebrow: item.eyebrow?.trim() ?? "",
+        body: item.body?.trim() ?? "",
         sort_order: index,
         is_visible: item.is_visible,
       })),
@@ -205,6 +206,18 @@ export function StudioHomepageSectionsManager() {
                         }))
                       }
                       placeholder="Eyebrow label"
+                    />
+
+                    <textarea
+                      className="admin-textarea md:col-span-2 min-h-[80px]"
+                      value={item.body ?? ""}
+                      onChange={(event) =>
+                        updateItem(item.section_key, (current) => ({
+                          ...current,
+                          body: event.target.value,
+                        }))
+                      }
+                      placeholder="Body text — describe this section in your own words. Shown to visitors on your public site."
                     />
                   </div>
 
