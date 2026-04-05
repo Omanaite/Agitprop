@@ -1,10 +1,8 @@
+import { unstable_cache } from "next/cache";
 import type { Post } from "@/types";
 import { createSupabasePublicClient } from "@/lib/supabase/public";
 
-// Fetch published posts from Supabase.
-export async function getPublishedPosts(
-  ownerUserId?: string | null
-): Promise<Post[]> {
+async function _getPublishedPosts(ownerUserId?: string | null): Promise<Post[]> {
   try {
     const client = createSupabasePublicClient();
     const now = new Date().toISOString();
@@ -18,13 +16,15 @@ export async function getPublishedPosts(
       query = query.eq("owner_user_id", ownerUserId);
     }
     const { data, error } = await query;
-
-    if (error) {
-      throw error;
-    }
-
+    if (error) throw error;
     return (data ?? []) as Post[];
   } catch {
     return [];
   }
 }
+
+export const getPublishedPosts = unstable_cache(
+  _getPublishedPosts,
+  ["published-posts"],
+  { revalidate: 60, tags: ["posts"] }
+);

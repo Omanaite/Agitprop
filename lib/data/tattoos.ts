@@ -1,11 +1,9 @@
+import { unstable_cache } from "next/cache";
 import type { Tattoo } from "@/types";
 import { createSupabasePublicClient } from "@/lib/supabase/public";
 import { FALLBACK_TATTOOS } from "@/lib/data/fallback";
 
-// Fetch tattoos from Supabase with a safe fallback when env vars are missing.
-export async function getTattooGallery(
-  ownerUserId?: string | null
-): Promise<Tattoo[]> {
+async function _getTattooGallery(ownerUserId?: string | null): Promise<Tattoo[]> {
   try {
     const client = createSupabasePublicClient();
     let query = client
@@ -18,18 +16,20 @@ export async function getTattooGallery(
       query = query.eq("owner_user_id", ownerUserId);
     }
     const { data, error } = await query;
-
-    if (error) {
-      throw error;
-    }
-
+    if (error) throw error;
     return (data ?? []) as Tattoo[];
   } catch {
     return FALLBACK_TATTOOS;
   }
 }
 
-export async function getTattoosByGalleryId(
+export const getTattooGallery = unstable_cache(
+  _getTattooGallery,
+  ["tattoo-gallery"],
+  { revalidate: 60, tags: ["tattoos"] }
+);
+
+async function _getTattoosByGalleryId(
   galleryId: string,
   ownerUserId?: string | null
 ): Promise<Tattoo[]> {
@@ -47,13 +47,15 @@ export async function getTattoosByGalleryId(
       query = query.eq("owner_user_id", ownerUserId);
     }
     const { data, error } = await query;
-
-    if (error) {
-      throw error;
-    }
-
+    if (error) throw error;
     return (data ?? []) as Tattoo[];
   } catch {
     return [];
   }
 }
+
+export const getTattoosByGalleryId = unstable_cache(
+  _getTattoosByGalleryId,
+  ["tattoos-by-gallery"],
+  { revalidate: 60, tags: ["tattoos"] }
+);

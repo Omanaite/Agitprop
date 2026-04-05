@@ -1,3 +1,4 @@
+import { unstable_cache } from "next/cache";
 import type { Locale } from "@/lib/i18n";
 import type { HomepageSection } from "@/types";
 import { createSupabasePublicClient } from "@/lib/supabase/public";
@@ -80,7 +81,7 @@ export function mergeSections(
     .sort((a, b) => a.sort_order - b.sort_order);
 }
 
-export async function getHomepageSections(
+async function _getHomepageSections(
   locale: Locale = "en",
   ownerUserId?: string | null
 ): Promise<HomepageSection[]> {
@@ -96,13 +97,15 @@ export async function getHomepageSections(
       query = query.eq("owner_user_id", ownerUserId);
     }
     const { data, error } = await query;
-
-    if (error) {
-      throw error;
-    }
-
+    if (error) throw error;
     return mergeSections((data ?? []) as HomepageSection[], locale);
   } catch {
     return mergeSections([], locale);
   }
 }
+
+export const getHomepageSections = unstable_cache(
+  _getHomepageSections,
+  ["homepage-sections"],
+  { revalidate: 60, tags: ["homepage-sections"] }
+);

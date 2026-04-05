@@ -6,12 +6,22 @@ type RateLimitResult = {
 
 const buckets = new Map<string, { count: number; reset: number }>();
 
+// Prune expired entries to prevent unbounded memory growth in long-lived instances.
+function pruneExpired(now: number) {
+  if (buckets.size > 5000) {
+    for (const [k, v] of buckets) {
+      if (v.reset < now) buckets.delete(k);
+    }
+  }
+}
+
 export function rateLimit(
   key: string,
   limit: number,
   windowMs: number
 ): RateLimitResult {
   const now = Date.now();
+  pruneExpired(now);
   const existing = buckets.get(key);
 
   if (!existing || existing.reset < now) {
