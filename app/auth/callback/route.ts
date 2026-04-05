@@ -58,14 +58,7 @@ export async function GET(request: Request) {
     return NextResponse.redirect(new URL("/register/complete?source=oauth", url.origin));
   }
 
-  // Explicit next param (e.g., /studio): resolve the correct console for this user
-  // so OAuth never lands on the wrong workspace.
-  if (data.user && next !== "/agitprop") {
-    const consoleRoute = getUserConsoleRoute(data.user);
-    if (consoleRoute) {
-      return NextResponse.redirect(new URL(consoleRoute, url.origin));
-    }
-  }
-
+  // Redirect to safeNext — cookies are already set on response so the
+  // browser will carry them on the next request through the proxy.
   return NextResponse.redirect(new URL(safeNext, url.origin));
 }
