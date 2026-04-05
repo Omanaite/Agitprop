@@ -45,10 +45,10 @@ export const gallerySchema = z.object({
 
 export const adminProfileSchema = z.object({
   email: z.string().email(),
-  nickname: z.string().optional(),
-  shipping_address: z.string().optional(),
-  billing_address: z.string().optional(),
-  payment_notes: z.string().optional(),
+  nickname: z.string().nullish().transform((v) => v ?? ""),
+  shipping_address: z.string().nullish().transform((v) => v ?? ""),
+  billing_address: z.string().nullish().transform((v) => v ?? ""),
+  payment_notes: z.string().nullish().transform((v) => v ?? ""),
 });
 
 export const adminIntegrationSchema = z.object({
