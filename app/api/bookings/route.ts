@@ -94,6 +94,7 @@ export async function POST(request: Request) {
       const notifyTo = artistEmail ?? process.env.RESEND_TO_EMAIL ?? "studio@akemi.tattoo";
 
       try {
+        // Notify artist
         await sendNotificationEmail({
           to: notifyTo,
           subject: `New booking request from ${payload.name}`,
@@ -110,7 +111,27 @@ export async function POST(request: Request) {
           `,
         });
       } catch {
-        // Notification failure is non-blocking — booking is already saved.
+        // Non-blocking
+      }
+
+      try {
+        // Confirm to client
+        await sendNotificationEmail({
+          to: payload.email,
+          subject: `We received your request — we'll be in touch soon`,
+          html: `
+            <p>Hi ${payload.name},</p>
+            <p>Thanks for reaching out! We've received your booking request and will get back to you as soon as possible.</p>
+            <table cellpadding="6" style="font-family:monospace;font-size:14px;margin:16px 0">
+              <tr><td><strong>Preferred date</strong></td><td>${payload.preferredDate}</td></tr>
+              <tr><td><strong>Placement</strong></td><td>${payload.placement}</td></tr>
+              <tr><td><strong>Description</strong></td><td>${payload.description}</td></tr>
+            </table>
+            <p>We'll review your request and reach out to confirm availability.</p>
+          `,
+        });
+      } catch {
+        // Non-blocking
       }
     }
 
