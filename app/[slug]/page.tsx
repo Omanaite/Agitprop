@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { PostFeed } from "@/components/PostFeed";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
@@ -196,18 +197,7 @@ export default async function ArtistSitePage({ params }: { params: Promise<Param
       {
         render: (section) => (
           <Section key="posts" id="posts" title={section.title} eyebrow={section.eyebrow ?? undefined}>
-            {posts.length ? (
-              <div className="grid gap-4 md:grid-cols-2">
-                {posts.map((post) => (
-                  <article key={post.id} className="theme-border rounded-xl p-5">
-                    <h3 className="text-lg font-semibold">{post.title}</h3>
-                    <p className="mt-2 text-sm opacity-75 line-clamp-3">{post.excerpt || post.body}</p>
-                  </article>
-                ))}
-              </div>
-            ) : (
-              <p className="text-sm opacity-60">No posts published yet.</p>
-            )}
+            <PostFeed posts={posts} />
           </Section>
         ),
       },

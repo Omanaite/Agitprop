@@ -46,6 +46,8 @@ export function StudioBookingsManager() {
   const [isLoading, setIsLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [schemaPending, setSchemaPending] = useState(false);
+  const [rescheduleId, setRescheduleId] = useState<string | null>(null);
+  const [rescheduleDate, setRescheduleDate] = useState("");
 
   async function load() {
     setStatus("");
@@ -66,6 +68,27 @@ export function StudioBookingsManager() {
     const id = window.setTimeout(() => void load(), 0);
     return () => window.clearTimeout(id);
   }, []);
+
+  async function reschedule(id: string) {
+    if (!rescheduleDate) return;
+    setUpdatingId(id);
+    const res = await fetch("/api/studio/bookings", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, preferred_date: rescheduleDate }),
+    });
+    if (res.ok) {
+      setItems((prev) =>
+        prev.map((b) => (b.id === id ? { ...b, preferred_date: rescheduleDate } : b))
+      );
+      setRescheduleId(null);
+      setRescheduleDate("");
+    } else {
+      const data = await res.json().catch(() => null);
+      setStatus(data?.message ?? "Failed to reschedule.");
+    }
+    setUpdatingId(null);
+  }
 
   async function updateStatus(id: string, newStatus: Booking["status"]) {
     setUpdatingId(id);
@@ -192,7 +215,42 @@ export function StudioBookingsManager() {
                   Reopen
                 </button>
               ) : null}
+              <button
+                className="admin-button admin-button-ghost text-xs"
+                disabled={updatingId === booking.id}
+                onClick={() => {
+                  setRescheduleId(rescheduleId === booking.id ? null : booking.id);
+                  setRescheduleDate(booking.preferred_date?.slice(0, 10) ?? "");
+                }}
+              >
+                Reschedule
+              </button>
             </div>
+
+            {rescheduleId === booking.id ? (
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <input
+                  type="date"
+                  className="admin-input text-xs py-1.5 px-3"
+                  value={rescheduleDate}
+                  min={new Date().toISOString().slice(0, 10)}
+                  onChange={(e) => setRescheduleDate(e.target.value)}
+                />
+                <button
+                  className="admin-button admin-button-primary text-xs"
+                  disabled={!rescheduleDate || updatingId === booking.id}
+                  onClick={() => void reschedule(booking.id)}
+                >
+                  {updatingId === booking.id ? "Saving…" : "Save date"}
+                </button>
+                <button
+                  className="admin-button admin-button-ghost text-xs"
+                  onClick={() => { setRescheduleId(null); setRescheduleDate(""); }}
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : null}
           </li>
         ))}
       </ul>

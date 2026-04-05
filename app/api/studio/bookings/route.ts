@@ -78,11 +78,38 @@ export async function PATCH(request: Request) {
 
   try {
     const json = await request.json();
-    const { id, status } = json;
+    const { id, status, preferred_date } = json;
 
     if (!id || typeof id !== "string") {
       return NextResponse.json({ message: "Invalid id." }, { status: 400 });
     }
+
+    const adminClient = createSupabaseServerClient();
+
+    // Reschedule: update preferred_date only
+    if (typeof preferred_date === "string") {
+      const dateRe = /^\d{4}-\d{2}-\d{2}$/;
+      if (!dateRe.test(preferred_date)) {
+        return NextResponse.json({ message: "Invalid date format (YYYY-MM-DD)." }, { status: 400 });
+      }
+      const { error } = await adminClient
+        .from("bookings")
+        .update({ preferred_date })
+        .eq("id", id)
+        .eq("owner_user_id", auth.user.id);
+      if (error) {
+        return NextResponse.json({ message: "Failed to reschedule booking." }, { status: 500 });
+      }
+      await logAuditEvent({
+        actor_email: auth.user.email ?? null,
+        action: "update",
+        entity: "bookings",
+        entity_id: id,
+        metadata: { preferred_date },
+      });
+      return NextResponse.json({ ok: true, preferred_date });
+    }
+
     const allowed = ["pending", "confirmed", "declined", "completed"];
     if (!status || !allowed.includes(status)) {
       return NextResponse.json(
@@ -91,7 +118,6 @@ export async function PATCH(request: Request) {
       );
     }
 
-    const adminClient = createSupabaseServerClient();
     const { error } = await adminClient
       .from("bookings")
       .update({ status })
