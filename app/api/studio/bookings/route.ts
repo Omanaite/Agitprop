@@ -4,6 +4,9 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import { enforceSameOrigin } from "@/lib/security";
 import { logAuditEvent } from "@/lib/audit";
+import { sendNotificationEmail } from "@/lib/email/resend";
+
+export const runtime = "nodejs";
 
 export async function GET(request: Request) {
   const ip = getClientIp(request);
@@ -138,6 +141,32 @@ export async function PATCH(request: Request) {
       entity_id: id,
       metadata: { status },
     });
+
+    // Notify client of status change
+    if (process.env.RESEND_API_KEY && (status === "confirmed" || status === "declined")) {
+      try {
+        const { data: booking } = await adminClient
+          .from("bookings")
+          .select("name,email,preferred_date")
+          .eq("id", id)
+          .maybeSingle();
+
+        if (booking?.email) {
+          const isConfirmed = status === "confirmed";
+          await sendNotificationEmail({
+            to: booking.email,
+            subject: isConfirmed
+              ? "Your booking request has been confirmed"
+              : "Update on your booking request",
+            html: isConfirmed
+              ? `<p>Hi ${booking.name},</p><p>Great news — your session request for <strong>${booking.preferred_date}</strong> has been confirmed. We'll follow up with details soon.</p>`
+              : `<p>Hi ${booking.name},</p><p>Unfortunately we're unable to accommodate your request for <strong>${booking.preferred_date}</strong>. Please feel free to reach out to explore other dates.</p>`,
+          });
+        }
+      } catch {
+        // Non-blocking
+      }
+    }
 
     return NextResponse.json({ ok: true });
   } catch {
