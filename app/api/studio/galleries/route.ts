@@ -113,7 +113,7 @@ export async function POST(request: Request) {
   if (!canAddGallery(planCode, galleryCount ?? 0)) {
     return NextResponse.json(
       {
-        message: "Gallery limit reached for your plan. Upgrade to premium to add more.",
+        message: "Storage limit reached. You have used your basic allocation. Visit your studio to learn about expanded storage.",
         code: "plan_limit_exceeded",
       },
       { status: 403 }

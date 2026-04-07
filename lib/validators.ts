@@ -86,7 +86,7 @@ export const platformTenantUpdateSchema = z.object({
   tenant_id: z.string().uuid(),
   studio_name: z.string().min(2).max(120).optional(),
   status: z.enum(["active", "inactive", "suspended"]).optional(),
-  plan_code: z.enum(["free", "premium"]).optional(),
+  plan_code: z.enum(["basic", "expanded"]).optional(),
   site_theme: z
     .enum(["atelier", "mono", "ink", "akemi_brutalist", "verdure", "amber"])
     .optional(),
@@ -98,7 +98,7 @@ export const platformTenantCreateSchema = z.object({
   studio_name: z.string().min(2).max(120),
   slug: z.string().min(2).max(120),
   status: z.enum(["active", "inactive", "suspended"]).default("active"),
-  plan_code: z.enum(["free", "premium"]).default("free"),
+  plan_code: z.enum(["basic", "expanded"]).default("basic"),
   site_theme: z
     .enum(["atelier", "mono", "ink", "akemi_brutalist", "verdure", "amber"])
     .optional(),

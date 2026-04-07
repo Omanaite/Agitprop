@@ -8,7 +8,7 @@ type Tenant = {
   studio_name: string;
   slug: string;
   status: "active" | "inactive" | "suspended";
-  plan_code: "free" | "premium";
+  plan_code: "basic" | "expanded";
   site_theme: "atelier" | "mono" | "ink" | "akemi_brutalist";
   custom_domain?: string | null;
   owner_user_id: string;
@@ -34,7 +34,7 @@ export function PlatformGovernanceManager() {
     owner_user_id: "",
     studio_name: "",
     slug: "",
-    plan_code: "free" as Tenant["plan_code"],
+    plan_code: "basic" as Tenant["plan_code"],
     site_theme: "atelier" as Tenant["site_theme"],
   });
 
@@ -144,7 +144,7 @@ export function PlatformGovernanceManager() {
       owner_user_id: "",
       studio_name: "",
       slug: "",
-      plan_code: "free",
+      plan_code: "basic",
       site_theme: "atelier",
     });
     await load();
@@ -265,8 +265,8 @@ export function PlatformGovernanceManager() {
                 }))
               }
             >
-              <option value="free">free</option>
-              <option value="premium">premium</option>
+              <option value="basic">basic</option>
+              <option value="expanded">expanded (more space)</option>
             </select>
             <button
               type="submit"
@@ -333,7 +333,7 @@ export function PlatformGovernanceManager() {
                 </select>
 
                 <select
-                  className="admin-input min-w-[120px]"
+                  className="admin-input min-w-[140px]"
                   value={tenant.plan_code}
                   onChange={(event) =>
                     void updateTenant(tenant.id, {
@@ -341,9 +341,10 @@ export function PlatformGovernanceManager() {
                     })
                   }
                   disabled={isSavingTenant === tenant.id}
+                  title="Storage tier — basic = community default, expanded = artist contributes to hosting costs"
                 >
-                  <option value="free">free</option>
-                  <option value="premium">premium</option>
+                  <option value="basic">basic (free)</option>
+                  <option value="expanded">expanded (contributor)</option>
                 </select>
                 <select
                   className="admin-input min-w-[140px]"

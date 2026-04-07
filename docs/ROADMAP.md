@@ -93,20 +93,20 @@ Current objective: close MVP safely, verify production, and preserve a clear han
   - platform tenant lifecycle baseline expanded: create/delete operations now available in platform admin governance module
 - Plan model:
   - free plan with limited feature set
-  - premium plan with full feature set
+  - expanded plan with full feature set
 - Theme model:
   - free plan: 3 selectable default styles
-  - Akemi pilot: premium + custom brutalist style (email anchor: `akemi@tattoo.ink`)
+  - Akemi pilot: expanded + custom brutalist style (email anchor: `akemi@tattoo.ink`)
 - Tenant public surface model:
   - platform entry remains separate (`/agitprop`, `/studio/login`, `/admin/login`)
   - each artist gets an isolated public slug route (`/{artist-slug}`)
-  - Akemi remains reserved as premium pilot (`/akemi`) with brutalist-only theme
+  - Akemi remains reserved as expanded pilot (`/akemi`) with brutalist-only theme
   - non-Akemi tenants cannot use `akemi_brutalist`
 - Feature-flag architecture per artist account.
 
 ### Phase 7.5 - Product Marketing Surface (Planned / In Progress)
 - Build dedicated service page for Agitprop value proposition.
-- Explain Free vs Premium clearly for conversion.
+- Explain Free vs expanded clearly for conversion.
 - Add direct CTAs to registration, login, and pilot public site.
 - Define SEO baseline for service page intent ("tattoo website builder", "artist booking software").
 - Add instrumentation plan for conversion tracking (view -> register -> first login).
@@ -129,7 +129,7 @@ Current objective: close MVP safely, verify production, and preserve a clear han
 - Chatbot for site guidance and developer ticket escalation.
 - Per-feature toggles so the artist can enable or disable integrations safely.
 - Platform admin can activate/deactivate artist pages.
-- Free vs premium plan enforcement with feature gating.
+- Free vs expanded plan enforcement with feature gating.
 
 ## Deliverables by Phase
 - P0: `docs/ROADMAP.md`, `docs/PROJECT_OVERVIEW.md`
@@ -150,7 +150,7 @@ Current objective: close MVP safely, verify production, and preserve a clear han
 
 **Directive from Pablo Chandía:** Stop all new feature development. Stabilize the current system and close the MVP with akemi as the pilot. No new modules, no payments, no scheduling, no shop until MVP is declared done and working.
 
-Future expansions (scheduling, piece sales, workshops with payment, premium tiers) are recorded in `docs/POST_MVP_BACKLOG.md` and will be evaluated after MVP launch.
+Future expansions (scheduling, piece sales, workshops with payment, expanded tiers) are recorded in `docs/POST_MVP_BACKLOG.md` and will be evaluated after MVP launch.
 
 A separate product (**Asamblea**) has been defined for left/social organizations at `C:/GitHub/asamblea/SPEC.md`. It will be built as an independent project after Agitprop MVP is stable.
 

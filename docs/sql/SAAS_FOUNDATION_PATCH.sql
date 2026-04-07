@@ -24,7 +24,7 @@ create table if not exists public.artist_tenants (
   studio_name text not null,
   slug text not null unique,
   status text not null default 'active',
-  plan_code text not null default 'free',
+  plan_code text not null default 'basic',
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );

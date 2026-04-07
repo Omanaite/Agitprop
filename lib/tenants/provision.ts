@@ -87,7 +87,7 @@ export async function ensureArtistTenantProvisioned(input: ProvisionInput) {
     if (!slug) return { ok: false, schemaMissing: true as const };
 
     const isAkemiTenant = isAkemiTenantIdentity(input.email, slug);
-    const planCode = isAkemiTenant ? "premium" : "free";
+    const planCode = isAkemiTenant ? "expanded" : "basic";
     const studioName = isAkemiTenant ? "Akemi Tattoo" : `${emailPrefix} Studio`;
     const siteTheme = sanitizeTenantTheme(undefined, isAkemiTenant);
 

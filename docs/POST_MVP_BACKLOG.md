@@ -52,7 +52,7 @@ Requires: a scheduled job or cron (Vercel Cron / Supabase Edge Function with pg_
 Configurable timing in Studio settings (e.g. "24h before", "48h before").
 
 **6. SaaS plan enforcement**
-Enforce free/premium limits: gallery count, pieces per gallery, post count, custom domain.
+Enforce free/expanded limits: gallery count, pieces per gallery, post count, custom domain.
 `lib/tenants/plan.ts` foundation exists. Needs: limit checks in studio APIs, upgrade prompt in UI.
 
 ### 🔴 Hard (weeks)
@@ -90,8 +90,8 @@ Foundation exists (`/api/admin/platform-tenants`). Needs: tenant list UI, plan a
 - Configurable feature modules per tenant.
 - Platform admin controls to activate/deactivate artist pages.
 - Auto-provision artist workspace on registration.
-- Plan model with `free` and `premium` capabilities.
-- Pilot rule: `akemi@tattoo.ink` mapped to premium baseline and custom brutalist theme.
+- Plan model with `free` and `expanded` capabilities.
+- Pilot rule: `akemi@tattoo.ink` mapped to expanded baseline and custom brutalist theme.
 
 ## Theme 2 - Payments (Sandbox First)
 - Stripe integration completed with sandbox validation.

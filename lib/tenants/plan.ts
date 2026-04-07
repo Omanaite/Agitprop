@@ -1,39 +1,55 @@
-/** Plan codes supported by the platform. */
-export type PlanCode = "free" | "premium";
+/**
+ * Storage tiers for Agitprop.
+ *
+ * Agitprop is a free, community-supported service for artists.
+ * There are no "premium plans" — instead, storage is the only real
+ * cost driver. Artists who need more space contribute to server costs.
+ *
+ * Tier definitions:
+ *   "basic"    — default for all artists, covers a small active portfolio.
+ *   "expanded" — for artists who upload more content and contribute to
+ *                hosting costs (storage on Supabase is not free at scale).
+ *
+ * Storage estimates (Supabase Free plan = 1 GB total):
+ *   ~500 KB avg photo × 25 photos = 12.5 MB per basic artist
+ *   ~80 basic artists fit in 1 GB → upgrade to Supabase Pro ($25/mo) around that mark
+ *   Artists on expanded tier contribute donations to offset that cost.
+ */
+export type StorageTier = "basic" | "expanded";
 
 /**
- * Feature flags and limits for a given plan.
- * `null` means unlimited (no enforced ceiling).
+ * Limits and capabilities for each storage tier.
+ * Numeric limits reflect realistic storage budgets, not artificial marketing gates.
+ * null = no enforced ceiling (expanded tier).
  */
-export type PlanFeatures = {
-  /** Maximum number of galleries allowed. null = unlimited. */
+export type TierFeatures = {
+  /** Max galleries. Reflects storage cost, not a marketing gate. */
   maxGalleries: number | null;
-  /** Maximum number of posts allowed. null = unlimited. */
+  /** Max published posts. */
   maxPosts: number | null;
-  /** Maximum number of items per gallery. null = unlimited. */
+  /** Max pieces per gallery. */
   maxGalleryItems: number | null;
-  /** Whether the tenant may connect a custom domain. */
+  /** Custom domain support (expanded only — DNS infra cost). */
   customDomain: boolean;
-  /** Theme access level: "default" = curated set only, "full" = all themes. */
+  /** Theme access. All artists get all themes — design is community value. */
   themeSelection: "default" | "full";
-  /** Whether payment settings are accessible. */
+  /** Payment settings access (Stripe/PayPal connect). */
   paymentSettings: boolean;
-  /** Whether third-party integrations are accessible. */
+  /** Third-party integrations access (WhatsApp, Telegram, etc.). */
   integrations: boolean;
 };
 
-/** Plan feature definitions keyed by PlanCode. */
-const PLAN_FEATURES: Record<PlanCode, PlanFeatures> = {
-  free: {
-    maxGalleries: 3,
-    maxPosts: 10,
-    maxGalleryItems: 20,
+const TIER_FEATURES: Record<StorageTier, TierFeatures> = {
+  basic: {
+    maxGalleries: 2,
+    maxPosts: 5,
+    maxGalleryItems: 25,   // ~12 MB per artist at 500 KB avg
     customDomain: false,
-    themeSelection: "default",
+    themeSelection: "full", // all themes free — no design gate
     paymentSettings: false,
     integrations: false,
   },
-  premium: {
+  expanded: {
     maxGalleries: null,
     maxPosts: null,
     maxGalleryItems: null,
@@ -44,93 +60,59 @@ const PLAN_FEATURES: Record<PlanCode, PlanFeatures> = {
   },
 };
 
-/** Ordered list of plans from least to most capable. */
-const PLAN_ORDER: PlanCode[] = ["free", "premium"];
+const TIER_ORDER: StorageTier[] = ["basic", "expanded"];
 
 /**
- * Returns the full feature set for a given plan code.
- * Falls back to `free` features for any unrecognised value.
- *
- * @param planCode - The plan code to look up.
- * @returns The {@link PlanFeatures} for that plan.
+ * Normalise legacy DB values to current tier names.
+ * "free" → "basic", "premium" → "expanded" (backwards compat).
  */
-export function getPlanFeatures(planCode: string): PlanFeatures {
-  const key = planCode as PlanCode;
-  return PLAN_FEATURES[key] ?? PLAN_FEATURES.free;
+function normaliseTier(planCode: string): StorageTier {
+  if (planCode === "free" || planCode === "basic") return "basic";
+  if (planCode === "premium" || planCode === "expanded") return "expanded";
+  return "basic";
 }
 
-/**
- * Returns `true` when `planCode` is at least as capable as `minimum`.
- * Useful for guard clauses such as `isPlanAtLeast(tenant.plan_code, "premium")`.
- *
- * @param planCode - The plan code to evaluate.
- * @param minimum  - The minimum required plan code.
- */
-export function isPlanAtLeast(planCode: string, minimum: PlanCode): boolean {
-  const currentIndex = PLAN_ORDER.indexOf(planCode as PlanCode);
-  const minimumIndex = PLAN_ORDER.indexOf(minimum);
+/** Returns feature set for a given storage tier. */
+export function getTierFeatures(planCode: string): TierFeatures {
+  return TIER_FEATURES[normaliseTier(planCode)];
+}
+
+/** True when planCode is at least as capable as minimum tier. */
+export function isTierAtLeast(planCode: string, minimum: StorageTier): boolean {
+  const currentIndex = TIER_ORDER.indexOf(normaliseTier(planCode));
+  const minimumIndex = TIER_ORDER.indexOf(minimum);
   if (currentIndex === -1) return false;
   return currentIndex >= minimumIndex;
 }
 
-/**
- * Returns `true` when the tenant may create an additional gallery.
- *
- * @param planCode     - The tenant's plan code.
- * @param currentCount - The number of galleries the tenant currently has.
- */
 export function canAddGallery(planCode: string, currentCount: number): boolean {
-  const { maxGalleries } = getPlanFeatures(planCode);
-  if (maxGalleries === null) return true;
-  return currentCount < maxGalleries;
+  const { maxGalleries } = getTierFeatures(planCode);
+  return maxGalleries === null || currentCount < maxGalleries;
 }
 
-/**
- * Returns `true` when the tenant may create an additional post.
- *
- * @param planCode     - The tenant's plan code.
- * @param currentCount - The number of posts the tenant currently has.
- */
 export function canAddPost(planCode: string, currentCount: number): boolean {
-  const { maxPosts } = getPlanFeatures(planCode);
-  if (maxPosts === null) return true;
-  return currentCount < maxPosts;
+  const { maxPosts } = getTierFeatures(planCode);
+  return maxPosts === null || currentCount < maxPosts;
 }
 
-/**
- * Returns `true` when the tenant may add another item to a gallery.
- *
- * @param planCode     - The tenant's plan code.
- * @param currentCount - The number of items already in the gallery.
- */
-export function canAddGalleryItem(
-  planCode: string,
-  currentCount: number
-): boolean {
-  const { maxGalleryItems } = getPlanFeatures(planCode);
-  if (maxGalleryItems === null) return true;
-  return currentCount < maxGalleryItems;
+export function canAddGalleryItem(planCode: string, currentCount: number): boolean {
+  const { maxGalleryItems } = getTierFeatures(planCode);
+  return maxGalleryItems === null || currentCount < maxGalleryItems;
 }
 
-/**
- * Returns the value of a specific feature flag for the given plan.
- * For numeric limits (`maxGalleries`, `maxPosts`, `maxGalleryItems`),
- * returns `true` when the limit is unlimited (`null`) and `false` when
- * a finite ceiling is imposed. For boolean and string features the
- * truthiness of the stored value is returned.
- *
- * @param planCode - The tenant's plan code.
- * @param feature  - The key of the feature to check.
- */
-export function hasFeature(
-  planCode: string,
-  feature: keyof PlanFeatures
-): boolean {
-  const features = getPlanFeatures(planCode);
+export function hasFeature(planCode: string, feature: keyof TierFeatures): boolean {
+  const features = getTierFeatures(planCode);
   const value = features[feature];
-  if (value === null) return true;   // null numeric limit = unlimited = enabled
-  if (typeof value === "number") return false; // finite limit = restricted
+  if (value === null) return true;
+  if (typeof value === "number") return false;
   if (typeof value === "boolean") return value;
-  // string discriminants — treat non-"default" as enabled/full
   return value !== "default";
 }
+
+// Legacy aliases — existing imports keep working during migration.
+/** @deprecated Use getTierFeatures */
+export const getPlanFeatures = getTierFeatures;
+/** @deprecated Use isTierAtLeast */
+export const isPlanAtLeast = isTierAtLeast;
+/** @deprecated Use StorageTier */
+export type PlanCode = StorageTier;

@@ -84,7 +84,7 @@ export async function POST(request: Request) {
 
   if (!canAddPost(planCode, postCount ?? 0)) {
     return NextResponse.json(
-      { message: "Post limit reached for your plan. Upgrade to premium to add more.", code: "plan_limit_exceeded" },
+      { message: "Storage limit reached. You have used your basic allocation of posts. Visit your studio to learn about expanded storage.", code: "plan_limit_exceeded" },
       { status: 403 }
     );
   }

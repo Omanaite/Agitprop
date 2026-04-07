@@ -75,7 +75,7 @@ export type ArtistTenant = {
   studio_name: string;
   slug: string;
   status: "active" | "inactive" | "suspended";
-  plan_code: "free" | "premium";
+  plan_code: "basic" | "expanded";
   site_theme: "atelier" | "mono" | "ink" | "verdure" | "amber" | "akemi_brutalist";
   custom_domain?: string | null;
   rates?: RateCard[] | null;
