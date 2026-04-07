@@ -3,6 +3,9 @@ import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
 import { signOutArtist } from "@/app/studio/actions";
 import { StudioConsoleShell } from "@/components/studio/StudioConsoleShell";
 import { StudioSiteLink } from "@/components/studio/StudioSiteLink";
+import { StudioSplitLayout } from "@/components/studio/StudioSplitLayout";
+import { StudioPreviewProvider } from "@/lib/studio-preview-context";
+import { StudioSlugLoader } from "@/components/studio/StudioSlugLoader";
 import { createSupabaseServerClient } from "@/lib/supabase/ssr";
 import { createSupabaseServerClient as createAdminClient } from "@/lib/supabase/server";
 
@@ -32,34 +35,42 @@ async function getTenantInfo() {
 export default async function StudioPage() {
   const tenant = await getTenantInfo();
   const studioTitle = tenant?.studio_name ?? "Your studio";
+  const slug = tenant?.slug ?? null;
 
   return (
-    <div className="admin-shell px-6 py-8 md:px-10 md:py-10">
-      <div className="mx-auto flex max-w-7xl flex-col gap-6">
-        <header className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-          <div>
-            <p className="admin-chip">Artist workspace</p>
-            <h1 className="admin-title mt-4 text-4xl font-semibold">
-              {studioTitle}
-            </h1>
-            <p className="admin-muted mt-2 max-w-2xl text-sm leading-6">
-              Manage your galleries, posts, bookings, and site settings.
-            </p>
-          </div>
+    <StudioPreviewProvider>
+      {/* Injects slug into preview context on mount */}
+      {slug && <StudioSlugLoader slug={slug} />}
 
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <StudioSiteLink />
-            <AdminThemeToggle />
-            <form action={signOutArtist}>
-              <button type="submit" className="admin-button admin-button-ghost">
-                Sign out
-              </button>
-            </form>
-          </div>
-        </header>
+      <div className="admin-shell px-6 py-8 md:px-10 md:py-10">
+        <div className="mx-auto flex max-w-[1800px] flex-col gap-6">
+          <header className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p className="admin-chip">Artist workspace</p>
+              <h1 className="admin-title mt-4 text-4xl font-semibold">
+                {studioTitle}
+              </h1>
+              <p className="admin-muted mt-2 max-w-2xl text-sm leading-6">
+                Manage your galleries, posts, bookings, and site settings.
+              </p>
+            </div>
 
-        <StudioConsoleShell />
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+              <StudioSiteLink />
+              <AdminThemeToggle />
+              <form action={signOutArtist}>
+                <button type="submit" className="admin-button admin-button-ghost">
+                  Sign out
+                </button>
+              </form>
+            </div>
+          </header>
+
+          <StudioSplitLayout>
+            <StudioConsoleShell />
+          </StudioSplitLayout>
+        </div>
       </div>
-    </div>
+    </StudioPreviewProvider>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useStudioPreview } from "@/lib/studio-preview-context";
 import { AdminSectionSkeleton } from "@/components/admin/AdminSectionSkeleton";
 
 type GalleryItem = {
@@ -41,6 +42,7 @@ const emptyItem = {
 type ValidationError = { path: string; message: string };
 
 export function StudioGalleryManager() {
+  const { refreshPreview } = useStudioPreview();
   const [items, setItems] = useState<GalleryItem[]>([]);
   const [galleries, setGalleries] = useState<Gallery[]>([]);
   const [form, setForm] = useState<typeof emptyItem>(emptyItem);
@@ -197,6 +199,7 @@ export function StudioGalleryManager() {
     resetForm();
     await load();
     setStatus("Saved.");
+    refreshPreview();
     setIsSaving(false);
   }
 

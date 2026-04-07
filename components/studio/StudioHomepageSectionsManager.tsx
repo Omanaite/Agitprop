@@ -2,11 +2,13 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { AdminSectionSkeleton } from "@/components/admin/AdminSectionSkeleton";
+import { useStudioPreview } from "@/lib/studio-preview-context";
 import type { HomepageSection } from "@/types";
 
 type ValidationError = { path: string; message: string };
 
 export function StudioHomepageSectionsManager() {
+  const { refreshPreview } = useStudioPreview();
   const [items, setItems] = useState<HomepageSection[]>([]);
   const [status, setStatus] = useState("");
   const [errors, setErrors] = useState<ValidationError[]>([]);
@@ -135,6 +137,7 @@ export function StudioHomepageSectionsManager() {
     const data = await res.json().catch(() => null);
     setItems((data?.items ?? items) as HomepageSection[]);
     setStatus("Homepage composition saved.");
+    refreshPreview();
     setIsSaving(false);
   }
 
