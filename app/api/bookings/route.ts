@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { bookingSchema } from "@/lib/validators";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { sendNotificationEmail } from "@/lib/email/resend";
+import { sendTelegramMessage, buildBookingTelegramMessage } from "@/lib/telegram";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import { enforceSameOrigin } from "@/lib/security";
 
@@ -55,16 +56,20 @@ export async function POST(request: Request) {
     }
     const client = createSupabaseServerClient();
 
-    // Resolve owner_user_id from tenantSlug when provided.
+    // Resolve owner_user_id + notification config from tenantSlug when provided.
     let ownerUserId: string | null = null;
+    let tenantTelegramToken: string | null = null;
+    let tenantTelegramChatId: string | null = null;
     if (typeof json.tenantSlug === "string" && json.tenantSlug.trim()) {
       const { data: tenantRow } = await client
         .from("artist_tenants")
-        .select("owner_user_id")
+        .select("owner_user_id,telegram_bot_token,telegram_chat_id")
         .eq("slug", json.tenantSlug.trim())
         .eq("status", "active")
         .maybeSingle();
       ownerUserId = tenantRow?.owner_user_id ?? null;
+      tenantTelegramToken = tenantRow?.telegram_bot_token ?? null;
+      tenantTelegramChatId = tenantRow?.telegram_chat_id ?? null;
     }
 
     const { error } = await client.from("bookings").insert({
@@ -133,6 +138,21 @@ export async function POST(request: Request) {
       } catch {
         // Non-blocking
       }
+    }
+
+    // Telegram notification (non-blocking)
+    if (tenantTelegramToken && tenantTelegramChatId) {
+      void sendTelegramMessage(
+        tenantTelegramToken,
+        tenantTelegramChatId,
+        buildBookingTelegramMessage({
+          name: payload.name,
+          email: payload.email,
+          description: payload.description,
+          placement: payload.placement,
+          preferred_date: payload.preferredDate,
+        })
+      );
     }
 
     return NextResponse.json({ ok: true });

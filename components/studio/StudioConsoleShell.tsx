@@ -22,6 +22,7 @@ import { StudioBookingsManager } from "@/components/studio/StudioBookingsManager
 import { StudioRatesManager } from "@/components/studio/StudioRatesManager";
 import { StudioAvailabilityManager } from "@/components/studio/StudioAvailabilityManager";
 import { StudioStorageBanner } from "@/components/studio/StudioStorageBanner";
+import { StudioTelegramSettings } from "@/components/studio/StudioTelegramSettings";
 
 type Section = {
   id: string;
@@ -92,8 +93,13 @@ const sections: Section[] = [
     id: "site",
     label: "Site",
     eyebrow: "Appearance",
-    description: "Choose the visual theme for your public artist site.",
-    content: <StudioSiteSettings />,
+    description: "Theme, custom domain, and notification settings.",
+    content: (
+      <>
+        <StudioSiteSettings />
+        <StudioTelegramSettings />
+      </>
+    ),
   },
 ];
 
