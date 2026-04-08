@@ -66,6 +66,7 @@ export default async function ArtistSitePage({ params }: { params: Promise<Param
   const tattoos = await getTattooGallery(tenant.owner_user_id);
   const posts = await getPublishedPosts(tenant.owner_user_id);
   const themeClass = getThemeClass(tenant.site_theme);
+  const isDemo = slug === "demo";
 
   const pieceCountByGallery = tattoos.reduce<Record<string, number>>((acc, t) => {
     if (t.gallery_id) acc[t.gallery_id] = (acc[t.gallery_id] ?? 0) + 1;
@@ -188,7 +189,7 @@ export default async function ArtistSitePage({ params }: { params: Promise<Param
       {
         render: (section) => (
           <Section key="booking" id="booking" title={section.title} eyebrow={section.eyebrow ?? undefined}>
-            <BookingForm copy={dictionary.booking} tenantSlug={tenant.slug} />
+            <BookingForm copy={dictionary.booking} tenantSlug={tenant.slug} demoMode={isDemo} />
           </Section>
         ),
       },
@@ -219,6 +220,19 @@ export default async function ArtistSitePage({ params }: { params: Promise<Param
 
   return (
     <div className={`min-h-screen p-4 md:p-8 ${themeClass}`}>
+      {isDemo && (
+        <div className="mb-4 flex items-center justify-center gap-3 rounded border border-current/20 bg-current/10 px-4 py-2 text-xs uppercase tracking-[0.3em]">
+          <span className="font-bold">Demo Site</span>
+          <span className="opacity-60">—</span>
+          <span className="opacity-70">This is a preview. Bookings are disabled.</span>
+          <a
+            href="/studio/register"
+            className="ml-4 rounded border border-current/30 px-3 py-1 font-semibold opacity-90 hover:opacity-100 transition-opacity"
+          >
+            Create your site →
+          </a>
+        </div>
+      )}
       <div className="mx-auto flex max-w-6xl flex-col gap-6">
         <Header
           sections={visibleSections}

@@ -24,9 +24,10 @@ type BookingFormProps = {
     errorFallback: string; unexpected: string;
   };
   tenantSlug?: string;
+  demoMode?: boolean;
 };
 
-export function BookingForm({ copy, tenantSlug }: BookingFormProps) {
+export function BookingForm({ copy, tenantSlug, demoMode }: BookingFormProps) {
   const [state, setState] = useState<BookingFormState>("idle");
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState<{ path: string; message: string }[]>([]);
@@ -61,6 +62,12 @@ export function BookingForm({ copy, tenantSlug }: BookingFormProps) {
       setErrors([{ path: "preferredDate", message: "That day is not available. Choose a different date." }]);
       setState("error");
       setMessage("Please select an available date.");
+      return;
+    }
+    if (demoMode) {
+      setState("success");
+      setMessage("This is a live demo — no booking was saved. Register to accept real bookings.");
+      form.reset();
       return;
     }
     setState("submitting");
