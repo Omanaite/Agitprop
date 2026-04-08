@@ -395,91 +395,597 @@ html[data-theme="dark"] .gallery-filter-select {
 }
 
 /* ─── ARTIST THEMES ──────────────────────────────────────────────────────── */
-/* Each theme resets --fg/--bg and the font so all child utilities inherit  */
-/* the theme look instead of the global brutalist defaults.                 */
+/* Extended token system — each theme defines the full design vocabulary.    */
+/* Concept A = editorial/structured. Concept B = alternative layout/mood.   */
+/*                                                                           */
+/* Extended tokens (used by components):                                     */
+/*   --accent         Primary accent color                                   */
+/*   --accent-fg      Text on accent backgrounds                             */
+/*   --surface        Card / panel background                                */
+/*   --surface-2      Nested surface (inputs, sidebars)                      */
+/*   --muted          Subdued / secondary text                               */
+/*   --border-color   Border color                                           */
+/*   --border-width   Border thickness                                       */
+/*   --radius-sm      Small radius (tags, chips)                             */
+/*   --radius-btn     Button border radius                                   */
+/*   --radius-card    Card border radius                                     */
+/*   --radius-input   Input border radius                                    */
+/*   --shadow-sm      Subtle shadow                                          */
+/*   --shadow-card    Card elevation shadow                                  */
+/*   --shadow-btn     Button hover shadow / glow                             */
+/*   --shadow-offset  Hard offset shadow (brutalist / risograph)             */
+/*   --timing         Animation easing function                              */
+/*   --duration       Base transition duration                               */
+/*   --duration-slow  Slow / entrance animation duration                     */
 
-/* ATELIER — warm gallery editorial, serif, cream */
+/* ── ATELIER A — Museum Column ─────────────────────────────────────────── */
+/* Three-column editorial: narrow TOC left · content center · margin notes  */
+/* Serif type, no shadows, rule separators, sepia hover, parallax hero      */
 .artist-theme-atelier {
   --fg: #1c1410;
   --bg: #faf7f2;
+  --accent: #8b6f47;
+  --accent-fg: #faf7f2;
+  --surface: rgba(243, 237, 227, 0.7);
+  --surface-2: rgba(250, 247, 242, 0.9);
+  --muted: #7a6a5a;
+  --border-color: rgba(28, 20, 16, 0.13);
+  --border-width: 1px;
+  --radius-sm: 2px;
+  --radius-btn: 2px;
+  --radius-card: 2px;
+  --radius-input: 2px;
+  --shadow-sm: none;
+  --shadow-card: none;
+  --shadow-btn: none;
+  --shadow-offset: none;
+  --timing: ease-out;
+  --duration: 200ms;
+  --duration-slow: 400ms;
+
   background: linear-gradient(160deg, #faf7f2 0%, #f3ede3 100%);
   color: var(--fg);
   font-family: "Georgia", "Times New Roman", serif;
   letter-spacing: 0;
 }
-.artist-theme-atelier .theme-border {
-  border: 1px solid rgba(28, 20, 16, 0.18);
-}
+.artist-theme-atelier .theme-border,
 .artist-theme-atelier .hard-border {
-  border: 1px solid rgba(28, 20, 16, 0.18);
+  border: var(--border-width) solid var(--border-color);
+}
+.artist-theme-atelier .theme-invert {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+.artist-theme-atelier .theme-invert:hover {
+  background: #6e5535;
+  color: var(--accent-fg);
+  transition: background var(--duration) var(--timing);
 }
 
-/* MONO — Swiss clean minimalism, sans-serif, pure white */
+/* ── ATELIER B — Masonry Gallery ────────────────────────────────────────── */
+/* Vertical sidenav (icon-only) · asymmetric 4-col masonry · artist strip   */
+/* Pill buttons, card shadows, image scale+overlay on hover                 */
+.artist-theme-atelier-b {
+  --fg: #1c1410;
+  --bg: #f7f3ec;
+  --accent: #8b6f47;
+  --accent-fg: #faf7f2;
+  --surface: #ffffff;
+  --surface-2: rgba(243, 237, 227, 0.6);
+  --muted: #7a6a5a;
+  --border-color: rgba(28, 20, 16, 0.09);
+  --border-width: 1px;
+  --radius-sm: 999px;
+  --radius-btn: 999px;
+  --radius-card: 6px;
+  --radius-input: 6px;
+  --shadow-sm: 0 1px 4px rgba(28, 20, 16, 0.06);
+  --shadow-card: 0 4px 24px rgba(28, 20, 16, 0.10);
+  --shadow-btn: 0 4px 16px rgba(139, 111, 71, 0.22);
+  --shadow-offset: none;
+  --timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --duration: 240ms;
+  --duration-slow: 380ms;
+
+  background: #f7f3ec;
+  color: var(--fg);
+  font-family: "Georgia", "Times New Roman", serif;
+  letter-spacing: 0;
+}
+.artist-theme-atelier-b .theme-border,
+.artist-theme-atelier-b .hard-border {
+  border: var(--border-width) solid var(--border-color);
+}
+.artist-theme-atelier-b .theme-invert {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-radius: var(--radius-btn);
+  box-shadow: var(--shadow-btn);
+}
+.artist-theme-atelier-b .theme-invert:hover {
+  background: #6e5535;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(139, 111, 71, 0.3);
+  transition: transform var(--duration) var(--timing),
+              box-shadow var(--duration) var(--timing),
+              background var(--duration) var(--timing);
+}
+
+/* ── MONO A — Swiss Grid ────────────────────────────────────────────────── */
+/* Nav · full-width 120px headline · divider rule · 3-col even gallery      */
+/* Zero radius everywhere, step-based snap transitions, no shadows at all   */
 .artist-theme-mono {
   --fg: #0a0a0a;
   --bg: #ffffff;
+  --accent: #0a0a0a;
+  --accent-fg: #ffffff;
+  --surface: #f5f5f5;
+  --surface-2: #ebebeb;
+  --muted: #666666;
+  --border-color: rgba(10, 10, 10, 0.12);
+  --border-width: 1px;
+  --radius-sm: 0px;
+  --radius-btn: 0px;
+  --radius-card: 0px;
+  --radius-input: 0px;
+  --shadow-sm: none;
+  --shadow-card: none;
+  --shadow-btn: none;
+  --shadow-offset: none;
+  --timing: steps(2, jump-none);
+  --duration: 160ms;
+  --duration-slow: 240ms;
+
   background: #ffffff;
   color: var(--fg);
   font-family: "Helvetica Neue", "Arial", system-ui, sans-serif;
   letter-spacing: -0.02em;
 }
-.artist-theme-mono .theme-border {
-  border: 1px solid rgba(10, 10, 10, 0.14);
-}
+.artist-theme-mono .theme-border,
 .artist-theme-mono .hard-border {
-  border: 1px solid rgba(10, 10, 10, 0.14);
+  border: var(--border-width) solid var(--border-color);
+}
+.artist-theme-mono .theme-invert {
+  background: var(--fg);
+  color: var(--bg);
+  border-radius: 0;
+}
+.artist-theme-mono .theme-invert:hover {
+  background: var(--bg);
+  color: var(--fg);
+  outline: 1px solid var(--fg);
+  transition: all var(--duration) var(--timing);
 }
 
-/* INK — dark dramatic, violet accent, sans-serif */
+/* ── MONO B — Ratio Layout ──────────────────────────────────────────────── */
+/* 70/30 split (headline + bio) · 2-col work thumbnails · aside detail      */
+/* Content enters with translateY(-8px), 2px borders, high typographic mass */
+.artist-theme-mono-b {
+  --fg: #0a0a0a;
+  --bg: #fafafa;
+  --accent: #0a0a0a;
+  --accent-fg: #fafafa;
+  --surface: #f0f0f0;
+  --surface-2: #e8e8e8;
+  --muted: #5a5a5a;
+  --border-color: rgba(10, 10, 10, 0.18);
+  --border-width: 2px;
+  --radius-sm: 0px;
+  --radius-btn: 0px;
+  --radius-card: 0px;
+  --radius-input: 0px;
+  --shadow-sm: none;
+  --shadow-card: none;
+  --shadow-btn: none;
+  --shadow-offset: none;
+  --timing: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration: 200ms;
+  --duration-slow: 360ms;
+
+  background: #fafafa;
+  color: var(--fg);
+  font-family: "Helvetica Neue", "Arial", system-ui, sans-serif;
+  letter-spacing: -0.025em;
+}
+.artist-theme-mono-b .theme-border,
+.artist-theme-mono-b .hard-border {
+  border: var(--border-width) solid var(--border-color);
+}
+.artist-theme-mono-b .theme-invert {
+  background: var(--fg);
+  color: var(--bg);
+  border-radius: 0;
+  border: var(--border-width) solid var(--fg);
+}
+.artist-theme-mono-b .theme-invert:hover {
+  background: var(--bg);
+  color: var(--fg);
+  transition: all var(--duration) var(--timing);
+}
+
+/* ── INK A — Cinematic Center ───────────────────────────────────────────── */
+/* Full-bleed dark · centered 640px column · violet glow accent             */
+/* Glass cards, glow on hover, 600ms entrance fade, backdrop blur           */
 .artist-theme-ink {
   --fg: #f0eee8;
   --bg: #0e1017;
+  --accent: #7c5cbf;
+  --accent-fg: #f0eee8;
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-2: rgba(255, 255, 255, 0.07);
+  --muted: #8a8fa0;
+  --border-color: rgba(240, 238, 232, 0.10);
+  --border-width: 1px;
+  --radius-sm: 4px;
+  --radius-btn: 4px;
+  --radius-card: 8px;
+  --radius-input: 4px;
+  --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 8px 40px rgba(0, 0, 0, 0.5);
+  --shadow-btn: 0 0 20px rgba(124, 92, 191, 0.45);
+  --shadow-offset: none;
+  --timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --duration: 280ms;
+  --duration-slow: 600ms;
+
   background: linear-gradient(160deg, #0e1017 0%, #141824 100%);
   color: var(--fg);
   font-family: "Helvetica Neue", "Arial", system-ui, sans-serif;
   letter-spacing: -0.01em;
 }
-.artist-theme-ink .theme-border {
-  border: 1px solid rgba(240, 238, 232, 0.16);
-}
+.artist-theme-ink .theme-border,
 .artist-theme-ink .hard-border {
-  border: 1px solid rgba(240, 238, 232, 0.16);
+  border: var(--border-width) solid var(--border-color);
+}
+.artist-theme-ink .theme-invert {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-radius: var(--radius-btn);
+  box-shadow: var(--shadow-btn);
+}
+.artist-theme-ink .theme-invert:hover {
+  background: #9b7fe8;
+  box-shadow: 0 0 32px rgba(124, 92, 191, 0.65);
+  transform: translateY(-2px);
+  transition: all var(--duration) var(--timing);
+}
+.artist-theme-ink .theme-hover-invert:hover {
+  background: var(--accent);
+  color: var(--accent-fg);
+  box-shadow: var(--shadow-btn);
+  transition: all var(--duration) var(--timing);
 }
 
-/* VERDURE — organic nature, sage, earthy green */
+/* ── INK B — Narrative Scroll ───────────────────────────────────────────── */
+/* Portrait fullscreen · 3 work tiles · CTA dark section                    */
+/* Inset hero shadow, zero-radius buttons with glowing border, stagger fade */
+.artist-theme-ink-b {
+  --fg: #e8e4dc;
+  --bg: #090b10;
+  --accent: #b49ee8;
+  --accent-fg: #090b10;
+  --surface: rgba(255, 255, 255, 0.03);
+  --surface-2: rgba(180, 158, 232, 0.08);
+  --muted: #6b7280;
+  --border-color: rgba(180, 158, 232, 0.20);
+  --border-width: 1px;
+  --radius-sm: 0px;
+  --radius-btn: 0px;
+  --radius-card: 0px;
+  --radius-input: 0px;
+  --shadow-sm: 0 1px 8px rgba(0, 0, 0, 0.6);
+  --shadow-card: inset 0 -80px 120px rgba(0, 0, 0, 0.8);
+  --shadow-btn: none;
+  --shadow-offset: none;
+  --timing: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration: 320ms;
+  --duration-slow: 500ms;
+
+  background: #090b10;
+  color: var(--fg);
+  font-family: "Helvetica Neue", "Arial", system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+.artist-theme-ink-b .theme-border,
+.artist-theme-ink-b .hard-border {
+  border: var(--border-width) solid var(--border-color);
+}
+.artist-theme-ink-b .theme-invert {
+  background: transparent;
+  color: var(--accent);
+  border-radius: 0;
+  border: 1px solid var(--accent);
+}
+.artist-theme-ink-b .theme-invert:hover {
+  background: var(--accent);
+  color: var(--accent-fg);
+  transition: all var(--duration) var(--timing);
+}
+
+/* ── VERDURE A — Asymmetric Garden ─────────────────────────────────────── */
+/* Tall hero image left (520px) · name + bio + 2-col gallery right         */
+/* 12px radius buttons, soft green shadows, scale hover, serif italic        */
 .artist-theme-verdure {
   --fg: #1a2e1c;
   --bg: #f4f7f1;
+  --accent: #4a7c59;
+  --accent-fg: #f4f7f1;
+  --surface: rgba(232, 240, 228, 0.65);
+  --surface-2: rgba(244, 247, 241, 0.9);
+  --muted: #5a7260;
+  --border-color: rgba(26, 46, 28, 0.15);
+  --border-width: 1px;
+  --radius-sm: 6px;
+  --radius-btn: 12px;
+  --radius-card: 16px;
+  --radius-input: 10px;
+  --shadow-sm: 0 2px 8px rgba(26, 46, 28, 0.07);
+  --shadow-card: 0 8px 32px rgba(26, 46, 28, 0.10);
+  --shadow-btn: 0 4px 16px rgba(74, 124, 89, 0.22);
+  --shadow-offset: none;
+  --timing: cubic-bezier(0.34, 1.06, 0.64, 1);
+  --duration: 260ms;
+  --duration-slow: 420ms;
+
   background: linear-gradient(160deg, #f4f7f1 0%, #e8f0e4 100%);
   color: var(--fg);
   font-family: "Georgia", "Times New Roman", serif;
   letter-spacing: 0;
 }
-.artist-theme-verdure .theme-border {
-  border: 1px solid rgba(26, 46, 28, 0.2);
-}
+.artist-theme-verdure .theme-border,
 .artist-theme-verdure .hard-border {
-  border: 1px solid rgba(26, 46, 28, 0.2);
+  border: var(--border-width) solid var(--border-color);
+}
+.artist-theme-verdure .theme-invert {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-radius: var(--radius-btn);
+  box-shadow: var(--shadow-btn);
+}
+.artist-theme-verdure .theme-invert:hover {
+  background: #3a6147;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(74, 124, 89, 0.32);
+  transition: all var(--duration) var(--timing);
 }
 
-/* AMBER — warm studio, terracotta accent, editorial */
+/* ── VERDURE B — Centered Botanical ─────────────────────────────────────── */
+/* Centered portrait with decorative frame · tagline · pill CTA · h-scroll  */
+/* Full pill buttons, green glow shadows, horizontal snap gallery            */
+.artist-theme-verdure-b {
+  --fg: #1a2e1c;
+  --bg: #eef3ea;
+  --accent: #4a7c59;
+  --accent-fg: #eef3ea;
+  --surface: rgba(255, 255, 255, 0.7);
+  --surface-2: rgba(232, 240, 228, 0.8);
+  --muted: #5a7260;
+  --border-color: rgba(74, 124, 89, 0.18);
+  --border-width: 1px;
+  --radius-sm: 999px;
+  --radius-btn: 999px;
+  --radius-card: 20px;
+  --radius-input: 12px;
+  --shadow-sm: 0 2px 10px rgba(74, 124, 89, 0.08);
+  --shadow-card: 0 12px 40px rgba(26, 46, 28, 0.09);
+  --shadow-btn: 0 4px 20px rgba(74, 124, 89, 0.28);
+  --shadow-offset: none;
+  --timing: cubic-bezier(0.34, 1.06, 0.64, 1);
+  --duration: 300ms;
+  --duration-slow: 500ms;
+
+  background: radial-gradient(ellipse at 50% 0%, #dbebd4 0%, #eef3ea 60%);
+  color: var(--fg);
+  font-family: "Georgia", "Times New Roman", serif;
+  letter-spacing: 0;
+}
+.artist-theme-verdure-b .theme-border,
+.artist-theme-verdure-b .hard-border {
+  border: var(--border-width) solid var(--border-color);
+}
+.artist-theme-verdure-b .theme-invert {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-radius: var(--radius-btn);
+  box-shadow: var(--shadow-btn);
+}
+.artist-theme-verdure-b .theme-invert:hover {
+  background: #3a6147;
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 10px 32px rgba(74, 124, 89, 0.38);
+  transition: all var(--duration) var(--timing);
+}
+
+/* ── AMBER A — Layered Cards / Risograph ────────────────────────────────── */
+/* Feature card + overlapping layers · artist badge · booking strip         */
+/* Hard offset shadow (4px 4px 0 accent), shadow retraction on hover        */
 .artist-theme-amber {
   --fg: #2c1a0e;
   --bg: #fef5e4;
+  --accent: #c4622d;
+  --accent-fg: #fef5e4;
+  --surface: #fdecc8;
+  --surface-2: #fff8ee;
+  --muted: #7a5232;
+  --border-color: rgba(44, 26, 14, 0.20);
+  --border-width: 2px;
+  --radius-sm: 0px;
+  --radius-btn: 0px;
+  --radius-card: 0px;
+  --radius-input: 0px;
+  --shadow-sm: 2px 2px 0 rgba(196, 98, 45, 0.5);
+  --shadow-card: 4px 4px 0 #c4622d;
+  --shadow-btn: 4px 4px 0 #2c1a0e;
+  --shadow-offset: 4px 4px 0 currentColor;
+  --timing: steps(2, jump-none);
+  --duration: 140ms;
+  --duration-slow: 280ms;
+
   background: linear-gradient(160deg, #fef5e4 0%, #fdecc8 100%);
   color: var(--fg);
   font-family: "Georgia", "Times New Roman", serif;
   letter-spacing: 0;
 }
-.artist-theme-amber .theme-border {
-  border: 1px solid rgba(44, 26, 14, 0.18);
-}
+.artist-theme-amber .theme-border,
 .artist-theme-amber .hard-border {
-  border: 1px solid rgba(44, 26, 14, 0.18);
+  border: var(--border-width) solid var(--border-color);
+}
+.artist-theme-amber .theme-invert {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-radius: 0;
+  border: 2px solid var(--fg);
+  box-shadow: var(--shadow-btn);
+}
+.artist-theme-amber .theme-invert:hover {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+  transition: transform var(--duration) var(--timing),
+              box-shadow var(--duration) var(--timing);
 }
 
-/* AKEMI BRUTALIST — exclusive pilot theme, full brutalist system */
+/* ── AMBER B — Editorial Magazine ───────────────────────────────────────── */
+/* 60% image / 40% text interleaved · divider terracotta rule · 3-col       */
+/* Border-top accent on cards, saffron primary, subtle serif editorial feel  */
+.artist-theme-amber-b {
+  --fg: #2c1a0e;
+  --bg: #fffbf2;
+  --accent: #e8951a;
+  --accent-fg: #2c1a0e;
+  --surface: rgba(253, 236, 200, 0.5);
+  --surface-2: #fff8ee;
+  --muted: #8a6240;
+  --border-color: rgba(44, 26, 14, 0.14);
+  --border-width: 1px;
+  --radius-sm: 2px;
+  --radius-btn: 2px;
+  --radius-card: 2px;
+  --radius-input: 2px;
+  --shadow-sm: 0 1px 4px rgba(44, 26, 14, 0.08);
+  --shadow-card: 0 2px 12px rgba(44, 26, 14, 0.10);
+  --shadow-btn: none;
+  --shadow-offset: none;
+  --timing: ease-out;
+  --duration: 200ms;
+  --duration-slow: 380ms;
+
+  background: #fffbf2;
+  color: var(--fg);
+  font-family: "Georgia", "Times New Roman", serif;
+  letter-spacing: 0;
+}
+.artist-theme-amber-b .theme-border,
+.artist-theme-amber-b .hard-border {
+  border: var(--border-width) solid var(--border-color);
+}
+.artist-theme-amber-b .theme-invert {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-radius: var(--radius-btn);
+  border: 2px solid var(--fg);
+}
+.artist-theme-amber-b .theme-invert:hover {
+  background: #c4622d;
+  color: #fffbf2;
+  transition: background var(--duration) var(--timing),
+              color var(--duration) var(--timing);
+}
+
+/* ── AKEMI BRUTALIST A — Broken Grid ────────────────────────────────────── */
+/* Black bar · 60/40 hero split · diagonal divider · ticker · 4-col grid   */
+/* Zero radius, hard 4px offset shadow, steps(1) snap, full invert on hover */
 .artist-theme-akemi-brutalist {
+  --fg: #000000;
+  --bg: #ffffff;
+  --accent: #000000;
+  --accent-fg: #ffffff;
+  --surface: #f2f2f2;
+  --surface-2: #e8e8e8;
+  --muted: #444444;
+  --border-color: #000000;
+  --border-width: 2px;
+  --radius-sm: 0px;
+  --radius-btn: 0px;
+  --radius-card: 0px;
+  --radius-input: 0px;
+  --shadow-sm: 2px 2px 0 #000000;
+  --shadow-card: 4px 4px 0 #000000;
+  --shadow-btn: 4px 4px 0 #000000;
+  --shadow-offset: 4px 4px 0 #000000;
+  --timing: steps(1);
+  --duration: 0ms;
+  --duration-slow: 0ms;
+
   background: var(--bg);
   color: var(--fg);
+  font-family: "JetBrains Mono", "Space Mono", var(--font-body), monospace;
+  letter-spacing: -0.01em;
+}
+.artist-theme-akemi-brutalist .theme-border,
+.artist-theme-akemi-brutalist .hard-border {
+  border: var(--border-width) solid var(--border-color);
+}
+.artist-theme-akemi-brutalist .theme-invert {
+  background: var(--fg);
+  color: var(--bg);
+  border-radius: 0;
+  border: var(--border-width) solid var(--fg);
+  box-shadow: var(--shadow-btn);
+}
+.artist-theme-akemi-brutalist .theme-invert:hover {
+  background: var(--bg);
+  color: var(--fg);
+  box-shadow: none;
+  transition: none;
+}
+.artist-theme-akemi-brutalist .theme-hover-invert:hover {
+  background: var(--fg);
+  color: var(--bg);
+  transition: none;
+}
+
+/* ── AKEMI BRUTALIST B — Collage Anti-Design ────────────────────────────── */
+/* Full-black bg · white block left 50% · bleeding image right              */
+/* Massive bleeding type, no cards, no shadows, no animations               */
+.artist-theme-akemi-brutalist-b {
+  --fg: #ffffff;
+  --bg: #000000;
+  --accent: #ffffff;
+  --accent-fg: #000000;
+  --surface: rgba(255, 255, 255, 0.06);
+  --surface-2: rgba(255, 255, 255, 0.10);
+  --muted: #888888;
+  --border-color: rgba(255, 255, 255, 0.25);
+  --border-width: 2px;
+  --radius-sm: 0px;
+  --radius-btn: 0px;
+  --radius-card: 0px;
+  --radius-input: 0px;
+  --shadow-sm: none;
+  --shadow-card: none;
+  --shadow-btn: none;
+  --shadow-offset: none;
+  --timing: steps(1);
+  --duration: 0ms;
+  --duration-slow: 0ms;
+
+  background: #000000;
+  color: var(--fg);
+  font-family: "JetBrains Mono", "Space Mono", var(--font-body), monospace;
+  letter-spacing: -0.01em;
+}
+.artist-theme-akemi-brutalist-b .theme-border,
+.artist-theme-akemi-brutalist-b .hard-border {
+  border: var(--border-width) solid var(--border-color);
+}
+.artist-theme-akemi-brutalist-b .theme-invert {
+  background: var(--fg);
+  color: var(--accent-fg);
+  border-radius: 0;
+}
+.artist-theme-akemi-brutalist-b .theme-invert:hover {
+  background: var(--bg);
+  color: var(--fg);
+  outline: 2px solid var(--fg);
+  transition: none;
 }

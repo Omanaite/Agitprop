@@ -25,7 +25,7 @@ export function Header({
   brandEyebrow = "Akemi",
   brandTitle = "Tattoo Manifesto",
   themeLabels = { light: "Light", eye: "Eye", dark: "Dark" },
-  localeLabel = "Language",
+  localeLabel,
 }: HeaderProps) {
   const navItems = sections.filter(
     (section) => section.is_visible && !hiddenNavKeys.has(section.section_key)
@@ -42,7 +42,9 @@ export function Header({
       <div className="flex flex-col gap-4 md:items-end">
         <div className="flex flex-wrap gap-3 md:justify-end">
           <ThemeToggle labels={themeLabels} />
-          <PublicLocaleToggle locale={locale} label={localeLabel} />
+          {localeLabel !== undefined && (
+            <PublicLocaleToggle locale={locale} label={localeLabel} />
+          )}
         </div>
         <nav className="flex flex-wrap gap-4 text-xs uppercase tracking-[0.3em]">
           {navItems.map((section) => (

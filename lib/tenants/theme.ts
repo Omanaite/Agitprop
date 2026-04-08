@@ -1,9 +1,22 @@
-export const DEFAULT_TENANT_THEMES = ["atelier", "mono", "ink", "verdure", "amber"] as const;
+export const DEFAULT_TENANT_THEMES = [
+  "atelier",
+  "atelier_b",
+  "mono",
+  "mono_b",
+  "ink",
+  "ink_b",
+  "verdure",
+  "verdure_b",
+  "amber",
+  "amber_b",
+] as const;
 export const AKEMI_TENANT_THEME = "akemi_brutalist" as const;
+export const AKEMI_TENANT_THEME_B = "akemi_brutalist_b" as const;
 
 export type TenantTheme =
   | (typeof DEFAULT_TENANT_THEMES)[number]
-  | typeof AKEMI_TENANT_THEME;
+  | typeof AKEMI_TENANT_THEME
+  | typeof AKEMI_TENANT_THEME_B;
 
 const AKEMI_EMAIL = "akemi@tattoo.ink";
 const AKEMI_SLUG = "akemion-tattoo";

@@ -17,10 +17,16 @@ const RESERVED = new Set(["admin", "studio", "api", "register", "agitprop", "ake
 
 function getThemeClass(theme: string) {
   if (theme === "mono") return "artist-theme-mono";
+  if (theme === "mono_b") return "artist-theme-mono-b";
   if (theme === "ink") return "artist-theme-ink";
+  if (theme === "ink_b") return "artist-theme-ink-b";
   if (theme === "verdure") return "artist-theme-verdure";
+  if (theme === "verdure_b") return "artist-theme-verdure-b";
   if (theme === "amber") return "artist-theme-amber";
+  if (theme === "amber_b") return "artist-theme-amber-b";
   if (theme === "akemi_brutalist") return "artist-theme-akemi-brutalist";
+  if (theme === "akemi_brutalist_b") return "artist-theme-akemi-brutalist-b";
+  if (theme === "atelier_b") return "artist-theme-atelier-b";
   return "artist-theme-atelier";
 }
 

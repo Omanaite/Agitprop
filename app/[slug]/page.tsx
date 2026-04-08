@@ -16,16 +16,23 @@ import { getPublishedPosts } from "@/lib/data/posts";
 import { getHomepageSections } from "@/lib/data/homepage-sections";
 import { getPublicDictionary } from "@/lib/i18n";
 import { getRequestLocale } from "@/lib/request-locale";
+import { isTierAtLeast } from "@/lib/tenants/plan";
 import type { HomepageSection } from "@/types";
 
 const RESERVED = new Set(["admin", "studio", "api", "register", "agitprop", "akemi", "galleries"]);
 
 function getThemeClass(theme: string) {
   if (theme === "mono") return "artist-theme-mono";
+  if (theme === "mono_b") return "artist-theme-mono-b";
   if (theme === "ink") return "artist-theme-ink";
+  if (theme === "ink_b") return "artist-theme-ink-b";
   if (theme === "verdure") return "artist-theme-verdure";
+  if (theme === "verdure_b") return "artist-theme-verdure-b";
   if (theme === "amber") return "artist-theme-amber";
+  if (theme === "amber_b") return "artist-theme-amber-b";
   if (theme === "akemi_brutalist") return "artist-theme-akemi-brutalist";
+  if (theme === "akemi_brutalist_b") return "artist-theme-akemi-brutalist-b";
+  if (theme === "atelier_b") return "artist-theme-atelier-b";
   return "artist-theme-atelier";
 }
 
@@ -50,7 +57,9 @@ export default async function ArtistSitePage({ params }: { params: Promise<Param
   const tenant = await getArtistTenantBySlug(slug);
   if (!tenant) notFound();
 
-  const locale = await getRequestLocale();
+  // i18n is an expanded-tier feature — basic artists get English only
+  const hasI18n = isTierAtLeast(tenant.plan_code, "expanded");
+  const locale = hasI18n ? await getRequestLocale() : "en";
   const dictionary = getPublicDictionary(locale);
   const sections = await getHomepageSections(locale, tenant.owner_user_id);
   const galleries = await getGalleries(tenant.owner_user_id);
@@ -217,7 +226,7 @@ export default async function ArtistSitePage({ params }: { params: Promise<Param
           brandEyebrow="Artist Site"
           brandTitle={tenant.studio_name}
           themeLabels={dictionary.theme}
-          localeLabel={dictionary.locale.label}
+          localeLabel={hasI18n ? dictionary.locale.label : undefined}
         />
         {visibleSections.map((section) =>
           renderers.get(section.section_key)?.render(section)
