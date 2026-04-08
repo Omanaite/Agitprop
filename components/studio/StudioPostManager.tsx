@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AdminSectionSkeleton } from "@/components/admin/AdminSectionSkeleton";
+import { useStudioPreview } from "@/lib/studio-preview-context";
 
 type Post = {
   id: string;
@@ -47,6 +48,7 @@ function toLocalInput(value?: string | null) {
 }
 
 export function StudioPostManager() {
+  const { refreshPreview } = useStudioPreview();
   const [items, setItems] = useState<Post[]>([]);
   const [form, setForm] = useState<PostForm>(emptyPost);
   const [status, setStatus] = useState<string>("");
@@ -180,6 +182,7 @@ export function StudioPostManager() {
     await load();
     setStatus("Saved.");
     setIsSaving(false);
+    refreshPreview();
   }
 
   async function handleDelete(id: string) {

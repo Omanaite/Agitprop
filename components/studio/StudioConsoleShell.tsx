@@ -21,6 +21,7 @@ import { StudioSiteSettings } from "@/components/studio/StudioSiteSettings";
 import { StudioBookingsManager } from "@/components/studio/StudioBookingsManager";
 import { StudioRatesManager } from "@/components/studio/StudioRatesManager";
 import { StudioAvailabilityManager } from "@/components/studio/StudioAvailabilityManager";
+import { StudioStorageBanner } from "@/components/studio/StudioStorageBanner";
 
 type Section = {
   id: string;
@@ -108,6 +109,9 @@ export function StudioConsoleShell() {
     >
       <aside className="admin-card p-4 lg:sticky lg:top-6 lg:h-fit">
         <div className="mb-5 px-2">
+          <div className="mb-4">
+            <StudioStorageBanner />
+          </div>
           <p className="admin-chip">{activeSection.eyebrow}</p>
           <h2 className="admin-title mt-4 text-2xl font-semibold">
             {activeSection.label}

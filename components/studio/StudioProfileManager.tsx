@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { AdminSectionSkeleton } from "@/components/admin/AdminSectionSkeleton";
+import { useStudioPreview } from "@/lib/studio-preview-context";
 
 type Profile = {
   email: string;
@@ -33,6 +34,7 @@ function sanitizeSlugInput(value: string) {
 }
 
 export function StudioProfileManager() {
+  const { refreshPreview } = useStudioPreview();
   const [profile, setProfile] = useState<Profile>(emptyProfile);
   const [slugInput, setSlugInput] = useState("");
   const [slugStatus, setSlugStatus] = useState("");
@@ -101,6 +103,7 @@ export function StudioProfileManager() {
       setSlugInput(data.slug);
       setSlugStatus("Page name saved.");
       setIsNewArtist(false);
+      refreshPreview();
     }
     setIsSavingSlug(false);
   }
@@ -125,6 +128,7 @@ export function StudioProfileManager() {
       setProfile((p) => ({ ...p, studio_name: data.studio_name }));
       setStudioNameInput(data.studio_name);
       setStudioNameStatus("Studio name saved.");
+      refreshPreview();
     }
     setIsSavingStudioName(false);
   }

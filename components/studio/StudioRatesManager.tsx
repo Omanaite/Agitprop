@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AdminSectionSkeleton } from "@/components/admin/AdminSectionSkeleton";
+import { useStudioPreview } from "@/lib/studio-preview-context";
 
 type RateCard = {
   id: string;
@@ -20,6 +21,7 @@ function emptyCard(): RateCard {
 }
 
 export function StudioRatesManager() {
+  const { refreshPreview } = useStudioPreview();
   const [cards, setCards] = useState<RateCard[]>([]);
   const [status, setStatus] = useState("");
   const [isSaving, setIsSaving] = useState(false);
@@ -69,6 +71,7 @@ export function StudioRatesManager() {
       setStatus(data?.message ?? "Failed to save rates.");
     } else {
       setStatus("Rates saved.");
+      refreshPreview();
     }
     setIsSaving(false);
   }

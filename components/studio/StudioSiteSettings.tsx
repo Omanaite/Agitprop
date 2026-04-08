@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AdminSectionSkeleton } from "@/components/admin/AdminSectionSkeleton";
+import { useStudioPreview } from "@/lib/studio-preview-context";
 import {
   DEFAULT_TENANT_THEMES,
   AKEMI_TENANT_THEME,
@@ -27,6 +28,7 @@ const THEME_DESCRIPTIONS: Record<string, string> = {
 };
 
 export function StudioSiteSettings() {
+  const { refreshPreview } = useStudioPreview();
   const [currentTheme, setCurrentTheme] = useState<TenantTheme>("atelier");
   const [selectedTheme, setSelectedTheme] = useState<TenantTheme>("atelier");
   const [isAkemi, setIsAkemi] = useState(false);
@@ -87,6 +89,7 @@ export function StudioSiteSettings() {
     setStatus("Site theme saved.");
     setIsError(false);
     setIsSaving(false);
+    refreshPreview();
   }
 
   if (isLoading) {

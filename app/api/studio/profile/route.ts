@@ -95,13 +95,14 @@ export async function GET(request: Request) {
 
   const { data: tenantData } = await adminClient
     .from("artist_tenants")
-    .select("site_theme,slug,studio_name")
+    .select("site_theme,slug,studio_name,plan_code")
     .eq("owner_user_id", user.id)
     .maybeSingle();
 
   const siteTheme = tenantData?.site_theme ?? "atelier";
   const tenantSlug = tenantData?.slug ?? null;
   const studioName = tenantData?.studio_name ?? null;
+  const planCode = tenantData?.plan_code ?? "basic";
 
   return NextResponse.json({
     profile: {
@@ -115,6 +116,7 @@ export async function GET(request: Request) {
       site_theme: siteTheme,
       slug: tenantSlug,
       studio_name: studioName,
+      plan_code: planCode,
     },
   });
 }
