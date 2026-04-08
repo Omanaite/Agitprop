@@ -158,6 +158,7 @@ export function StudioSiteSettings() {
   const isDirty = selectedTheme !== currentTheme;
 
   return (
+    <>
     <section className="admin-card p-6 md:p-7">
       <p className="admin-chip">Appearance</p>
       <h2 className="admin-title mt-4 text-2xl font-semibold">Site Theme</h2>
@@ -302,5 +303,6 @@ export function StudioSiteSettings() {
         </p>
       )}
     </section>
+    </>
   );
 }
