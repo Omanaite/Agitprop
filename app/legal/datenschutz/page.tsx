@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const LAST_UPDATED = "2025-01-01";
+const LAST_UPDATED = "2026-04-07";
 
 export default function DatenschutzPage() {
   return (
@@ -25,11 +25,11 @@ export default function DatenschutzPage() {
             Verantwortlicher im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:
           </p>
           <p className="mt-2">
-            [VORNAME NACHNAME]<br />
-            [STRAßE UND HAUSNUMMER]<br />
-            [PLZ] [STADT]<br />
+            Pablo Horacio Chandia Cornejo<br />
+            Paul-Heyse-Str. 47<br />
+            04347 Leipzig<br />
             Deutschland<br />
-            E-Mail: [EMAIL@BEISPIEL.DE]
+            E-Mail: chandiapablo@outlook.com
           </p>
         </div>
 
@@ -91,7 +91,7 @@ export default function DatenschutzPage() {
         <div>
           <h2 className="text-lg font-bold uppercase mb-3">6. Zahlungsabwicklung</h2>
           <p>
-            Zahlungen werden über [ZAHLUNGSDIENSTLEISTER, z. B. Stripe] abgewickelt.
+            Zahlungen werden über [ZAHLUNGSDIENSTLEISTER — PENDIENTE] abgewickelt.
             Zahlungsdaten (Karteninformationen, Bankdaten) werden ausschließlich durch den
             Zahlungsdienstleister verarbeitet und nicht vom Betreiber gespeichert. Es gelten
             die Datenschutzbestimmungen des jeweiligen Anbieters.
@@ -157,12 +157,10 @@ export default function DatenschutzPage() {
             </li>
           </ul>
           <p className="mt-2">
-            Zur Ausübung dieser Rechte wenden Sie sich an: [EMAIL@BEISPIEL.DE]
+            Zur Ausübung dieser Rechte wenden Sie sich an: chandiapablo@outlook.com
           </p>
           <p className="mt-2">
-            Zuständige Aufsichtsbehörde: [Zuständige Landesdatenschutzbehörde, z. B.
-            Bayerisches Landesamt für Datenschutzaufsicht (BayLDA) oder Berliner
-            Beauftragter für Datenschutz — abhängig von Ihrem Bundesland].
+            Zuständige Aufsichtsbehörde: Sächsischer Datenschutzbeauftragter (SDtB), Devrientstraße 5, 01067 Dresden.
           </p>
         </div>
 

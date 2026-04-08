@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const LAST_UPDATED = "2025-01-01"; // Actualizar en cada revisión
+const LAST_UPDATED = "2026-04-07"; // Actualizar en cada revisión
 
 export default function AGBPage() {
   return (
@@ -25,8 +25,8 @@ export default function AGBPage() {
           <h2 className="text-lg font-bold uppercase mb-3">§ 1 Geltungsbereich und Anbieter</h2>
           <p>
             Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für die Nutzung der
-            Plattform Agitprop (nachfolgend „Plattform"), betrieben von [VORNAME NACHNAME],
-            [STRAßE], [PLZ STADT], Deutschland (nachfolgend „Betreiber").
+            Plattform Agitprop (nachfolgend „Plattform"), betrieben von Pablo Horacio Chandia Cornejo,
+            Paul-Heyse-Str. 47, 04347 Leipzig, Deutschland (nachfolgend „Betreiber").
           </p>
           <p className="mt-2">
             Agitprop ist ein digitales Marketplace- und Portfoliosystem, auf dem Künstler
@@ -117,7 +117,7 @@ export default function AGBPage() {
             entfernen (Notice and Takedown gemäß Art. 16 DSA).
           </p>
           <p className="mt-2">
-            Meldungen sind per E-Mail an [EMAIL@BEISPIEL.DE] zu richten und müssen folgende
+            Meldungen sind per E-Mail an chandiapablo@outlook.com zu richten und müssen folgende
             Angaben enthalten: (a) Bezeichnung des beanstandeten Inhalts mit URL,
             (b) Begründung der Rechtsverletzung, (c) Kontaktdaten des Meldenden.
           </p>
@@ -132,8 +132,8 @@ export default function AGBPage() {
             Tag des Vertragsschlusses.
           </p>
           <p className="mt-2">
-            Um Ihr Widerrufsrecht auszuüben, müssen Sie uns ([VORNAME NACHNAME],
-            [EMAIL@BEISPIEL.DE]) mittels einer eindeutigen Erklärung (z. B. eine per Post
+            Um Ihr Widerrufsrecht auszuüben, müssen Sie uns (Pablo Horacio Chandia Cornejo,
+            chandiapablo@outlook.com) mittels einer eindeutigen Erklärung (z. B. eine per Post
             versandte E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen,
             informieren.
           </p>
@@ -201,7 +201,7 @@ export default function AGBPage() {
           </p>
           <p className="mt-2">
             Gerichtsstand für alle Streitigkeiten mit Kaufleuten oder juristischen Personen
-            des öffentlichen Rechts ist [GERICHTSSTAND-STADT].
+            des öffentlichen Rechts ist Leipzig.
           </p>
         </div>
 

@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { useStudioPreview } from "@/lib/studio-preview-context";
 
 type Device = "desktop" | "tablet" | "mobile";
@@ -19,17 +18,8 @@ type Props = {
 
 export function StudioPreviewPanel({ device, onDeviceChange, onClose }: Props) {
   const { previewKey, slug } = useStudioPreview();
-  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const previewUrl = slug ? `/${slug}` : "/";
-
-  // Reload iframe when previewKey changes (triggered by save actions)
-  useEffect(() => {
-    if (previewKey === 0) return;
-    const iframe = iframeRef.current;
-    if (!iframe) return;
-    iframe.src = iframe.src;
-  }, [previewKey]);
 
   return (
     <div className="flex h-full flex-col border-l border-current/10 bg-[var(--bg)]">
@@ -83,7 +73,6 @@ export function StudioPreviewPanel({ device, onDeviceChange, onClose }: Props) {
           style={{ width: DEVICE_WIDTHS[device], maxWidth: "100%" }}
         >
           <iframe
-            ref={iframeRef}
             key={previewKey}
             src={previewUrl}
             title="Site preview"

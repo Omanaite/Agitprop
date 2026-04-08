@@ -226,7 +226,7 @@ export default async function ArtistSitePage({ params }: { params: Promise<Param
           <span className="opacity-60">—</span>
           <span className="opacity-70">This is a preview. Bookings are disabled.</span>
           <a
-            href="/studio/register"
+            href="/register"
             className="ml-4 rounded border border-current/30 px-3 py-1 font-semibold opacity-90 hover:opacity-100 transition-opacity"
           >
             Create your site →

@@ -27,9 +27,9 @@ export default function ImpressumPage() {
           <div>
             <strong>Angaben gemäß § 5 DDG</strong>
             <p className="mt-2">
-              [VORNAME NACHNAME]<br />
-              [STRAßE UND HAUSNUMMER]<br />
-              [PLZ] [STADT]<br />
+              Pablo Horacio Chandia Cornejo<br />
+              Paul-Heyse-Str. 47<br />
+              04347 Leipzig<br />
               Deutschland
             </p>
           </div>
@@ -37,7 +37,7 @@ export default function ImpressumPage() {
           <div>
             <strong>Kontakt</strong>
             <p className="mt-2">
-              E-Mail: [EMAIL@BEISPIEL.DE]<br />
+              E-Mail: chandiapablo@outlook.com<br />
               {/* Telefon ist optional, aber empfohlen: */}
               {/* Telefon: +49 [NUMMER] */}
             </p>
@@ -53,7 +53,7 @@ export default function ImpressumPage() {
 
                 Falls du umsatzsteuerpflichtig bist, trage hier ein:
               */}
-              Steuernummer: [STEUERNUMMER — beim Finanzamt erhalten]<br />
+              Steuernummer: [STEUERNUMMER — PENDIENTE]<br />
               {/* USt-IdNr.: DE[NUMMER] — nur wenn vorhanden */}
             </p>
           </div>
@@ -121,9 +121,9 @@ export default function ImpressumPage() {
           <div>
             <strong>Aviso legal conforme al § 5 DDG (Ley de Servicios Digitales)</strong>
             <p className="mt-2">
-              [NOMBRE COMPLETO]<br />
-              [CALLE Y NÚMERO]<br />
-              [CP] [CIUDAD]<br />
+              Pablo Horacio Chandia Cornejo<br />
+              Paul-Heyse-Str. 47<br />
+              04347 Leipzig<br />
               Alemania
             </p>
           </div>
@@ -131,14 +131,14 @@ export default function ImpressumPage() {
           <div>
             <strong>Contacto</strong>
             <p className="mt-2">
-              Email: [EMAIL@EJEMPLO.DE]
+              Email: chandiapablo@outlook.com
             </p>
           </div>
 
           <div>
             <strong>Datos fiscales</strong>
             <p className="mt-2">
-              Número de identificación fiscal: [NÚMERO — obtenido en la Hacienda alemana]<br />
+              Número de identificación fiscal: [STEUERNUMMER — PENDIENTE]<br />
               Nota: Si operas bajo la exención de pequeña empresa (§ 19 UStG), no necesitas
               número de IVA y debes indicarlo explícitamente.
             </p>
