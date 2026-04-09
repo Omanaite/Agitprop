@@ -29,7 +29,7 @@ const features = [
   },
   {
     title: "Your own URL",
-    body: "Choose your page name and go live at agitpropstudio.vercel.app/you. Custom domain support for premium plans.",
+    body: "Choose your page name and go live at agitpropstudio.vercel.app/you. Connect your own domain when you're ready.",
   },
   {
     title: "Visual themes",
@@ -42,21 +42,20 @@ const features = [
 ];
 
 const freeFeatures = [
-  "Up to 3 galleries",
-  "Up to 20 pieces per gallery",
-  "Up to 10 posts",
-  "Core booking intake",
-  "3 visual themes",
+  "2 galleries, 25 pieces, 5 posts",
+  "Booking intake from clients",
+  "All 5 visual themes included",
+  "Telegram notifications for bookings",
+  "Light / Eye / Dark mode",
+  "EN / ES / DE language toggle",
   "agitpropstudio.vercel.app/you URL",
 ];
 
-const proFeatures = [
-  "Unlimited galleries and pieces",
-  "Unlimited posts",
-  "Full scheduling and automations",
-  "Akemi Brutalist exclusive theme",
+const expandedFeatures = [
+  "Everything in the free tier",
+  "Unlimited galleries, pieces, and posts",
   "Custom domain support",
-  "Priority support",
+  "When your free storage fills up, manage your content by removing old pieces to make room — or keep everything and expand your storage.",
 ];
 
 function CheckIcon() {
@@ -122,10 +121,10 @@ export default function AgitpropPage() {
         {/* Pricing */}
         <section className="mt-6 grid gap-4 md:grid-cols-2">
           <article className="admin-card p-6 md:p-7">
-            <p className="admin-chip">Free forever</p>
-            <h3 className="admin-title mt-4 text-2xl font-semibold">Starter</h3>
+            <p className="admin-chip">Always free</p>
+            <h3 className="admin-title mt-4 text-2xl font-semibold">Free</h3>
             <p className="admin-muted mt-1 text-sm leading-6">
-              Everything you need to launch and start getting clients.
+              Everything you need to have a professional online presence. No credit card, no trial.
             </p>
             <ul className="mt-5 space-y-2.5">
               {freeFeatures.map((item) => (
@@ -140,19 +139,19 @@ export default function AgitpropPage() {
                 href="/register"
                 className="admin-button admin-button-primary w-full justify-center"
               >
-                Create free account
+                Create your site — free
               </Link>
             </div>
           </article>
 
           <article className="admin-card p-6 md:p-7">
-            <p className="admin-chip">Premium</p>
-            <h3 className="admin-title mt-4 text-2xl font-semibold">Studio Pro</h3>
+            <p className="admin-chip">More storage</p>
+            <h3 className="admin-title mt-4 text-2xl font-semibold">Expanded Storage</h3>
             <p className="admin-muted mt-1 text-sm leading-6">
-              Full feature set for serious artists growing a client base.
+              When your free storage fills up, you can expand it. No subscriptions — you decide when and how much.
             </p>
             <ul className="mt-5 space-y-2.5">
-              {proFeatures.map((item) => (
+              {expandedFeatures.map((item) => (
                 <li key={item} className="flex items-start gap-2 text-sm">
                   <CheckIcon />
                   <span className="text-[var(--admin-title)]">{item}</span>
@@ -164,7 +163,7 @@ export default function AgitpropPage() {
                 href="/register"
                 className="admin-button w-full justify-center"
               >
-                Start free, upgrade anytime
+                Start free
               </Link>
             </div>
           </article>
