@@ -297,8 +297,6 @@ export default async function Home() {
           locale={locale}
           brandEyebrow={dictionary.brand.eyebrow}
           brandTitle={dictionary.brand.title}
-          themeLabels={dictionary.theme}
-          localeLabel={dictionary.locale.label}
         />
 
         {visibleSections.map((section) =>

@@ -128,8 +128,6 @@ export default async function TenantGalleryDetailPage({
           locale={locale}
           brandEyebrow="Artist Site"
           brandTitle={tenant.studio_name}
-          themeLabels={dictionary.theme}
-          localeLabel={dictionary.locale.label}
         />
 
         <Section id="gallery" title={gallery.title} eyebrow="Gallery">
