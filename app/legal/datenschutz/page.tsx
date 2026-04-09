@@ -193,7 +193,7 @@ export default function DatenschutzPage() {
 
         <div>
           <h3 className="font-bold mb-2">1. Responsable del tratamiento</h3>
-          <p>[NOMBRE COMPLETO], [DIRECCIÓN], Alemania. Email: [EMAIL@EJEMPLO.DE]</p>
+          <p>Pablo Horacio Chandia Cornejo, Paul-Heyse-Str. 47, 04347 Leipzig, Alemania. Email: chandiapablo@outlook.com</p>
         </div>
 
         <div>
@@ -229,7 +229,7 @@ export default function DatenschutzPage() {
             Conforme al RGPD, los usuarios tienen derecho de acceso, rectificación,
             supresión (&quot;derecho al olvido&quot;), limitación del tratamiento,
             portabilidad de datos, oposición y reclamación ante la autoridad supervisora.
-            Para ejercerlos: [EMAIL@EJEMPLO.DE].
+            Para ejercerlos: chandiapablo@outlook.com.
           </p>
         </div>
 

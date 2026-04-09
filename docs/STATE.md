@@ -97,16 +97,22 @@ Ordered by difficulty in that file. After items 1-3 above are clear:
 | `app/akemi/page.tsx` | Legacy Akemi hardcoded route (keep for now) |
 | `app/studio/login/actions.ts` | Studio-specific login action |
 | `app/register/actions.ts` | Registration via admin API (no SMTP) |
+| `app/legal/impressum/page.tsx` | Impressum — § 5 DDG (datos reales de Pablo) |
+| `app/legal/agb/page.tsx` | AGB — Términos y Condiciones alemanes |
+| `app/legal/datenschutz/page.tsx` | Datenschutzerklärung — DSGVO |
 | `components/studio/StudioBookingsManager.tsx` | Bookings + reschedule UI |
 | `components/studio/StudioHomepageSectionsManager.tsx` | Section editor |
 | `components/GalleryGrid.tsx` | Public piece grid + detail modal |
 | `components/PostFeed.tsx` | Public post feed + detail modal |
-| `lib/tenants/theme.ts` | Theme policy — AKEMI_SLUG = "akemion-tattoo" |
+| `lib/tenants/theme.ts` | Theme policy — delega a akemi-pilot.ts |
+| `lib/tenants/akemi-pilot.ts` | **Fuente de verdad del tenant piloto** — identidad, design tokens, art style |
+| `lib/legal/templates.ts` | **Datos legales del operador** — OPERATOR, getAGBSections(), getDatenschutzSections() |
 | `lib/availability.ts` | Shared DEFAULT_AVAILABILITY |
 | `lib/i18n.ts` | Akemi's about text (to be migrated to DB) |
 | `lib/validators.ts` | Zod schemas — site_theme enum includes verdure/amber |
 | `proxy.ts` | Auth guard (Next 16 — not middleware.ts) |
 | `docs/POST_MVP_BACKLOG.md` | Full backlog ordered by difficulty |
+| `docs/ENGINEERING_CONTEXT.md` | **Skills convertidas a funciones** — leer antes de cargar cualquier skill |
 
 ---
 

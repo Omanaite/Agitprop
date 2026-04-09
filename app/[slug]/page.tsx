@@ -8,6 +8,7 @@ import { Section } from "@/components/Section";
 import { Footer } from "@/components/Footer";
 import { GalleryFilter } from "@/components/GalleryFilter";
 import { BookingForm } from "@/components/BookingForm";
+import { PaymentButtons } from "@/components/PaymentButtons";
 import { ContactForm } from "@/components/ContactForm";
 import { getArtistTenantBySlug } from "@/lib/data/artist-tenants";
 import { getGalleries } from "@/lib/data/galleries";
@@ -162,18 +163,25 @@ export default async function ArtistSitePage({ params }: { params: Promise<Param
           return (
             <Section key="rates" id="rates" title={section.title} eyebrow={section.eyebrow ?? undefined}>
               {cards.length > 0 ? (
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {cards.map((card) => (
-                    <div key={card.id} className="theme-border rounded-xl p-5">
-                      <p className="text-xs uppercase tracking-[0.2em] opacity-60">{card.label}</p>
-                      <p className="mt-2 text-2xl font-bold">{card.price}</p>
-                      {card.description && <p className="mt-2 text-sm opacity-70 leading-6">{card.description}</p>}
-                      {card.capacity != null && (
-                        <p className="mt-3 text-xs uppercase tracking-[0.2em] opacity-50">{card.capacity} spots available</p>
-                      )}
+                <>
+                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {cards.map((card) => (
+                      <div key={card.id} className="theme-border rounded-xl p-5">
+                        <p className="text-xs uppercase tracking-[0.2em] opacity-60">{card.label}</p>
+                        <p className="mt-2 text-2xl font-bold">{card.price}</p>
+                        {card.description && <p className="mt-2 text-sm opacity-70 leading-6">{card.description}</p>}
+                        {card.capacity != null && (
+                          <p className="mt-3 text-xs uppercase tracking-[0.2em] opacity-50">{card.capacity} spots available</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  {!isDemo && (
+                    <div className="mt-8">
+                      <PaymentButtons copy={dictionary.rates} tenantSlug={tenant.slug} />
                     </div>
-                  ))}
-                </div>
+                  )}
+                </>
               ) : (
                 <p className="text-sm opacity-60">Rates coming soon. Contact for pricing.</p>
               )}

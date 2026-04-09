@@ -29,6 +29,30 @@ Keep execution quality stable across long sessions, context compaction, and hand
 - `ui-ux-pro-max` for private/public UX consistency.
 - `sdd-*` skills for spec/design/tasks traceability.
 
+## Skills convertidas a funciones backend (NO usar la skill — usar el código)
+
+Las siguientes skills han sido eliminadas del sistema de prompts y reemplazadas por
+funciones TypeScript deterministas. El modelo debe importar estas funciones en lugar
+de "razonar" sobre el dominio.
+
+| Skill eliminada | Reemplazada por | Qué resuelve |
+|---|---|---|
+| `design-akemi-specs` (`.agents/skills/desing-user-specs/`) | `lib/tenants/akemi-pilot.ts` → `AKEMI_PILOT` | Tokens de diseño, identidad del tenant piloto, principios del tema Brutalist. Importar `AKEMI_PILOT.designTokens` o `AKEMI_PILOT.artStyle`. |
+| `terms-page-generator` (skill genérica) | `lib/legal/templates.ts` → `OPERATOR`, `getAGBSections()`, `getDatenschutzSections()` | Datos del operador, secciones AGB y Datenschutz tipadas. Las páginas en `app/legal/` consumen estos datos. |
+
+### Regla para nuevas skills
+Antes de cargar una skill como contexto, evaluar si su output es determinista.
+Si lo es → convertir a función en `lib/` y documentar aquí.
+Si requiere razonamiento contextual → usar skill normalmente.
+
+### Pendientes de conversión (Prioridad 2)
+- `agent-teams-lite` → `lib/agents/orchestrator.ts` (state machine de fases SDD)
+- `spec-kit-command-cursor` → `lib/agents/spec-runner.ts` (fases serializadas JSON)
+
+### Pendientes de conversión (Prioridad 3)
+- `next-best-practices` → ESLint custom rules (`.eslintrc.json`)
+- `web-design-guidelines` → script `tools/audit-a11y.ts` con axe-core
+
 ## Release discipline
 - Use prefixed commits (`feat:`, `fix:`, `docs:`, etc.).
 - Keep PR notes aligned with roadmap phase and risk.

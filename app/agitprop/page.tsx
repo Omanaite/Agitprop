@@ -223,6 +223,11 @@ export default function AgitpropPage() {
             Pablo Chandía
           </a>
           .
+          <div className="mt-3 flex justify-center gap-6 text-xs uppercase tracking-widest border-t border-[var(--admin-border)] pt-3">
+            <a href="/legal/impressum" className="hover:underline">Impressum</a>
+            <a href="/legal/agb" className="hover:underline">AGB</a>
+            <a href="/legal/datenschutz" className="hover:underline">Datenschutz</a>
+          </div>
         </footer>
       </div>
     </div>

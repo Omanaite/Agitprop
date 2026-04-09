@@ -5,6 +5,7 @@ import { useState } from "react";
 type PaymentType = "deposit" | "design";
 
 type PaymentButtonsProps = {
+  tenantSlug?: string;
   copy: {
     paymentStateStripeUnavailable: string;
     paymentStatePaypalUnavailable: string;
@@ -17,8 +18,7 @@ type PaymentButtonsProps = {
   };
 };
 
-// Client helper to trigger Stripe or PayPal checkout flows.
-export function PaymentButtons({ copy }: PaymentButtonsProps) {
+export function PaymentButtons({ copy, tenantSlug }: PaymentButtonsProps) {
   const [state, setState] = useState<string>("");
 
   async function startStripe(type: PaymentType) {
@@ -26,7 +26,7 @@ export function PaymentButtons({ copy }: PaymentButtonsProps) {
     const res = await fetch("/api/payments/stripe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ type }),
+      body: JSON.stringify({ type, tenantSlug }),
     });
     const data = await res.json();
     if (data.url) {
@@ -41,11 +41,11 @@ export function PaymentButtons({ copy }: PaymentButtonsProps) {
     const res = await fetch("/api/payments/paypal", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ type }),
+      body: JSON.stringify({ type, tenantSlug }),
     });
     const data = await res.json();
-    if (data.id) {
-      setState(`PayPal order created: ${data.id}`);
+    if (data.approvalUrl) {
+      window.location.href = data.approvalUrl;
     } else {
       setState(copy.paymentStatePaypalUnavailable);
     }
@@ -81,9 +81,11 @@ export function PaymentButtons({ copy }: PaymentButtonsProps) {
       >
         {copy.payDesignPaypal}
       </button>
-      {state ? (
-        <p className="text-xs uppercase tracking-[0.2em]">{state}</p>
-      ) : null}
+      {state && (
+        <p className="md:col-span-2 text-xs uppercase tracking-[0.2em] opacity-70">
+          {state}
+        </p>
+      )}
     </div>
   );
 }

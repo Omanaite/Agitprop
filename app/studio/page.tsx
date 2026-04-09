@@ -6,6 +6,7 @@ import { StudioSiteLink } from "@/components/studio/StudioSiteLink";
 import { StudioSplitLayout } from "@/components/studio/StudioSplitLayout";
 import { StudioPreviewProvider } from "@/lib/studio-preview-context";
 import { StudioSlugLoader } from "@/components/studio/StudioSlugLoader";
+import { StudioChatbot } from "@/components/studio/StudioChatbot";
 import { createSupabaseServerClient } from "@/lib/supabase/ssr";
 import { createSupabaseServerClient as createAdminClient } from "@/lib/supabase/server";
 
@@ -71,6 +72,7 @@ export default async function StudioPage() {
           </StudioSplitLayout>
         </div>
       </div>
+      <StudioChatbot />
     </StudioPreviewProvider>
   );
 }
