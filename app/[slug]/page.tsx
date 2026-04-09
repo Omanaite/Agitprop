@@ -16,7 +16,6 @@ import { getPublishedPosts } from "@/lib/data/posts";
 import { getHomepageSections } from "@/lib/data/homepage-sections";
 import { getPublicDictionary } from "@/lib/i18n";
 import { getRequestLocale } from "@/lib/request-locale";
-import { isTierAtLeast } from "@/lib/tenants/plan";
 import type { HomepageSection } from "@/types";
 
 const RESERVED = new Set(["admin", "studio", "api", "register", "agitprop", "akemi", "galleries"]);
@@ -57,9 +56,8 @@ export default async function ArtistSitePage({ params }: { params: Promise<Param
   const tenant = await getArtistTenantBySlug(slug);
   if (!tenant) notFound();
 
-  // i18n is an expanded-tier feature — basic artists get English only
-  const hasI18n = isTierAtLeast(tenant.plan_code, "expanded");
-  const locale = hasI18n ? await getRequestLocale() : "en";
+  // i18n is free for all tiers
+  const locale = await getRequestLocale();
   const dictionary = getPublicDictionary(locale);
   const sections = await getHomepageSections(locale, tenant.owner_user_id);
   const galleries = await getGalleries(tenant.owner_user_id);
@@ -240,7 +238,7 @@ export default async function ArtistSitePage({ params }: { params: Promise<Param
           brandEyebrow="Artist Site"
           brandTitle={tenant.studio_name}
           themeLabels={dictionary.theme}
-          localeLabel={hasI18n ? dictionary.locale.label : undefined}
+          localeLabel={dictionary.locale.label}
         />
         {visibleSections.map((section) =>
           renderers.get(section.section_key)?.render(section)
