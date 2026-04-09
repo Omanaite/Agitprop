@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const LAST_UPDATED = "2026-04-07"; // Actualizar en cada revisión
+const LAST_UPDATED = "2026-04-09"; // Actualizar en cada revisión
 
 export default function AGBPage() {
   return (
@@ -29,10 +29,10 @@ export default function AGBPage() {
             Paul-Heyse-Str. 47, 04347 Leipzig, Deutschland (nachfolgend „Betreiber").
           </p>
           <p className="mt-2">
-            Agitprop ist ein digitales Marketplace- und Portfoliosystem, auf dem Künstler
-            (nachfolgend „Künstler") ihre Werke veröffentlichen, präsentieren und verkaufen
-            können. Käufer (nachfolgend „Käufer") können über die Plattform Werke von
-            Künstlern erwerben.
+            Agitprop ist eine kostenlose digitale Plattform für unabhängige Künstler
+            (Musiker, Illustratoren, Fotografen, Tätowierer u. a.), auf der diese ihr Portfolio
+            veröffentlichen, Buchungsanfragen empfangen und ihre Online-Präsenz verwalten können.
+            Agitprop ist kein Verkaufsmarktplatz.
           </p>
           <p className="mt-2">
             Abweichende Bedingungen der Nutzer werden nicht anerkannt, es sei denn, der
@@ -48,23 +48,62 @@ export default function AGBPage() {
             Betreiber und dem Nutzer zustande.
           </p>
           <p className="mt-2">
+            Die Grundnutzung der Plattform ist kostenlos. Es fallen keine Abonnementgebühren an.
+            Kostenpflichtige Leistungen sind ausschließlich die freiwillige Erweiterung des
+            Speicherplatzes sowie die Registrierung einer eigenen Domain (siehe § 3a).
+          </p>
+          <p className="mt-2">
             Der Nutzer versichert, volljährig zu sein und die Plattform nur für rechtmäßige
             Zwecke zu nutzen.
           </p>
         </div>
 
         <div>
-          <h2 className="text-lg font-bold uppercase mb-3">§ 3 Vermittlerrolle des Betreibers</h2>
+          <h2 className="text-lg font-bold uppercase mb-3">§ 3 Rolle des Betreibers</h2>
           <p>
-            Der Betreiber tritt bei Kauf- und Dienstleistungsverträgen über Kunstwerke
-            lediglich als technischer Vermittler (Vermittler) auf. Der Kaufvertrag kommt
-            ausschließlich zwischen dem Künstler als Verkäufer und dem Käufer zustande.
-            Der Betreiber ist nicht Vertragspartei dieser Geschäfte.
+            Agitprop ist eine Präsentations- und Verwaltungsplattform für unabhängige Künstler.
+            Der Betreiber stellt die technische Infrastruktur bereit, um Portfolios, Buchungsanfragen,
+            Veröffentlichungen und Kontaktmöglichkeiten zu verwalten.
           </p>
           <p className="mt-2">
-            Der Betreiber übernimmt keine Haftung für die Erfüllung der zwischen Künstlern
-            und Käufern geschlossenen Verträge, die Qualität der angebotenen Werke oder
-            eventuelle Leistungsstörungen.
+            Der Betreiber ist kein Vertragspartei von Vereinbarungen zwischen Künstlern und
+            deren Kunden (z. B. Buchungen, Kommissionen oder Zahlungen). Diese Verträge kommen
+            ausschließlich zwischen dem Künstler und dem Endkunden zustande.
+          </p>
+          <p className="mt-2">
+            Zahlungsabwicklungen (PayPal, Stripe) werden direkt zwischen dem Künstler und dem
+            Kunden abgewickelt. Der Betreiber übernimmt keine Haftung für diese Transaktionen.
+          </p>
+        </div>
+
+        <div>
+          <h2 className="text-lg font-bold uppercase mb-3">§ 3a Speicherplatz und Domains</h2>
+          <p className="font-bold mt-2">Kostenloser Speicher</p>
+          <p className="mt-2">
+            Jedes Konto verfügt über ein kostenloses Speicherkontingent: 2 Galerien, 25 Werke
+            und 5 Beiträge. Bei Erreichen dieses Limits kann der Nutzer ältere Inhalte löschen,
+            um Platz freizugeben, oder eine Speichererweiterung beantragen.
+          </p>
+          <p className="mt-2">
+            Eine Speichererweiterung ist kein Abonnement. Es handelt sich um eine einmalige
+            Zahlung, deren Höhe in Abhängigkeit vom benötigten Umfang mit dem Betreiber
+            vereinbart wird. Kontakt: chandiapablo@outlook.com.
+          </p>
+          <p className="font-bold mt-4">Custom Domain über Vercel</p>
+          <p className="mt-2">
+            Nutzer, die eine eigene Domain wünschen, können diese direkt über Vercel (vercel.com)
+            erwerben. Agitprop ist auf der Vercel-Infrastruktur gehostet; die Vercel-Domain-API
+            ist direkt in die Plattform integriert, sodass die Domain nach dem Kauf automatisch
+            mit der Künstlerseite verbunden wird. Der Nutzer zahlt den von Vercel festgelegten
+            Preis direkt an Vercel — der Betreiber erhebt keinen Aufschlag.
+          </p>
+          <p className="font-bold mt-4">Domain bei einem anderen Anbieter</p>
+          <p className="mt-2">
+            Falls der Nutzer eine Domain besitzt, die bei einem Drittanbieter (z. B. GoDaddy,
+            Namecheap, Google Domains) registriert ist, ist eine Verbindung mit der Plattform
+            nur im Rahmen einer individuellen Vereinbarung mit dem Entwickler möglich.
+            In diesem Fall ist eine gesonderte Absprache mit dem Betreiber unter
+            chandiapablo@outlook.com erforderlich.
           </p>
         </div>
 
@@ -224,18 +263,47 @@ export default function AGBPage() {
           <h3 className="font-bold mb-2">§ 1 Ámbito de aplicación y proveedor</h3>
           <p>
             Estas Condiciones Generales rigen el uso de la plataforma Agitprop
-            (agitprop.vercel.app), operada por [NOMBRE COMPLETO], [DIRECCIÓN], Alemania.
-            Agitprop es un marketplace digital donde los artistas pueden publicar, exhibir
-            y vender sus obras, y los compradores pueden adquirirlas.
+            (agitpropstudio.vercel.app), operada por Pablo Horacio Chandia Cornejo,
+            Paul-Heyse-Str. 47, 04347 Leipzig, Alemania.
+            Agitprop es una plataforma gratuita de presencia digital para artistas independientes.
+            No es un marketplace de compraventa.
           </p>
         </div>
 
         <div>
-          <h3 className="font-bold mb-2">§ 3 Rol de intermediario</h3>
+          <h3 className="font-bold mb-2">§ 2 Uso gratuito y costos opcionales</h3>
           <p>
-            El operador actúa únicamente como intermediario técnico. El contrato de compraventa
-            se celebra exclusivamente entre el artista (vendedor) y el comprador. El operador
-            no es parte de dicho contrato y no asume responsabilidad por su cumplimiento.
+            El uso básico de la plataforma es completamente gratuito. No existen suscripciones.
+            Los únicos costos opcionales son: (1) ampliación de almacenamiento, acordada directamente
+            con el desarrollador; (2) dominio propio comprado a través de Vercel al precio de Vercel.
+          </p>
+        </div>
+
+        <div>
+          <h3 className="font-bold mb-2">§ 3 Rol del operador</h3>
+          <p>
+            El operador provee infraestructura técnica para que los artistas gestionen su portfolio,
+            bookings y contenido. No es parte de ningún acuerdo entre el artista y sus clientes.
+            Los pagos entre artista y cliente (vía PayPal o Stripe) son responsabilidad de las partes
+            involucradas.
+          </p>
+        </div>
+
+        <div>
+          <h3 className="font-bold mb-2">§ 3a Almacenamiento y dominios</h3>
+          <p>
+            <strong>Almacenamiento gratuito:</strong> 2 galerías, 25 piezas, 5 posts. Al llegar al
+            límite, el artista puede eliminar contenido antiguo o solicitar una ampliación de pago único
+            (no suscripción) acordada con el operador.
+          </p>
+          <p className="mt-2">
+            <strong>Dominio vía Vercel:</strong> El artista puede comprar un dominio directamente en
+            Vercel al precio de Vercel. Al registrarlo en el studio, queda conectado automáticamente.
+            El operador no cobra comisión.
+          </p>
+          <p className="mt-2">
+            <strong>Dominio en otro registrador:</strong> Requiere acuerdo individual con el desarrollador
+            (chandiapablo@outlook.com).
           </p>
         </div>
 

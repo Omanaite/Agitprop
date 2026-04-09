@@ -54,8 +54,7 @@ const freeFeatures = [
 const expandedFeatures = [
   "Everything in the free tier",
   "Unlimited galleries, pieces, and posts",
-  "Custom domain support",
-  "When your free storage fills up, manage your content by removing old pieces to make room — or keep everything and expand your storage.",
+  "Custom domain (purchased via Vercel — you pay Vercel's price directly)",
 ];
 
 function CheckIcon() {
@@ -145,10 +144,10 @@ export default function AgitpropPage() {
           </article>
 
           <article className="admin-card p-6 md:p-7">
-            <p className="admin-chip">More storage</p>
+            <p className="admin-chip">More space</p>
             <h3 className="admin-title mt-4 text-2xl font-semibold">Expanded Storage</h3>
             <p className="admin-muted mt-1 text-sm leading-6">
-              When your free storage fills up, you can expand it. No subscriptions — you decide when and how much.
+              The free tier has limits on galleries, pieces, and posts. When you hit them, you have two options: remove older content to free up space, or expand your storage. No subscriptions — you pay only for what you need, once.
             </p>
             <ul className="mt-5 space-y-2.5">
               {expandedFeatures.map((item) => (
@@ -167,6 +166,50 @@ export default function AgitpropPage() {
               </Link>
             </div>
           </article>
+        </section>
+
+        {/* Domain & storage explainer */}
+        <section className="admin-card mt-6 p-6 md:p-8">
+          <p className="admin-chip">How it works</p>
+          <h2 className="admin-title mt-4 text-2xl font-semibold">Storage & custom domains</h2>
+          <div className="mt-6 grid gap-6 sm:grid-cols-2">
+            <div>
+              <h3 className="admin-title text-base font-semibold">Free storage limit</h3>
+              <p className="admin-muted mt-2 text-sm leading-6">
+                Every account starts with a free storage tier: 2 galleries, 25 pieces, and 5 posts.
+                When you reach the limit, you can delete older content to make room — or contact us
+                to expand your storage. We&apos;ll set a fair one-time cost based on how much extra
+                space you need.
+              </p>
+            </div>
+            <div>
+              <h3 className="admin-title text-base font-semibold">Custom domain — via Vercel</h3>
+              <p className="admin-muted mt-2 text-sm leading-6">
+                Your site runs on Vercel, the same infrastructure used by major production apps.
+                If you want a custom domain (e.g. <span className="font-mono text-xs">yourname.com</span>),
+                you buy it directly through Vercel at their listed price — we don&apos;t mark it up.
+                The domain gets connected to your artist site automatically.
+              </p>
+            </div>
+            <div>
+              <h3 className="admin-title text-base font-semibold">Domain from another registrar?</h3>
+              <p className="admin-muted mt-2 text-sm leading-6">
+                If you already own a domain with GoDaddy, Namecheap, Google Domains, or any other
+                registrar, connecting it requires a custom agreement with the developer. Reach out
+                at <a href="mailto:chandiapablo@outlook.com" className="underline opacity-70 hover:opacity-100">chandiapablo@outlook.com</a> and
+                we&apos;ll work out the details.
+              </p>
+            </div>
+            <div>
+              <h3 className="admin-title text-base font-semibold">Why Vercel?</h3>
+              <p className="admin-muted mt-2 text-sm leading-6">
+                Agitprop is hosted on Vercel. Their domain API is directly integrated with the platform,
+                which means when you add a domain in your studio, it gets registered and routed to
+                your site automatically — no manual DNS configuration on our end.
+                It&apos;s the simplest, most reliable path.
+              </p>
+            </div>
+          </div>
         </section>
 
         {/* How it works */}
