@@ -237,8 +237,6 @@ export default async function ArtistSitePage({ params }: { params: Promise<Param
           locale={locale}
           brandEyebrow="Artist Site"
           brandTitle={tenant.studio_name}
-          themeLabels={dictionary.theme}
-          localeLabel={dictionary.locale.label}
         />
         {visibleSections.map((section) =>
           renderers.get(section.section_key)?.render(section)

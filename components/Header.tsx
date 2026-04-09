@@ -1,20 +1,12 @@
-import { PublicLocaleToggle } from "@/components/PublicLocaleToggle";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { SitePreferencesMenu } from "@/components/SitePreferencesMenu";
 import type { Locale } from "@/lib/i18n";
 import type { HomepageSection } from "@/types";
 
-// Primary navigation header with brutalist, high-contrast layout.
 type HeaderProps = {
   sections?: HomepageSection[];
   locale?: Locale;
   brandEyebrow?: string;
   brandTitle?: string;
-  themeLabels?: {
-    light: string;
-    eye: string;
-    dark: string;
-  };
-  localeLabel?: string;
 };
 
 const hiddenNavKeys = new Set(["hero"]);
@@ -24,8 +16,6 @@ export function Header({
   locale = "en",
   brandEyebrow = "Akemi",
   brandTitle = "Tattoo Manifesto",
-  themeLabels = { light: "Light", eye: "Eye", dark: "Dark" },
-  localeLabel,
 }: HeaderProps) {
   const navItems = sections.filter(
     (section) => section.is_visible && !hiddenNavKeys.has(section.section_key)
@@ -40,11 +30,8 @@ export function Header({
         </h1>
       </div>
       <div className="flex flex-col gap-4 md:items-end">
-        <div className="flex flex-wrap gap-3 md:justify-end">
-          <ThemeToggle labels={themeLabels} />
-          {localeLabel !== undefined && (
-            <PublicLocaleToggle locale={locale} label={localeLabel} />
-          )}
+        <div className="flex justify-end">
+          <SitePreferencesMenu locale={locale} />
         </div>
         <nav className="flex flex-wrap gap-4 text-xs uppercase tracking-[0.3em]">
           {navItems.map((section) => (
