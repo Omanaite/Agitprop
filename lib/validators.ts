@@ -7,6 +7,8 @@ export const bookingSchema = z.object({
   preferredDate: z.string().min(4),
   placement: z.string().min(2),
   description: z.string().min(10),
+  slot_id: z.string().optional(),
+  slot_label: z.string().optional(),
 });
 
 export const contactSchema = z.object({

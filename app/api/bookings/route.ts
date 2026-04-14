@@ -80,6 +80,8 @@ export async function POST(request: Request) {
       description: payload.description,
       status: "pending",
       owner_user_id: ownerUserId,
+      slot_id: payload.slot_id ?? null,
+      slot_label: payload.slot_label ?? null,
     });
 
     if (error) {
