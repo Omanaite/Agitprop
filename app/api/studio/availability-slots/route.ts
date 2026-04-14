@@ -6,20 +6,19 @@ import { enforceSameOrigin } from "@/lib/security";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import { logAuditEvent } from "@/lib/audit";
 
-const DAYS = ["mon","tue","wed","thu","fri","sat","sun"] as const;
-
+// Slot = a specific time window on a specific calendar date
 const slotSchema = z.object({
   id: z.string().min(1).max(40),
-  label: z.string().min(1).max(80),
-  days: z.array(z.enum(DAYS)).min(1),
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "date must be YYYY-MM-DD"),
   from: z.string().regex(/^\d{2}:\d{2}$/),
   until: z.string().regex(/^\d{2}:\d{2}$/),
   capacity: z.number().int().min(1).max(500),
+  label: z.string().max(80).optional().default(""),
   note: z.string().max(200).optional().default(""),
 });
 
 const bodySchema = z.object({
-  slots: z.array(slotSchema).max(20),
+  slots: z.array(slotSchema).max(200),
 });
 
 export type AvailabilitySlot = z.infer<typeof slotSchema>;
@@ -49,7 +48,15 @@ export async function GET(request: Request) {
     .eq("owner_user_id", auth.user.id)
     .maybeSingle();
 
-  return NextResponse.json({ slots: data?.availability_slots ?? [] });
+  // Return only future slots (today included), sorted by date+from
+  const today = new Date().toISOString().split("T")[0];
+  const slots: AvailabilitySlot[] = (data?.availability_slots ?? [])
+    .filter((s: AvailabilitySlot) => s.date >= today)
+    .sort((a: AvailabilitySlot, b: AvailabilitySlot) =>
+      a.date === b.date ? a.from.localeCompare(b.from) : a.date.localeCompare(b.date)
+    );
+
+  return NextResponse.json({ slots });
 }
 
 export async function PUT(request: Request) {
@@ -69,6 +76,12 @@ export async function PUT(request: Request) {
 
   if (error) return NextResponse.json({ message: "Failed to save." }, { status: 500 });
 
-  await logAuditEvent({ actor_email: r.user.email ?? null, action: "update", entity: "artist_tenants", entity_id: r.user.id, metadata: { availability_slots: true } });
+  await logAuditEvent({
+    actor_email: r.user.email ?? null,
+    action: "update",
+    entity: "artist_tenants",
+    entity_id: r.user.id,
+    metadata: { availability_slots: true },
+  });
   return NextResponse.json({ ok: true, slots: parsed.data.slots });
 }

@@ -5,20 +5,18 @@ import { useEffect, useState } from "react";
 type BookingFormState = "idle" | "submitting" | "success" | "error";
 
 type SlotWithCapacity = {
-  id: string;
-  label: string;
-  days: string[];
-  from: string;
-  until: string;
-  capacity: number;
-  note: string;
-  booked: number;
-  available: number;
+  id: string; date: string; from: string; until: string;
+  capacity: number; label?: string; note?: string;
+  booked: number; available: number;
 };
 
-const DAY_KEY: Record<number, string> = {
-  0: "sun", 1: "mon", 2: "tue", 3: "wed", 4: "thu", 5: "fri", 6: "sat",
-};
+const MONTHS = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+
+function formatDateLabel(ymd: string) {
+  const [y, m, d] = ymd.split("-").map(Number);
+  const weekday = new Date(ymd + "T12:00:00").toLocaleDateString("es-ES", { weekday: "long" });
+  return `${weekday.charAt(0).toUpperCase() + weekday.slice(1)}, ${d} ${MONTHS[m - 1]} ${y}`;
+}
 
 type BookingFormProps = {
   copy: {
@@ -32,17 +30,35 @@ type BookingFormProps = {
 };
 
 export function BookingForm({ copy, tenantSlug, demoMode }: BookingFormProps) {
-  const [state, setState] = useState<BookingFormState>("idle");
+  const [formState, setFormState] = useState<BookingFormState>("idle");
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState<{ path: string; message: string }[]>([]);
-  const [selectedDate, setSelectedDate] = useState("");
+
+  // Available dates (no slots yet)
+  const [availableDates, setAvailableDates] = useState<string[] | null>(null);
+  const [loadingDates, setLoadingDates] = useState(false);
+
+  // Selected date + its slots
+  const [selectedDate, setSelectedDate] = useState<string>("");
   const [slots, setSlots] = useState<SlotWithCapacity[] | null>(null);
   const [loadingSlots, setLoadingSlots] = useState(false);
   const [selectedSlotId, setSelectedSlotId] = useState<string>("");
-  const errorMap = new Map(errors.map((e) => [e.path, e.message]));
 
+  const errorMap = new Map(errors.map((e) => [e.path, e.message]));
   const today = new Date().toISOString().split("T")[0];
 
+  // Fetch available dates on mount
+  useEffect(() => {
+    if (!tenantSlug) return;
+    setLoadingDates(true);
+    fetch(`/api/public/availability-slots?slug=${encodeURIComponent(tenantSlug)}`)
+      .then((r) => r.json())
+      .then((d) => setAvailableDates(d.dates ?? null))
+      .catch(() => setAvailableDates(null))
+      .finally(() => setLoadingDates(false));
+  }, [tenantSlug]);
+
+  // Fetch slots when date selected
   useEffect(() => {
     if (!tenantSlug || !selectedDate) { setSlots(null); setSelectedSlotId(""); return; }
     setLoadingSlots(true);
@@ -55,39 +71,30 @@ export function BookingForm({ copy, tenantSlug, demoMode }: BookingFormProps) {
       .finally(() => setLoadingSlots(false));
   }, [tenantSlug, selectedDate]);
 
-  const slotsForDay = slots?.filter((s) => {
-    if (!selectedDate) return false;
-    const dow = new Date(selectedDate + "T12:00:00").getDay();
-    return s.days.includes(DAY_KEY[dow]);
-  }) ?? null;
-
-  const selectedSlot = slotsForDay?.find((s) => s.id === selectedSlotId) ?? null;
+  const selectedSlot = slots?.find((s) => s.id === selectedSlotId) ?? null;
+  const hasSlotSystem = availableDates !== null;
+  // If slot system active, require slot selection when slots exist for the day
+  const slotsRequired = hasSlotSystem && slots !== null && slots.length > 0;
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
 
-    // If there are slots configured, a slot selection is required
-    if (slotsForDay && slotsForDay.length > 0 && !selectedSlotId) {
-      setErrors([{ path: "slot", message: "Selecciona un horario disponible." }]);
-      setState("error");
+    if (slotsRequired && !selectedSlotId) {
+      setErrors([{ path: "slot", message: "Selecciona un horario." }]);
+      setFormState("error");
       setMessage("Selecciona un horario para continuar.");
       return;
     }
 
     if (demoMode) {
-      setState("success");
+      setFormState("success");
       setMessage("This is a live demo — no booking was saved. Register to accept real bookings.");
-      form.reset();
-      setSelectedDate("");
-      setSlots(null);
-      setSelectedSlotId("");
+      form.reset(); setSelectedDate(""); setSlots(null); setSelectedSlotId("");
       return;
     }
 
-    setState("submitting");
-    setMessage("");
-    setErrors([]);
+    setFormState("submitting"); setMessage(""); setErrors([]);
 
     const formData = new FormData(form);
     const payload: Record<string, string> = Object.fromEntries(
@@ -96,7 +103,9 @@ export function BookingForm({ copy, tenantSlug, demoMode }: BookingFormProps) {
     if (tenantSlug) payload.tenantSlug = tenantSlug;
     if (selectedSlot) {
       payload.slot_id = selectedSlot.id;
-      payload.slot_label = selectedSlot.label;
+      payload.slot_label = selectedSlot.label
+        ? `${selectedSlot.label} (${selectedSlot.from}–${selectedSlot.until})`
+        : `${selectedSlot.from}–${selectedSlot.until}`;
     }
 
     try {
@@ -110,21 +119,100 @@ export function BookingForm({ copy, tenantSlug, demoMode }: BookingFormProps) {
         setErrors(error.errors ?? []);
         throw new Error(error.message || copy.errorFallback);
       }
-      setState("success");
+      setFormState("success");
       setMessage(copy.success);
       setErrors([]);
       form.reset();
-      setSelectedDate("");
-      setSlots(null);
-      setSelectedSlotId("");
+      setSelectedDate(""); setSlots(null); setSelectedSlotId("");
     } catch (error) {
-      setState("error");
+      setFormState("error");
       setMessage(error instanceof Error ? error.message : copy.unexpected);
     }
   }
 
   return (
     <div className="space-y-4">
+
+      {/* Available dates list — shown when artist uses slot system */}
+      {hasSlotSystem && (
+        <div className="theme-border rounded-xl p-4">
+          <p className="text-xs uppercase tracking-[0.2em] opacity-60 mb-3">Fechas disponibles</p>
+          {loadingDates && <p className="text-xs opacity-50">Cargando…</p>}
+          {!loadingDates && availableDates && availableDates.length === 0 && (
+            <p className="text-xs opacity-50">No hay fechas disponibles por el momento.</p>
+          )}
+          {!loadingDates && availableDates && availableDates.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {availableDates.map((d) => (
+                <button
+                  key={d}
+                  type="button"
+                  onClick={() => setSelectedDate(selectedDate === d ? "" : d)}
+                  className={[
+                    "rounded-lg border px-3 py-1.5 text-xs font-semibold transition-all",
+                    selectedDate === d
+                      ? "bg-[var(--fg)] text-[var(--bg)] border-[var(--fg)]"
+                      : "theme-border hover:bg-[var(--fg)] hover:text-[var(--bg)]",
+                  ].join(" ")}
+                >
+                  {formatDateLabel(d)}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Slots for selected date */}
+      {selectedDate && (
+        <div>
+          {loadingSlots && <p className="text-xs opacity-50">Cargando horarios…</p>}
+          {!loadingSlots && slots !== null && slots.length === 0 && (
+            <p className="text-xs opacity-50">Sin horarios disponibles para este día.</p>
+          )}
+          {!loadingSlots && slots && slots.length > 0 && (
+            <div className="grid gap-2">
+              <p className="text-xs uppercase tracking-[0.2em] opacity-60">Horarios — {formatDateLabel(selectedDate)}</p>
+              {slots.map((slot) => {
+                const full = slot.available <= 0;
+                const selected = selectedSlotId === slot.id;
+                return (
+                  <button
+                    key={slot.id}
+                    type="button"
+                    disabled={full}
+                    onClick={() => { setSelectedSlotId(slot.id); setErrors([]); }}
+                    className={[
+                      "text-left rounded-xl border px-4 py-3 text-sm transition-all",
+                      full
+                        ? "opacity-40 cursor-not-allowed theme-border"
+                        : selected
+                          ? "bg-[var(--fg)] text-[var(--bg)] border-[var(--fg)]"
+                          : "theme-border hover:bg-[var(--fg)] hover:text-[var(--bg)]",
+                    ].join(" ")}
+                  >
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <span className="font-semibold">{slot.from} – {slot.until}</span>
+                      {slot.label && <span className="opacity-70 text-xs">{slot.label}</span>}
+                      {slot.capacity > 1 && (
+                        <span className={["text-xs", full ? "" : selected ? "opacity-70" : "opacity-50"].join(" ")}>
+                          {full ? "Completo" : `${slot.available} lugar${slot.available !== 1 ? "es" : ""} disponible${slot.available !== 1 ? "s" : ""}`}
+                        </span>
+                      )}
+                      {full && slot.capacity === 1 && <span className="text-xs">Ocupado</span>}
+                    </div>
+                    {slot.note && <p className="text-xs opacity-50 mt-1">{slot.note}</p>}
+                  </button>
+                );
+              })}
+              {errorMap.get("slot") && (
+                <p className="input-helper" data-variant="error">{errorMap.get("slot")}</p>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
       <form className="grid gap-4" onSubmit={handleSubmit}>
         <div className="grid gap-2">
           <label className="text-xs uppercase tracking-[0.2em]">
@@ -141,70 +229,24 @@ export function BookingForm({ copy, tenantSlug, demoMode }: BookingFormProps) {
           </label>
           {errorMap.get("email") && <p className="input-helper" data-variant="error">email: {errorMap.get("email")}</p>}
 
-          {/* Date picker */}
-          <label className="text-xs uppercase tracking-[0.2em]">
-            {copy.preferredDate}
-            <input
-              className={`hard-border mt-1 w-full px-3 py-2 ${errorMap.get("preferredDate") ? "input-error" : ""}`}
-              name="preferredDate" type="date" min={today} required
-              value={selectedDate}
-              onChange={(e) => { setSelectedDate(e.target.value); setErrors([]); setState("idle"); }}
-            />
-          </label>
-          {errorMap.get("preferredDate") && <p className="input-helper" data-variant="error">{errorMap.get("preferredDate")}</p>}
-
-          {/* Slot selector */}
-          {selectedDate && (
-            <div>
-              {loadingSlots && (
-                <p className="text-xs opacity-60 mt-1">Cargando horarios…</p>
+          {/* Date input — hidden if using slot system (date comes from slot selection) */}
+          {!hasSlotSystem && (
+            <>
+              <label className="text-xs uppercase tracking-[0.2em]">
+                {copy.preferredDate}
+                <input
+                  className={`hard-border mt-1 w-full px-3 py-2 ${errorMap.get("preferredDate") ? "input-error" : ""}`}
+                  name="preferredDate" type="date" min={today} required
+                />
+              </label>
+              {errorMap.get("preferredDate") && (
+                <p className="input-helper" data-variant="error">{errorMap.get("preferredDate")}</p>
               )}
-              {!loadingSlots && slotsForDay !== null && slotsForDay.length === 0 && (
-                <div className="theme-border rounded-xl p-4 mt-1">
-                  <p className="text-xs opacity-60">Sin disponibilidad para este día.</p>
-                </div>
-              )}
-              {!loadingSlots && slotsForDay && slotsForDay.length > 0 && (
-                <div className="mt-1">
-                  <p className="text-xs uppercase tracking-[0.2em] mb-2">Horario disponible</p>
-                  <div className="grid gap-2">
-                    {slotsForDay.map((slot) => {
-                      const full = slot.available <= 0;
-                      const selected = selectedSlotId === slot.id;
-                      return (
-                        <button
-                          key={slot.id}
-                          type="button"
-                          disabled={full}
-                          onClick={() => { setSelectedSlotId(slot.id); setErrors([]); }}
-                          className={[
-                            "text-left rounded-xl border px-4 py-3 text-sm transition-all",
-                            full
-                              ? "opacity-40 cursor-not-allowed border-current"
-                              : selected
-                                ? "bg-[var(--fg)] text-[var(--bg)] border-[var(--fg)]"
-                                : "theme-border hover:bg-[var(--fg)] hover:text-[var(--bg)]",
-                          ].join(" ")}
-                        >
-                          <span className="font-semibold">{slot.label}</span>
-                          <span className="ml-2 opacity-70 text-xs">{slot.from} – {slot.until}</span>
-                          {slot.capacity > 1 && (
-                            <span className={["ml-2 text-xs", full ? "" : selected ? "opacity-70" : "opacity-50"].join(" ")}>
-                              {full ? "Completo" : `${slot.available} lugar${slot.available !== 1 ? "es" : ""}`}
-                            </span>
-                          )}
-                          {full && slot.capacity === 1 && (
-                            <span className="ml-2 text-xs">Ocupado</span>
-                          )}
-                          {slot.note && <span className="block text-xs opacity-50 mt-0.5">{slot.note}</span>}
-                        </button>
-                      );
-                    })}
-                  </div>
-                  {errorMap.get("slot") && <p className="input-helper mt-2" data-variant="error">{errorMap.get("slot")}</p>}
-                </div>
-              )}
-            </div>
+            </>
+          )}
+          {/* When using slot system, date comes from selectedDate */}
+          {hasSlotSystem && (
+            <input type="hidden" name="preferredDate" value={selectedDate} />
           )}
 
           <label className="text-xs uppercase tracking-[0.2em]">
@@ -225,13 +267,16 @@ export function BookingForm({ copy, tenantSlug, demoMode }: BookingFormProps) {
           {errorMap.get("description") && <p className="input-helper" data-variant="error">description: {errorMap.get("description")}</p>}
         </div>
 
-        <button className="snap-transition theme-border theme-invert w-full px-4 py-3"
-          type="submit" disabled={state === "submitting"}>
-          {state === "submitting" ? copy.submitBusy : copy.submitIdle}
+        <button
+          className="snap-transition theme-border theme-invert w-full px-4 py-3"
+          type="submit"
+          disabled={formState === "submitting" || (hasSlotSystem && !selectedDate)}
+        >
+          {formState === "submitting" ? copy.submitBusy : copy.submitIdle}
         </button>
 
         {message && (
-          <p className="validation-box" data-variant={state === "error" ? "error" : "success"} aria-live="polite">
+          <p className="validation-box" data-variant={formState === "error" ? "error" : "success"} aria-live="polite">
             {message}
           </p>
         )}
