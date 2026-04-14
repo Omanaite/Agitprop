@@ -1,6 +1,9 @@
 # State Snapshot - Agitprop Studio
 
-**Regla:** Registrar cada sesión en la bitácora al final. Leer este archivo al inicio de cada sesión.
+**Reglas obligatorias para todo agente:**
+1. Leer sección **COORDINACIÓN** antes de tocar cualquier archivo
+2. Registrar tu trabajo en COORDINACIÓN al empezar
+3. Registrar la sesión en la **Bitácora** al terminar
 
 Branch: `vercel` → auto-deploy en push
 Production URL: https://agitpropstudio.vercel.app
@@ -8,9 +11,39 @@ Supabase project: `ffnrzvklegbiejlksnai`
 
 ---
 
+## COORDINACIÓN — leer antes de empezar cualquier trabajo
+
+> Si dos agentes editan el mismo archivo en paralelo habrá conflictos de merge.
+> Antes de tocar un archivo, verifica que no esté en la columna "En progreso" de otro agente.
+> Al terminar, mueve tu entrada a "Libre" o elimínala.
+
+### En progreso ahora
+
+| Agente | Archivos / área | Iniciado |
+|--------|----------------|----------|
+| — | — | — |
+
+### Áreas libres (disponibles para trabajar)
+
+- `components/studio/StudioBookingsManager.tsx` — mostrar slot_label
+- `app/api/payments/*` — smoke test PayPal
+- `components/studio/StudioTelegramSettings.tsx` — smoke test
+- `app/agitprop/*` — home/marketing
+- `app/legal/*` — textos legales
+- Cualquier archivo no listado en "En progreso"
+
+### Protocolo
+
+1. **Al empezar:** agrega tu fila en "En progreso" con los archivos que vas a tocar
+2. **Si el archivo ya está en progreso:** espera o coordina con el usuario
+3. **Al terminar:** elimina tu fila de "En progreso"
+4. **Siempre:** `git pull` antes de empezar, `git push` al terminar cada bloque
+
+---
+
 ## START HERE cada sesión
 
-1. Leer este archivo de arriba abajo
+1. Leer sección COORDINACIÓN arriba ← obligatorio
 2. `git log --oneline -5`
 3. Continuar "Pendientes" o lo que indique el usuario
 
@@ -190,7 +223,12 @@ Ver `docs/POST_MVP_BACKLOG.md` para lista completa ordenada por dificultad.
 - PayPal per-artista: `payee.email_address` en purchase_units, flujo approvalUrl
 - Combobox unificado tema+idioma: `SitePreferencesMenu`
 
+**Coordinación multi-agente:**
+- Sección COORDINACIÓN agregada a STATE.md con tabla "En progreso" y protocolo
+- Regla establecida: chequear COORDINACIÓN antes de empezar cualquier trabajo
+
 **Commits clave:**
+- `8f8fe84` docs: STATE.md actualizado + bitácora
 - `a0a0158` fix: zod v4 compat
 - `3061662` feat: BookingForm slot selector
 - `3929890` feat: multi-slot availability, thumbnails
