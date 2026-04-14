@@ -103,7 +103,7 @@ export function StudioAvailabilityManager() {
 
   function commitDraft() {
     if (!draft) return;
-    if (draft.from >= draft.until) { setStatus("La hora de inicio debe ser anterior a la de fin."); return; }
+    if (draft.from >= draft.until) { setStatus("Start time must be before end time."); return; }
     setStatus("");
     if (isEditingDraft) {
       setSlots(prev => prev.map(s => s.id === draft.id ? draft : s));
@@ -128,7 +128,7 @@ export function StudioAvailabilityManager() {
       body: JSON.stringify({ slots }),
     });
     const data = await res.json().catch(() => null);
-    setStatus(res.ok ? "Disponibilidad guardada." : (data?.message ?? "Error al guardar."));
+    setStatus(res.ok ? "Availability saved." : (data?.message ?? "Failed to save."));
     setIsSaving(false);
   }
 
@@ -140,10 +140,10 @@ export function StudioAvailabilityManager() {
   return (
     <section className="admin-card p-6 md:p-7">
       <p className="admin-chip">Availability</p>
-      <h2 className="admin-title mt-4 text-2xl font-semibold">Agenda de disponibilidad</h2>
+      <h2 className="admin-title mt-4 text-2xl font-semibold">Booking Availability</h2>
       <p className="admin-muted mt-2 text-sm leading-6">
-        Selecciona un día en el calendario y agrega los turnos disponibles para ese día.
-        Cada turno tiene horario, capacidad y nombre opcional.
+        Select a day on the calendar and add available slots for that day.
+        Each slot has a time range, capacity, and optional label.
       </p>
 
       {/* Calendar */}
@@ -211,12 +211,12 @@ export function StudioAvailabilityManager() {
               {formatDateLabel(selectedDate)}
             </h3>
             <button type="button" className="admin-button text-xs" onClick={startAddSlot}>
-              + Agregar turno
+              + Add slot
             </button>
           </div>
 
           {selectedSlots.length === 0 && !draft && (
-            <p className="admin-muted mt-2 text-xs">Sin turnos para este día. Agrega uno arriba.</p>
+            <p className="admin-muted mt-2 text-xs">No slots for this day. Add one above.</p>
           )}
 
           <ul className="mt-3 grid gap-2">
@@ -235,8 +235,8 @@ export function StudioAvailabilityManager() {
                     {slot.note && <p className="mt-0.5 text-xs opacity-50">{slot.note}</p>}
                   </div>
                   <div className="flex gap-2 shrink-0">
-                    <button className="admin-button text-xs" onClick={() => startEditSlot(slot)}>Editar</button>
-                    <button className="admin-button admin-button-danger text-xs" onClick={() => removeSlot(slot.id)}>Quitar</button>
+                    <button className="admin-button text-xs" onClick={() => startEditSlot(slot)}>Edit</button>
+                    <button className="admin-button admin-button-danger text-xs" onClick={() => removeSlot(slot.id)}>Remove</button>
                   </div>
                 </li>
               ))}
@@ -246,39 +246,39 @@ export function StudioAvailabilityManager() {
           {draft && draft.date === selectedDate && (
             <div className="mt-3 admin-card-soft p-4 grid gap-3">
               <h4 className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--admin-title)]">
-                {isEditingDraft ? "Editar turno" : "Nuevo turno"}
+                {isEditingDraft ? "Edit slot" : "New slot"}
               </h4>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="admin-muted mb-1 block text-xs uppercase tracking-[0.12em]">Desde</label>
+                  <label className="admin-muted mb-1 block text-xs uppercase tracking-[0.12em]">From</label>
                   <input type="time" className="admin-input" value={draft.from}
                     onChange={e => setDraft(p => p ? { ...p, from: e.target.value } : p)} />
                 </div>
                 <div>
-                  <label className="admin-muted mb-1 block text-xs uppercase tracking-[0.12em]">Hasta</label>
+                  <label className="admin-muted mb-1 block text-xs uppercase tracking-[0.12em]">Until</label>
                   <input type="time" className="admin-input" value={draft.until}
                     onChange={e => setDraft(p => p ? { ...p, until: e.target.value } : p)} />
                 </div>
               </div>
 
               <div>
-                <label className="admin-muted mb-1 block text-xs uppercase tracking-[0.12em]">Capacidad (personas)</label>
+                <label className="admin-muted mb-1 block text-xs uppercase tracking-[0.12em]">Capacity (people)</label>
                 <input type="number" className="admin-input" min={1} max={500} value={draft.capacity}
                   onChange={e => setDraft(p => p ? { ...p, capacity: Number(e.target.value) } : p)} />
-                <p className="admin-helper mt-0.5">1 = solo una persona · N = workshop / grupo</p>
+                <p className="admin-helper mt-0.5">1 = one person only · N = workshop / group</p>
               </div>
 
               <div>
-                <label className="admin-muted mb-1 block text-xs uppercase tracking-[0.12em]">Nombre del turno (opcional)</label>
-                <input className="admin-input" placeholder="Ej: Sesión individual, Workshop linework"
+                <label className="admin-muted mb-1 block text-xs uppercase tracking-[0.12em]">Slot name (optional)</label>
+                <input className="admin-input" placeholder="E.g. Individual session, Linework workshop"
                   value={draft.label}
                   onChange={e => setDraft(p => p ? { ...p, label: e.target.value } : p)} />
               </div>
 
               <div>
-                <label className="admin-muted mb-1 block text-xs uppercase tracking-[0.12em]">Nota para clientes (opcional)</label>
-                <input className="admin-input" placeholder="Ej: Incluye boceto, confirmar con depósito"
+                <label className="admin-muted mb-1 block text-xs uppercase tracking-[0.12em]">Note for clients (optional)</label>
+                <input className="admin-input" placeholder="E.g. Includes sketch, confirm with deposit"
                   value={draft.note}
                   onChange={e => setDraft(p => p ? { ...p, note: e.target.value } : p)} />
               </div>
@@ -287,9 +287,9 @@ export function StudioAvailabilityManager() {
 
               <div className="flex gap-2">
                 <button type="button" className="admin-button admin-button-primary text-xs" onClick={commitDraft}>
-                  {isEditingDraft ? "Actualizar" : "Agregar turno"}
+                  {isEditingDraft ? "Update" : "Add slot"}
                 </button>
-                <button type="button" className="admin-button admin-button-ghost text-xs" onClick={cancelDraft}>Cancelar</button>
+                <button type="button" className="admin-button admin-button-ghost text-xs" onClick={cancelDraft}>Cancel</button>
               </div>
             </div>
           )}
@@ -300,7 +300,7 @@ export function StudioAvailabilityManager() {
       {upcomingDates.length > 0 && (
         <div className="mt-6">
           <h3 className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--admin-title)] mb-3">
-            Próximos turnos ({slots.length} total)
+            Upcoming slots ({slots.length} total)
           </h3>
           <ul className="grid gap-2">
             {upcomingDates.map(date => (
@@ -329,7 +329,7 @@ export function StudioAvailabilityManager() {
       {/* Save button */}
       <div className="mt-6 flex flex-wrap items-center gap-3">
         <button type="button" className="admin-button admin-button-primary" onClick={handleSave} disabled={isSaving}>
-          {isSaving ? "Guardando…" : "Guardar disponibilidad"}
+          {isSaving ? "Saving…" : "Save availability"}
         </button>
         {!status.includes("Error") && status && (
           <p className="admin-validation" data-variant="success" aria-live="polite">{status}</p>
