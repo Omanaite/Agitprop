@@ -21,14 +21,10 @@ Supabase project: `ffnrzvklegbiejlksnai`
 
 | Agente | Archivos / área | Iniciado |
 |--------|----------------|----------|
-| Agente-A | `components/auth/RegisterForm.tsx`, `components/auth/OAuthTermsGate.tsx`, `app/register/actions.ts`, `app/register/complete/page.tsx` | 2026-04-14 |
-| Agente-B (esta sesión) | `components/studio/StudioBookingsManager.tsx` | 2026-04-14 |
-
-> ⚠️ **Agente-A:** `app/register/actions.ts` ya fue modificado (commit `a0a0158`, fix Zod v4). Hacer `git pull` antes de continuar.
+| — | — | — |
 
 ### Áreas libres (disponibles para trabajar)
 
-- `components/studio/StudioBookingsManager.tsx` — mostrar slot_label
 - `app/api/payments/*` — smoke test PayPal
 - `components/studio/StudioTelegramSettings.tsx` — smoke test
 - `app/agitprop/*` — home/marketing
@@ -122,8 +118,8 @@ Supabase project: `ffnrzvklegbiejlksnai`
    - `VERCEL_PROJECT_ID` (ID del proyecto en vercel.com)
 
 ### Código — siguiente a implementar
-2. `StudioBookingsManager` — mostrar columna `slot_label` en tabla de bookings del artista
-3. Smoke test general producción (ver lista abajo)
+2. ✅ `StudioBookingsManager` — slot_label visible en booking cards (commit `53c2e07`)
+3. Smoke test general producción (ver lista abajo — requiere verificación manual)
 
 ### Nice-to-have backlog
 Ver `docs/POST_MVP_BACKLOG.md` para lista completa ordenada por dificultad.
