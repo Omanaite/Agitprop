@@ -13,32 +13,41 @@ const registerSchema = z
       .string()
       .min(8, "Password must have at least 8 characters."),
     confirmPassword: z.string(),
+    terms_accepted: z.literal("on", {
+      error: () => ({ message: "You must accept the Terms and Conditions to continue." }),
+    }),
   })
-  .refine((values) => values.password === values.confirmPassword, {
-    message: "Passwords do not match.",
-    path: ["confirmPassword"],
+  .superRefine((values, ctx) => {
+    if (values.password !== values.confirmPassword) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Passwords do not match.",
+        path: ["confirmPassword"],
+      });
+    }
   });
 
 export type RegisterActionState = {
   status: "idle" | "success" | "error";
   message?: string;
-  fieldErrors?: Partial<Record<"email" | "password" | "confirmPassword", string>>;
+  fieldErrors?: Partial<Record<"email" | "password" | "confirmPassword" | "terms_accepted", string>>;
 };
 
 export async function signUpUser(
   _prevState: RegisterActionState,
   formData: FormData
 ): Promise<RegisterActionState> {
-  const parsed = registerSchema.safeParse({
-    email: String(formData.get("email") || ""),
-    password: String(formData.get("password") || ""),
-    confirmPassword: String(formData.get("confirmPassword") || ""),
-  });
-
   const honeypot = String(formData.get("website") || "");
   if (honeypot.trim()) {
     return { status: "success", message: "Account created. You can now sign in." };
   }
+
+  const parsed = registerSchema.safeParse({
+    email: String(formData.get("email") || ""),
+    password: String(formData.get("password") || ""),
+    confirmPassword: String(formData.get("confirmPassword") || ""),
+    terms_accepted: formData.get("terms_accepted") ?? undefined,
+  });
 
   if (!parsed.success) {
     const errors = parsed.error.flatten().fieldErrors;
@@ -49,6 +58,7 @@ export async function signUpUser(
         email: errors.email?.[0],
         password: errors.password?.[0],
         confirmPassword: errors.confirmPassword?.[0],
+        terms_accepted: errors.terms_accepted?.[0],
       },
     };
   }
