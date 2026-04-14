@@ -12,6 +12,8 @@ type Booking = {
   description: string;
   status: "pending" | "confirmed" | "declined" | "completed";
   created_at: string;
+  slot_id: string | null;
+  slot_label: string | null;
 };
 
 const STATUS_LABELS: Record<Booking["status"], string> = {
@@ -166,6 +168,11 @@ export function StudioBookingsManager() {
               <p>
                 <span className="font-semibold">Preferred date:</span>{" "}
                 {formatDate(booking.preferred_date)}
+                {booking.slot_label && (
+                  <span className="ml-2 rounded-md bg-[var(--admin-accent-soft)] px-2 py-0.5 font-semibold text-[var(--admin-accent)]">
+                    {booking.slot_label}
+                  </span>
+                )}
               </p>
               <p>
                 <span className="font-semibold">Placement:</span> {booking.placement}
