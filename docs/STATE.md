@@ -21,7 +21,10 @@ Supabase project: `ffnrzvklegbiejlksnai`
 
 | Agente | Archivos / área | Iniciado |
 |--------|----------------|----------|
-| — | — | — |
+| Agente-A | `components/auth/RegisterForm.tsx`, `components/auth/OAuthTermsGate.tsx`, `app/register/actions.ts`, `app/register/complete/page.tsx` | 2026-04-14 |
+| Agente-B (esta sesión) | `components/studio/StudioBookingsManager.tsx` | 2026-04-14 |
+
+> ⚠️ **Agente-A:** `app/register/actions.ts` ya fue modificado (commit `a0a0158`, fix Zod v4). Hacer `git pull` antes de continuar.
 
 ### Áreas libres (disponibles para trabajar)
 
