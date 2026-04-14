@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import type { RegisterActionState } from "@/app/register/actions";
+import { useState } from "react";
 
 type RegisterFormProps = {
   action: (
@@ -32,6 +33,7 @@ function SubmitButton() {
 
 export function RegisterForm({ action }: RegisterFormProps) {
   const [state, formAction] = useActionState(action, initialState);
+  const [termsChecked, setTermsChecked] = useState(false);
 
   return (
     <form action={formAction} className="space-y-4" noValidate>
@@ -114,6 +116,35 @@ export function RegisterForm({ action }: RegisterFormProps) {
           {state.message}
         </p>
       ) : null}
+
+      {/* Terms acceptance */}
+      <div>
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            name="terms_accepted"
+            checked={termsChecked}
+            onChange={(e) => setTermsChecked(e.target.checked)}
+            className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--admin-accent)]"
+          />
+          <span className="text-sm text-[var(--admin-muted)] leading-5">
+            I have read and accept the{" "}
+            <Link href="/legal/agb" target="_blank" className="font-semibold text-[var(--admin-accent)] underline underline-offset-2">
+              Terms and Conditions
+            </Link>{" "}
+            and the{" "}
+            <Link href="/legal/datenschutz" target="_blank" className="font-semibold text-[var(--admin-accent)] underline underline-offset-2">
+              Privacy Policy
+            </Link>
+            .
+          </span>
+        </label>
+        {state.fieldErrors?.terms_accepted ? (
+          <p className="admin-helper mt-2" data-variant="error">
+            {state.fieldErrors.terms_accepted}
+          </p>
+        ) : null}
+      </div>
 
       {state.status === "success" ? (
         <Link

@@ -233,5 +233,24 @@ Ver `docs/POST_MVP_BACKLOG.md` para lista completa ordenada por dificultad.
 - `3929890` feat: multi-slot availability, thumbnails
 - `acb2541` fix: modelo de negocio correcto
 
+### 2026-04-14 — Sesión 3
+
+**Skills → funciones backend (3 skills eliminadas del registry):**
+- `desing-user-specs` → `lib/tenants/akemi-pilot.ts`
+- `agent-teams-lite` → `lib/agents/orchestrator.ts` (state machine SDD)
+- `spec-kit-command-cursor` → `lib/agents/spec-runner.ts`
+- `terms-page-generator` → `lib/legal/templates.ts`
+- `ENGINEERING_CONTEXT.md` — tabla skills→funciones + aviso coordinación multi-agente
+
+**Páginas legales:** `app/legal/` — Impressum, AGB, Datenschutz con datos reales del operador.
+
+**Location autocomplete:** `components/studio/LocationSearch.tsx` — Nominatim, reemplaza 2 inputs en `StudioGalleryManager`.
+
+**Terms acceptance en registro:**
+- Email: checkbox en `RegisterForm.tsx` + validación Zod en `actions.ts`
+- OAuth: `OAuthTermsGate.tsx` en `/register/complete` — botón bloqueado hasta aceptar
+
+**Verificados como ya completos:** editable body text, booking email notification, location display.
+
 ### 2026-04-05 — Sesión 1
 MVP completado. Todas las migraciones SQL aplicadas en producción. Funcionalidades base: registro, login, studio workspace, sitio público, SEO, seguridad.

@@ -53,7 +53,7 @@ export default function ImpressumPage() {
 
                 Falls du umsatzsteuerpflichtig bist, trage hier ein:
               */}
-              Steuernummer: [STEUERNUMMER — PENDIENTE]<br />
+              Steuernummer: 80 732 336 158<br />
               {/* USt-IdNr.: DE[NUMMER] — nur wenn vorhanden */}
             </p>
           </div>
@@ -138,7 +138,7 @@ export default function ImpressumPage() {
           <div>
             <strong>Datos fiscales</strong>
             <p className="mt-2">
-              Número de identificación fiscal: [STEUERNUMMER — PENDIENTE]<br />
+              Número de identificación fiscal: 80 732 336 158<br />
               Nota: Si operas bajo la exención de pequeña empresa (§ 19 UStG), no necesitas
               número de IVA y debes indicarlo explícitamente.
             </p>

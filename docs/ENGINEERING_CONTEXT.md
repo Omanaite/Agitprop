@@ -5,6 +5,10 @@ Date: 2026-04-01
 ## Purpose
 Keep execution quality stable across long sessions, context compaction, and handoffs.
 
+## ⚠️ Multi-agent coordination
+Antes de tocar cualquier archivo: leer sección **COORDINACIÓN** en `docs/STATE.md`.
+Registrar ahí los archivos que vas a editar. Al terminar, eliminar tu fila.
+
 ## Mandatory update points
 - After each significant feature/fix:
   - update `docs/DEVLOG.md`
@@ -39,15 +43,16 @@ de "razonar" sobre el dominio.
 |---|---|---|
 | `design-akemi-specs` (`.agents/skills/desing-user-specs/`) | `lib/tenants/akemi-pilot.ts` → `AKEMI_PILOT` | Tokens de diseño, identidad del tenant piloto, principios del tema Brutalist. Importar `AKEMI_PILOT.designTokens` o `AKEMI_PILOT.artStyle`. |
 | `terms-page-generator` (skill genérica) | `lib/legal/templates.ts` → `OPERATOR`, `getAGBSections()`, `getDatenschutzSections()` | Datos del operador, secciones AGB y Datenschutz tipadas. Las páginas en `app/legal/` consumen estos datos. |
+| `agent-teams-lite` (`.agents/skills/agent-teams-lite-main/`) | `lib/agents/orchestrator.ts` + `lib/agents/spec-runner.ts` | State machine SDD: fases (init→propose→design→tasks→apply→verify→archive), transiciones validadas, generador de prompts para sub-agentes, persistencia en `openspec/changes/`. API: `run()`, `resume()`, `done()`, `status()`, `listAll()`. |
+| `spec-kit-command-cursor` (`.agents/skills/spec-kit-command-cursor-main/`) | `lib/agents/spec-runner.ts` → `plan()`, `resume()`, `run()` | Flujo plan-approve-execute serializado. Sin ambigüedad: el runner define qué fase viene después y genera el prompt exacto. |
 
 ### Regla para nuevas skills
 Antes de cargar una skill como contexto, evaluar si su output es determinista.
 Si lo es → convertir a función en `lib/` y documentar aquí.
 Si requiere razonamiento contextual → usar skill normalmente.
 
-### Pendientes de conversión (Prioridad 2)
-- `agent-teams-lite` → `lib/agents/orchestrator.ts` (state machine de fases SDD)
-- `spec-kit-command-cursor` → `lib/agents/spec-runner.ts` (fases serializadas JSON)
+### Pendientes de conversión (Prioridad 3)
+<!-- Prioridad 2 completada: orchestrator.ts + spec-runner.ts ✅ -->
 
 ### Pendientes de conversión (Prioridad 3)
 - `next-best-practices` → ESLint custom rules (`.eslintrc.json`)

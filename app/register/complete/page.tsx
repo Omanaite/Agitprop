@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
+import { OAuthTermsGate } from "@/components/auth/OAuthTermsGate";
 
 export const metadata: Metadata = {
   title: "Account Ready | Agitprop",
@@ -47,7 +48,8 @@ const nextSteps = [
 ];
 
 export default function RegisterCompletePage({ searchParams }: CompletePageProps) {
-  const content = getContent(searchParams?.source);
+  const source = searchParams?.source;
+  const content = getContent(source);
 
   return (
     <div className="admin-shell px-6 py-8 md:px-10 md:py-10">
@@ -62,14 +64,23 @@ export default function RegisterCompletePage({ searchParams }: CompletePageProps
           </h1>
           <p className="admin-muted mt-4 text-sm leading-7">{content.body}</p>
 
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Link href={content.primaryHref} className="admin-button admin-button-primary">
-              {content.primaryLabel}
-            </Link>
-            <Link href={content.secondaryHref} className="admin-button admin-button-ghost">
-              {content.secondaryLabel}
-            </Link>
-          </div>
+          {source?.startsWith("oauth") ? (
+            <OAuthTermsGate
+              primaryHref={content.primaryHref}
+              primaryLabel={content.primaryLabel}
+              secondaryHref={content.secondaryHref}
+              secondaryLabel={content.secondaryLabel}
+            />
+          ) : (
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link href={content.primaryHref} className="admin-button admin-button-primary">
+                {content.primaryLabel}
+              </Link>
+              <Link href={content.secondaryHref} className="admin-button admin-button-ghost">
+                {content.secondaryLabel}
+              </Link>
+            </div>
+          )}
         </section>
 
         <section className="admin-card mt-4 p-6 md:p-7">
