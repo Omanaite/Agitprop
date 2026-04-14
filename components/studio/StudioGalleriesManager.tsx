@@ -8,6 +8,7 @@ type Gallery = {
   title: string;
   description: string | null;
   slug: string;
+  cover_image?: string | null;
 };
 
 const emptyGallery = {
@@ -254,11 +255,25 @@ export function StudioGalleriesManager() {
       <ul className="mt-6 grid gap-4 md:grid-cols-2">
         {items.map((item) => (
           <li key={item.id} className="admin-card-soft p-4">
-            <div className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--admin-muted)]">
-              {item.slug}
+            <div className="flex gap-3">
+              {item.cover_image ? (
+                <div className="shrink-0 h-14 w-14 overflow-hidden rounded-xl">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={item.cover_image} alt={item.title} className="h-full w-full object-cover" />
+                </div>
+              ) : (
+                <div className="shrink-0 h-14 w-14 rounded-xl bg-[var(--admin-surface-strong)] flex items-center justify-center text-[var(--admin-muted)] text-xs">
+                  —
+                </div>
+              )}
+              <div className="min-w-0 flex-1">
+                <div className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--admin-muted)]">
+                  {item.slug}
+                </div>
+                <div className="admin-title mt-1 text-base font-semibold leading-tight">{item.title}</div>
+                <div className="admin-muted mt-1 text-xs leading-5 line-clamp-2">{item.description}</div>
+              </div>
             </div>
-            <div className="admin-title mt-2 text-lg font-semibold">{item.title}</div>
-            <div className="admin-muted mt-2 text-sm leading-6">{item.description}</div>
             <div className="mt-3 flex flex-wrap gap-2">
               <button
                 className="admin-button"

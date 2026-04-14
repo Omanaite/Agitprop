@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import { useStudioPreview } from "@/lib/studio-preview-context";
 import { AdminSectionSkeleton } from "@/components/admin/AdminSectionSkeleton";
+import { LocationSearch } from "@/components/studio/LocationSearch";
 
 type GalleryItem = {
   id: string;
@@ -44,6 +46,7 @@ type ValidationError = { path: string; message: string };
 export function StudioGalleryManager() {
   const { refreshPreview } = useStudioPreview();
   const [items, setItems] = useState<GalleryItem[]>([]);
+  const [lightboxUrl, setLightboxUrl] = useState<string | null>(null);
   const [galleries, setGalleries] = useState<Gallery[]>([]);
   const [form, setForm] = useState<typeof emptyItem>(emptyItem);
   const [bulkStyle, setBulkStyle] = useState<string>("");
@@ -338,6 +341,22 @@ export function StudioGalleryManager() {
   }
 
   return (
+    <>
+    {lightboxUrl && (
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+        onClick={() => setLightboxUrl(null)}
+      >
+        <div className="relative max-h-[90vh] max-w-[90vw]" onClick={(e) => e.stopPropagation()}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={lightboxUrl} alt="Preview" className="max-h-[85vh] max-w-[85vw] rounded-2xl object-contain shadow-2xl" />
+          <button
+            className="absolute -top-3 -right-3 flex h-8 w-8 items-center justify-center rounded-full bg-white text-black shadow-lg text-sm font-bold"
+            onClick={() => setLightboxUrl(null)}
+          >✕</button>
+        </div>
+      </div>
+    )}
     <section className="admin-card p-6 md:p-7">
       <p className="admin-chip">Portfolio library</p>
       <h2 className="admin-title mt-4 text-2xl font-semibold">Gallery Pieces</h2>
@@ -423,21 +442,11 @@ export function StudioGalleryManager() {
             value={form.tags}
             onChange={(e) => setForm({ ...form, tags: e.target.value })}
           />
-          <input
-            className="admin-input"
-            placeholder="Location link (URL) - optional"
-            value={form.location_link}
-            onChange={(e) =>
-              setForm({ ...form, location_link: e.target.value })
-            }
-            type="url"
-          />
-          <input
-            className="admin-input"
-            placeholder="Location name (e.g. Brooklyn, NY) - optional"
-            value={form.location_name}
-            onChange={(e) =>
-              setForm({ ...form, location_name: e.target.value })
+          <LocationSearch
+            locationName={form.location_name}
+            locationLink={form.location_link}
+            onChange={(name, link) =>
+              setForm({ ...form, location_name: name, location_link: link })
             }
           />
           <input
@@ -539,9 +548,28 @@ export function StudioGalleryManager() {
             onDragOver={(e) => e.preventDefault()}
             onDrop={() => reorderItems(item.id)}
           >
-            <div className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--admin-muted)]">{item.style}</div>
-            <div className="admin-title mt-2 text-lg font-semibold">{item.title}</div>
-            <div className="admin-muted mt-2 text-sm leading-6">{item.description}</div>
+            <div className="flex gap-3">
+              {item.image_url && (
+                <button
+                  type="button"
+                  className="shrink-0 overflow-hidden rounded-xl"
+                  onClick={() => setLightboxUrl(item.image_url)}
+                  title="Ver imagen"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={item.image_url}
+                    alt={item.title}
+                    className="h-16 w-16 object-cover transition-transform hover:scale-105"
+                  />
+                </button>
+              )}
+              <div className="min-w-0 flex-1">
+                <div className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--admin-muted)]">{item.style}</div>
+                <div className="admin-title mt-1 text-base font-semibold leading-tight">{item.title}</div>
+                <div className="admin-muted mt-1 text-sm leading-5 line-clamp-2">{item.description}</div>
+              </div>
+            </div>
             <div className="mt-3 flex flex-wrap gap-2">
               <button
                 className="admin-button"
@@ -623,6 +651,7 @@ export function StudioGalleryManager() {
         </button>
       </div>
     </section>
+    </>
   );
 }
 

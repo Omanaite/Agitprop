@@ -67,7 +67,33 @@ export async function GET(request: Request) {
     );
   }
 
-  return NextResponse.json({ items: data ?? [] });
+  const galleries = data ?? [];
+
+  // Attach cover image: first piece per gallery sorted by sort_order
+  if (galleries.length > 0) {
+    const galleryIds = galleries.map((g) => g.id);
+    const { data: covers } = await adminClient
+      .from("gallery_items")
+      .select("gallery_id,image_url")
+      .in("gallery_id", galleryIds)
+      .eq("owner_user_id", auth.user.id)
+      .order("sort_order", { ascending: true });
+
+    const coverMap = new Map<string, string>();
+    for (const c of covers ?? []) {
+      if (c.gallery_id && c.image_url && !coverMap.has(c.gallery_id)) {
+        coverMap.set(c.gallery_id, c.image_url);
+      }
+    }
+
+    const items = galleries.map((g) => ({
+      ...g,
+      cover_image: coverMap.get(g.id) ?? null,
+    }));
+    return NextResponse.json({ items });
+  }
+
+  return NextResponse.json({ items: galleries });
 }
 
 export async function POST(request: Request) {
