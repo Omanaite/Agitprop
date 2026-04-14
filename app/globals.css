@@ -989,3 +989,8 @@ html[data-theme="dark"] .gallery-filter-select {
   outline: 2px solid var(--fg);
   transition: none;
 }
+
+/* Eye mode tint for artist themes — warm sepia overlay */
+html[data-theme="eye"] #theme-root {
+  filter: sepia(18%) saturate(90%) brightness(0.97);
+}

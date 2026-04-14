@@ -3,13 +3,14 @@
 import { useEffect, useRef, useState } from "react";
 import type { Locale } from "@/lib/i18n";
 
-type Theme = "light" | "eye" | "dark";
+type Mode = "light" | "eye" | "dark";
 
 type Props = {
   locale: Locale;
+  siteTheme?: string;
 };
 
-const THEMES: { id: Theme; label: string; icon: string }[] = [
+const MODES: { id: Mode; label: string; icon: string }[] = [
   { id: "light", label: "Light", icon: "○" },
   { id: "eye",   label: "Eye",   icon: "◎" },
   { id: "dark",  label: "Dark",  icon: "●" },
@@ -21,20 +22,44 @@ const LOCALES: { id: Locale; label: string }[] = [
   { id: "de", label: "DE" },
 ];
 
-export function SitePreferencesMenu({ locale }: Props) {
-  const [theme, setTheme] = useState<Theme>("light");
+// Returns the CSS class for a given artist theme + mode.
+// Artist themes have a "_b" dark variant. Eye mode uses html[data-theme="eye"]
+// as a tint layer since there are no per-theme eye variants.
+function getThemeClass(siteTheme: string, mode: Mode): string {
+  const BASE: Record<string, string> = {
+    atelier:          "artist-theme-atelier",
+    mono:             "artist-theme-mono",
+    ink:              "artist-theme-ink",
+    verdure:          "artist-theme-verdure",
+    amber:            "artist-theme-amber",
+    akemi_brutalist:  "artist-theme-akemi-brutalist",
+  };
+  const base = BASE[siteTheme] ?? BASE["atelier"];
+  if (mode === "dark") return `${base}-b`;
+  if (mode === "eye")  return base; // eye tint applied via html[data-theme="eye"]
+  return base;
+}
+
+// Storage key scoped to site theme so each artist's preference is independent.
+function storageKey(siteTheme: string) {
+  return `theme-mode:${siteTheme}`;
+}
+
+export function SitePreferencesMenu({ locale, siteTheme = "atelier" }: Props) {
+  const [mode, setMode] = useState<Mode>("light");
   const [currentLocale, setCurrentLocale] = useState<Locale>(locale);
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  // Init theme from localStorage
+  // Init from localStorage
   useEffect(() => {
-    const saved = localStorage.getItem("theme") as Theme | null;
-    const initial = saved ?? "light";
-    setTheme(initial);
-    document.documentElement.dataset.theme = initial;
-  }, []);
+    const saved = localStorage.getItem(storageKey(siteTheme)) as Mode | null;
+    const initial: Mode = saved ?? "light";
+    applyMode(initial, siteTheme);
+    setMode(initial);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [siteTheme]);
 
   // Close on outside click
   useEffect(() => {
@@ -45,10 +70,32 @@ export function SitePreferencesMenu({ locale }: Props) {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  function applyTheme(t: Theme) {
-    setTheme(t);
-    document.documentElement.dataset.theme = t;
-    localStorage.setItem("theme", t);
+  function applyMode(m: Mode, theme: string) {
+    const root = document.getElementById("theme-root");
+
+    // Swap artist theme class (light ↔ dark variant)
+    if (root) {
+      const cls = getThemeClass(theme, m);
+      // Remove all known artist-theme-* classes then add the correct one
+      const existing = Array.from(root.classList).filter((c) => c.startsWith("artist-theme-"));
+      existing.forEach((c) => root.classList.remove(c));
+      root.classList.add(cls);
+    }
+
+    // Eye tint: set data-theme on html (used for warm sepia overlay only)
+    if (m === "eye") {
+      document.documentElement.dataset.theme = "eye";
+    } else {
+      delete document.documentElement.dataset.theme;
+    }
+
+    localStorage.setItem(storageKey(theme), m);
+  }
+
+  function handleMode(m: Mode) {
+    setMode(m);
+    applyMode(m, siteTheme);
+    setOpen(false);
   }
 
   async function applyLocale(l: Locale) {
@@ -68,7 +115,7 @@ export function SitePreferencesMenu({ locale }: Props) {
     }
   }
 
-  const activeTheme = THEMES.find((t) => t.id === theme) ?? THEMES[0];
+  const activeMode = MODES.find((m) => m.id === mode) ?? MODES[0];
 
   return (
     <div ref={ref} className="relative text-xs uppercase tracking-[0.2em]">
@@ -78,8 +125,8 @@ export function SitePreferencesMenu({ locale }: Props) {
         className="snap-transition theme-border-thin flex items-center gap-2 px-3 py-1"
         aria-expanded={open}
       >
-        <span>{activeTheme.icon}</span>
-        <span>{activeTheme.label}</span>
+        <span>{activeMode.icon}</span>
+        <span>{activeMode.label}</span>
         <span className="opacity-40">/</span>
         <span>{currentLocale.toUpperCase()}</span>
         <span className="opacity-40">{open ? "▴" : "▾"}</span>
@@ -87,27 +134,24 @@ export function SitePreferencesMenu({ locale }: Props) {
 
       {open && (
         <div className="absolute right-0 top-full z-50 mt-1 min-w-[140px] border border-[var(--fg)] bg-[var(--bg)] py-1 shadow-lg">
-          {/* Theme section */}
           <p className="px-3 py-1 opacity-40">Theme</p>
-          {THEMES.map((t) => (
+          {MODES.map((m) => (
             <button
-              key={t.id}
+              key={m.id}
               type="button"
-              onClick={() => { applyTheme(t.id); setOpen(false); }}
+              onClick={() => handleMode(m.id)}
               className={`flex w-full items-center gap-2 px-3 py-1.5 text-left transition-opacity hover:opacity-70 ${
-                theme === t.id ? "opacity-100 font-semibold" : "opacity-60"
+                mode === m.id ? "opacity-100 font-semibold" : "opacity-60"
               }`}
             >
-              <span>{t.icon}</span>
-              <span>{t.label}</span>
-              {theme === t.id && <span className="ml-auto">✓</span>}
+              <span>{m.icon}</span>
+              <span>{m.label}</span>
+              {mode === m.id && <span className="ml-auto">✓</span>}
             </button>
           ))}
 
-          {/* Divider */}
           <div className="my-1 border-t border-[var(--fg)] opacity-20" />
 
-          {/* Locale section */}
           <p className="px-3 py-1 opacity-40">Language</p>
           {LOCALES.map((l) => (
             <button

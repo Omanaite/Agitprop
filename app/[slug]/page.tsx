@@ -225,7 +225,7 @@ export default async function ArtistSitePage({ params }: { params: Promise<Param
   const visibleSections = sections.filter((s) => s.is_visible);
 
   return (
-    <div className={`min-h-screen p-4 md:p-8 ${themeClass}`}>
+    <div id="theme-root" data-site-theme={tenant.site_theme} className={`min-h-screen p-4 md:p-8 ${themeClass}`}>
       {isDemo && (
         <div className="mb-4 flex items-center justify-center gap-3 rounded border border-current/20 bg-current/10 px-4 py-2 text-xs uppercase tracking-[0.3em]">
           <span className="font-bold">Demo Site</span>
@@ -245,6 +245,7 @@ export default async function ArtistSitePage({ params }: { params: Promise<Param
           locale={locale}
           brandEyebrow="Artist Site"
           brandTitle={tenant.studio_name}
+          siteTheme={tenant.site_theme}
         />
         {visibleSections.map((section) =>
           renderers.get(section.section_key)?.render(section)

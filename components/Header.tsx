@@ -7,6 +7,7 @@ type HeaderProps = {
   locale?: Locale;
   brandEyebrow?: string;
   brandTitle?: string;
+  siteTheme?: string;
 };
 
 const hiddenNavKeys = new Set(["hero"]);
@@ -16,6 +17,7 @@ export function Header({
   locale = "en",
   brandEyebrow = "Akemi",
   brandTitle = "Tattoo Manifesto",
+  siteTheme,
 }: HeaderProps) {
   const navItems = sections.filter(
     (section) => section.is_visible && !hiddenNavKeys.has(section.section_key)
@@ -31,7 +33,7 @@ export function Header({
       </div>
       <div className="flex flex-col gap-4 md:items-end">
         <div className="flex justify-end">
-          <SitePreferencesMenu locale={locale} />
+          <SitePreferencesMenu locale={locale} siteTheme={siteTheme} />
         </div>
         <nav className="flex flex-wrap gap-4 text-xs uppercase tracking-[0.3em]">
           {navItems.map((section) => (
