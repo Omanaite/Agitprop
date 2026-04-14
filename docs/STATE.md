@@ -1,133 +1,200 @@
-# State Snapshot - Agitprop (Akemi Pilot)
+# State Snapshot - Agitprop Studio
 
-Date: 2026-04-05
-Branch: `vercel` → auto-deploy on push
+**Regla:** Registrar cada sesión en la bitácora al final. Leer este archivo al inicio de cada sesión.
+
+Branch: `vercel` → auto-deploy en push
 Production URL: https://agitpropstudio.vercel.app
-Supabase project: ffnrzvklegbiejlksnai
+Supabase project: `ffnrzvklegbiejlksnai`
 
 ---
 
-## START HERE every session
+## START HERE cada sesión
 
-### 1. Read this file top to bottom
-### 2. Check last commit: `git log --oneline -5`
-### 3. Ask the user what to work on, or continue "Next Actions" below
-
----
-
-## MVP Status: COMPLETE ✅
-
-All SQL patches applied in production:
-- `STUDIO_TENANT_OWNERSHIP_PATCH` ✅
-- `MVP_COMPLETION_PATCH` ✅
-- `BOOKINGS_TENANT_ISOLATION_PATCH` ✅
-- `ARTIST_SITE_THEMES_PATCH` ✅
-- Akemi backfill (owner_user_id = `030ae67c-d882-4cfe-a6ae-d006fe6bf2ce`) ✅
-
-Akemi tenant slug in DB: `akemion-tattoo` (not "akemi")
-Akemi email: `akemi@tattoo.ink`
-Akemi site_theme: `akemi_brutalist` (reserved, pilot-only)
+1. Leer este archivo de arriba abajo
+2. `git log --oneline -5`
+3. Continuar "Pendientes" o lo que indique el usuario
 
 ---
 
-## What works in production
+## Estado de producción
 
-- Registration (email, no SMTP) + OAuth (Google/GitHub)
-- Studio login `/studio/login` with own action
-- Studio workspace: galleries, pieces, posts, homepage sections, profile, rates, availability, bookings
-- Booking reschedule by artist (inline date picker)
-- Public site `/{slug}` — dynamic renderer, 5 themes + akemi_brutalist
-- Public piece detail modal (tags, duration, location link)
-- Public post feed with date + full content modal
-- Rates section on public site (from DB JSONB)
-- Availability shown in booking form
-- BookingForm validates against artist's available weekdays
-- i18n en/es/de (UI labels only — content data not translated)
-- SEO: metadata, sitemap, robots, JSON-LD, OG/Twitter images
-- Security: CSP, rate limiting, honeypot, same-origin enforcement
+### DB — todo aplicado ✅
+| Patch | Estado |
+|-------|--------|
+| `STUDIO_TENANT_OWNERSHIP_PATCH` | ✅ |
+| `MVP_COMPLETION_PATCH` | ✅ |
+| `BOOKINGS_TENANT_ISOLATION_PATCH` | ✅ |
+| `ARTIST_SITE_THEMES_PATCH` | ✅ |
+| Akemi backfill (`owner_user_id = 030ae67c-d882-4cfe-a6ae-d006fe6bf2ce`) | ✅ |
+| `availability_slots` JSONB en `artist_tenants` | ✅ |
+| `slot_id` + `slot_label` en `bookings` | ✅ |
 
----
+### Datos clave Akemi
+- Slug: `akemion-tattoo`
+- Email: `akemi@tattoo.ink`
+- plan_code: `expanded`
+- site_theme: `akemi_brutalist` (reservado, solo piloto)
 
-## Next Actions (priority order)
-
-### 1. 🔴 IMPLEMENT FIRST — Editable section body text
-Every section (hero, about, work, etc.) should let the artist write their own body text.
-Currently hardcoded. Critical for multi-artist use.
-
-Steps:
-- SQL: `ALTER TABLE homepage_sections ADD COLUMN body text;`
-- Apply via Supabase MCP (`mcp__supabase__apply_migration`)
-- Update `getHomepageSections` in `lib/data/homepage-sections.ts` to SELECT body
-- Update `HomepageSection` type in `types/index.ts` to add `body?: string | null`
-- Add textarea to section editor in `components/studio/StudioHomepageSectionsManager.tsx`
-- Update section renderers in `app/[slug]/page.tsx` to use `section.body` instead of hardcoded text
-- For Akemi's about: her current bio is in `lib/i18n.ts` under `about.body1` / `about.body2` — migrate to DB on first save
-
-### 2. Location display + autocomplete
-- Show place name (e.g. "Leipzig, Sachsen") instead of "View Location ↗" in piece modal
-- Replace URL input in piece editor with Nominatim geocoding search (free, no API key)
-- Debounce 300ms, dropdown with results, on select stores name + Maps URL
-- DB: add `location_name text` column to tattoos table
-
-### 3. Smoke test pending verification
-User is testing production. When done, report any failures:
-- Registration (email + OAuth)
-- Login (email + OAuth)
-- Contact form
-- Booking reschedule
-- Piece detail modal click
-- Post detail modal click
-- Profile nickname save (fix deployed: nullish transform on zod schema)
-
-### 4. Post-MVP features (see POST_MVP_BACKLOG.md for full list)
-Ordered by difficulty in that file. After items 1-3 above are clear:
-- Notification email to artist on new booking
-- i18n expansion to content data (posts, pieces, galleries)
-- Reminder email to client before appointment
-- Calendar view for artist
-- Payments (Stripe/PayPal sandbox)
+### Variables de entorno Vercel — pendientes de agregar
+| Var | Uso | Estado |
+|-----|-----|--------|
+| `ANTHROPIC_API_KEY` | Chatbot studio (Claude Haiku) | ⚠️ falta en producción |
+| `VERCEL_TOKEN` | Dominios custom (Vercel API) | ⚠️ falta en producción |
+| `VERCEL_PROJECT_ID` | Dominios custom (Vercel API) | ⚠️ falta en producción |
+| `VERCEL_TEAM_ID` | Dominios custom (opcional, si hay team) | opcional |
 
 ---
 
-## Key files
+## Qué funciona en producción
 
-| File | Purpose |
-|------|---------|
-| `app/[slug]/page.tsx` | Public artist site — dynamic renderer |
-| `app/akemi/page.tsx` | Legacy Akemi hardcoded route (keep for now) |
-| `app/studio/login/actions.ts` | Studio-specific login action |
-| `app/register/actions.ts` | Registration via admin API (no SMTP) |
-| `app/legal/impressum/page.tsx` | Impressum — § 5 DDG (datos reales de Pablo) |
-| `app/legal/agb/page.tsx` | AGB — Términos y Condiciones alemanes |
-| `app/legal/datenschutz/page.tsx` | Datenschutzerklärung — DSGVO |
-| `components/studio/StudioBookingsManager.tsx` | Bookings + reschedule UI |
-| `components/studio/StudioHomepageSectionsManager.tsx` | Section editor |
-| `components/GalleryGrid.tsx` | Public piece grid + detail modal |
-| `components/PostFeed.tsx` | Public post feed + detail modal |
-| `lib/tenants/theme.ts` | Theme policy — delega a akemi-pilot.ts |
-| `lib/tenants/akemi-pilot.ts` | **Fuente de verdad del tenant piloto** — identidad, design tokens, art style |
-| `lib/legal/templates.ts` | **Datos legales del operador** — OPERATOR, getAGBSections(), getDatenschutzSections() |
-| `lib/availability.ts` | Shared DEFAULT_AVAILABILITY |
-| `lib/i18n.ts` | Akemi's about text (to be migrated to DB) |
-| `lib/validators.ts` | Zod schemas — site_theme enum includes verdure/amber |
-| `proxy.ts` | Auth guard (Next 16 — not middleware.ts) |
-| `docs/POST_MVP_BACKLOG.md` | Full backlog ordered by difficulty |
-| `docs/ENGINEERING_CONTEXT.md` | **Skills convertidas a funciones** — leer antes de cargar cualquier skill |
+- Registro email + OAuth (Google/GitHub)
+- Login studio `/studio/login`
+- Studio workspace: galerías, piezas, posts, secciones homepage, perfil, tarifas, disponibilidad multi-slot, bookings
+- Disponibilidad multi-slot: bloques con días, horario, capacidad; selector en booking form público
+- Booking reschedule por artista
+- Thumbnails + lightbox en vista de piezas studio
+- Cover image en lista de galerías studio
+- Notificaciones Telegram por artista (bot propio vía BotFather)
+- Dominio custom via Vercel API (UI lista, requiere env vars)
+- Chatbot Claude Haiku en studio (requiere `ANTHROPIC_API_KEY`)
+- PayPal per-artista (`payee.email_address` en purchase_units)
+- Sitio público `/{slug}` — 6 themes
+- Combobox unificado tema + idioma en header público
+- i18n en/es/de gratis para todos los tiers
+- SEO: metadata, sitemap, robots, JSON-LD, OG/Twitter
+- Seguridad: CSP, rate limiting, honeypot, same-origin
 
 ---
 
-## Architecture rules (do not break)
+## Modelo de negocio (fuente de verdad)
 
-- Artist APIs: `/api/studio/*` — never `/api/admin/*`
-- Auth guard: `proxy.ts` (Next 16 convention)
-- Theme entitlement: `lib/tenants/theme.ts` — akemi_brutalist reserved
-- All POST/PATCH/PUT: `enforceSameOrigin()` + `rateLimit()` + `requireArtistOperator()`
-- Commits prefixed: `feat:`, `fix:`, `docs:`, `chore:`
-- Push to `vercel` branch → triggers Vercel deploy → promote preview to production manually
+- **Todo gratis**: booking, galería, posts, temas, i18n, Telegram
+- **Límite free** (`basic`): 2 galerías, 25 piezas, 5 posts
+- **Expanded storage** (`expanded`): ilimitado — pago único, sin suscripción
+- **Dominio custom**: costo Vercel sin markup — artista compra en Vercel, se conecta aquí
+- **Dominio externo** (ej: propio hosting): acuerdo directo con el desarrollador
+- No hay "premium", no hay "Studio Pro", no hay priority support
 
 ---
 
-## Supabase MCP
-Available via `.mcp.json` at repo root.
-Project ID: `ffnrzvklegbiejlksnai`
-Use `mcp__supabase__apply_migration` for DDL, `mcp__supabase__execute_sql` for queries.
+## Pendientes
+
+### Bloqueante — requiere acción manual del usuario
+1. **Agregar en Vercel Dashboard** → Settings → Environment Variables:
+   - `ANTHROPIC_API_KEY` (obtener en console.anthropic.com)
+   - `VERCEL_TOKEN` (obtener en vercel.com/account/tokens)
+   - `VERCEL_PROJECT_ID` (ID del proyecto en vercel.com)
+
+### Código — siguiente a implementar
+2. `StudioBookingsManager` — mostrar columna `slot_label` en tabla de bookings del artista
+3. Smoke test general producción (ver lista abajo)
+
+### Nice-to-have backlog
+Ver `docs/POST_MVP_BACKLOG.md` para lista completa ordenada por dificultad.
+
+---
+
+## Smoke test (pendiente verificación manual)
+
+- [ ] Registro con email nuevo
+- [ ] Login email + OAuth Google/GitHub
+- [ ] Formulario de contacto
+- [ ] Booking público con slot selector (requiere slots configurados por artista)
+- [ ] Booking reschedule desde studio
+- [ ] Click en pieza → modal detalle
+- [ ] Click en post → modal detalle
+- [ ] Guardar nombre/slug en perfil
+- [ ] Cambiar tema desde header público
+- [ ] Cambiar idioma desde header público
+- [ ] Crear/editar pieza con thumbnail visible en studio
+- [ ] Configurar slot de disponibilidad y verificar que se deshabilita al llenarse
+
+---
+
+## Archivos clave
+
+| Archivo | Propósito |
+|---------|-----------|
+| `app/[slug]/page.tsx` | Sitio público artista — renderer dinámico |
+| `app/akemi/page.tsx` | Ruta legacy Akemi hardcoded |
+| `app/studio/login/actions.ts` | Login action studio |
+| `app/register/actions.ts` | Registro via admin API (sin SMTP) |
+| `app/agitprop/page.tsx` | Home del proyecto — modelo free/expanded |
+| `app/legal/agb/page.tsx` | Términos y Condiciones (alemán + español) |
+| `components/BookingForm.tsx` | Formulario público con slot selector |
+| `components/studio/StudioAvailabilityManager.tsx` | Multi-slot availability editor |
+| `components/studio/StudioGalleryManager.tsx` | Piezas con thumbnails + lightbox |
+| `components/studio/StudioGalleriesManager.tsx` | Galerías con cover image |
+| `components/studio/StudioBookingsManager.tsx` | Bookings + reschedule (falta slot_label) |
+| `components/studio/StudioTelegramSettings.tsx` | Config bot Telegram por artista |
+| `components/studio/StudioSiteSettings.tsx` | Tema + dominio custom |
+| `components/studio/StudioChatbot.tsx` | Chatbot Claude Haiku en studio |
+| `components/SitePreferencesMenu.tsx` | Combobox tema+idioma en header público |
+| `components/PaymentButtons.tsx` | PayPal per-artista con approvalUrl |
+| `app/api/studio/availability-slots/route.ts` | CRUD slots por artista |
+| `app/api/public/availability-slots/route.ts` | Slots públicos con conteo capacidad |
+| `app/api/studio/telegram/route.ts` | GET/PUT/DELETE/POST(test) config Telegram |
+| `app/api/studio/domain/route.ts` | GET/PATCH/DELETE dominio custom via Vercel API |
+| `app/api/studio/chat/route.ts` | Chatbot — proxy a Claude Haiku |
+| `app/api/payments/paypal/route.ts` | Crear orden PayPal per-artista |
+| `app/api/payments/paypal/capture/route.ts` | Capturar pago PayPal |
+| `lib/telegram.ts` | sendTelegramMessage + buildBookingTelegramMessage |
+| `lib/validators.ts` | Zod schemas — incluye slot_id/slot_label en bookingSchema |
+| `lib/tenants/plan.ts` | Límites por tier (canAddGallery, etc.) |
+| `proxy.ts` | Auth guard (Next 16) |
+| `docs/POST_MVP_BACKLOG.md` | Backlog ordenado por dificultad |
+| `docs/ENGINEERING_CONTEXT.md` | Skills como funciones — leer antes de cargar skill |
+
+---
+
+## Reglas de arquitectura
+
+- APIs artista: `/api/studio/*` — nunca `/api/admin/*`
+- Auth guard: `proxy.ts` (Next 16)
+- Theme entitlement: `lib/tenants/theme.ts` — `akemi_brutalist` reservado
+- Todos los POST/PATCH/PUT: `enforceSameOrigin()` + `rateLimit()` + `requireArtistOperator()`
+- Commits: `feat:`, `fix:`, `docs:`, `chore:`
+- Push a `vercel` → deploy automático en Vercel
+
+---
+
+## Bitácora de sesiones
+
+### 2026-04-14 — Sesión 2 (continuación)
+**Build fix:** Zod v4 breaking changes en `app/register/actions.ts` — `errorMap` → `error`, `.refine()` → `.superRefine()`. Build limpio.
+
+**Disponibilidad multi-slot:**
+- Reescritura completa de `StudioAvailabilityManager.tsx` — lista de bloques, editor inline, días toggle, capacidad, nota
+- `app/api/studio/availability-slots/route.ts` — GET/PUT para artista
+- `app/api/public/availability-slots/route.ts` — GET público con conteo de capacidad por fecha
+
+**BookingForm rediseñado:**
+- Date picker → fetch slots disponibles para ese día
+- Selector visual de slots; llenos = deshabilitados
+- `slot_id` + `slot_label` en payload → guardados en DB
+
+**Thumbnails studio:**
+- `StudioGalleryManager`: miniatura 64×64 + lightbox al click
+- `StudioGalleriesManager`: cover image (primer piece de cada galería)
+- Galleries API: adjunta `cover_image` desde `gallery_items`
+
+**Modelo de negocio:**
+- Home (`app/agitprop/page.tsx`): quitado todo lo de "premium", ahora free/expanded storage
+- AGB actualizado: sin suscripciones, límites reales, Vercel domain pricing, dominio externo = acuerdo con desarrollador
+- i18n gratis para todos — eliminado gate por tier
+
+**Otras features de la sesión:**
+- Telegram por artista: `StudioTelegramSettings`, `/api/studio/telegram`, `lib/telegram.ts`
+- Dominio custom: `StudioSiteSettings` sección dominio, `/api/studio/domain` (Vercel API)
+- ChatBot: `StudioChatbot`, `/api/studio/chat` (Claude Haiku)
+- PayPal per-artista: `payee.email_address` en purchase_units, flujo approvalUrl
+- Combobox unificado tema+idioma: `SitePreferencesMenu`
+
+**Commits clave:**
+- `a0a0158` fix: zod v4 compat
+- `3061662` feat: BookingForm slot selector
+- `3929890` feat: multi-slot availability, thumbnails
+- `acb2541` fix: modelo de negocio correcto
+
+### 2026-04-05 — Sesión 1
+MVP completado. Todas las migraciones SQL aplicadas en producción. Funcionalidades base: registro, login, studio workspace, sitio público, SEO, seguridad.
