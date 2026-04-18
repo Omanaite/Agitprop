@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Locale } from "@/lib/i18n";
 
-type Mode = "light" | "eye" | "dark";
+type Mode = "light" | "dark";
 
 type Props = {
   locale: Locale;
@@ -12,7 +12,6 @@ type Props = {
 
 const MODES: { id: Mode; label: string; icon: string }[] = [
   { id: "light", label: "Light", icon: "○" },
-  { id: "eye",   label: "Eye",   icon: "◎" },
   { id: "dark",  label: "Dark",  icon: "●" },
 ];
 
@@ -36,7 +35,6 @@ function getThemeClass(siteTheme: string, mode: Mode): string {
   };
   const base = BASE[siteTheme] ?? BASE["atelier"];
   if (mode === "dark") return `${base}-b`;
-  if (mode === "eye")  return base; // eye tint applied via html[data-theme="eye"]
   return base;
 }
 
@@ -82,13 +80,7 @@ export function SitePreferencesMenu({ locale, siteTheme = "atelier" }: Props) {
       root.classList.add(cls);
     }
 
-    // Eye tint: set data-theme on html (used for warm sepia overlay only)
-    if (m === "eye") {
-      document.documentElement.dataset.theme = "eye";
-    } else {
-      delete document.documentElement.dataset.theme;
-    }
-
+    delete document.documentElement.dataset.theme;
     localStorage.setItem(storageKey(theme), m);
   }
 

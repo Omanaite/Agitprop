@@ -1,4 +1,8 @@
-import { SitePreferencesMenu } from "@/components/SitePreferencesMenu";
+import { NavAtelier } from "@/components/headers/NavAtelier";
+import { NavMono } from "@/components/headers/NavMono";
+import { NavInk } from "@/components/headers/NavInk";
+import { NavVerdure } from "@/components/headers/NavVerdure";
+import { NavAmber } from "@/components/headers/NavAmber";
 import type { Locale } from "@/lib/i18n";
 import type { HomepageSection } from "@/types";
 
@@ -17,36 +21,19 @@ export function Header({
   locale = "en",
   brandEyebrow = "Akemi",
   brandTitle = "Tattoo Manifesto",
-  siteTheme,
+  siteTheme = "atelier",
 }: HeaderProps) {
   const navItems = sections.filter(
     (section) => section.is_visible && !hiddenNavKeys.has(section.section_key)
   );
 
-  return (
-    <header className="hard-border flex flex-col gap-6 bg-[var(--bg)] px-6 py-8 md:flex-row md:items-center md:justify-between md:px-10">
-      <div>
-        <p className="text-xs uppercase tracking-[0.5em]">{brandEyebrow}</p>
-        <h1 className="font-[var(--font-heading)] text-4xl uppercase md:text-5xl">
-          {brandTitle}
-        </h1>
-      </div>
-      <div className="flex flex-col gap-4 md:items-end">
-        <div className="flex justify-end">
-          <SitePreferencesMenu locale={locale} siteTheme={siteTheme} />
-        </div>
-        <nav className="flex flex-wrap gap-4 text-xs uppercase tracking-[0.3em]">
-          {navItems.map((section) => (
-            <a
-              key={section.section_key}
-              className="snap-transition theme-border-thin px-2 py-1 theme-hover-invert"
-              href={`#${section.section_key}`}
-            >
-              {section.title}
-            </a>
-          ))}
-        </nav>
-      </div>
-    </header>
-  );
+  const props = { navItems, locale, brandEyebrow, brandTitle, siteTheme };
+
+  const family = siteTheme.replace(/_b$/, "");
+
+  if (family === "mono") return <NavMono {...props} />;
+  if (family === "ink") return <NavInk {...props} />;
+  if (family === "verdure") return <NavVerdure {...props} />;
+  if (family === "amber") return <NavAmber {...props} />;
+  return <NavAtelier {...props} />;
 }
