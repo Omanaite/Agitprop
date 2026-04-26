@@ -10,12 +10,9 @@ type SlotWithCapacity = {
   booked: number; available: number;
 };
 
-const MONTHS = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-
-function formatDateLabel(ymd: string) {
-  const [y, m, d] = ymd.split("-").map(Number);
-  const weekday = new Date(ymd + "T12:00:00").toLocaleDateString("es-ES", { weekday: "long" });
-  return `${weekday.charAt(0).toUpperCase() + weekday.slice(1)}, ${d} ${MONTHS[m - 1]} ${y}`;
+function formatDateLabel(ymd: string, locale = "en") {
+  const date = new Date(ymd + "T12:00:00");
+  return date.toLocaleDateString(locale, { weekday: "long", year: "numeric", month: "long", day: "numeric" });
 }
 
 type BookingFormProps = {
@@ -24,12 +21,18 @@ type BookingFormProps = {
     placement: string; description: string;
     submitIdle: string; submitBusy: string; success: string;
     errorFallback: string; unexpected: string;
+    availableDates: string; noAvailableDates: string;
+    selectTime: string; noTimesForDay: string; loading: string;
+    slotFull: string; slotOccupied: string;
+    spotsAvailable: string; spotAvailable: string;
+    selectDateFirst: string; selectSlotFirst: string;
   };
   tenantSlug?: string;
   demoMode?: boolean;
+  locale?: string;
 };
 
-export function BookingForm({ copy, tenantSlug, demoMode }: BookingFormProps) {
+export function BookingForm({ copy, tenantSlug, demoMode, locale = "en" }: BookingFormProps) {
   const [formState, setFormState] = useState<BookingFormState>("idle");
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState<{ path: string; message: string }[]>([]);
@@ -81,9 +84,9 @@ export function BookingForm({ copy, tenantSlug, demoMode }: BookingFormProps) {
     const form = event.currentTarget;
 
     if (slotsRequired && !selectedSlotId) {
-      setErrors([{ path: "slot", message: "Selecciona un horario." }]);
+      setErrors([{ path: "slot", message: copy.selectSlotFirst }]);
       setFormState("error");
-      setMessage("Selecciona un horario para continuar.");
+      setMessage(copy.selectSlotFirst);
       return;
     }
 
@@ -136,10 +139,10 @@ export function BookingForm({ copy, tenantSlug, demoMode }: BookingFormProps) {
       {/* Available dates list — shown when artist uses slot system */}
       {hasSlotSystem && (
         <div className="theme-border rounded-xl p-4">
-          <p className="text-xs uppercase tracking-[0.2em] opacity-60 mb-3">Fechas disponibles</p>
-          {loadingDates && <p className="text-xs opacity-50">Cargando…</p>}
+          <p className="text-xs uppercase tracking-[0.2em] opacity-60 mb-3">{copy.availableDates}</p>
+          {loadingDates && <p className="text-xs opacity-50">{copy.loading}</p>}
           {!loadingDates && availableDates && availableDates.length === 0 && (
-            <p className="text-xs opacity-50">No hay fechas disponibles por el momento.</p>
+            <p className="text-xs opacity-50">{copy.noAvailableDates}</p>
           )}
           {!loadingDates && availableDates && availableDates.length > 0 && (
             <div className="flex flex-wrap gap-2">
@@ -155,7 +158,7 @@ export function BookingForm({ copy, tenantSlug, demoMode }: BookingFormProps) {
                       : "theme-border hover:bg-[var(--fg)] hover:text-[var(--bg)]",
                   ].join(" ")}
                 >
-                  {formatDateLabel(d)}
+                  {formatDateLabel(d, locale)}
                 </button>
               ))}
             </div>
@@ -166,13 +169,13 @@ export function BookingForm({ copy, tenantSlug, demoMode }: BookingFormProps) {
       {/* Slots for selected date */}
       {selectedDate && (
         <div>
-          {loadingSlots && <p className="text-xs opacity-50">Cargando horarios…</p>}
+          {loadingSlots && <p className="text-xs opacity-50">{copy.loading}</p>}
           {!loadingSlots && slots !== null && slots.length === 0 && (
-            <p className="text-xs opacity-50">Sin horarios disponibles para este día.</p>
+            <p className="text-xs opacity-50">{copy.noTimesForDay}</p>
           )}
           {!loadingSlots && slots && slots.length > 0 && (
             <div className="grid gap-2">
-              <p className="text-xs uppercase tracking-[0.2em] opacity-60">Horarios — {formatDateLabel(selectedDate)}</p>
+              <p className="text-xs uppercase tracking-[0.2em] opacity-60">{copy.selectTime} — {formatDateLabel(selectedDate)}</p>
               {slots.map((slot) => {
                 const full = slot.available <= 0;
                 const selected = selectedSlotId === slot.id;
@@ -196,10 +199,10 @@ export function BookingForm({ copy, tenantSlug, demoMode }: BookingFormProps) {
                       {slot.label && <span className="opacity-70 text-xs">{slot.label}</span>}
                       {slot.capacity > 1 && (
                         <span className={["text-xs", full ? "" : selected ? "opacity-70" : "opacity-50"].join(" ")}>
-                          {full ? "Completo" : `${slot.available} lugar${slot.available !== 1 ? "es" : ""} disponible${slot.available !== 1 ? "s" : ""}`}
+                          {full ? copy.slotFull : `${slot.available} ${slot.available === 1 ? copy.spotAvailable : copy.spotsAvailable}`}
                         </span>
                       )}
-                      {full && slot.capacity === 1 && <span className="text-xs">Ocupado</span>}
+                      {full && slot.capacity === 1 && <span className="text-xs">{copy.slotOccupied}</span>}
                     </div>
                     {slot.note && <p className="text-xs opacity-50 mt-1">{slot.note}</p>}
                   </button>
@@ -271,6 +274,7 @@ export function BookingForm({ copy, tenantSlug, demoMode }: BookingFormProps) {
           className="snap-transition theme-border theme-invert w-full px-4 py-3"
           type="submit"
           disabled={formState === "submitting" || (hasSlotSystem && !selectedDate)}
+          title={hasSlotSystem && !selectedDate ? copy.selectDateFirst : undefined}
         >
           {formState === "submitting" ? copy.submitBusy : copy.submitIdle}
         </button>

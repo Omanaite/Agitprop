@@ -233,6 +233,16 @@ Ver `docs/POST_MVP_BACKLOG.md` para lista completa ordenada por dificultad.
 - `3929890` feat: multi-slot availability, thumbnails
 - `acb2541` fix: modelo de negocio correcto
 
+### 2026-04-18 — Sesión 4
+
+**Sync datos reales del operador:**
+- `lib/legal/templates.ts` — Steuernummer real (80 732 336 158), kleinunternehmer: false
+
+**Reminder email (Backlog item 5):**
+- `vercel.json` — Vercel Cron `0 8 * * *`
+- `app/api/cron/booking-reminders/route.ts` — busca bookings confirmed para mañana, envía email por Resend
+- Requiere: `CRON_SECRET` en Vercel env vars (agregar en Vercel Dashboard)
+
 ### 2026-04-14 — Sesión 3
 
 **Skills → funciones backend (3 skills eliminadas del registry):**

@@ -30,6 +30,17 @@ export type PublicDictionary = {
     success: string;
     errorFallback: string;
     unexpected: string;
+    availableDates: string;
+    noAvailableDates: string;
+    selectTime: string;
+    noTimesForDay: string;
+    loading: string;
+    slotFull: string;
+    slotOccupied: string;
+    spotsAvailable: string;
+    spotAvailable: string;
+    selectDateFirst: string;
+    selectSlotFirst: string;
   };
   contact: {
     name: string;
@@ -83,6 +94,17 @@ export const publicDictionaries: Record<Locale, PublicDictionary> = {
       success: "Booking request sent. We will reply within 48h.",
       errorFallback: "Booking failed.",
       unexpected: "Unexpected error occurred.",
+      availableDates: "Available dates",
+      noAvailableDates: "No available dates at the moment.",
+      selectTime: "Available times",
+      noTimesForDay: "No times available for this day.",
+      loading: "Loading...",
+      slotFull: "Full",
+      slotOccupied: "Occupied",
+      spotsAvailable: "spots available",
+      spotAvailable: "spot available",
+      selectDateFirst: "Select a date to continue.",
+      selectSlotFirst: "Select a time slot to continue.",
     },
     contact: {
       name: "Name",
@@ -141,6 +163,17 @@ export const publicDictionaries: Record<Locale, PublicDictionary> = {
       success: "Solicitud enviada. Responderemos dentro de 48h.",
       errorFallback: "La solicitud no pudo enviarse.",
       unexpected: "Ocurrio un error inesperado.",
+      availableDates: "Fechas disponibles",
+      noAvailableDates: "No hay fechas disponibles por el momento.",
+      selectTime: "Horarios disponibles",
+      noTimesForDay: "Sin horarios disponibles para este dia.",
+      loading: "Cargando...",
+      slotFull: "Completo",
+      slotOccupied: "Ocupado",
+      spotsAvailable: "lugares disponibles",
+      spotAvailable: "lugar disponible",
+      selectDateFirst: "Selecciona una fecha para continuar.",
+      selectSlotFirst: "Selecciona un horario para continuar.",
     },
     contact: {
       name: "Nombre",
@@ -199,6 +232,17 @@ export const publicDictionaries: Record<Locale, PublicDictionary> = {
       success: "Anfrage gesendet. Wir antworten innerhalb von 48h.",
       errorFallback: "Die Anfrage konnte nicht gesendet werden.",
       unexpected: "Ein unerwarteter Fehler ist aufgetreten.",
+      availableDates: "Verfuegbare Termine",
+      noAvailableDates: "Derzeit keine Termine verfuegbar.",
+      selectTime: "Verfuegbare Zeiten",
+      noTimesForDay: "Keine Zeiten fuer diesen Tag verfuegbar.",
+      loading: "Laden...",
+      slotFull: "Ausgebucht",
+      slotOccupied: "Belegt",
+      spotsAvailable: "Plaetze verfuegbar",
+      spotAvailable: "Platz verfuegbar",
+      selectDateFirst: "Waehle ein Datum um fortzufahren.",
+      selectSlotFirst: "Waehle eine Uhrzeit um fortzufahren.",
     },
     contact: {
       name: "Name",

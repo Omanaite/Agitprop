@@ -46,10 +46,10 @@ Options:
 - **C) Separate content rows with `locale` column** — clean but complex querying.
 Recommended: Option B (JSONB). Requires: DB migration, editor UI with language tabs, public fetch filtered by locale.
 
-**5. Reminder email to client before appointment**
-After a booking is confirmed, schedule a reminder email N hours/days before `preferred_date`.
-Requires: a scheduled job or cron (Vercel Cron / Supabase Edge Function with pg_cron).
-Configurable timing in Studio settings (e.g. "24h before", "48h before").
+**5. ✅ Reminder email to client before appointment**
+`app/api/cron/booking-reminders/route.ts` — Vercel Cron 08:00 UTC daily.
+Busca bookings `confirmed` con `preferred_date = tomorrow`, envía reminder por Resend.
+Requiere: `CRON_SECRET` en Vercel env vars. Configurado en `vercel.json`.
 
 **6. SaaS plan enforcement**
 Enforce free/expanded limits: gallery count, pieces per gallery, post count, custom domain.

@@ -18,10 +18,8 @@ export const OPERATOR = {
   city: "Leipzig",
   country: "Deutschland",
   email: "chandiapablo@outlook.com",
-  /** Rellenar cuando se reciba del Finanzamt Leipzig */
-  steuernummer: null as string | null,
-  /** Kleinunternehmer § 19 UStG — sin USt-IdNr. hasta superar el umbral */
-  kleinunternehmer: true,
+  steuernummer: "80 732 336 158",
+  kleinunternehmer: false,
   gerichtsstand: "Leipzig",
   datenschutzbehoerde: "Sächsischer Datenschutzbeauftragter (SDtB), Devrientstraße 5, 01067 Dresden",
 } as const;

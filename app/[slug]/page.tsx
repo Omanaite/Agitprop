@@ -195,7 +195,7 @@ export default async function ArtistSitePage({ params }: { params: Promise<Param
       {
         render: (section) => (
           <Section key="booking" id="booking" title={section.title} eyebrow={section.eyebrow ?? undefined}>
-            <BookingForm copy={dictionary.booking} tenantSlug={tenant.slug} demoMode={isDemo} />
+            <BookingForm copy={dictionary.booking} tenantSlug={tenant.slug} demoMode={isDemo} locale={locale} />
           </Section>
         ),
       },

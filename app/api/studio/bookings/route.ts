@@ -33,7 +33,7 @@ export async function GET(request: Request) {
 
   const { data, error } = await adminClient
     .from("bookings")
-    .select("id,name,email,preferred_date,placement,description,status,created_at")
+    .select("id,name,email,preferred_date,placement,description,status,slot_id,slot_label,created_at")
     .eq("owner_user_id", auth.user.id)
     .order("created_at", { ascending: false })
     .limit(100);
@@ -121,6 +121,14 @@ export async function PATCH(request: Request) {
       );
     }
 
+    // Fetch the booking to get slot_id before updating
+    const { data: targetBooking } = await adminClient
+      .from("bookings")
+      .select("id,slot_id")
+      .eq("id", id)
+      .eq("owner_user_id", auth.user.id)
+      .maybeSingle();
+
     const { error } = await adminClient
       .from("bookings")
       .update({ status })
@@ -141,6 +149,44 @@ export async function PATCH(request: Request) {
       entity_id: id,
       metadata: { status },
     });
+
+    // Auto-decline pending bookings if slot is now at capacity
+    if (status === "confirmed" && targetBooking?.slot_id) {
+      const slotId = targetBooking.slot_id;
+      try {
+        // Get slot capacity from artist_tenants JSONB
+        const { data: tenant } = await adminClient
+          .from("artist_tenants")
+          .select("availability_slots")
+          .eq("owner_user_id", auth.user.id)
+          .maybeSingle();
+
+        const slots: { id: string; capacity: number }[] = tenant?.availability_slots ?? [];
+        const slot = slots.find((s: { id: string }) => s.id === slotId);
+
+        if (slot) {
+          // Count confirmed bookings for this slot
+          const { count } = await adminClient
+            .from("bookings")
+            .select("id", { count: "exact", head: true })
+            .eq("owner_user_id", auth.user.id)
+            .eq("slot_id", slotId)
+            .eq("status", "confirmed");
+
+          if ((count ?? 0) >= slot.capacity) {
+            // Decline all remaining pending bookings for this slot
+            await adminClient
+              .from("bookings")
+              .update({ status: "declined" })
+              .eq("owner_user_id", auth.user.id)
+              .eq("slot_id", slotId)
+              .eq("status", "pending");
+          }
+        }
+      } catch {
+        // Non-blocking — auto-decline is best-effort
+      }
+    }
 
     // Notify client of status change
     if (process.env.RESEND_API_KEY && (status === "confirmed" || status === "declined")) {

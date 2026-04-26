@@ -15,6 +15,21 @@
     sans-serif;
   --font-body: "JetBrains Mono", "Space Mono", var(--font-body), monospace;
   --font-admin: "Manrope", "Suisse Int'l", "Neue Haas Grotesk", sans-serif;
+
+  /* Typography scale tokens */
+  --type-eyebrow:    0.625rem;
+  --type-label:      0.75rem;
+  --type-body-sm:    0.875rem;
+  --type-body:       1rem;
+  --type-body-lg:    1.125rem;
+  --type-subheading: 1.5rem;
+  --type-heading-sm: 1.875rem;
+  --type-heading:    2.25rem;
+  --type-heading-lg: 3rem;
+  --type-display:    4.5rem;
+  --track-eyebrow:   0.6em;
+  --track-nav:       0.2em;
+
   --admin-bg: #f4f1ea;
   --admin-surface: rgba(255, 255, 255, 0.88);
   --admin-surface-strong: #ffffff;
@@ -462,32 +477,31 @@ html[data-theme="dark"] .gallery-filter-select {
   transition: background var(--duration) var(--timing);
 }
 
-/* ── ATELIER B — Masonry Gallery ────────────────────────────────────────── */
-/* Vertical sidenav (icon-only) · asymmetric 4-col masonry · artist strip   */
-/* Pill buttons, card shadows, image scale+overlay on hover                 */
+/* ── ATELIER B — Dark Gallery ───────────────────────────────────────────── */
+/* Deep warm charcoal · gold accent · refined dark museum feel              */
 .artist-theme-atelier-b {
-  --fg: #1c1410;
-  --bg: #f7f3ec;
-  --accent: #8b6f47;
-  --accent-fg: #faf7f2;
-  --surface: #ffffff;
-  --surface-2: rgba(243, 237, 227, 0.6);
-  --muted: #7a6a5a;
-  --border-color: rgba(28, 20, 16, 0.09);
+  --fg: #f5efe6;
+  --bg: #1a1510;
+  --accent: #c4a265;
+  --accent-fg: #1a1510;
+  --surface: rgba(255, 245, 220, 0.05);
+  --surface-2: rgba(255, 245, 220, 0.08);
+  --muted: #9a8a7a;
+  --border-color: rgba(245, 239, 230, 0.12);
   --border-width: 1px;
-  --radius-sm: 999px;
-  --radius-btn: 999px;
-  --radius-card: 6px;
-  --radius-input: 6px;
-  --shadow-sm: 0 1px 4px rgba(28, 20, 16, 0.06);
-  --shadow-card: 0 4px 24px rgba(28, 20, 16, 0.10);
-  --shadow-btn: 0 4px 16px rgba(139, 111, 71, 0.22);
+  --radius-sm: 2px;
+  --radius-btn: 2px;
+  --radius-card: 2px;
+  --radius-input: 2px;
+  --shadow-sm: 0 1px 8px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 6px 32px rgba(0, 0, 0, 0.6);
+  --shadow-btn: 0 4px 20px rgba(196, 162, 101, 0.28);
   --shadow-offset: none;
-  --timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --timing: ease-out;
   --duration: 240ms;
-  --duration-slow: 380ms;
+  --duration-slow: 400ms;
 
-  background: #f7f3ec;
+  background: linear-gradient(160deg, #1a1510 0%, #120f0a 100%);
   color: var(--fg);
   font-family: "Georgia", "Times New Roman", serif;
   letter-spacing: 0;
@@ -503,9 +517,9 @@ html[data-theme="dark"] .gallery-filter-select {
   box-shadow: var(--shadow-btn);
 }
 .artist-theme-atelier-b .theme-invert:hover {
-  background: #6e5535;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(139, 111, 71, 0.3);
+  background: #a8874e;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 28px rgba(196, 162, 101, 0.40);
   transition: transform var(--duration) var(--timing),
               box-shadow var(--duration) var(--timing),
               background var(--duration) var(--timing);
@@ -557,18 +571,17 @@ html[data-theme="dark"] .gallery-filter-select {
   transition: all var(--duration) var(--timing);
 }
 
-/* ── MONO B — Ratio Layout ──────────────────────────────────────────────── */
-/* 70/30 split (headline + bio) · 2-col work thumbnails · aside detail      */
-/* Content enters with translateY(-8px), 2px borders, high typographic mass */
+/* ── MONO B — Dark Brutalist ────────────────────────────────────────────── */
+/* True black · white text · maximum contrast · zero decoration             */
 .artist-theme-mono-b {
-  --fg: #0a0a0a;
-  --bg: #fafafa;
-  --accent: #0a0a0a;
-  --accent-fg: #fafafa;
-  --surface: #f0f0f0;
-  --surface-2: #e8e8e8;
-  --muted: #5a5a5a;
-  --border-color: rgba(10, 10, 10, 0.18);
+  --fg: #f5f5f5;
+  --bg: #0a0a0a;
+  --accent: #f5f5f5;
+  --accent-fg: #0a0a0a;
+  --surface: #141414;
+  --surface-2: #1e1e1e;
+  --muted: #888888;
+  --border-color: rgba(245, 245, 245, 0.14);
   --border-width: 2px;
   --radius-sm: 0px;
   --radius-btn: 0px;
@@ -582,7 +595,7 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 200ms;
   --duration-slow: 360ms;
 
-  background: #fafafa;
+  background: #0a0a0a;
   color: var(--fg);
   font-family: "Helvetica Neue", "Arial", system-ui, sans-serif;
   letter-spacing: -0.025em;
@@ -603,32 +616,31 @@ html[data-theme="dark"] .gallery-filter-select {
   transition: all var(--duration) var(--timing);
 }
 
-/* ── INK A — Cinematic Center ───────────────────────────────────────────── */
-/* Full-bleed dark · centered 640px column · violet glow accent             */
-/* Glass cards, glow on hover, 600ms entrance fade, backdrop blur           */
+/* ── INK A — Light / Editorial ──────────────────────────────────────────── */
+/* Light mode: clean white with violet accent                               */
 .artist-theme-ink {
-  --fg: #f0eee8;
-  --bg: #0e1017;
+  --fg: #1a1520;
+  --bg: #f9f8fc;
   --accent: #7c5cbf;
-  --accent-fg: #f0eee8;
-  --surface: rgba(255, 255, 255, 0.04);
-  --surface-2: rgba(255, 255, 255, 0.07);
-  --muted: #8a8fa0;
-  --border-color: rgba(240, 238, 232, 0.10);
+  --accent-fg: #f9f8fc;
+  --surface: rgba(124, 92, 191, 0.05);
+  --surface-2: rgba(124, 92, 191, 0.09);
+  --muted: #6b6480;
+  --border-color: rgba(26, 21, 32, 0.12);
   --border-width: 1px;
   --radius-sm: 4px;
   --radius-btn: 4px;
   --radius-card: 8px;
   --radius-input: 4px;
-  --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.4);
-  --shadow-card: 0 8px 40px rgba(0, 0, 0, 0.5);
-  --shadow-btn: 0 0 20px rgba(124, 92, 191, 0.45);
+  --shadow-sm: 0 2px 12px rgba(124, 92, 191, 0.10);
+  --shadow-card: 0 8px 32px rgba(124, 92, 191, 0.12);
+  --shadow-btn: 0 0 16px rgba(124, 92, 191, 0.30);
   --shadow-offset: none;
   --timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --duration: 280ms;
   --duration-slow: 600ms;
 
-  background: linear-gradient(160deg, #0e1017 0%, #141824 100%);
+  background: linear-gradient(160deg, #f9f8fc 0%, #f0edf8 100%);
   color: var(--fg);
   font-family: "Helvetica Neue", "Arial", system-ui, sans-serif;
   letter-spacing: -0.01em;
@@ -644,9 +656,9 @@ html[data-theme="dark"] .gallery-filter-select {
   box-shadow: var(--shadow-btn);
 }
 .artist-theme-ink .theme-invert:hover {
-  background: #9b7fe8;
-  box-shadow: 0 0 32px rgba(124, 92, 191, 0.65);
-  transform: translateY(-2px);
+  background: #6040a8;
+  box-shadow: 0 0 24px rgba(124, 92, 191, 0.40);
+  transform: translateY(-1px);
   transition: all var(--duration) var(--timing);
 }
 .artist-theme-ink .theme-hover-invert:hover {
@@ -656,32 +668,31 @@ html[data-theme="dark"] .gallery-filter-select {
   transition: all var(--duration) var(--timing);
 }
 
-/* ── INK B — Narrative Scroll ───────────────────────────────────────────── */
-/* Portrait fullscreen · 3 work tiles · CTA dark section                    */
-/* Inset hero shadow, zero-radius buttons with glowing border, stagger fade */
+/* ── INK B — Cinematic Dark ─────────────────────────────────────────────── */
+/* Full-bleed dark · centered column · violet glow accent                   */
 .artist-theme-ink-b {
-  --fg: #e8e4dc;
-  --bg: #090b10;
-  --accent: #b49ee8;
-  --accent-fg: #090b10;
-  --surface: rgba(255, 255, 255, 0.03);
-  --surface-2: rgba(180, 158, 232, 0.08);
-  --muted: #6b7280;
-  --border-color: rgba(180, 158, 232, 0.20);
+  --fg: #f0eee8;
+  --bg: #0e1017;
+  --accent: #9b7fe8;
+  --accent-fg: #0e1017;
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-2: rgba(155, 127, 232, 0.10);
+  --muted: #8a8fa0;
+  --border-color: rgba(240, 238, 232, 0.10);
   --border-width: 1px;
-  --radius-sm: 0px;
-  --radius-btn: 0px;
-  --radius-card: 0px;
-  --radius-input: 0px;
-  --shadow-sm: 0 1px 8px rgba(0, 0, 0, 0.6);
-  --shadow-card: inset 0 -80px 120px rgba(0, 0, 0, 0.8);
-  --shadow-btn: none;
+  --radius-sm: 4px;
+  --radius-btn: 4px;
+  --radius-card: 8px;
+  --radius-input: 4px;
+  --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 8px 40px rgba(0, 0, 0, 0.6);
+  --shadow-btn: 0 0 24px rgba(155, 127, 232, 0.50);
   --shadow-offset: none;
-  --timing: cubic-bezier(0.16, 1, 0.3, 1);
-  --duration: 320ms;
-  --duration-slow: 500ms;
+  --timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --duration: 280ms;
+  --duration-slow: 600ms;
 
-  background: #090b10;
+  background: linear-gradient(160deg, #0e1017 0%, #141824 100%);
   color: var(--fg);
   font-family: "Helvetica Neue", "Arial", system-ui, sans-serif;
   letter-spacing: -0.01em;
@@ -691,14 +702,15 @@ html[data-theme="dark"] .gallery-filter-select {
   border: var(--border-width) solid var(--border-color);
 }
 .artist-theme-ink-b .theme-invert {
-  background: transparent;
-  color: var(--accent);
-  border-radius: 0;
-  border: 1px solid var(--accent);
-}
-.artist-theme-ink-b .theme-invert:hover {
   background: var(--accent);
   color: var(--accent-fg);
+  border-radius: var(--radius-btn);
+  box-shadow: var(--shadow-btn);
+}
+.artist-theme-ink-b .theme-invert:hover {
+  background: #b49ee8;
+  box-shadow: 0 0 36px rgba(155, 127, 232, 0.70);
+  transform: translateY(-2px);
   transition: all var(--duration) var(--timing);
 }
 
@@ -749,32 +761,31 @@ html[data-theme="dark"] .gallery-filter-select {
   transition: all var(--duration) var(--timing);
 }
 
-/* ── VERDURE B — Centered Botanical ─────────────────────────────────────── */
-/* Centered portrait with decorative frame · tagline · pill CTA · h-scroll  */
-/* Full pill buttons, green glow shadows, horizontal snap gallery            */
+/* ── VERDURE B — Dark Forest ─────────────────────────────────────────────── */
+/* Deep forest night · soft green glow · organic dark                       */
 .artist-theme-verdure-b {
-  --fg: #1a2e1c;
-  --bg: #eef3ea;
-  --accent: #4a7c59;
-  --accent-fg: #eef3ea;
-  --surface: rgba(255, 255, 255, 0.7);
-  --surface-2: rgba(232, 240, 228, 0.8);
-  --muted: #5a7260;
-  --border-color: rgba(74, 124, 89, 0.18);
+  --fg: #c8e6c9;
+  --bg: #0d1a0e;
+  --accent: #5daa72;
+  --accent-fg: #0d1a0e;
+  --surface: rgba(74, 124, 89, 0.10);
+  --surface-2: rgba(74, 124, 89, 0.06);
+  --muted: #6a9470;
+  --border-color: rgba(93, 170, 114, 0.18);
   --border-width: 1px;
-  --radius-sm: 999px;
-  --radius-btn: 999px;
-  --radius-card: 20px;
-  --radius-input: 12px;
-  --shadow-sm: 0 2px 10px rgba(74, 124, 89, 0.08);
-  --shadow-card: 0 12px 40px rgba(26, 46, 28, 0.09);
-  --shadow-btn: 0 4px 20px rgba(74, 124, 89, 0.28);
+  --radius-sm: 6px;
+  --radius-btn: 12px;
+  --radius-card: 16px;
+  --radius-input: 10px;
+  --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 8px 40px rgba(0, 0, 0, 0.6);
+  --shadow-btn: 0 4px 20px rgba(93, 170, 114, 0.30);
   --shadow-offset: none;
   --timing: cubic-bezier(0.34, 1.06, 0.64, 1);
   --duration: 300ms;
   --duration-slow: 500ms;
 
-  background: radial-gradient(ellipse at 50% 0%, #dbebd4 0%, #eef3ea 60%);
+  background: radial-gradient(ellipse at 50% 0%, #142016 0%, #0d1a0e 70%);
   color: var(--fg);
   font-family: "Georgia", "Times New Roman", serif;
   letter-spacing: 0;
@@ -790,9 +801,9 @@ html[data-theme="dark"] .gallery-filter-select {
   box-shadow: var(--shadow-btn);
 }
 .artist-theme-verdure-b .theme-invert:hover {
-  background: #3a6147;
-  transform: translateY(-3px) scale(1.01);
-  box-shadow: 0 10px 32px rgba(74, 124, 89, 0.38);
+  background: #4a9060;
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 10px 32px rgba(93, 170, 114, 0.40);
   transition: all var(--duration) var(--timing);
 }
 
@@ -844,32 +855,31 @@ html[data-theme="dark"] .gallery-filter-select {
               box-shadow var(--duration) var(--timing);
 }
 
-/* ── AMBER B — Editorial Magazine ───────────────────────────────────────── */
-/* 60% image / 40% text interleaved · divider terracotta rule · 3-col       */
-/* Border-top accent on cards, saffron primary, subtle serif editorial feel  */
+/* ── AMBER B — Dark Amber ───────────────────────────────────────────────── */
+/* Deep warm darkness · ember glow accent · rich night editorial            */
 .artist-theme-amber-b {
-  --fg: #2c1a0e;
-  --bg: #fffbf2;
+  --fg: #f5e8d0;
+  --bg: #180d04;
   --accent: #e8951a;
-  --accent-fg: #2c1a0e;
-  --surface: rgba(253, 236, 200, 0.5);
-  --surface-2: #fff8ee;
-  --muted: #8a6240;
-  --border-color: rgba(44, 26, 14, 0.14);
-  --border-width: 1px;
-  --radius-sm: 2px;
-  --radius-btn: 2px;
-  --radius-card: 2px;
-  --radius-input: 2px;
-  --shadow-sm: 0 1px 4px rgba(44, 26, 14, 0.08);
-  --shadow-card: 0 2px 12px rgba(44, 26, 14, 0.10);
-  --shadow-btn: none;
-  --shadow-offset: none;
-  --timing: ease-out;
-  --duration: 200ms;
-  --duration-slow: 380ms;
+  --accent-fg: #180d04;
+  --surface: rgba(232, 149, 26, 0.08);
+  --surface-2: rgba(232, 149, 26, 0.05);
+  --muted: #c4915a;
+  --border-color: rgba(232, 149, 26, 0.18);
+  --border-width: 2px;
+  --radius-sm: 0px;
+  --radius-btn: 0px;
+  --radius-card: 0px;
+  --radius-input: 0px;
+  --shadow-sm: 2px 2px 0 rgba(232, 149, 26, 0.4);
+  --shadow-card: 4px 4px 0 rgba(232, 149, 26, 0.5);
+  --shadow-btn: 4px 4px 0 var(--fg);
+  --shadow-offset: 4px 4px 0 currentColor;
+  --timing: steps(2, jump-none);
+  --duration: 140ms;
+  --duration-slow: 280ms;
 
-  background: #fffbf2;
+  background: linear-gradient(160deg, #180d04 0%, #100802 100%);
   color: var(--fg);
   font-family: "Georgia", "Times New Roman", serif;
   letter-spacing: 0;
@@ -881,14 +891,15 @@ html[data-theme="dark"] .gallery-filter-select {
 .artist-theme-amber-b .theme-invert {
   background: var(--accent);
   color: var(--accent-fg);
-  border-radius: var(--radius-btn);
+  border-radius: 0;
   border: 2px solid var(--fg);
+  box-shadow: var(--shadow-btn);
 }
 .artist-theme-amber-b .theme-invert:hover {
-  background: #c4622d;
-  color: #fffbf2;
-  transition: background var(--duration) var(--timing),
-              color var(--duration) var(--timing);
+  transform: translate(4px, 4px);
+  box-shadow: none;
+  transition: transform var(--duration) var(--timing),
+              box-shadow var(--duration) var(--timing);
 }
 
 /* ── AKEMI BRUTALIST A — Broken Grid ────────────────────────────────────── */

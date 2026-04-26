@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
+
+export const runtime = "nodejs";
 import { createClient } from "@supabase/supabase-js";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
 
 type Slot = {
@@ -7,7 +10,8 @@ type Slot = {
   capacity: number; label?: string; note?: string;
 };
 
-function getSupabase() {
+// Anon client for reading public tenant data (artist_tenants has public RLS)
+function getAnonClient() {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -28,9 +32,10 @@ export async function GET(request: Request) {
 
   if (!slug) return NextResponse.json({ slots: [], dates: [] });
 
-  const supabase = getSupabase();
+  const anon = getAnonClient();
+  const admin = createSupabaseServerClient(); // service role — needed to count bookings (RLS blocks anon)
 
-  const { data: tenant } = await supabase
+  const { data: tenant } = await anon
     .from("artist_tenants")
     .select("owner_user_id, availability_slots")
     .eq("slug", slug)
@@ -53,7 +58,7 @@ export async function GET(request: Request) {
   const daySlots = allSlots.filter((s) => s.date === date);
   if (daySlots.length === 0) return NextResponse.json({ slots: [], dates: [] });
 
-  const { data: bookings } = await supabase
+  const { data: bookings } = await admin
     .from("bookings")
     .select("slot_id")
     .eq("owner_user_id", tenant.owner_user_id)

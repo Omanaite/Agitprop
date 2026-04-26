@@ -17,66 +17,88 @@ export function NavMono({ navItems, locale, brandEyebrow, brandTitle, siteTheme 
 
   return (
     <>
-      {/* Header bar */}
-      <header className="bg-[var(--bg)] px-6 py-6 md:px-10">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.5em] opacity-40 mb-0.5">{brandEyebrow}</p>
-            <h1 className="font-[var(--font-heading)] text-5xl md:text-8xl leading-none font-black uppercase">
-              {brandTitle}
-            </h1>
-          </div>
+      <header className="bg-[var(--bg)]">
+        {/* Top utility bar */}
+        <div className="flex items-center justify-between px-6 md:px-10 py-3 border-b border-[var(--fg)]/10">
+          <p className="text-[9px] uppercase tracking-[0.6em] opacity-40">{brandEyebrow}</p>
           <div className="flex items-center gap-4">
             <SitePreferencesMenu locale={locale} siteTheme={siteTheme} />
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="text-2xl leading-none px-2 py-1 snap-transition hover:opacity-60"
               aria-label="Open menu"
+              className="flex flex-col justify-center gap-[5px] w-8 h-8 group"
             >
-              ☰
+              <span className="block h-[2px] bg-[var(--fg)] transition-all duration-200 group-hover:w-full w-full" />
+              <span className="block h-[2px] bg-[var(--fg)] w-2/3 transition-all duration-200 group-hover:w-full" />
+              <span className="block h-[2px] bg-[var(--fg)] w-1/3 transition-all duration-200 group-hover:w-full" />
             </button>
           </div>
         </div>
-        {/* Thick rule */}
-        <div className="mt-4 h-[3px] bg-[var(--fg)]" />
+
+        {/* Hero title */}
+        <div className="px-6 md:px-10 pt-6 pb-8 overflow-hidden">
+          <h1
+            className="text-[clamp(3rem,14vw,9rem)] leading-[0.88] font-black uppercase tracking-[-0.04em] select-none"
+            style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif" }}
+          >
+            {brandTitle}
+          </h1>
+          {/* Bottom rule with count */}
+          <div className="flex items-center gap-4 mt-4">
+            <div className="flex-1 h-[2px] bg-[var(--fg)]" />
+            <span className="text-[9px] uppercase tracking-[0.6em] opacity-40 shrink-0">
+              {navItems.length} sections
+            </span>
+          </div>
+        </div>
       </header>
 
-      {/* Side drawer */}
-      {open && (
-        <div className="fixed inset-0 z-50 flex">
-          {/* Backdrop */}
-          <button
-            type="button"
-            className="flex-1 bg-black/40"
-            onClick={() => setOpen(false)}
-            aria-label="Close menu"
-          />
-          {/* Panel */}
-          <div className="w-72 bg-[var(--fg)] text-[var(--bg)] flex flex-col p-8 gap-2">
+      {/* Drawer overlay */}
+      <div
+        className={`fixed inset-0 z-50 flex transition-opacity duration-300 ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+      >
+        {/* Backdrop */}
+        <button
+          type="button"
+          className="flex-1 bg-[var(--fg)]/30 backdrop-blur-sm"
+          onClick={() => setOpen(false)}
+          aria-label="Close menu"
+        />
+        {/* Panel */}
+        <div
+          className={`w-80 bg-[var(--fg)] text-[var(--bg)] flex flex-col p-8 transition-transform duration-300 ${open ? "translate-x-0" : "translate-x-full"}`}
+        >
+          <div className="flex items-center justify-between mb-10">
+            <span className="text-[9px] uppercase tracking-[0.6em] opacity-40">Menu</span>
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="self-end text-xl mb-6 opacity-60 hover:opacity-100 transition-opacity"
+              className="text-[var(--bg)] opacity-50 hover:opacity-100 transition-opacity text-xl leading-none"
               aria-label="Close"
             >
               ✕
             </button>
-            <p className="text-[10px] uppercase tracking-[0.5em] opacity-40 mb-4">Navigation</p>
+          </div>
+          <nav className="flex flex-col gap-0">
             {navItems.map((s, i) => (
               <a
                 key={s.section_key}
                 href={`#${s.section_key}`}
                 onClick={() => setOpen(false)}
-                className="flex items-baseline gap-4 text-2xl font-bold uppercase tracking-[0.05em] py-2 border-b border-current/10 hover:opacity-60 transition-opacity"
+                className="group flex items-baseline gap-4 py-4 border-b border-[var(--bg)]/10 hover:pl-2 transition-all duration-200"
               >
-                <span className="text-xs opacity-30 font-normal">0{i + 1}</span>
-                {s.title}
+                <span className="text-[10px] font-mono opacity-30 w-5">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="text-2xl font-black uppercase tracking-[-0.02em] group-hover:opacity-70 transition-opacity">
+                  {s.title}
+                </span>
               </a>
             ))}
-          </div>
+          </nav>
         </div>
-      )}
+      </div>
     </>
   );
 }
