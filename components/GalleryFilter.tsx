@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import type { Gallery, Tattoo } from "@/types";
+import type { PublicDictionary } from "@/lib/i18n";
 import { GalleryGrid } from "@/components/GalleryGrid";
 
 type Props = {
@@ -9,6 +10,7 @@ type Props = {
   galleries: Gallery[];
   filterLabel: string;
   allLabel: string;
+  dict?: Pick<PublicDictionary, "galleries">;
 };
 
 export function GalleryFilter({
@@ -16,6 +18,7 @@ export function GalleryFilter({
   galleries,
   filterLabel,
   allLabel,
+  dict,
 }: Props) {
   const [selected, setSelected] = useState<string>("all");
 
@@ -41,7 +44,7 @@ export function GalleryFilter({
           ))}
         </select>
       </div>
-      <GalleryGrid tattoos={filtered} />
+      <GalleryGrid tattoos={filtered} dict={dict} />
     </div>
   );
 }
