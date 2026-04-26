@@ -21,7 +21,7 @@ Supabase project: `ffnrzvklegbiejlksnai`
 
 | Agente | Archivos / área | Iniciado |
 |--------|----------------|----------|
-| — | — | — |
+| claude-ui-ux | `app/globals.css`, `components/headers/NavMono.tsx`, `components/headers/NavInk.tsx` | 2026-04-27 |
 
 ### Áreas libres (disponibles para trabajar)
 
