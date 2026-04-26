@@ -21,7 +21,23 @@ Supabase project: `ffnrzvklegbiejlksnai`
 
 | Agente | Archivos / área | Iniciado |
 |--------|----------------|----------|
-| claude-ui-ux | `app/globals.css`, `components/headers/NavMono.tsx`, `components/headers/NavInk.tsx` | 2026-04-27 |
+| — | — | — |
+
+### Últimos archivos modificados por Agente-B (sesión 2026-04-27) — YA PUSHEADOS
+
+| Archivo | Qué se hizo |
+|---------|-------------|
+| `app/globals.css` | Dark mode real para atelier-b, mono-b, ink (swap light↔dark), verdure-b, amber-b |
+| `components/headers/NavAtelier.tsx` | Rediseño: título centrado serif + animated underline |
+| `components/headers/NavMono.tsx` | Rediseño: drawer animado, título gigante clamp |
+| `components/headers/NavInk.tsx` | Fix overlap + overlay con accent gradient |
+| `components/headers/NavVerdure.tsx` | Rediseño: italic serif + ornamento ❧ + pill hover |
+| `components/headers/NavAmber.tsx` | Rediseño: ◆ decorativo + sticky bottom hover accent |
+| `components/SitePreferencesMenu.tsx` | Eliminado Eye Care |
+| `components/BookingForm.tsx` | `formatDateLabel` → `Intl.DateTimeFormat` con locale |
+| `app/[slug]/page.tsx` | Pasa `locale` a BookingForm |
+| `app/api/studio/bookings/route.ts` | Auto-reject pending al confirmar slot lleno |
+| `components/studio/StudioAvailabilityManager.tsx` | 100% en inglés |
 
 ### Áreas libres (disponibles para trabajar)
 
