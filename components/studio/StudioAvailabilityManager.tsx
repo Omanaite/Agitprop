@@ -13,8 +13,21 @@ type Slot = {
   note: string;
 };
 
-const WEEKDAYS = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
-const MONTHS = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+const WEEKDAY_INDICES = [0, 1, 2, 3, 4, 5, 6]; // Sun–Sat
+
+function getWeekdayLabels(locale: string) {
+  // Build short weekday names starting from Sunday using a known Sunday anchor
+  const anchor = new Date(2023, 0, 1); // 2023-01-01 is a Sunday
+  return WEEKDAY_INDICES.map((i) => {
+    const d = new Date(anchor);
+    d.setDate(anchor.getDate() + i);
+    return new Intl.DateTimeFormat(locale, { weekday: "short" }).format(d);
+  });
+}
+
+function getMonthLabel(year: number, month: number, locale: string) {
+  return new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }).format(new Date(year, month, 1));
+}
 
 function toYMD(y: number, m: number, d: number) {
   return `${y}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
@@ -24,12 +37,13 @@ function newSlot(date: string): Slot {
   return { id: crypto.randomUUID(), date, from: "10:00", until: "18:00", capacity: 1, label: "", note: "" };
 }
 
-function formatDateLabel(ymd: string) {
+function formatDateLabel(ymd: string, locale: string) {
   const [y, m, d] = ymd.split("-").map(Number);
-  return `${d} ${MONTHS[m - 1]} ${y}`;
+  return new Intl.DateTimeFormat(locale, { day: "numeric", month: "long", year: "numeric" }).format(new Date(y, m - 1, d));
 }
 
 export function StudioAvailabilityManager() {
+  const locale = typeof navigator !== "undefined" ? navigator.language : "en";
   const [slots, setSlots] = useState<Slot[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -152,14 +166,14 @@ export function StudioAvailabilityManager() {
         <div className="flex items-center justify-between mb-4">
           <button type="button" className="admin-button px-3 py-1 text-sm" onClick={prevMonth}>‹</button>
           <span className="text-sm font-semibold text-[var(--admin-title)] uppercase tracking-[0.12em]">
-            {MONTHS[calMonth]} {calYear}
+            {getMonthLabel(calYear, calMonth, locale)}
           </span>
           <button type="button" className="admin-button px-3 py-1 text-sm" onClick={nextMonth}>›</button>
         </div>
 
         {/* Weekday headers */}
         <div className="grid grid-cols-7 mb-1">
-          {WEEKDAYS.map(d => (
+          {getWeekdayLabels(locale).map(d => (
             <div key={d} className="text-center text-[10px] uppercase tracking-[0.1em] opacity-50 py-1">{d}</div>
           ))}
         </div>
@@ -208,7 +222,7 @@ export function StudioAvailabilityManager() {
         <div className="mt-4">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-semibold text-[var(--admin-title)]">
-              {formatDateLabel(selectedDate)}
+              {formatDateLabel(selectedDate, locale)}
             </h3>
             <button type="button" className="admin-button text-xs" onClick={startAddSlot}>
               + Add slot
@@ -313,7 +327,7 @@ export function StudioAvailabilityManager() {
                     setCalYear(y); setCalMonth(m - 1); setSelectedDate(date); setDraft(null);
                   }}
                 >
-                  <span className="text-xs font-semibold text-[var(--admin-title)]">{formatDateLabel(date)}</span>
+                  <span className="text-xs font-semibold text-[var(--admin-title)]">{formatDateLabel(date, locale)}</span>
                   <span className="ml-3 admin-muted text-xs">
                     {slotsByDate[date].sort((a, b) => a.from.localeCompare(b.from)).map(s =>
                       `${s.from}–${s.until}${s.capacity > 1 ? ` (${s.capacity}p)` : ""}`
