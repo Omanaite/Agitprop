@@ -101,6 +101,7 @@ export default async function ArtistSitePage({ params }: { params: Promise<Param
               galleries={galleries}
               filterLabel={dictionary.work.filter}
               allLabel={dictionary.work.all}
+              dict={{ galleries: dictionary.galleries }}
             />
           </Section>
         ),
@@ -215,7 +216,7 @@ export default async function ArtistSitePage({ params }: { params: Promise<Param
       {
         render: (section) => (
           <Section key="posts" id="posts" title={section.title} eyebrow={section.eyebrow ?? undefined}>
-            <PostFeed posts={posts} />
+            <PostFeed posts={posts} dict={dictionary} />
           </Section>
         ),
       },

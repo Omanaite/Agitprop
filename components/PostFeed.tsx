@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { Post } from "@/types";
+import type { PublicDictionary } from "@/lib/i18n";
 
 function formatDate(iso: string) {
   try {
@@ -45,11 +46,11 @@ function PostModal({ post, onClose }: { post: Post; onClose: () => void }) {
   );
 }
 
-export function PostFeed({ posts }: { posts: Post[] }) {
+export function PostFeed({ posts, dict }: { posts: Post[]; dict: Pick<PublicDictionary, "posts"> }) {
   const [selected, setSelected] = useState<Post | null>(null);
 
   if (!posts.length) {
-    return <p className="text-sm opacity-60">No posts published yet.</p>;
+    return <p className="text-sm opacity-60">{dict.posts.empty}</p>;
   }
 
   return (
@@ -74,7 +75,7 @@ export function PostFeed({ posts }: { posts: Post[] }) {
               {post.excerpt || post.body}
             </p>
             <p className="mt-3 text-xs uppercase tracking-[0.18em] opacity-40">
-              Read more →
+              {dict.posts.readMore}
             </p>
           </article>
         ))}

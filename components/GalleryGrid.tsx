@@ -3,12 +3,18 @@
 import Image from "next/image";
 import { useState } from "react";
 import type { Tattoo } from "@/types";
+import type { PublicDictionary } from "@/lib/i18n";
+
+const DEFAULT_DICT = {
+  galleries: { empty: "No pieces yet.", viewLocation: "View location", tapToView: "Tap to view" },
+};
 
 type GalleryGridProps = {
   tattoos: Tattoo[];
+  dict?: Pick<PublicDictionary, "galleries">;
 };
 
-function PieceModal({ tattoo, onClose }: { tattoo: Tattoo; onClose: () => void }) {
+function PieceModal({ tattoo, onClose, viewLocation }: { tattoo: Tattoo; onClose: () => void; viewLocation: string }) {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
@@ -68,7 +74,7 @@ function PieceModal({ tattoo, onClose }: { tattoo: Tattoo; onClose: () => void }
                   rel="noopener noreferrer"
                   className="underline hover:opacity-100"
                 >
-                  {tattoo.location_name ? tattoo.location_name : "View location"} ↗
+                  {tattoo.location_name ? tattoo.location_name : viewLocation} ↗
                 </a>
               </p>
             ) : null}
@@ -85,20 +91,21 @@ function PieceModal({ tattoo, onClose }: { tattoo: Tattoo; onClose: () => void }
   );
 }
 
-export function GalleryGrid({ tattoos }: GalleryGridProps) {
+export function GalleryGrid({ tattoos, dict: dictProp }: GalleryGridProps) {
+  const dict = dictProp ?? DEFAULT_DICT;
   const [selected, setSelected] = useState<Tattoo | null>(null);
 
   if (tattoos.length === 0) {
     return (
       <p className="text-sm uppercase tracking-[0.2em]">
-        The archive is being updated. Check back soon for new work.
+        {dict.galleries.empty}
       </p>
     );
   }
 
   return (
     <>
-      {selected ? <PieceModal tattoo={selected} onClose={() => setSelected(null)} /> : null}
+      {selected ? <PieceModal tattoo={selected} onClose={() => setSelected(null)} viewLocation={dict.galleries.viewLocation} /> : null}
       <div className="grid gap-4 md:grid-cols-[1.2fr_0.8fr_1fr]">
         {tattoos.map((tattoo) => (
           <article
@@ -129,7 +136,7 @@ export function GalleryGrid({ tattoos }: GalleryGridProps) {
                 <p className="mt-2 text-sm">{tattoo.description}</p>
               ) : null}
               <p className="mt-2 text-xs uppercase tracking-[0.18em] opacity-40">
-                Tap to view details
+                {dict.galleries.tapToView}
               </p>
             </div>
           </article>

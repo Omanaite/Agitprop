@@ -65,8 +65,8 @@ export type PublicDictionary = {
     cards: Array<{ title: string; description: string; price: string }>;
   };
   work: { filter: string; all: string };
-  galleries: { empty: string };
-  posts: { empty: string };
+  galleries: { empty: string; viewLocation: string; tapToView: string };
+  posts: { empty: string; readMore: string };
   footer: { studio: string; copyright: string };
 };
 
@@ -133,8 +133,8 @@ export const publicDictionaries: Record<Locale, PublicDictionary> = {
       ],
     },
     work: { filter: "Filter", all: "All" },
-    galleries: { empty: "Curated galleries are being prepared. Return soon for the next release." },
-    posts: { empty: "Studio notes are offline for editing. New entries will be published soon." },
+    galleries: { empty: "Curated galleries are being prepared. Return soon for the next release.", viewLocation: "View location", tapToView: "Tap to view details" },
+    posts: { empty: "Studio notes are offline for editing. New entries will be published soon.", readMore: "Read more →" },
     footer: {
       studio: "Berlin - Private Studio",
       copyright: "Copyright 2026 Akemi Tattoo",
@@ -202,8 +202,8 @@ export const publicDictionaries: Record<Locale, PublicDictionary> = {
       ],
     },
     work: { filter: "Filtro", all: "Todo" },
-    galleries: { empty: "Las galerias curadas se estan preparando. Vuelve pronto para la siguiente seleccion." },
-    posts: { empty: "Las notas del estudio estan en edicion. Habra nuevas publicaciones pronto." },
+    galleries: { empty: "Las galerias curadas se estan preparando. Vuelve pronto para la siguiente seleccion.", viewLocation: "Ver ubicacion", tapToView: "Toca para ver detalles" },
+    posts: { empty: "Las notas del estudio estan en edicion. Habra nuevas publicaciones pronto.", readMore: "Leer mas →" },
     footer: {
       studio: "Berlin - Estudio privado",
       copyright: "Copyright 2026 Akemi Tattoo",
@@ -271,8 +271,8 @@ export const publicDictionaries: Record<Locale, PublicDictionary> = {
       ],
     },
     work: { filter: "Filter", all: "Alle" },
-    galleries: { empty: "Kurierte Galerien werden gerade vorbereitet. Schau bald wieder vorbei." },
-    posts: { empty: "Studio-Notizen werden gerade ueberarbeitet. Neue Eintraege folgen bald." },
+    galleries: { empty: "Kurierte Galerien werden gerade vorbereitet. Schau bald wieder vorbei.", viewLocation: "Standort anzeigen", tapToView: "Tippen fuer Details" },
+    posts: { empty: "Studio-Notizen werden gerade ueberarbeitet. Neue Eintraege folgen bald.", readMore: "Weiterlesen →" },
     footer: {
       studio: "Berlin - Privatstudio",
       copyright: "Copyright 2026 Akemi Tattoo",
