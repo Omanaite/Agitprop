@@ -152,7 +152,7 @@ export function BookingForm({ copy, tenantSlug, demoMode, locale = "en" }: Booki
                   type="button"
                   onClick={() => setSelectedDate(selectedDate === d ? "" : d)}
                   className={[
-                    "rounded-lg border px-3 py-1.5 text-xs font-semibold transition-all",
+                    "rounded-xl border px-3 py-1.5 text-xs font-semibold transition-all",
                     selectedDate === d
                       ? "bg-[var(--fg)] text-[var(--bg)] border-[var(--fg)]"
                       : "theme-border hover:bg-[var(--fg)] hover:text-[var(--bg)]",
