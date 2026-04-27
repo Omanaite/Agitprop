@@ -46,7 +46,7 @@ const freeFeatures = [
   "Booking intake from clients",
   "All 5 visual themes included",
   "Telegram notifications for bookings",
-  "Light / Eye / Dark mode",
+  "Light / Dark mode per theme",
   "EN / ES / DE language toggle",
   "agitpropstudio.vercel.app/you URL",
 ];
