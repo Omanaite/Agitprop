@@ -131,7 +131,7 @@ export function LocationSearch({ locationName, locationLink, onChange }: Props) 
 
       {/* Dropdown */}
       {open && (
-        <ul className="absolute z-50 w-full mt-1 border border-black bg-white text-black text-xs shadow-[2px_2px_0_#000] max-h-48 overflow-y-auto">
+        <ul className="absolute z-50 w-full mt-1 border border-[var(--admin-border)] bg-[var(--admin-surface-strong)] text-[var(--admin-title)] text-xs shadow-[var(--admin-shadow)] max-h-48 overflow-y-auto">
           {loading && (
             <li className="px-3 py-2 opacity-40">Searching…</li>
           )}
@@ -139,7 +139,7 @@ export function LocationSearch({ locationName, locationLink, onChange }: Props) 
             <li key={r.place_id}>
               <button
                 type="button"
-                className="w-full text-left px-3 py-2 hover:bg-black hover:text-white transition-none truncate"
+                className="w-full text-left px-3 py-2 hover:bg-[var(--admin-accent)] hover:text-white transition-colors truncate"
                 onClick={() => handleSelect(r)}
               >
                 {r.display_name}
