@@ -43,7 +43,7 @@ function formatDateLabel(ymd: string, locale: string) {
 }
 
 export function StudioAvailabilityManager() {
-  const locale = typeof navigator !== "undefined" ? navigator.language : "en";
+  const locale = "en"; // admin UI is always English
   const [slots, setSlots] = useState<Slot[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);

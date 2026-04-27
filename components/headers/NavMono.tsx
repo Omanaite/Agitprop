@@ -67,7 +67,7 @@ export function NavMono({ navItems, locale, brandEyebrow, brandTitle, siteTheme 
         />
         {/* Panel */}
         <div
-          className={`w-80 bg-[var(--fg)] text-[var(--bg)] flex flex-col p-8 transition-transform duration-300 ${open ? "translate-x-0" : "translate-x-full"}`}
+          className={`w-80 bg-[var(--fg)] text-[var(--bg)] flex flex-col p-8 overflow-y-auto transition-transform duration-300 ${open ? "translate-x-0" : "translate-x-full"}`}
         >
           <div className="flex items-center justify-between mb-10">
             <span className="text-[9px] uppercase tracking-[0.6em] opacity-40">Menu</span>

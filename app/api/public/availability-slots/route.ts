@@ -63,7 +63,7 @@ export async function GET(request: Request) {
     .select("slot_id")
     .eq("owner_user_id", tenant.owner_user_id)
     .eq("preferred_date", date)
-    .in("status", ["pending", "confirmed"]);
+    .in("status", ["confirmed", "completed"]);
 
   const counts: Record<string, number> = {};
   for (const b of bookings ?? []) {

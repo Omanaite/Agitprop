@@ -45,7 +45,7 @@ export function NavInk({ navItems, locale, brandEyebrow, brandTitle, siteTheme }
 
       {/* Fullscreen overlay */}
       <div
-        className={`fixed inset-0 z-50 flex flex-col items-center justify-center transition-all duration-500 ${
+        className={`fixed inset-0 z-50 flex flex-col overflow-y-auto transition-all duration-500 ${
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         style={{ background: "var(--fg)", color: "var(--bg)" }}
@@ -53,12 +53,13 @@ export function NavInk({ navItems, locale, brandEyebrow, brandTitle, siteTheme }
         <button
           type="button"
           onClick={() => setOpen(false)}
-          className="absolute top-8 right-8 text-[10px] uppercase tracking-[0.6em] opacity-40 hover:opacity-100 transition-opacity duration-200"
+          className="sticky top-0 self-end mr-8 mt-8 text-[10px] uppercase tracking-[0.6em] opacity-40 hover:opacity-100 transition-opacity duration-200 z-10"
           aria-label="Close"
         >
           ✕ Close
         </button>
 
+        <div className="flex flex-col items-center justify-center flex-1 py-10 px-6">
         <p className="text-[9px] uppercase tracking-[1.2em] mb-10 opacity-20">
           {brandEyebrow}
         </p>
@@ -84,6 +85,7 @@ export function NavInk({ navItems, locale, brandEyebrow, brandTitle, siteTheme }
             </a>
           ))}
         </nav>
+        </div>
       </div>
     </>
   );

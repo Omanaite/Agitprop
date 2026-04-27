@@ -165,13 +165,13 @@ export async function PATCH(request: Request) {
         const slot = slots.find((s: { id: string }) => s.id === slotId);
 
         if (slot) {
-          // Count confirmed bookings for this slot
+          // Count confirmed+completed bookings (both occupy the slot permanently)
           const { count } = await adminClient
             .from("bookings")
             .select("id", { count: "exact", head: true })
             .eq("owner_user_id", auth.user.id)
             .eq("slot_id", slotId)
-            .eq("status", "confirmed");
+            .in("status", ["confirmed", "completed"]);
 
           if ((count ?? 0) >= slot.capacity) {
             // Decline all remaining pending bookings for this slot
