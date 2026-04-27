@@ -17,27 +17,47 @@ Supabase project: `ffnrzvklegbiejlksnai`
 > Antes de tocar un archivo, verifica que no esté en la columna "En progreso" de otro agente.
 > Al terminar, mueve tu entrada a "Libre" o elimínala.
 
+---
+
+### DIVISIÓN DE DOMINIOS (respetar siempre)
+
+| Agente-A (diseño) | Agente-B (lógica) |
+|---|---|
+| `app/globals.css` | `app/api/**` |
+| `components/headers/Nav*.tsx` | `lib/**` |
+| `components/Section.tsx` | `components/studio/**` |
+| `components/Footer.tsx` | `components/BookingForm.tsx` |
+| Layout visual de `app/[slug]/page.tsx` | `components/GalleryGrid.tsx`, `GalleryFilter.tsx` |
+
+**Archivos compartidos** — requieren coordinación explícita antes de tocar:
+- `lib/i18n.ts` — si cambias el tipo `PublicDictionary`, actualiza los 3 locales Y busca todos los callers con grep
+- `types/index.ts` — si cambias una interfaz exportada, verifica todos los componentes que la usan
+- `app/[slug]/page.tsx` — avisar antes de tocar
+
+**Regla anti-romper-build:** si modificas un `type` o `interface` exportado, corre `npx tsc --noEmit` antes de commitear. El pre-push hook lo captura igual, pero mejor prevenir.
+
+---
+
 ### En progreso ahora
 
 | Agente | Archivos / área | Iniciado |
 |--------|----------------|----------|
 | — | — | — |
 
-### Últimos archivos modificados por Agente-B (sesión 2026-04-27) — YA PUSHEADOS
+### Últimos archivos modificados por Agente-B (sesión 2026-04-27)
 
 | Archivo | Qué se hizo |
 |---------|-------------|
-| `app/globals.css` | Dark mode real para atelier-b, mono-b, ink (swap light↔dark), verdure-b, amber-b |
-| `components/headers/NavAtelier.tsx` | Rediseño: título centrado serif + animated underline |
-| `components/headers/NavMono.tsx` | Rediseño: drawer animado, título gigante clamp |
-| `components/headers/NavInk.tsx` | Fix overlap + overlay con accent gradient |
-| `components/headers/NavVerdure.tsx` | Rediseño: italic serif + ornamento ❧ + pill hover |
-| `components/headers/NavAmber.tsx` | Rediseño: ◆ decorativo + sticky bottom hover accent |
+| `app/globals.css` | Dark modes reales (atelier-b, mono-b, ink swap, verdure-b, amber-b) |
+| `components/headers/Nav*.tsx` | Rediseño creativo + fix ink overlap + scroll interno overlays |
 | `components/SitePreferencesMenu.tsx` | Eliminado Eye Care |
-| `components/BookingForm.tsx` | `formatDateLabel` → `Intl.DateTimeFormat` con locale |
-| `app/[slug]/page.tsx` | Pasa `locale` a BookingForm |
-| `app/api/studio/bookings/route.ts` | Auto-reject pending al confirmar slot lleno |
-| `components/studio/StudioAvailabilityManager.tsx` | 100% en inglés |
+| `components/BookingForm.tsx` | `formatDateLabel` con `Intl.DateTimeFormat` + prop `locale` |
+| `app/[slug]/page.tsx` | Pasa `locale` + `dict.galleries` a sub-componentes |
+| `app/api/studio/bookings/route.ts` | Auto-reject pending al llenar slot; cuenta confirmed+completed |
+| `app/api/public/availability-slots/route.ts` | Cuenta confirmed+completed (no pending) para disponibilidad |
+| `components/studio/StudioAvailabilityManager.tsx` | locale="en" hardcoded, 100% inglés |
+| `components/GalleryGrid.tsx` | `dict` prop opcional con fallback (fix TS error del otro agente) |
+| `components/GalleryFilter.tsx` | Propaga `dict` a GalleryGrid |
 
 ### Áreas libres (disponibles para trabajar)
 
