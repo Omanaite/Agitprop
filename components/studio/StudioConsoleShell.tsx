@@ -144,18 +144,18 @@ export function StudioConsoleShell() {
                   {({ focus }) => (
                     <button
                       type="button"
-                      className={`w-full rounded-2xl px-4 py-3 text-left transition ${
+                      className={`w-full rounded-lg px-4 py-3 text-left transition ${
                         focus || index === selectedIndex
                           ? "bg-[var(--admin-accent-soft)] text-[var(--admin-title)]"
                           : "text-[var(--admin-muted)]"
                       }`}
                       onClick={() => setSelectedIndex(index)}
                     >
-                      <span className="block text-sm font-semibold">
-                        {section.label}
+                      <span className="block text-[9px] uppercase tracking-[0.14em] opacity-60">
+                        {section.eyebrow}
                       </span>
-                      <span className="mt-1 block text-xs leading-5">
-                        {section.description}
+                      <span className="block text-sm font-semibold mt-0.5">
+                        {section.label}
                       </span>
                     </button>
                   )}
@@ -165,16 +165,19 @@ export function StudioConsoleShell() {
           </Menu>
         </div>
 
-        <TabList className="hidden flex-col gap-2 lg:flex">
+        <TabList className="hidden flex-col lg:flex">
           {sections.map((section) => (
             <Tab
               key={section.id}
-              className="rounded-2xl px-4 py-4 text-left outline-none transition data-[selected]:bg-[var(--admin-accent-soft)] data-[selected]:text-[var(--admin-title)] data-[selected]:shadow-sm"
+              className="group relative flex items-center gap-3 rounded-lg px-3 py-3 text-left outline-none transition-colors hover:bg-[var(--admin-accent-soft)]/50 data-[selected]:bg-[var(--admin-accent-soft)] data-[selected]:text-[var(--admin-title)]"
             >
-              <span className="block text-sm font-semibold">{section.label}</span>
-              <span className="admin-muted mt-1 block text-xs leading-5">
-                {section.description}
-              </span>
+              <span className="absolute left-0 top-2 bottom-2 w-[2px] rounded-full bg-[var(--admin-accent)] opacity-0 transition-opacity group-data-[selected]:opacity-100" />
+              <div className="min-w-0 flex-1 pl-2">
+                <span className="block text-[9px] uppercase tracking-[0.14em] text-[var(--admin-muted)] group-data-[selected]:text-[var(--admin-accent)]">
+                  {section.eyebrow}
+                </span>
+                <span className="block text-sm font-semibold leading-tight mt-0.5">{section.label}</span>
+              </div>
             </Tab>
           ))}
         </TabList>

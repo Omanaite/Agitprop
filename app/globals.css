@@ -284,10 +284,26 @@ a {
   transform: translateY(-1px);
 }
 
+.admin-button:active {
+  transform: translateY(0) scale(0.99);
+}
+
+.admin-button:disabled,
+.admin-button[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .admin-button-primary {
   border-color: var(--admin-accent);
   background: var(--admin-accent);
   color: #ffffff;
+}
+
+.admin-button-primary:hover {
+  background: color-mix(in srgb, var(--admin-accent) 85%, #000);
+  border-color: color-mix(in srgb, var(--admin-accent) 85%, #000);
 }
 
 .admin-button-ghost {

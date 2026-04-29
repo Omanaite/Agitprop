@@ -29,22 +29,22 @@ const features = [
   },
   {
     title: "Your own URL",
-    body: "Choose your page name and go live at agitpropstudio.vercel.app/you. Connect your own domain when you're ready.",
+    body: "Go live at agitpropstudio.vercel.app/you. Connect your own domain when you're ready.",
   },
   {
     title: "Visual themes",
-    body: "Pick from three built-in styles — Atelier, Mono, and Ink. Each theme is clean, fast, and built for creative portfolios.",
+    body: "Six built-in styles — Atelier, Mono, Ink, Verdure, Amber, and more. Each is clean, fast, and built for creative portfolios.",
   },
   {
     title: "Secure by default",
-    body: "OAuth sign-in with Google and GitHub, email confirmation, rate limiting, and tenant isolation out of the box.",
+    body: "OAuth sign-in, email confirmation, rate limiting, and tenant isolation out of the box.",
   },
 ];
 
 const freeFeatures = [
   "2 galleries, 25 pieces, 5 posts",
   "Booking intake from clients",
-  "All 5 visual themes included",
+  "All visual themes included",
   "Telegram notifications for bookings",
   "Light / Dark mode per theme",
   "EN / ES / DE language toggle",
@@ -82,50 +82,66 @@ export default function AgitpropPage() {
           <AdminThemeToggle />
         </div>
 
-        {/* Hero */}
-        <section className="admin-card p-6 md:p-10">
-          <p className="admin-chip">Agitprop Studio Platform</p>
-          <h1 className="admin-title mt-5 text-4xl font-semibold leading-tight md:text-5xl lg:text-6xl">
+        {/* Hero — left-aligned, no centered cliché */}
+        <section className="admin-card p-6 md:p-12 lg:p-16">
+          <p className="admin-chip mb-6">Agitprop Studio Platform</p>
+          <h1 className="admin-title text-5xl font-black tracking-tight leading-[1.02] md:text-6xl lg:text-7xl">
             Your artist website,
-            <br className="hidden sm:block" /> portfolio, and booking system.
+            <br />portfolio, and
+            <br />booking system.
           </h1>
-          <p className="admin-muted mt-5 max-w-2xl text-base leading-7">
-            Agitprop gives artists a production-ready web presence without
-            building infrastructure from scratch. One workspace to showcase galleries,
+          <p className="admin-muted mt-6 max-w-xl text-base leading-7">
+            One workspace to showcase galleries,
             publish studio updates, and capture client requests.
+            No infrastructure, no subscriptions.
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-10 flex flex-wrap gap-3">
             <Link href="/register" className="admin-button admin-button-primary">
-              Get started free
+              Get started — it&apos;s free
             </Link>
             <Link href="/studio/login" className="admin-button admin-button-ghost">
-              I already have an account
+              Sign in
             </Link>
           </div>
         </section>
 
-        {/* Features grid */}
-        <section className="mt-6">
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {features.map((f) => (
-              <article key={f.title} className="admin-card p-5">
-                <h2 className="admin-title text-base font-semibold">{f.title}</h2>
-                <p className="admin-muted mt-2 text-sm leading-6">{f.body}</p>
-              </article>
+        {/* Features — border list, not card grid */}
+        <section className="mt-6 admin-card overflow-hidden">
+          <div className="px-6 pt-6 pb-2 md:px-8 md:pt-8">
+            <p className="admin-chip">What you get</p>
+          </div>
+          <div className="divide-y divide-[var(--admin-border)]">
+            {features.map((f, i) => (
+              <div
+                key={f.title}
+                className="grid grid-cols-1 gap-1 px-6 py-5 md:grid-cols-[1fr_2fr] md:gap-8 md:px-8"
+              >
+                <div className="flex items-baseline gap-3">
+                  <span className="text-[10px] font-mono text-[var(--admin-muted)] w-5 shrink-0">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h2 className="admin-title text-sm font-semibold">{f.title}</h2>
+                </div>
+                <p className="admin-muted text-sm leading-6 md:pl-0">{f.body}</p>
+              </div>
             ))}
           </div>
         </section>
 
         {/* Pricing */}
         <section className="mt-6 grid gap-4 md:grid-cols-2">
-          <article className="admin-card p-6 md:p-7">
+          {/* Free */}
+          <article className="admin-card p-6 md:p-8 flex flex-col">
             <p className="admin-chip">Always free</p>
-            <h3 className="admin-title mt-4 text-2xl font-semibold">Free</h3>
-            <p className="admin-muted mt-1 text-sm leading-6">
-              Everything you need to have a professional online presence. No credit card, no trial.
+            <div className="mt-5 flex items-baseline gap-2">
+              <span className="admin-title text-4xl font-black tracking-tight">€0</span>
+              <span className="admin-muted text-sm">/ forever</span>
+            </div>
+            <p className="admin-muted mt-2 text-sm leading-6">
+              No credit card. No trial. No catch.
             </p>
-            <ul className="mt-5 space-y-2.5">
+            <ul className="mt-6 space-y-2.5 flex-1">
               {freeFeatures.map((item) => (
                 <li key={item} className="flex items-start gap-2 text-sm">
                   <CheckIcon />
@@ -133,23 +149,27 @@ export default function AgitpropPage() {
                 </li>
               ))}
             </ul>
-            <div className="mt-7">
+            <div className="mt-8">
               <Link
                 href="/register"
                 className="admin-button admin-button-primary w-full justify-center"
               >
-                Create your site — free
+                Create your site
               </Link>
             </div>
           </article>
 
-          <article className="admin-card p-6 md:p-7">
+          {/* Expanded */}
+          <article className="admin-card p-6 md:p-8 flex flex-col">
             <p className="admin-chip">More space</p>
-            <h3 className="admin-title mt-4 text-2xl font-semibold">Expanded Storage</h3>
-            <p className="admin-muted mt-1 text-sm leading-6">
-              The free tier has limits on galleries, pieces, and posts. When you hit them, you have two options: remove older content to free up space, or expand your storage. No subscriptions — you pay only for what you need, once.
+            <div className="mt-5 flex items-baseline gap-2">
+              <span className="admin-title text-4xl font-black tracking-tight">One-time</span>
+            </div>
+            <p className="admin-muted mt-2 text-sm leading-6">
+              Hit the free limit? Expand your storage once — no subscriptions.
+              We set a fair price based on how much extra space you need.
             </p>
-            <ul className="mt-5 space-y-2.5">
+            <ul className="mt-6 space-y-2.5 flex-1">
               {expandedFeatures.map((item) => (
                 <li key={item} className="flex items-start gap-2 text-sm">
                   <CheckIcon />
@@ -157,11 +177,8 @@ export default function AgitpropPage() {
                 </li>
               ))}
             </ul>
-            <div className="mt-7">
-              <Link
-                href="/register"
-                className="admin-button w-full justify-center"
-              >
+            <div className="mt-8">
+              <Link href="/register" className="admin-button w-full justify-center">
                 Start free
               </Link>
             </div>
@@ -170,55 +187,72 @@ export default function AgitpropPage() {
 
         {/* Domain & storage explainer */}
         <section className="admin-card mt-6 p-6 md:p-8">
-          <p className="admin-chip">How it works</p>
-          <h2 className="admin-title mt-4 text-2xl font-semibold">Storage & custom domains</h2>
-          <div className="mt-6 grid gap-6 sm:grid-cols-2">
-            <div>
-              <h3 className="admin-title text-base font-semibold">Free storage limit</h3>
-              <p className="admin-muted mt-2 text-sm leading-6">
-                Every account starts with a free storage tier: 2 galleries, 25 pieces, and 5 posts.
-                When you reach the limit, you can delete older content to make room — or contact us
-                to expand your storage. We&apos;ll set a fair one-time cost based on how much extra
-                space you need.
-              </p>
-            </div>
-            <div>
-              <h3 className="admin-title text-base font-semibold">Custom domain — via Vercel</h3>
-              <p className="admin-muted mt-2 text-sm leading-6">
-                Your site runs on Vercel, the same infrastructure used by major production apps.
-                If you want a custom domain (e.g. <span className="font-mono text-xs">yourname.com</span>),
-                you buy it directly through Vercel at their listed price — we don&apos;t mark it up.
-                The domain gets connected to your artist site automatically.
-              </p>
-            </div>
-            <div>
-              <h3 className="admin-title text-base font-semibold">Domain from another registrar?</h3>
-              <p className="admin-muted mt-2 text-sm leading-6">
-                If you already own a domain with GoDaddy, Namecheap, Google Domains, or any other
-                registrar, connecting it requires a custom agreement with the developer. Reach out
-                at <a href="mailto:chandiapablo@outlook.com" className="underline opacity-70 hover:opacity-100">chandiapablo@outlook.com</a> and
-                we&apos;ll work out the details.
-              </p>
-            </div>
-            <div>
-              <h3 className="admin-title text-base font-semibold">Why Vercel?</h3>
-              <p className="admin-muted mt-2 text-sm leading-6">
-                Agitprop is hosted on Vercel. Their domain API is directly integrated with the platform,
-                which means when you add a domain in your studio, it gets registered and routed to
-                your site automatically — no manual DNS configuration on our end.
-                It&apos;s the simplest, most reliable path.
-              </p>
-            </div>
+          <p className="admin-chip">Details</p>
+          <h2 className="admin-title mt-4 text-2xl font-bold tracking-tight">Storage &amp; custom domains</h2>
+          <div className="mt-6 divide-y divide-[var(--admin-border)]">
+            {[
+              {
+                title: "Free storage limit",
+                body: (
+                  <>
+                    Every account starts with 2 galleries, 25 pieces, and 5 posts.
+                    When you reach the limit, delete older content to make room — or contact us
+                    to expand your storage. We&apos;ll set a fair one-time cost based on how much extra
+                    space you need.
+                  </>
+                ),
+              },
+              {
+                title: "Custom domain via Vercel",
+                body: (
+                  <>
+                    Your site runs on Vercel. If you want a custom domain (e.g.{" "}
+                    <span className="font-mono text-xs">yourname.com</span>),
+                    buy it directly through Vercel at their listed price — we don&apos;t mark it up.
+                    The domain gets connected automatically.
+                  </>
+                ),
+              },
+              {
+                title: "Domain from another registrar?",
+                body: (
+                  <>
+                    If you own a domain with GoDaddy, Namecheap, or any other registrar,
+                    connecting it requires a custom agreement with the developer. Reach out
+                    at{" "}
+                    <a href="mailto:chandiapablo@outlook.com" className="underline opacity-70 hover:opacity-100 transition-opacity">
+                      chandiapablo@outlook.com
+                    </a>
+                    .
+                  </>
+                ),
+              },
+              {
+                title: "Why Vercel?",
+                body: (
+                  <>
+                    Agitprop is hosted on Vercel. Their domain API integrates directly with
+                    the platform — when you add a domain in your studio, it&apos;s registered
+                    and routed automatically. No manual DNS on our end.
+                  </>
+                ),
+              },
+            ].map((item) => (
+              <div key={item.title} className="grid grid-cols-1 gap-1 py-5 md:grid-cols-[1fr_2fr] md:gap-8 first:pt-0">
+                <h3 className="admin-title text-sm font-semibold">{item.title}</h3>
+                <p className="admin-muted text-sm leading-6">{item.body}</p>
+              </div>
+            ))}
           </div>
         </section>
 
         {/* How it works */}
         <section className="admin-card mt-6 p-6 md:p-8">
-          <p className="admin-chip">How it works</p>
-          <h2 className="admin-title mt-4 text-2xl font-semibold">
+          <p className="admin-chip">Getting started</p>
+          <h2 className="admin-title mt-4 text-2xl font-bold tracking-tight">
             Up and running in minutes
           </h2>
-          <div className="mt-6 grid gap-4 sm:grid-cols-3">
+          <div className="mt-8 grid gap-0 divide-y divide-[var(--admin-border)]">
             {[
               {
                 step: "01",
@@ -236,39 +270,45 @@ export default function AgitpropPage() {
                 body: "Create galleries, upload portfolio pieces, and write your first post. Your site is live.",
               },
             ].map((s) => (
-              <div key={s.step} className="admin-card-soft p-5">
-                <span className="text-3xl font-bold text-[var(--admin-accent)] opacity-40">
+              <div key={s.step} className="grid grid-cols-[3rem_1fr] gap-4 py-6">
+                <span className="text-3xl font-black text-[var(--admin-accent)] leading-none opacity-30 tabular-nums">
                   {s.step}
                 </span>
-                <h3 className="admin-title mt-3 text-base font-semibold">{s.title}</h3>
-                <p className="admin-muted mt-2 text-sm leading-6">{s.body}</p>
+                <div>
+                  <h3 className="admin-title text-sm font-semibold">{s.title}</h3>
+                  <p className="admin-muted mt-1 text-sm leading-6">{s.body}</p>
+                </div>
               </div>
             ))}
           </div>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-2 flex flex-wrap gap-3 border-t border-[var(--admin-border)] pt-6">
             <Link href="/register" className="admin-button admin-button-primary">
-              Get started free
+              Get started — it&apos;s free
             </Link>
             <Link href="/studio/login" className="admin-button admin-button-ghost">
-              I already have an account
+              Sign in
             </Link>
           </div>
         </section>
 
         {/* Footer */}
-        <footer className="mt-10 border-t border-[var(--admin-border)] pt-6 pb-2 text-center text-xs text-[var(--admin-muted)]">
-          © {new Date().getFullYear()} Agitprop Studio. All rights reserved. Built by{" "}
-          <a
-            href="https://agitpropstudio.vercel.app/admin/login"
-            className="underline underline-offset-2 hover:text-[var(--admin-title)] transition-colors"
-          >
-            Pablo Chandía
-          </a>
-          .
-          <div className="mt-3 flex justify-center gap-6 text-xs uppercase tracking-widest border-t border-[var(--admin-border)] pt-3">
-            <a href="/legal/impressum" className="hover:underline">Impressum</a>
-            <a href="/legal/agb" className="hover:underline">AGB</a>
-            <a href="/legal/datenschutz" className="hover:underline">Datenschutz</a>
+        <footer className="mt-10 border-t border-[var(--admin-border)] pt-6 pb-2">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-xs text-[var(--admin-muted)]">
+              © {new Date().getFullYear()} Agitprop Studio. Built by{" "}
+              <a
+                href="mailto:chandiapablo@outlook.com"
+                className="underline underline-offset-2 hover:text-[var(--admin-title)] transition-colors"
+              >
+                Pablo Chandía
+              </a>
+              .
+            </p>
+            <div className="flex gap-5 text-xs text-[var(--admin-muted)]">
+              <a href="/legal/impressum" className="hover:text-[var(--admin-title)] transition-colors">Impressum</a>
+              <a href="/legal/agb" className="hover:text-[var(--admin-title)] transition-colors">AGB</a>
+              <a href="/legal/datenschutz" className="hover:text-[var(--admin-title)] transition-colors">Datenschutz</a>
+            </div>
           </div>
         </footer>
       </div>
