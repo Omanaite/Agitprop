@@ -485,6 +485,11 @@ html[data-theme="eye"] .marketing-shell {
   border-top: 1px solid var(--mkt-border);
 }
 
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+
 
 .admin-validation[data-variant="success"] {
   border-color: color-mix(in srgb, var(--admin-success) 30%, var(--admin-border));

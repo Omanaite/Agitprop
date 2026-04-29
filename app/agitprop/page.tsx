@@ -142,44 +142,106 @@ export default function AgitpropPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-5xl px-6">
-        {/* Hero */}
-        <section className="relative flex min-h-[78vh] flex-col items-center justify-center py-24 text-center">
-          {/* Status pill */}
-          <div className="mkt-chip mb-8">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--mkt-success)] opacity-70" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--mkt-success)]" />
-            </span>
-            <span>Free forever — no credit card</span>
+      <main className="mx-auto max-w-6xl px-6">
+        {/* Hero — editorial asymmetric */}
+        <section className="relative pt-12 pb-20 md:pt-20 md:pb-28">
+          {/* Top strip: masthead + status */}
+          <div className="flex items-center gap-4 mb-12 md:mb-20">
+            <p className="mkt-mono text-[10px] uppercase tracking-[0.22em] mkt-muted shrink-0">
+              Agitprop / Vol.01 / Est. 2026
+            </p>
+            <div className="flex-1 h-px bg-[var(--mkt-border)]" />
+            <div className="mkt-chip shrink-0">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--mkt-success)] opacity-70" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--mkt-success)]" />
+              </span>
+              <span className="hidden sm:inline">Free forever — no credit card</span>
+              <span className="sm:hidden">Free forever</span>
+            </div>
           </div>
 
-          <h1 className="mkt-display text-5xl sm:text-6xl lg:text-[5.25rem] max-w-4xl">
-            Your artist website,
-            <br />
-            <span className="mkt-muted">portfolio &amp; bookings.</span>
-          </h1>
+          {/* Asymmetric main: 7 / 5 split */}
+          <div className="grid grid-cols-12 gap-x-6 gap-y-12">
+            {/* Left: massive display heading */}
+            <h1 className="col-span-12 lg:col-span-7 mkt-display text-6xl sm:text-7xl lg:text-[7rem] leading-[0.92]">
+              Artist
+              <br />
+              websites,
+              <br />
+              <span className="mkt-muted">galleries</span>
+              <br />
+              &amp; bookings.
+            </h1>
 
-          <p className="mt-7 max-w-2xl text-base sm:text-lg leading-relaxed mkt-muted">
-            One workspace to showcase galleries, publish studio updates, and capture client requests.
-            No infrastructure. No subscriptions.
-          </p>
-
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            <Link href="/register" className="mkt-button mkt-button-primary group">
-              Get started — it&apos;s free <ArrowRight />
-            </Link>
-            <Link href="/studio/login" className="mkt-button">
-              Sign in
-            </Link>
+            {/* Right: numbered manifesto */}
+            <div className="col-span-12 lg:col-span-5 lg:pt-4">
+              <p className="mkt-mono text-[10px] uppercase tracking-[0.22em] mkt-muted mb-6">
+                The pitch — in three points
+              </p>
+              <ol className="space-y-5">
+                {[
+                  { n: "01", title: "No subscriptions, ever.", body: "Free for the basics, forever. Pay once for more space, or don't." },
+                  { n: "02", title: "No infrastructure work.", body: "Sign up, pick a name, you're live. Database, auth, domains — handled." },
+                  { n: "03", title: "Built for artists, not devs.", body: "Six visual themes. Three languages. One workspace for galleries, posts, bookings." },
+                ].map((item) => (
+                  <li key={item.n} className="grid grid-cols-[2.25rem_1fr] gap-3 items-start">
+                    <span className="mkt-mono text-xs mkt-muted pt-1">{item.n}</span>
+                    <div>
+                      <p className="text-sm font-semibold leading-snug">{item.title}</p>
+                      <p className="mt-1 text-sm leading-relaxed mkt-muted">{item.body}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
           </div>
 
-          <div className="mt-14 flex items-center gap-2.5">
-            <span className="mkt-tag">Next.js 16</span>
-            <span className="mkt-tag">Supabase</span>
-            <span className="mkt-tag">Vercel</span>
+          {/* Bottom strip: CTAs + tags, anchored left */}
+          <div className="mt-16 md:mt-24 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+            <div className="flex flex-wrap items-center gap-3">
+              <Link href="/register" className="mkt-button mkt-button-primary group">
+                Start your site — free <ArrowRight />
+              </Link>
+              <Link href="/studio/login" className="mkt-button">
+                Sign in
+              </Link>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="mkt-mono text-[10px] uppercase tracking-[0.22em] mkt-muted mr-2">
+                For
+              </span>
+              <span className="mkt-tag">Tattoo</span>
+              <span className="mkt-tag">Illustration</span>
+              <span className="mkt-tag">Photography</span>
+              <span className="mkt-tag">Design</span>
+            </div>
           </div>
         </section>
+
+        {/* Theme marquee divider */}
+        <div className="overflow-hidden border-y border-[var(--mkt-border)] py-4 -mx-6 mb-2">
+          <div className="flex gap-10 mkt-mono text-xs uppercase tracking-[0.18em] mkt-muted whitespace-nowrap animate-[marquee_28s_linear_infinite]">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="flex gap-10 shrink-0">
+                <span>Atelier</span>
+                <span aria-hidden="true">·</span>
+                <span>Mono</span>
+                <span aria-hidden="true">·</span>
+                <span>Ink</span>
+                <span aria-hidden="true">·</span>
+                <span>Verdure</span>
+                <span aria-hidden="true">·</span>
+                <span>Amber</span>
+                <span aria-hidden="true">·</span>
+                <span>Brutalist</span>
+                <span aria-hidden="true">·</span>
+                <span className="text-[var(--mkt-fg)] font-semibold">Six themes included</span>
+                <span aria-hidden="true">·</span>
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* Features */}
         <section id="features" className="mkt-divider py-24 md:py-28">
