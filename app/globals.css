@@ -490,6 +490,79 @@ html[data-theme="eye"] .marketing-shell {
   100% { transform: translateX(-33.333%); }
 }
 
+/* Marketing-context overrides for shared form components.
+   Lets us reuse AdminLoginForm/RegisterForm/OAuthButton inside .marketing-shell
+   without changing the components or breaking the /studio admin styling. */
+.marketing-shell .admin-input,
+.marketing-shell .admin-select,
+.marketing-shell .admin-textarea {
+  border: 1px solid var(--mkt-border);
+  border-radius: 0.75rem;
+  background: var(--mkt-card);
+  color: var(--mkt-fg);
+  padding: 0.85rem 1rem;
+  font-family: var(--font-mkt-sans), ui-sans-serif, sans-serif;
+  font-size: 0.95rem;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.marketing-shell .admin-input::placeholder,
+.marketing-shell .admin-textarea::placeholder {
+  color: var(--mkt-muted);
+}
+
+.marketing-shell .admin-input:focus,
+.marketing-shell .admin-select:focus,
+.marketing-shell .admin-textarea:focus {
+  outline: none;
+  border-color: var(--mkt-fg);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mkt-fg) 12%, transparent);
+}
+
+.marketing-shell .admin-button {
+  border-radius: 9999px;
+  border-color: var(--mkt-border-strong);
+  background: var(--mkt-card);
+  color: var(--mkt-fg);
+  padding: 0.75rem 1.25rem;
+  font-family: var(--font-mkt-sans), ui-sans-serif, sans-serif;
+  letter-spacing: -0.005em;
+}
+
+.marketing-shell .admin-button-primary {
+  border-color: var(--mkt-accent);
+  background: var(--mkt-accent);
+  color: var(--mkt-accent-fg);
+}
+
+.marketing-shell .admin-button-primary:hover {
+  background: var(--mkt-accent);
+  opacity: 0.9;
+}
+
+.marketing-shell .admin-validation {
+  border-radius: 0.75rem;
+  border: 1px solid var(--mkt-border);
+  background: var(--mkt-card);
+  font-family: var(--font-mkt-sans), ui-sans-serif, sans-serif;
+}
+
+.marketing-shell .oauth-provider-button {
+  border-radius: 9999px;
+  border-color: var(--mkt-border-strong);
+  background: var(--mkt-card);
+  color: var(--mkt-fg);
+  font-family: var(--font-mkt-sans), ui-sans-serif, sans-serif;
+}
+
+.marketing-shell .oauth-provider-button:hover {
+  background: var(--mkt-card-hover);
+}
+
+.marketing-shell .admin-divider {
+  border-top-color: var(--mkt-border);
+}
+
 
 .admin-validation[data-variant="success"] {
   border-color: color-mix(in srgb, var(--admin-success) 30%, var(--admin-border));
