@@ -221,5 +221,6 @@ Purpose: chronological project progress log to preserve context across sessions.
 ## 2026-04-29
 - Auditoría de diseño aplicada a `app/agitprop/page.tsx` y `IMPROVEMENT_PLAN.md`.
 - Refinamiento de tracking tipográfico y curvas de animación (Emil Kowalski / Taste Design).
+- Implementación física del botón "Demo (Piloto)" en el Hero de `app/agitprop/page.tsx` enlazando al sitio de Akemi.
 - Agent: Gemini Code Assist
 - Model: Gemini 1.5 Pro (Workspace Context)

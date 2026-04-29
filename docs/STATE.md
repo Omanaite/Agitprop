@@ -42,7 +42,7 @@ Supabase project: `ffnrzvklegbiejlksnai`
 
 | Agente | Archivos / área | Iniciado |
 |--------|----------------|----------|
-| Gemini | Auditoría General (app/agitprop, docs/) | 2026-04-29 |
+| Gemini | Auditoría + Implementación Demo Button (app/agitprop/page.tsx) | 2026-04-29 |
 
 ### Últimos archivos modificados por Agente-B (sesión 2026-04-27)
 

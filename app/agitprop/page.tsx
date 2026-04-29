@@ -206,6 +206,9 @@ export default function AgitpropPage() {
               <Link href="/studio/login" className="mkt-button transition-transform active:scale-[0.98] duration-200">
                 Sign in
               </Link>
+              <Link href="/akemi" className="mkt-button transition-transform active:scale-[0.98] duration-200 border-[var(--mkt-border-strong)]">
+                Demo (Piloto)
+              </Link>
             </div>
             <div className="flex flex-wrap items-center gap-2">
               <span className="mkt-mono text-[10px] uppercase tracking-[0.22em] mkt-muted mr-2">
