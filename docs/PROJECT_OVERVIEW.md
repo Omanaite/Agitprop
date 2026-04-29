@@ -1,13 +1,12 @@
-﻿# Project Overview - Agitprop (Akemi Pilot)
+﻿# Project Overview - Agitprop
 
 ## Product
-Agitprop is a Next.js App Router + Supabase product for artist websites and operations. The current production pilot is Akemi Tattoo, combining a brand-forward public portfolio with a dedicated operational admin console.
+Agitprop is a Next.js App Router + Supabase product for artist websites and operations. The current production pilot is Akemi, the first tenant on the platform, used to validate the multi-tenant SaaS architecture.
 
 ## Core Product Goals
-- Showcase tattoo work in a strong editorial format.
-- Allow visitors to browse galleries and published updates.
-- Let visitors request bookings and contact the artist.
-- Give the artist a private workspace to manage public content.
+- Give any independent artist a professional public presence with portfolio, posts, and booking.
+- Allow visitors to browse galleries, published updates, and contact or book the artist.
+- Give the artist a private workspace to manage all public content without writing code.
 - Prepare the codebase for safe expansion after MVP into a SaaS-ready multi-artist platform.
 
 ## Current MVP Scope

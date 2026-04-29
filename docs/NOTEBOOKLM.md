@@ -1,4 +1,4 @@
-﻿# NotebookLM Source Pack - Akemi Tattoo Portfolio
+﻿# NotebookLM Source Pack - Agitprop
 
 ## Snapshot
 - Date: 2026-03-24
@@ -7,7 +7,7 @@
 - Current phase: MVP hardening and production verification
 
 ## What the Product Is
-Akemi Tattoo Portfolio is a web application for a tattoo artist. It combines a public editorial portfolio with a dedicated admin console for content operations.
+Agitprop is a web platform for independent artists. It combines a public editorial portfolio with a dedicated admin console for content operations.
 
 ## MVP Scope
 ### Public

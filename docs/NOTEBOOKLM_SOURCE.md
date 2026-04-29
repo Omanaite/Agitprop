@@ -1,4 +1,4 @@
-﻿# NotebookLM Source - Akemi Tattoo Portfolio
+﻿# NotebookLM Source - Agitprop
 
 ## Snapshot
 - Date: 2026-03-24

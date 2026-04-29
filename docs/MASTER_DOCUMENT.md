@@ -5,7 +5,7 @@ Version: 2.1
 Status: MVP hardening + SaaS role-split stabilization
 
 ## 1. Product Summary
-Agitprop is a platform for tattoo artists combining:
+Agitprop is a platform for independent artists combining:
 - public portfolio and discovery
 - private operations workspace
 - SaaS governance layer for platform administration

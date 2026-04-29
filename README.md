@@ -1,6 +1,6 @@
 # Agitprop Studio
 
-Open-source platform for artists (especially tattoo artists) to run a professional website with portfolio, posts, contact form, and booking system, all managed from a private dashboard.
+Open-source platform for independent artists to run a professional website with portfolio, posts, contact form, and booking system, all managed from a private dashboard.
 
 ## Mission and vision
 

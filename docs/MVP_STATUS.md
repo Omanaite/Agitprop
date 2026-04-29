@@ -1,4 +1,4 @@
-﻿# MVP Status - Akemi Tattoo Portfolio
+﻿# MVP Status - Agitprop
 
 Date: 2026-03-24
 Status: Near-complete, pending production verification and external service confirmation

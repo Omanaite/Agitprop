@@ -25,7 +25,7 @@ tributo a la tradición del arte como herramienta de comunicación directa.
 
 ### Para el cliente del artista (visitante de la web)
 - Ver el portfolio del artista
-- Solicitar una sesión de tatuaje o servicio artístico
+- Solicitar una sesión o servicio artístico
 - Contactar directamente al artista
 
 ---

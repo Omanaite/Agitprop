@@ -4,7 +4,7 @@ Date: 2026-04-05
 Status: Active — ordered by implementation complexity (easiest first)
 
 ## Goal
-Capture the next evolution of the product after MVP is accepted, with a path toward a configurable SaaS platform for tattoo artists or adjacent creative studios.
+Capture the next evolution of the product after MVP is accepted, with a path toward a configurable SaaS platform for independent artists and creative studios.
 
 ---
 

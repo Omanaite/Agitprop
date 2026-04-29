@@ -7,7 +7,7 @@ Build a dedicated page that explains the software product (Agitprop), separates 
 - `/agitprop`
 
 ## Target User
-- Tattoo artist or studio owner evaluating a ready-to-use website + operations product.
+- Independent artist or studio owner evaluating a ready-to-use website + operations product.
 
 ## Core Message Blocks
 1. Product positioning: artist website + portfolio + booking operations.
