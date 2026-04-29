@@ -1,6 +1,7 @@
 # Akemi — Visual & UX Improvement Plan
 
 > Plan exhaustivo de mejoras visuales, experiencia de usuario, normalización tipográfica e internacionalización.
+> Basado en estándares: **Emil Kowalski** (Motion), **Impeccable** (Details) y **Taste Design** (Editorial).
 > Cada ítem está estructurado para abrir un Pull Request independiente.
 
 ---
@@ -15,6 +16,7 @@
 6. [UX — Estados vacíos, error, hover, disabled](#6-ux--estados-vacíos-error-hover-disabled)
 7. [Formularios — Validación y feedback](#7-formularios--validación-y-feedback)
 8. [Calidad de código CSS](#8-calidad-de-código-css)
+9. [Auditoría de Estándares Premium (Kowalski/Impeccable/Taste)](#9-auditoría-de-estándares-premium)
 
 ---
 
@@ -32,19 +34,16 @@ Agregar en `app/globals.css`, dentro del bloque `@layer base`, un conjunto de va
 
 ```css
 /* Typography scale tokens */
---type-eyebrow:    0.625rem;   /* 10px - etiquetas, categorías */
+--type-eyebrow:    0.6875rem;  /* 11px - tracking 0.1em */
 --type-label:      0.75rem;    /* 12px - labels de formulario, pies */
 --type-body-sm:    0.875rem;   /* 14px */
 --type-body:       1rem;       /* 16px */
---type-body-lg:    1.125rem;   /* 18px */
---type-subheading: 1.5rem;     /* 24px */
---type-heading-sm: 1.875rem;   /* 30px */
---type-heading:    2.25rem;    /* 36px */
---type-heading-lg: 3rem;       /* 48px */
---type-display:    4.5rem;     /* 72px */
+--type-heading:    2.25rem;    /* 36px - leading 1.1, tracking -0.02em */
+--type-display:    5rem;       /* 80px - leading 1.05, tracking -0.04em */
 
---track-eyebrow:   0.6em;
+--track-eyebrow:   0.1em;
 --track-nav:       0.2em;
+--track-heading:   -0.02em;
 --track-body:      0;
 ```
 
@@ -58,6 +57,19 @@ Agregar en `app/globals.css`, dentro del bloque `@layer base`, un conjunto de va
 **Puntos a tener en cuenta:**
 - Los temas de artista (Ink, Atelier, Mono, etc.) pueden sobreescribir estos tokens dentro de su scope de tema si necesitan escalas dramáticamente distintas.
 - No romper los breakpoints responsive: mantener los modificadores `md:` y `lg:` usando las variables.
+## 9. Auditoría de Estándares Premium
+
+### 9.1 — Refinamiento Editorial (Taste Design)
+**Hallazgo:** Los encabezados masivos carecen de tracking negativo.
+**Acción:** Aplicar `tracking-[-0.04em]` a cualquier texto mayor a `4rem`.
+
+### 9.2 — Curvas de Animación (Emil Kowalski)
+**Hallazgo:** Uso de `ease-in-out` estándar.
+**Acción:** Reemplazar por `cubic-bezier(0.16, 1, 0.3, 1)` para transiciones de opacidad y transform.
+
+### 9.3 — Feedback Háptico Visual
+**Hallazgo:** Elementos interactivos estáticos al click.
+**Acción:** Inyectar `active:scale-[0.98]` en todos los botones de la clase `mkt-button`.
 
 ---
 

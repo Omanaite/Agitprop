@@ -1,6 +1,28 @@
-﻿# Devlog
+﻿﻿# Devlog
 
 Purpose: chronological project progress log to preserve context across sessions.
+
+## 2026-04-29
+- Enabled `impeccable` for the workspace root by adding shared context files:
+  - `../PRODUCT.md`
+  - `../DESIGN.md`
+  - `../IMPECCABLE_SETUP.md`
+- Installed and verified the Emil Kowalski skill in the workspace:
+  - `../.agents/skills/emil-design-eng/SKILL.md`
+- Added local wrappers so `impeccable` can run even when `node` is not on `PATH`:
+  - `../scripts/impeccable.ps1`
+  - `../scripts/impeccable.cmd`
+- Verified end-to-end that `impeccable` context loading works from the workspace root using the discovered Node runtime at `C:\nvm4w\nodejs\node.exe`.
+- Updated project workflow rules so every future feature, fix, or docs-relevant implementation must register:
+  - devlog entry
+  - agent used
+  - model used
+- Updated UI/UX process guidance so frontend design, audit, and new surface creation should use this skill baseline:
+  - `impeccable`
+  - `emil-design-eng`
+  - `design-taste-frontend`
+- Agent used for this implementation: `Codex`
+- Model used for this implementation: `GPT-5-based Codex runtime (exact model variant not exposed in-session)`
 
 ## 2026-03-24
 - Formalized MVP signoff documents:
@@ -186,3 +208,18 @@ Purpose: chronological project progress log to preserve context across sessions.
 - Extended `proxy.ts` with custom domain resolution:
   - non-platform hostnames are looked up against `artist_tenants.custom_domain` and transparently rewritten to `/{slug}`.
   - proxy matcher expanded to cover all non-asset paths.
+
+## 2026-04-27
+- Auditoría completa del `IMPROVEMENT_PLAN.md` bajo los frameworks de Emil Kowalski, Impeccable y Taste Design.
+- Reformulación del plan de mejoras inyectando:
+  - Escala tipográfica editorial con tracking negativo.
+  - Sistema de foco custom de alta precisión.
+  - Protocolo de micro-interacciones (spring motion + tactile feedback).
+  - Unificación de tokens de radio de borde.
+- Adición de botón "Demo (Piloto)" en la página principal de Agitprop (`/agitprop`), enlazando a `/akemi` con animaciones sutiles.
+
+## 2026-04-29
+- Auditoría de diseño aplicada a `app/agitprop/page.tsx` y `IMPROVEMENT_PLAN.md`.
+- Refinamiento de tracking tipográfico y curvas de animación (Emil Kowalski / Taste Design).
+- Agent: Gemini Code Assist
+- Model: Gemini 1.5 Pro (Workspace Context)

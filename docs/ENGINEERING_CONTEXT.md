@@ -5,6 +5,14 @@ Date: 2026-04-01
 ## Purpose
 Keep execution quality stable across long sessions, context compaction, and handoffs.
 
+## Non-negotiable execution principles
+- Do not invent facts about the codebase, architecture, file state, or runtime behavior.
+- Before changing code, verify the relevant local source of truth in the repository.
+- Prefer the smallest correct change that solves the specific problem.
+- Keep changes atomic and tightly scoped to the requested feature or fix.
+- Do not modify unrelated files while solving a specific issue unless the dependency is real, necessary, and explicitly documented in the work log.
+- If a broader refactor seems useful but is not required for the requested fix, defer it and propose it separately.
+
 ## ⚠️ Multi-agent coordination
 Antes de tocar cualquier archivo: leer sección **COORDINACIÓN** en `docs/STATE.md`.
 Registrar ahí los archivos que vas a editar. Al terminar, eliminar tu fila.
@@ -15,6 +23,10 @@ Registrar ahí los archivos que vas a editar. Al terminar, eliminar tu fila.
   - update `docs/STATE.md`
   - update `docs/ROADMAP.md` if stage/scope changed
   - update `openspec/changes/admin-content-management/tasks.md`
+  - record execution trace in `docs/DEVLOG.md`:
+    - agent used
+    - model used
+    - if the exact model variant is unavailable in-session, record the best available identifier honestly
 - Before release decisions:
   - sync `docs/MVP_STATUS.md`
   - sync `docs/PRE_PROD_CHECKLIST.md`
@@ -32,6 +44,21 @@ Registrar ahí los archivos que vas a editar. Al terminar, eliminar tu fila.
 - `security-best-practices` for endpoint hardening.
 - `ui-ux-pro-max` for private/public UX consistency.
 - `sdd-*` skills for spec/design/tasks traceability.
+
+## UI/UX skill baseline (mandatory for design-facing work)
+For frontend design, UI audits, redesigns, and creation of new public or private UI surfaces, use this baseline together:
+- `impeccable`
+- `emil-design-eng`
+- `design-taste-frontend`
+
+Apply it to:
+- new marketing pages
+- new product, admin, or studio UI
+- visual refactors
+- UI/UX audits
+- typography, spacing, interaction, and motion passes
+
+If one of these skills cannot be applied cleanly in a session, state the limitation explicitly in the work log and continue with the strongest available fallback.
 
 ## Skills convertidas a funciones backend (NO usar la skill — usar el código)
 

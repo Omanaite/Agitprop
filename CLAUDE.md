@@ -3,6 +3,11 @@
 ## Workflow SDD
 - Antes de implementar: revisar `docs/ENGINEERING_CONTEXT.md` y `.atl/skill-registry.md`
 - Post-feature: sync `docs/DEVLOG.md`, `docs/STATE.md`, `docs/ROADMAP.md`
+- Cada cambio relevante debe quedar registrado en `docs/DEVLOG.md` con agente y modelo utilizados
+- Si el trabajo es de UI/UX, auditoria visual o nueva superficie frontend, usar como base `impeccable`, `emil-design-eng` y `design-taste-frontend`
+- No inventar hechos sobre el repo o el runtime; verificar antes de afirmar o cambiar
+- Resolver con la modificacion minima correcta y no tocar archivos no relacionados
+- Mantener cada cambio atomico; mejoras mayores se proponen aparte
 - Commits prefijados: `feat:`, `fix:`, `docs:`, `chore:`
 - Branch activa: `vercel` → auto-deploy a Vercel en cada push
 

@@ -105,7 +105,7 @@ function ArrowRight() {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
       fill="currentColor"
-      className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
+      className="h-3.5 w-3.5 transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) group-hover:translate-x-0.5"
       aria-hidden="true"
     >
       <path
@@ -164,7 +164,7 @@ export default function AgitpropPage() {
           {/* Asymmetric main: 7 / 5 split */}
           <div className="grid grid-cols-12 gap-x-6 gap-y-12">
             {/* Left: massive display heading */}
-            <h1 className="col-span-12 lg:col-span-7 mkt-display text-6xl sm:text-7xl lg:text-[7rem] leading-[0.92]">
+            <h1 className="col-span-12 lg:col-span-7 mkt-display text-6xl sm:text-7xl lg:text-[7rem] leading-[0.88] tracking-[-0.04em]">
               Artist
               <br />
               websites,
@@ -200,10 +200,10 @@ export default function AgitpropPage() {
           {/* Bottom strip: CTAs + tags, anchored left */}
           <div className="mt-16 md:mt-24 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
             <div className="flex flex-wrap items-center gap-3">
-              <Link href="/register" className="mkt-button mkt-button-primary group">
+              <Link href="/register" className="mkt-button mkt-button-primary group transition-transform active:scale-[0.98] duration-200">
                 Start your site — free <ArrowRight />
               </Link>
-              <Link href="/studio/login" className="mkt-button">
+              <Link href="/studio/login" className="mkt-button transition-transform active:scale-[0.98] duration-200">
                 Sign in
               </Link>
             </div>

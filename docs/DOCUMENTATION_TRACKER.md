@@ -33,6 +33,10 @@ Ensure each roadmap phase has associated documentation and that handoff context 
 - Documents: `docs/MASTER_DOCUMENT.md`, `docs/NOTEBOOKLM.md`, `docs/NOTEBOOKLM_SOURCE.md`
 - Status: Refreshed for cross-session continuity and PDF/export use
 
+### Documentation governance / consolidation
+- Document: `docs/DOCUMENTATION_GOVERNANCE_PROPOSAL.md`
+- Status: Proposed audit and consolidation plan, pending implementation
+
 ### Progress log / Vitacora
 - Document: `docs/DEVLOG.md`
 - Status: Active
@@ -56,3 +60,4 @@ Ensure each roadmap phase has associated documentation and that handoff context 
 - 2026-03-31: Added persistent devlog for cross-session continuity and release traceability.
 - 2026-04-01: Documented studio API split (`/api/studio/profile`, `/api/studio/payment-settings`, `/api/studio/integrations`) and role-boundary hardening.
 - 2026-04-01: Updated roadmap, overview, state, and specs task tracking for Platform Admin vs Artist Workspace execution model.
+- 2026-04-29: Added documentation governance and consolidation proposal, plus category-level audit map for workflow, release, specs, and support docs.
