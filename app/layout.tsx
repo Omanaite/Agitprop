@@ -1,5 +1,5 @@
 ﻿import type { Metadata } from "next";
-import { Bebas_Neue, Manrope, Space_Mono } from "next/font/google";
+import { Bebas_Neue, Manrope, Space_Mono, Space_Grotesk, Geist, Geist_Mono } from "next/font/google";
 import { getRequestLocale } from "@/lib/request-locale";
 import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
@@ -22,6 +22,22 @@ const adminFont = Manrope({
   variable: "--font-admin",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+});
+
+const marketingDisplay = Space_Grotesk({
+  variable: "--font-mkt-display",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const marketingSans = Geist({
+  variable: "--font-mkt-sans",
+  subsets: ["latin"],
+});
+
+const marketingMono = Geist_Mono({
+  variable: "--font-mkt-mono",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -69,7 +85,7 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body
-        className={`${headingFont.variable} ${bodyFont.variable} ${adminFont.variable}`}
+        className={`${headingFont.variable} ${bodyFont.variable} ${adminFont.variable} ${marketingDisplay.variable} ${marketingSans.variable} ${marketingMono.variable}`}
       >
         {children}
       </body>
