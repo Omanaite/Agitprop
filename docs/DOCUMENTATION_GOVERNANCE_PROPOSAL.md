@@ -1,5 +1,10 @@
 # Documentation Governance and Consolidation Proposal
 
+Document role: Proposed plan
+Owner: Documentation governance
+Scope: Future cleanup and consolidation plan for the documentation system
+Last updated: 2026-04-29
+
 Date: 2026-04-29
 Status: Proposed, not implemented yet
 Agent: Codex

@@ -1,5 +1,10 @@
 ﻿# MVP Status - Agitprop
 
+Document role: Milestone-specific
+Owner: Release planning
+Scope: Current MVP completion gate and remaining validation status
+Last updated: 2026-04-29
+
 Date: 2026-03-24
 Status: Near-complete, pending production verification and external service confirmation
 

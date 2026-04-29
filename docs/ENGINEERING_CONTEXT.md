@@ -1,5 +1,10 @@
 # Engineering Context Protocol
 
+Document role: Canonical
+Owner: Engineering workflow
+Scope: Project-wide execution rules, architectural invariants, and update protocol
+Last updated: 2026-04-29
+
 Date: 2026-04-01
 
 ## Purpose

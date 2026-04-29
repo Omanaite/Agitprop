@@ -1,5 +1,10 @@
 ﻿# Pre-Prod Checklist
 
+Document role: Canonical
+Owner: Release operations
+Scope: Pre-release operational verification before signoff
+Last updated: 2026-04-29
+
 Date: 2026-03-24
 Status: Awaiting production verification
 

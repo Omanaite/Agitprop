@@ -1,5 +1,10 @@
 ﻿# Pending External Interventions
 
+Document role: Canonical
+Owner: External coordination
+Scope: User actions, credentials, and production-access blockers outside direct code changes
+Last updated: 2026-04-29
+
 Date: 2026-03-24
 Purpose: Track every item that requires user action, external credentials, or production access, without blocking autonomous development.
 

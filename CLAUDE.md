@@ -1,5 +1,10 @@
 # Agitprop — Claude Code Project Rules
 
+Document role: Agent adapter
+Owner: Claude-specific harness
+Scope: Claude-facing adapter for project rules defined canonically elsewhere
+Last updated: 2026-04-29
+
 ## Workflow SDD
 - Antes de implementar: revisar `docs/ENGINEERING_CONTEXT.md` y `.atl/skill-registry.md`
 - Post-feature: sync `docs/DEVLOG.md`, `docs/STATE.md`, `docs/ROADMAP.md`

@@ -1,5 +1,10 @@
 ﻿# Project Roadmap: Agitprop (Akemi Pilot)
 
+Document role: Canonical
+Owner: Product planning
+Scope: Forward-looking phase plan, sequencing, and strategic direction
+Last updated: 2026-04-29
+
 Date: 2026-03-31
 Current status: Phase 4 + Phase 7 bridge (MVP hardening + SaaS role split stabilization)
 
@@ -186,5 +191,4 @@ Source of record: `docs/reports/akemi-seo-security-audit-2026-03-24.pdf`
 - User-dependent items: `docs/PENDING_EXTERNAL_INTERVENTIONS.md`
 - Post-MVP expansion backlog: `docs/POST_MVP_BACKLOG.md`
 - Production readiness checklist: `docs/PRE_PROD_CHECKLIST.md`
-
 

@@ -1,5 +1,10 @@
 ﻿# Documentation by Process
 
+Document role: Canonical
+Owner: Documentation governance
+Scope: Documentation index, audit map, and category-level tracking
+Last updated: 2026-04-29
+
 ## Goal
 Ensure each roadmap phase has associated documentation and that handoff context survives beyond the current chat/session.
 
@@ -61,3 +66,4 @@ Ensure each roadmap phase has associated documentation and that handoff context 
 - 2026-04-01: Documented studio API split (`/api/studio/profile`, `/api/studio/payment-settings`, `/api/studio/integrations`) and role-boundary hardening.
 - 2026-04-01: Updated roadmap, overview, state, and specs task tracking for Platform Admin vs Artist Workspace execution model.
 - 2026-04-29: Added documentation governance and consolidation proposal, plus category-level audit map for workflow, release, specs, and support docs.
+- 2026-04-29: Added document-role headers to major docs so canonical, support, milestone-specific, derived, and agent-adapter files are visible at a glance.

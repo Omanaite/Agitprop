@@ -1,5 +1,10 @@
 ﻿# NotebookLM Source Pack - Agitprop
 
+Document role: Derived
+Owner: Documentation export
+Scope: External ingestion pack; not a primary source of truth
+Last updated: 2026-04-29
+
 ## Snapshot
 - Date: 2026-03-24
 - Environment target: Vercel + Supabase production

@@ -1,5 +1,10 @@
 # Master Document - Agitprop (Akemi Pilot)
 
+Document role: Derived
+Owner: Documentation export
+Scope: Broad project summary derived from canonical product, roadmap, and release docs
+Last updated: 2026-04-29
+
 Date: 2026-04-01  
 Version: 2.1  
 Status: MVP hardening + SaaS role-split stabilization

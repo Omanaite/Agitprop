@@ -1,5 +1,10 @@
 # PR Process (Security-Gated)
 
+Document role: Support
+Owner: Release process
+Scope: Short PR and merge-gate summary; canonical quality rules live in `docs/SDLC_QUALITY_STANDARD.md`
+Last updated: 2026-04-29
+
 ## Rules
 1. Every relevant push MUST open a Pull Request.
 2. No Pull Request is eligible for merge without passing the internal manual security review.

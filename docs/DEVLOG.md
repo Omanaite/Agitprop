@@ -1,5 +1,10 @@
 ﻿﻿# Devlog
 
+Document role: Canonical
+Owner: Documentation traceability
+Scope: Chronological implementation history, including agent and model trace
+Last updated: 2026-04-29
+
 Purpose: chronological project progress log to preserve context across sessions.
 
 ## 2026-04-29
@@ -21,6 +26,13 @@ Purpose: chronological project progress log to preserve context across sessions.
   - `impeccable`
   - `emil-design-eng`
   - `design-taste-frontend`
+- Added document-role headers across major docs to classify each file as:
+  - canonical
+  - support
+  - milestone-specific
+  - derived
+  - agent-adapter
+  - proposed plan
 - Agent used for this implementation: `Codex`
 - Model used for this implementation: `GPT-5-based Codex runtime (exact model variant not exposed in-session)`
 

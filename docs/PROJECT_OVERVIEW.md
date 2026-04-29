@@ -1,5 +1,10 @@
 ﻿# Project Overview - Agitprop
 
+Document role: Canonical
+Owner: Product documentation
+Scope: Current product definition, active scope, and system overview
+Last updated: 2026-04-29
+
 ## Product
 Agitprop is a Next.js App Router + Supabase product for artist websites and operations. The current production pilot is Akemi, the first tenant on the platform, used to validate the multi-tenant SaaS architecture.
 
@@ -93,6 +98,5 @@ The MVP is functionally close, but still depends on:
 - `docs/PENDING_EXTERNAL_INTERVENTIONS.md`
 - `docs/POST_MVP_BACKLOG.md`
 - `openspec/changes/admin-content-management/*`
-
 
 

@@ -1,5 +1,10 @@
 # Manual de Administrador
 
+Document role: Canonical
+Owner: Operations and support
+Scope: Operator guide for admin and workspace usage flows
+Last updated: 2026-04-29
+
 ## Objetivo
 Guiar al artista/administrador en el uso del panel para gestionar perfil, integraciones, galeria y publicaciones.
 

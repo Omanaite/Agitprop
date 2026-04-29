@@ -17,6 +17,7 @@
 7. [Formularios — Validación y feedback](#7-formularios--validación-y-feedback)
 8. [Calidad de código CSS](#8-calidad-de-código-css)
 9. [Auditoría de Estándares Premium (Kowalski/Impeccable/Taste)](#9-auditoría-de-estándares-premium)
+10. [Rediseño Studio Workspace — "Creative Mirror"](#10-rediseño-studio-workspace--creative-mirror)
 
 ---
 
@@ -730,6 +731,39 @@ style={{ transition: `all var(--transition-dur) var(--ease)` }}
 
 ---
 
+## 10. Rediseño Studio Workspace — "Creative Mirror"
+
+**Prioridad:** 🔴 Alta  
+**Tipo:** UX / Arquitectura
+
+**Problema:** El panel de control actual se siente como una aplicación administrativa genérica. No hay conexión visual inmediata entre los cambios del artista y su marca pública.
+
+**Qué hacer:**
+
+### 10.1 — Layout de Pantalla Dividida (Split-Screen)
+- Implementar en `app/studio/layout.tsx` un grid de dos columnas para viewports > 1024px.
+- **Columna A (50%):** Canvas de edición con scroll independiente.
+- **Columna B (50%):** Preview en vivo mediante `iframe`.
+
+### 10.2 — Sistema de Sincronización en Tiempo Real
+- Utilizar `BroadcastChannel` para notificar al iframe que debe refrescarse o actualizar estados locales cuando se guarda un formulario en el Studio.
+
+### 10.3 — UI Utilitaria (The Editor UI)
+- Tipografía: `--type-label` (12px) para captions, `--type-body` (14px/16px) para inputs.
+- Componentes: Reemplazar inputs estándar por componentes con estados `hover` y `focus` refinados.
+- **Motion:** Entradas de paneles con `cubic-bezier(0.16, 1, 0.3, 1)` y duración de `300ms`.
+
+**Archivos afectados:**
+- `app/studio/layout.tsx`
+- `components/studio/StudioConsoleShell.tsx`
+- `app/globals.css` (tokens de tipografía neutral)
+
+**Puntos a tener en cuenta:**
+- El Preview debe ser "read-only" (deshabilitar clicks en el iframe que saquen al usuario de la página).
+- Añadir selector de dispositivo (Mobile Icon, Desktop Icon) sobre el preview.
+
+---
+
 ## Resumen de Pendientes por Prioridad
 
 ### 🔴 Alta — Bloqueante o visible para usuarios finales
@@ -745,6 +779,7 @@ style={{ transition: `all var(--transition-dur) var(--ease)` }}
 | 5.2 | Agregar aria-labels faltantes en botones | `SitePreferencesMenu`, `PaymentButtons` |
 | 5.3 | Asociar mensajes de error a inputs con aria-describedby | `BookingForm`, `ContactForm` |
 | 7.1 | Corregir mensajes de error (eliminar prefijo de nombre de campo) | `BookingForm` |
+| 10.1| Implementar Split-Screen en Studio | `studio/layout.tsx` |
 
 ### 🟡 Media — UX y Diseño
 

@@ -1,5 +1,10 @@
 # Security Review Checklist
 
+Document role: Canonical
+Owner: Security and release verification
+Scope: Manual security checklist for release and operational review
+Last updated: 2026-04-29
+
 ## OWASP Top 10 (Admin + Public APIs)
 - [x] A01 Broken Access Control: admin routes protected by middleware + server auth checks
 - [x] A02 Cryptographic Failures: HTTPS in production, secure cookies

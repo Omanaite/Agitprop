@@ -1,5 +1,10 @@
 # SDLC Quality Standard
 
+Document role: Canonical
+Owner: Quality and release process
+Scope: Lifecycle quality gates for planning, implementation, testing, security, and release
+Last updated: 2026-04-29
+
 ## Objetivo
 Definir un estandar de calidad para todo el ciclo de vida del software.
 

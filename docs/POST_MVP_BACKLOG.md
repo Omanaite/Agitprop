@@ -1,5 +1,10 @@
 ﻿# Post-MVP Backlog
 
+Document role: Canonical
+Owner: Product backlog
+Scope: Deferred work and future evolution after MVP closure
+Last updated: 2026-04-29
+
 Date: 2026-04-05
 Status: Active — ordered by implementation complexity (easiest first)
 

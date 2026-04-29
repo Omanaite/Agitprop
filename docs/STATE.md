@@ -1,5 +1,10 @@
 # State Snapshot - Agitprop Studio
 
+Document role: Support
+Owner: Live operations
+Scope: Current coordination board, active work, and production snapshot
+Last updated: 2026-04-29
+
 **Reglas obligatorias para todo agente:**
 1. Leer sección **COORDINACIÓN** antes de tocar cualquier archivo
 2. Registrar tu trabajo en COORDINACIÓN al empezar
@@ -42,7 +47,7 @@ Supabase project: `ffnrzvklegbiejlksnai`
 
 | Agente | Archivos / área | Iniciado |
 |--------|----------------|----------|
-| Gemini | Auditoría + Implementación Demo Button (app/agitprop/page.tsx) | 2026-04-29 |
+| Gemini | Rediseño Studio Workspace (Split-Screen) + Auditoría Visual | 2026-04-29 |
 
 ### Últimos archivos modificados por Agente-B (sesión 2026-04-27)
 
