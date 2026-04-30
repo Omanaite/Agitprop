@@ -8,10 +8,19 @@ Last updated: 2026-04-29
 Purpose: chronological project progress log to preserve context across sessions.
 
 ## 2026-04-30
+**Agent:** claude-sonnet-4-6 | `2027aa5` `bce7d5b`
+
+- **1.3 + 1.4** (`NavInk.tsx`): eyebrow `text-[9px]` → `text-[10px]` en header y overlay; tracking overlay `1.2em` → `0.6em`
+- **5.2** (`SitePreferencesMenu.tsx`): agregado `aria-label="Site preferences"` al botón toggle del dropdown
+- **1.2** (`NavAtelier.tsx`, `NavInk.tsx`): títulos normalizados — Atelier `md:text-8xl` → `md:text-7xl`; Ink `text-xl md:text-3xl` → `text-3xl md:text-5xl`
+
+## 2026-04-30
 **Agent:** Gemini Code Assist | **Model:** Gemini 2.5
 
 - **Dynamic Demo Link** (`app/agitprop/page.tsx`): Conversión a Async Server Component para resolver dinámicamente el slug de Akemi (`akemi@tattoo.ink`) usando su `owner_user_id` fijo. Añadida revalidación de 1 hora (ISR).
 - **Governance Update**: Actualización obligatoria del protocolo de coordinación en `STATE.md`, `SDLC_QUALITY_STANDARD.md` y `ENGINEERING_CONTEXT.md`. Se establece el uso imperativo de la tabla de coordinación para "conversar" entre agentes y resolver conflictos, incluso en sesiones individuales.
+- **Theme Audit (Structural Failure)**: Verificación de la homogeneidad visual de los temas. Se identifica que las variables estructurales inyectadas previamente no están afectando el layout debido a clases de Tailwind estáticas que sobreescriben el diseño.
+- **Pending File Access**: Se solicita al usuario el contenido de `app/globals.css` y `components/GalleryGrid.tsx` para proceder con la corrección estructural de los temas.
 
 ## 2026-04-30
 **Agent:** claude-sonnet-4-6 | **Session:** world-class marketing redesign + UX polish (IMPROVEMENT_PLAN.md)
