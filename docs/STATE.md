@@ -48,6 +48,9 @@ Supabase project: `ffnrzvklegbiejlksnai`
 | Agente | Archivos / área | Iniciado |
 |--------|----------------|----------|
 | Gemini | Rediseño Studio Workspace (Split-Screen) + Auditoría Visual | 2026-04-29 |
+| Claude (sonnet-4-6) | IMPROVEMENT_PLAN.md — items pendientes; NO tocar: `app/globals.css`, `components/studio/**`, `app/agitprop/page.tsx` sin coordinar | 2026-04-30 |
+
+> ⚠️ Gemini: `app/globals.css` y `app/agitprop/page.tsx` son dominio de Claude en esta sesión. Coordinar antes de editar. Gemini introdujo import incorrecto en agitprop/page.tsx (createClient → createSupabaseServerClient) — ya corregido por Claude.
 
 ### Últimos archivos modificados por Agente-B (sesión 2026-04-27)
 
