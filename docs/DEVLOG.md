@@ -7,6 +7,23 @@ Last updated: 2026-04-29
 
 Purpose: chronological project progress log to preserve context across sessions.
 
+## 2026-04-30
+**Agent:** claude-sonnet-4-6 | **Session:** world-class marketing redesign + UX polish (IMPROVEMENT_PLAN.md)
+
+- **Marketing page redesign** (`app/agitprop/page.tsx`): Full rewrite using `.marketing-shell` token system. Editorial asymmetric 7/5 grid hero, sticky nav with backdrop blur, theme marquee, features 3-col grid, pricing with recommended badge, steps with large display numbers, big CTA section, audience tags (Tattoo/Illustration/Photography/Design) replacing tech stack tags.
+- **Font system** (`app/layout.tsx`): Added Geist, Geist Mono, Space Grotesk via `next/font/google`; CSS variables `--font-mkt-display`, `--font-mkt-sans`, `--font-mkt-mono` on `<body>`.
+- **Marketing token system** (`app/globals.css`): `.marketing-shell` with `--mkt-*` variables, 3 theme variants (`data-theme`), utility classes: `.mkt-button`, `.mkt-button-primary`, `.mkt-card`, `.mkt-card-hover`, `.mkt-chip`, `.mkt-tag`, `.mkt-display`, `.mkt-mono`, `.mkt-muted`, `.mkt-divider`.
+- **Motion tokens** (`app/globals.css`): `--ease-out-expo: cubic-bezier(0.16,1,0.3,1)`, `--transition-speed: 200ms`, `@keyframes marquee`, `@keyframes panel-enter`, `.admin-panel-enter`.
+- **Type scale tokens** (`app/globals.css`): `--type-*` and `--track-*` tokens; applied to `Section.tsx`, `Footer.tsx`.
+- **Focus/disabled states** (`app/globals.css`): `#theme-root :focus-visible` ring (2px, var(--accent)), `button:disabled` opacity-40 + cursor-not-allowed.
+- **Admin transitions** (`app/globals.css`): ease → `cubic-bezier(0.16,1,0.3,1) 200ms` on all admin button/input elements.
+- **Gallery filter select** (`app/globals.css`): option bg/fg from hardcoded hex → `var(--bg)/var(--fg)`.
+- **AnimatePresence validation** (`ContactForm.tsx`, `BookingForm.tsx`): Replaced static `<p>` with `motion.p` + AnimatePresence; added `aria-invalid`, `aria-describedby`, `role="alert"` on all fields; removed field-name prefixes from error messages.
+- **BroadcastChannel preview refresh** (`lib/studio-preview-context.tsx`, `components/PreviewRefreshListener.tsx`, `app/[slug]/page.tsx`): Cross-context reload via `BroadcastChannel("agitprop-preview-refresh")`; `PreviewRefreshListener` injected into public tenant page.
+- **Preview panel polish** (`components/studio/StudioPreviewPanel.tsx`): Width transition to expo curve; read-only overlay (`pointerEvents: all`) prevents iframe navigation.
+- **Panel enter animation** (`components/studio/StudioConsoleShell.tsx`): Added `admin-panel-enter` class to `TabPanel`.
+- **Circular font var fix** (`app/globals.css`): Removed self-referencing `var(--font-heading)`.
+
 ## 2026-04-29
 - Enabled `impeccable` for the workspace root by adding shared context files:
   - `../PRODUCT.md`
