@@ -11,9 +11,8 @@
   --accent: #000000;
   --eye-bg: #f6f1e1;
   --eye-fg: #1a1a1a;
-  --font-heading: "Druk Wide", "Founders Grotesk Condensed", var(--font-heading),
-    sans-serif;
-  --font-body: "JetBrains Mono", "Space Mono", var(--font-body), monospace;
+  --font-heading: "Druk Wide", "Founders Grotesk Condensed", var(--font-admin), sans-serif;
+  --font-body: "JetBrains Mono", "Space Mono", var(--font-admin), monospace;
   --font-admin: "Manrope", "Suisse Int'l", "Neue Haas Grotesk", sans-serif;
 
   /* Typography scale tokens */
@@ -117,6 +116,21 @@ a {
 /* Brutalist motion: no easing, step-based transitions. */
 .snap-transition {
   transition: all 160ms steps(2, jump-none);
+}
+
+/* 5.1 — focus-visible for public site (keyboard nav / screen readers) */
+#theme-root :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* 6.2 — disabled state for interactive elements */
+#theme-root button:disabled,
+#theme-root [disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 /* Global image treatment per spec. */

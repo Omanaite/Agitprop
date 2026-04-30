@@ -220,17 +220,25 @@ export function BookingForm({ copy, tenantSlug, demoMode, locale = "en" }: Booki
         <div className="grid gap-2">
           <label className="text-xs uppercase tracking-[0.2em]">
             {copy.name}
-            <input className={`hard-border mt-1 w-full px-3 py-2 ${errorMap.get("name") ? "input-error" : ""}`}
-              name="name" minLength={2} required />
+            <input
+              className={`hard-border mt-1 w-full px-3 py-2 ${errorMap.get("name") ? "input-error" : ""}`}
+              name="name" minLength={2} required
+              aria-invalid={errorMap.has("name") || undefined}
+              aria-describedby={errorMap.has("name") ? "err-name" : undefined}
+            />
           </label>
-          {errorMap.get("name") && <p className="input-helper" data-variant="error">name: {errorMap.get("name")}</p>}
+          {errorMap.get("name") && <p id="err-name" className="input-helper" data-variant="error" role="alert">{errorMap.get("name")}</p>}
 
           <label className="text-xs uppercase tracking-[0.2em]">
             {copy.email}
-            <input className={`hard-border mt-1 w-full px-3 py-2 ${errorMap.get("email") ? "input-error" : ""}`}
-              name="email" type="email" required />
+            <input
+              className={`hard-border mt-1 w-full px-3 py-2 ${errorMap.get("email") ? "input-error" : ""}`}
+              name="email" type="email" required
+              aria-invalid={errorMap.has("email") || undefined}
+              aria-describedby={errorMap.has("email") ? "err-email" : undefined}
+            />
           </label>
-          {errorMap.get("email") && <p className="input-helper" data-variant="error">email: {errorMap.get("email")}</p>}
+          {errorMap.get("email") && <p id="err-email" className="input-helper" data-variant="error" role="alert">{errorMap.get("email")}</p>}
 
           {/* Date input — hidden if using slot system (date comes from slot selection) */}
           {!hasSlotSystem && (
@@ -254,20 +262,28 @@ export function BookingForm({ copy, tenantSlug, demoMode, locale = "en" }: Booki
 
           <label className="text-xs uppercase tracking-[0.2em]">
             {copy.placement}
-            <input className={`hard-border mt-1 w-full px-3 py-2 ${errorMap.get("placement") ? "input-error" : ""}`}
-              name="placement" minLength={2} required />
+            <input
+              className={`hard-border mt-1 w-full px-3 py-2 ${errorMap.get("placement") ? "input-error" : ""}`}
+              name="placement" minLength={2} required
+              aria-invalid={errorMap.has("placement") || undefined}
+              aria-describedby={errorMap.has("placement") ? "err-placement" : undefined}
+            />
           </label>
-          {errorMap.get("placement") && <p className="input-helper" data-variant="error">placement: {errorMap.get("placement")}</p>}
+          {errorMap.get("placement") && <p id="err-placement" className="input-helper" data-variant="error" role="alert">{errorMap.get("placement")}</p>}
 
           <label className="text-xs uppercase tracking-[0.2em]">
             {copy.description}
-            <textarea className={`hard-border mt-1 min-h-[120px] w-full px-3 py-2 ${errorMap.get("description") ? "input-error" : ""}`}
-              name="description" minLength={10} required />
+            <textarea
+              className={`hard-border mt-1 min-h-[120px] w-full px-3 py-2 ${errorMap.get("description") ? "input-error" : ""}`}
+              name="description" minLength={10} required
+              aria-invalid={errorMap.has("description") || undefined}
+              aria-describedby={errorMap.has("description") ? "err-description" : undefined}
+            />
           </label>
           <label className="hidden" aria-hidden="true">
             Website <input name="website" tabIndex={-1} autoComplete="off" className="hidden" />
           </label>
-          {errorMap.get("description") && <p className="input-helper" data-variant="error">description: {errorMap.get("description")}</p>}
+          {errorMap.get("description") && <p id="err-description" className="input-helper" data-variant="error" role="alert">{errorMap.get("description")}</p>}
         </div>
 
         <button
