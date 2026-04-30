@@ -28,7 +28,7 @@ export function NavAtelier({ navItems, locale, brandEyebrow, brandTitle, siteThe
       {/* Large centered title */}
       <div className="text-center px-8 md:px-12">
         <h1
-          className="text-5xl md:text-8xl leading-[0.9] tracking-[-0.02em]"
+          className="text-5xl md:text-7xl leading-[0.9] tracking-[-0.02em]"
           style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
         >
           {brandTitle}

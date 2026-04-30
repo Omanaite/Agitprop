@@ -22,7 +22,7 @@ export function NavInk({ navItems, locale, brandEyebrow, brandTitle, siteTheme }
           <div>
             <p className="text-[10px] uppercase tracking-[0.9em] opacity-30 mb-1">{brandEyebrow}</p>
             <h1
-              className="text-xl md:text-3xl uppercase tracking-[0.25em] font-light"
+              className="text-3xl md:text-5xl uppercase tracking-[0.25em] font-light"
               style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif" }}
             >
               {brandTitle}
