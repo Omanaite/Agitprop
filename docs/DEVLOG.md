@@ -8,14 +8,18 @@ Last updated: 2026-04-29
 Purpose: chronological project progress log to preserve context across sessions.
 
 ## 2026-04-30
-**Agent:** claude-sonnet-4-6 | `2027aa5` `bce7d5b` `84e9fa1`
+**Agent:** claude-sonnet-4-6 | `2027aa5` `bce7d5b` `84e9fa1` `34909bf`
 
 - **1.3 + 1.4** (`NavInk.tsx`): eyebrow `text-[9px]` → `text-[10px]` en header y overlay; tracking overlay `1.2em` → `0.6em`
 - **5.2** (`SitePreferencesMenu.tsx`): `aria-label="Site preferences"` en botón toggle
 - **1.2** (`NavAtelier.tsx`, `NavInk.tsx`): Atelier `md:text-8xl` → `md:text-7xl`; Ink `text-xl md:text-3xl` → `text-3xl md:text-5xl`
 - **7.2** (`ContactForm.tsx`): spinner SVG animado durante envío + `disabled:opacity-40 disabled:cursor-not-allowed`
 - **9.3**: ya estaba implementado (`active { transform: scale(0.98) }`)
-- **8.2**: tokens `--ease-out-expo` y `--transition-speed` ya en `:root`; pendiente en Agente-B (BookingForm, GalleryGrid)
+- **8.2**: tokens `--ease-out-expo` y `--transition-speed` ya en `:root`; BookingForm/PostFeed no tenían hardcoded — cubierto
+- **6.1** (`app/globals.css`): `.hard-border` con `transition` + `:hover`/`:focus` → `border-color: var(--accent)`
+- **6.3** (`studio/LocationSearch.tsx`): estado `fetchError` con mensaje visible cuando Nominatim falla
+- **4.3**: padding inputs ya unificado en `px-3 py-2`; no requirió cambio
+- **2.3**: studio hardcodeado en inglés por decisión de arquitectura — sin sistema i18n en panel artista
 - **5.2** (`SitePreferencesMenu.tsx`): agregado `aria-label="Site preferences"` al botón toggle del dropdown
 - **1.2** (`NavAtelier.tsx`, `NavInk.tsx`): títulos normalizados — Atelier `md:text-8xl` → `md:text-7xl`; Ink `text-xl md:text-3xl` → `text-3xl md:text-5xl`
 
@@ -25,7 +29,9 @@ Purpose: chronological project progress log to preserve context across sessions.
 - **Dynamic Demo Link** (`app/agitprop/page.tsx`): Conversión a Async Server Component para resolver dinámicamente el slug de Akemi (`akemi@tattoo.ink`) usando su `owner_user_id` fijo. Añadida revalidación de 1 hora (ISR).
 - **Governance Update**: Actualización obligatoria del protocolo de coordinación en `STATE.md`, `SDLC_QUALITY_STANDARD.md` y `ENGINEERING_CONTEXT.md`. Se establece el uso imperativo de la tabla de coordinación para "conversar" entre agentes y resolver conflictos, incluso en sesiones individuales.
 - **Theme Audit (Structural Failure)**: Verificación de la homogeneidad visual de los temas. Se identifica que las variables estructurales inyectadas previamente no están afectando el layout debido a clases de Tailwind estáticas que sobreescriben el diseño.
-- **Pending File Access**: Se solicita al usuario el contenido de `app/globals.css` y `components/GalleryGrid.tsx` para proceder con la corrección estructural de los temas.
+- **Theme Structural Correction**: Implementación de un motor de galería en `app/globals.css` y `components/GalleryGrid.tsx` para permitir layouts estructurales dinámicos por tema (Atelier = columna, Mono = grid denso, Ink = scroll horizontal, etc.).
+- **Accessibility 5.4 (GalleryGrid)**: Convertido `<article role="button">` a `<button>` semántico en `components/GalleryGrid.tsx` para mejorar la accesibilidad.
+- **Accessibility 5.5 (WCAG Contrast)**: Reemplazado `opacity-40` por `text-[var(--muted)]` en `components/GalleryGrid.tsx` y `app/agitprop/page.tsx` para mejorar el contraste WCAG. Se han añadido definiciones de `--muted` a todos los temas en `app/globals.css`.
 
 ## 2026-04-30
 **Agent:** claude-sonnet-4-6 | **Session:** world-class marketing redesign + UX polish (IMPROVEMENT_PLAN.md)
