@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
-import { createClient } from "@/lib/supabase/server";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
   title: "Agitprop | Artist website, portfolio & booking platform",
@@ -121,7 +121,7 @@ function ArrowRight() {
 export default async function AgitpropPage() {
   // Obtenemos el slug de Akemi dinámicamente desde Supabase usando su owner_user_id fijo.
   // ID asociado a akemi@tattoo.ink en STATE.md: 030ae67c-d882-4cfe-a6ae-d006fe6bf2ce
-  const supabase = await createClient();
+  const supabase = createSupabaseServerClient();
   const { data: akemiTenant } = await supabase
     .from("artist_tenants")
     .select("slug")
