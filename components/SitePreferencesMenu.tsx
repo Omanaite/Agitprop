@@ -115,6 +115,7 @@ export function SitePreferencesMenu({ locale, siteTheme = "atelier" }: Props) {
         type="button"
         onClick={() => setOpen((v) => !v)}
         className="snap-transition theme-border-thin flex items-center gap-2 px-3 py-1"
+        aria-label="Site preferences"
         aria-expanded={open}
       >
         <span>{activeMode.icon}</span>

@@ -20,7 +20,7 @@ export function NavInk({ navItems, locale, brandEyebrow, brandTitle, siteTheme }
       <header className="bg-[var(--bg)] px-6 md:px-10 py-6">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <p className="text-[9px] uppercase tracking-[0.9em] opacity-30 mb-1">{brandEyebrow}</p>
+            <p className="text-[10px] uppercase tracking-[0.9em] opacity-30 mb-1">{brandEyebrow}</p>
             <h1
               className="text-xl md:text-3xl uppercase tracking-[0.25em] font-light"
               style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif" }}
@@ -60,7 +60,7 @@ export function NavInk({ navItems, locale, brandEyebrow, brandTitle, siteTheme }
         </button>
 
         <div className="flex flex-col items-center justify-center flex-1 py-10 px-6">
-        <p className="text-[9px] uppercase tracking-[1.2em] mb-10 opacity-20">
+        <p className="text-[10px] uppercase tracking-[0.6em] mb-10 opacity-20">
           {brandEyebrow}
         </p>
 
