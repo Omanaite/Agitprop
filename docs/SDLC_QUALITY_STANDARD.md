@@ -23,6 +23,7 @@ Definir un estandar de calidad para todo el ciclo de vida del software.
 ### 2) Implementacion
 - Commits con prefijos: `feat:`, `fix:`, `docs:`, `refactor:`.
 - Validaciones UX consistentes en admin y cliente.
+- **Gobernanza de sesión:** Consultar y actualizar la tabla de **COORDINACIÓN** en `STATE.md` antes y después de cada bloque de trabajo. En caso de conflicto, se debe dejar una nota en la tabla para negociar el acceso con el otro agente.
 - Si cambia el dominio del trabajo (UI, auth, seguridad, SQL, SDD), repetir revision de skills antes de seguir.
 - Ningun modelo debe inventar comportamiento, estado o contexto no verificado en el repositorio.
 - Toda modificacion debe ser precisa, acotada y atomica.

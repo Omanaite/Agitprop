@@ -20,7 +20,8 @@ Keep execution quality stable across long sessions, context compaction, and hand
 
 ## ⚠️ Multi-agent coordination
 Antes de tocar cualquier archivo: leer sección **COORDINACIÓN** en `docs/STATE.md`.
-Registrar ahí los archivos que vas a editar. Al terminar, eliminar tu fila.
+Registrar ahí los archivos que vas a editar. **Es obligatorio usar esta tabla incluso trabajando solo.**
+En caso de solapamiento de archivos, utiliza la tabla para conversar con el otro agente y llegar a un acuerdo antes de proceder.
 
 ## Mandatory update points
 - After each significant feature/fix:

@@ -8,6 +8,12 @@ Last updated: 2026-04-29
 Purpose: chronological project progress log to preserve context across sessions.
 
 ## 2026-04-30
+**Agent:** Gemini Code Assist | **Model:** Gemini 2.5
+
+- **Dynamic Demo Link** (`app/agitprop/page.tsx`): Conversión a Async Server Component para resolver dinámicamente el slug de Akemi (`akemi@tattoo.ink`) usando su `owner_user_id` fijo. Añadida revalidación de 1 hora (ISR).
+- **Governance Update**: Actualización obligatoria del protocolo de coordinación en `STATE.md`, `SDLC_QUALITY_STANDARD.md` y `ENGINEERING_CONTEXT.md`. Se establece el uso imperativo de la tabla de coordinación para "conversar" entre agentes y resolver conflictos, incluso en sesiones individuales.
+
+## 2026-04-30
 **Agent:** claude-sonnet-4-6 | **Session:** world-class marketing redesign + UX polish (IMPROVEMENT_PLAN.md)
 
 - **Marketing page redesign** (`app/agitprop/page.tsx`): Full rewrite using `.marketing-shell` token system. Editorial asymmetric 7/5 grid hero, sticky nav with backdrop blur, theme marquee, features 3-col grid, pricing with recommended badge, steps with large display numbers, big CTA section, audience tags (Tattoo/Illustration/Photography/Design) replacing tech stack tags.
