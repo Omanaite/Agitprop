@@ -69,8 +69,8 @@ export function StudioPreviewPanel({ device, onDeviceChange, onClose }: Props) {
       {/* iframe container */}
       <div className="flex flex-1 overflow-hidden items-start justify-center bg-[var(--fg)]/5 p-2">
         <div
-          className="h-full overflow-hidden transition-all duration-300 bg-white shadow-lg"
-          style={{ width: DEVICE_WIDTHS[device], maxWidth: "100%" }}
+          className="relative h-full overflow-hidden bg-white shadow-lg"
+          style={{ width: DEVICE_WIDTHS[device], maxWidth: "100%", transition: "width 300ms cubic-bezier(0.16,1,0.3,1)" }}
         >
           <iframe
             key={previewKey}
@@ -79,6 +79,8 @@ export function StudioPreviewPanel({ device, onDeviceChange, onClose }: Props) {
             className="h-full w-full border-0"
             sandbox="allow-same-origin allow-scripts allow-forms"
           />
+          {/* Read-only overlay — prevents clicks navigating away from the preview */}
+          <div className="absolute inset-0" style={{ pointerEvents: "all" }} aria-hidden="true" />
         </div>
       </div>
     </div>

@@ -12,7 +12,9 @@
  *   refreshPreview();
  */
 
-import { createContext, useContext, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
+
+export const PREVIEW_CHANNEL = "agitprop-preview-refresh";
 
 type StudioPreviewContextValue = {
   /** Call after any save to reload the preview iframe. */
@@ -40,8 +42,17 @@ export function StudioPreviewProvider({ children }: { children: React.ReactNode 
   const [previewKey, setPreviewKey] = useState(0);
   const [splitActive, setSplitActive] = useState(false);
   const [slug, setSlug] = useState<string | null>(null);
+  const channelRef = useRef<BroadcastChannel | null>(null);
+
+  useEffect(() => {
+    channelRef.current = new BroadcastChannel(PREVIEW_CHANNEL);
+    return () => channelRef.current?.close();
+  }, []);
 
   function refreshPreview() {
+    // Broadcast to the iframe so it can reload without full remount
+    channelRef.current?.postMessage({ type: "refresh" });
+    // Fallback: increment key in case iframe isn't listening yet (first open)
     setPreviewKey((k) => k + 1);
   }
 

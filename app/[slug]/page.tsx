@@ -18,6 +18,7 @@ import { getHomepageSections } from "@/lib/data/homepage-sections";
 import { getPublicDictionary } from "@/lib/i18n";
 import { getRequestLocale } from "@/lib/request-locale";
 import type { HomepageSection } from "@/types";
+import { PreviewRefreshListener } from "@/components/PreviewRefreshListener";
 
 const RESERVED = new Set(["admin", "studio", "api", "register", "agitprop", "akemi", "galleries"]);
 
@@ -227,6 +228,7 @@ export default async function ArtistSitePage({ params }: { params: Promise<Param
 
   return (
     <div id="theme-root" data-site-theme={tenant.site_theme} className={`min-h-screen p-4 md:p-8 ${themeClass}`}>
+      <PreviewRefreshListener />
       {isDemo && (
         <div className="mb-4 flex items-center justify-center gap-3 rounded border border-current/20 bg-current/10 px-4 py-2 text-xs uppercase tracking-[0.3em]">
           <span className="font-bold">Demo Site</span>

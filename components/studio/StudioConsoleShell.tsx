@@ -185,7 +185,7 @@ export function StudioConsoleShell() {
 
       <TabPanels>
         {sections.map((section) => (
-          <TabPanel key={section.id} className="outline-none">
+          <TabPanel key={section.id} className="outline-none admin-panel-enter">
             {section.content}
           </TabPanel>
         ))}
