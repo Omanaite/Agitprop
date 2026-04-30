@@ -30,6 +30,7 @@ export function LocationSearch({ locationName, locationLink, onChange }: Props) 
   const [results, setResults] = useState<NominatimResult[]>([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [fetchError, setFetchError] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -63,6 +64,7 @@ export function LocationSearch({ locationName, locationLink, onChange }: Props) 
     debounceRef.current = setTimeout(async () => {
       if (value.trim().length < 3) return;
       setLoading(true);
+      setFetchError(false);
       try {
         const res = await fetch(
           `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(value)}&limit=5&addressdetails=0`,
@@ -73,6 +75,7 @@ export function LocationSearch({ locationName, locationLink, onChange }: Props) 
         setOpen(data.length > 0);
       } catch {
         setResults([]);
+        setFetchError(true);
       } finally {
         setLoading(false);
       }
@@ -94,6 +97,7 @@ export function LocationSearch({ locationName, locationLink, onChange }: Props) 
     setQuery("");
     setResults([]);
     setOpen(false);
+    setFetchError(false);
     onChange("", "");
   }
 
@@ -118,6 +122,10 @@ export function LocationSearch({ locationName, locationLink, onChange }: Props) 
           </button>
         )}
       </div>
+
+      {fetchError && (
+        <p className="mt-1 text-xs text-[var(--admin-error,#e53e3e)]">Could not reach location search. Try again.</p>
+      )}
 
       {/* Indicador de link guardado */}
       {locationLink && !open && (

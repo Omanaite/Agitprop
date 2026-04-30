@@ -161,6 +161,14 @@ a {
 /* Border utility to keep edges hard and consistent. */
 .hard-border {
   border: var(--border);
+  transition: border-color 150ms var(--ease-out-expo);
+}
+.hard-border:hover {
+  border-color: var(--accent);
+}
+.hard-border:focus {
+  outline: none;
+  border-color: var(--accent);
 }
 
 .theme-border {
@@ -730,6 +738,7 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 200ms;
   --duration-slow: 400ms;
 
+  --muted: #7a6a5a; /* Definido para Atelier A */
   background: linear-gradient(160deg, #faf7f2 0%, #f3ede3 100%);
   color: var(--fg);
   font-family: "Georgia", "Times New Roman", serif;
@@ -782,6 +791,7 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 240ms;
   --duration-slow: 400ms;
 
+  --muted: #9a8a7a; /* Definido para Atelier B */
   background: linear-gradient(160deg, #1a1510 0%, #120f0a 100%);
   color: var(--fg);
   font-family: "Georgia", "Times New Roman", serif;
@@ -835,6 +845,7 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 150ms;
   --duration-slow: 300ms;
 
+  --muted: #666666; /* Definido para Mono A */
   background: #ffffff;
   color: var(--fg);
   font-family: "Inter", "Helvetica Neue", sans-serif;
@@ -891,6 +902,7 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 150ms;
   --duration-slow: 300ms;
 
+  --muted: #888888; /* Definido para Mono B */
   background: #0a0a0a;
   color: var(--fg);
   font-family: "Inter", "Helvetica Neue", sans-serif;
@@ -940,6 +952,7 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 400ms;
   --duration-slow: 800ms;
 
+  --muted: #8E8E93; /* Definido para Ink A */
   background: var(--bg);
   color: var(--fg);
   font-family: "Inter", sans-serif;
@@ -1011,6 +1024,7 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 400ms;
   --duration-slow: 800ms;
 
+  --muted: #8a8fa0; /* Definido para Ink B */
   background: #0D1117;
   color: #C9D1D9;
   font-family: "Inter", sans-serif;
@@ -1062,6 +1076,7 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 500ms;
   --duration-slow: 900ms;
 
+  --muted: #5a7260; /* Definido para Verdure A */
   background: var(--bg);
   color: var(--fg);
   font-family: "Outfit", sans-serif;
@@ -1120,6 +1135,7 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 500ms;
   --duration-slow: 900ms;
 
+  --muted: #6a9470; /* Definido para Verdure B */
   background: var(--bg);
   color: var(--fg);
   font-family: "Outfit", sans-serif;
@@ -1171,6 +1187,7 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 200ms;
   --duration-slow: 400ms;
 
+  --muted: #8B5E00; /* Definido para Amber A */
   background: var(--bg);
   color: var(--fg);
   font-family: "Fraunces", serif;
@@ -1235,6 +1252,7 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 200ms;
   --duration-slow: 400ms;
 
+  --muted: #D97706; /* Definido para Amber B */
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-amber), serif;
@@ -1299,6 +1317,7 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 0ms;
   --duration-slow: 0ms;
 
+  --muted: #444444; /* Definido para Akemi Brutalist A */
   background: var(--bg);
   color: var(--fg);
   font-family: "JetBrains Mono", "Space Mono", var(--font-body), monospace;
@@ -1352,6 +1371,7 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 0ms;
   --duration-slow: 0ms;
 
+  --muted: #888888; /* Definido para Akemi Brutalist B */
   background: #000000;
   color: var(--fg);
   font-family: "JetBrains Mono", "Space Mono", var(--font-body), monospace;
