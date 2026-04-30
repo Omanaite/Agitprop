@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 type ContactFormState = "idle" | "submitting" | "success" | "error";
 
@@ -121,15 +122,22 @@ export function ContactForm({ copy, tenantSlug }: ContactFormProps) {
       >
         {state === "submitting" ? copy.submitBusy : copy.submitIdle}
       </button>
-      {message ? (
-        <p
-          className="validation-box"
-          data-variant={state === "error" ? "error" : "success"}
-          aria-live="polite"
-        >
-          {message}
-        </p>
-      ) : null}
+      <AnimatePresence>
+        {message ? (
+          <motion.p
+            key={message}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="validation-box"
+            data-variant={state === "error" ? "error" : "success"}
+            aria-live="polite"
+          >
+            {message}
+          </motion.p>
+        ) : null}
+      </AnimatePresence>
     </form>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 type BookingFormState = "idle" | "submitting" | "success" | "error";
 
@@ -295,11 +296,22 @@ export function BookingForm({ copy, tenantSlug, demoMode, locale = "en" }: Booki
           {formState === "submitting" ? copy.submitBusy : copy.submitIdle}
         </button>
 
-        {message && (
-          <p className="validation-box" data-variant={formState === "error" ? "error" : "success"} aria-live="polite">
-            {message}
-          </p>
-        )}
+        <AnimatePresence>
+          {message && (
+            <motion.p
+              key={message}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="validation-box"
+              data-variant={formState === "error" ? "error" : "success"}
+              aria-live="polite"
+            >
+              {message}
+            </motion.p>
+          )}
+        </AnimatePresence>
       </form>
     </div>
   );

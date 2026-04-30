@@ -15,6 +15,10 @@
   --font-body: "JetBrains Mono", "Space Mono", var(--font-admin), monospace;
   --font-admin: "Manrope", "Suisse Int'l", "Neue Haas Grotesk", sans-serif;
 
+  /* Motion tokens */
+  --ease-out-expo:   cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-speed: 200ms;
+
   /* Typography scale tokens */
   --type-eyebrow:    0.625rem;
   --type-label:      0.75rem;
@@ -100,6 +104,12 @@ body {
   color: var(--fg);
   font-family: var(--font-body);
   letter-spacing: -0.01em;
+  transition: background var(--transition-speed) var(--ease-out-expo), color var(--transition-speed) var(--ease-out-expo);
+}
+
+h1, h2, .mkt-display {
+  letter-spacing: var(--track-heading);
+  line-height: 1.05;
 }
 
 *,
@@ -443,18 +453,18 @@ html[data-theme="eye"] .marketing-shell {
   padding: 0.75rem 1.25rem;
   font-size: 0.875rem;
   font-weight: 600;
-  letter-spacing: -0.005em;
-  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, opacity 160ms ease;
+  letter-spacing: var(--track-nav);
+  transition: transform 150ms var(--ease-out-expo), background 150ms ease, border-color 150ms ease;
   white-space: nowrap;
 }
 
 .mkt-button:hover {
   background: var(--mkt-card-hover);
-  transform: translateY(-1px);
+  filter: brightness(1.05);
 }
 
 .mkt-button:active {
-  transform: translateY(0) scale(0.99);
+  transform: scale(0.98);
 }
 
 .mkt-button-primary {
@@ -661,8 +671,8 @@ html[data-theme="eye"] .marketing-shell {
 }
 
 .gallery-filter-select option {
-  background: #ffffff;
-  color: #000000;
+  background: var(--bg);
+  color: var(--fg);
 }
 
 html[data-theme="dark"] .gallery-filter-select {
@@ -809,18 +819,29 @@ html[data-theme="dark"] .gallery-filter-select {
   --shadow-btn: none;
   --shadow-offset: none;
   --timing: steps(2, jump-none);
-  --duration: 160ms;
-  --duration-slow: 240ms;
+  --duration: 150ms;
+  --duration-slow: 300ms;
 
   background: #ffffff;
   color: var(--fg);
-  font-family: "Helvetica Neue", "Arial", system-ui, sans-serif;
-  letter-spacing: -0.02em;
+  font-family: "Inter", "Helvetica Neue", sans-serif;
+  letter-spacing: -0.04em;
+
+  /* ESTRUCTURA TÉCNICA: Cuadrícula rígida con bordes */
+  --gallery-gap: 0px;
+  --gallery-columns: 3;
 }
+
 .artist-theme-mono .theme-border,
 .artist-theme-mono .hard-border {
   border: var(--border-width) solid var(--border-color);
 }
+
+.artist-theme-mono .mkt-card {
+  border: 1px solid var(--border-color);
+  margin: -0.5px; /* Colapsar bordes para efecto tabla */
+}
+
 .artist-theme-mono .theme-invert {
   background: var(--fg);
   color: var(--bg);
@@ -853,14 +874,14 @@ html[data-theme="dark"] .gallery-filter-select {
   --shadow-card: none;
   --shadow-btn: none;
   --shadow-offset: none;
-  --timing: cubic-bezier(0.16, 1, 0.3, 1);
-  --duration: 200ms;
-  --duration-slow: 360ms;
+  --timing: steps(2, jump-none);
+  --duration: 150ms;
+  --duration-slow: 300ms;
 
   background: #0a0a0a;
   color: var(--fg);
-  font-family: "Helvetica Neue", "Arial", system-ui, sans-serif;
-  letter-spacing: -0.025em;
+  font-family: "Inter", "Helvetica Neue", sans-serif;
+  letter-spacing: -0.04em;
 }
 .artist-theme-mono-b .theme-border,
 .artist-theme-mono-b .hard-border {
@@ -881,32 +902,51 @@ html[data-theme="dark"] .gallery-filter-select {
 /* ── INK A — Light / Editorial ──────────────────────────────────────────── */
 /* Light mode: clean white with violet accent                               */
 .artist-theme-ink {
-  --fg: #1a1520;
-  --bg: #f9f8fc;
-  --accent: #7c5cbf;
-  --accent-fg: #f9f8fc;
-  --surface: rgba(124, 92, 191, 0.05);
-  --surface-2: rgba(124, 92, 191, 0.09);
-  --muted: #6b6480;
-  --border-color: rgba(26, 21, 32, 0.12);
+  --fg: #E1E1E1;
+  --bg: #0A0A0B;
+  --accent: #FFFFFF;
+  --accent-fg: #0A0A0B;
+  --surface: #161618;
+  --surface-2: #1C1C1F;
+  --muted: #8E8E93;
+  --border-color: #2D2D30;
   --border-width: 1px;
   --radius-sm: 4px;
   --radius-btn: 4px;
   --radius-card: 8px;
   --radius-input: 4px;
-  --shadow-sm: 0 2px 12px rgba(124, 92, 191, 0.10);
-  --shadow-card: 0 8px 32px rgba(124, 92, 191, 0.12);
-  --shadow-btn: 0 0 16px rgba(124, 92, 191, 0.30);
+  --shadow-sm: 0 4px 12px rgba(0,0,0,0.5);
+  --shadow-card: 0 12px 40px rgba(0,0,0,0.7);
+  --shadow-btn: 0 0 20px rgba(255,255,255,0.2);
   --shadow-offset: none;
-  --timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --duration: 280ms;
-  --duration-slow: 600ms;
+  --timing: var(--ease-out-expo);
+  --duration: 400ms;
+  --duration-slow: 800ms;
 
-  background: linear-gradient(160deg, #f9f8fc 0%, #f0edf8 100%);
+  background: var(--bg);
   color: var(--fg);
-  font-family: "Helvetica Neue", "Arial", system-ui, sans-serif;
+  font-family: "Inter", sans-serif;
   letter-spacing: -0.01em;
+
+  /* ESTRUCTURA CINEMÁTICA: Scroll Horizontal */
+  --gallery-display: flex;
+  --gallery-overflow: auto;
 }
+
+.artist-theme-ink .gallery-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.artist-theme-ink .mkt-card {
+  flex: 0 0 80vw;
+  scroll-snap-align: center;
+  height: 60vh;
+}
+
 .artist-theme-ink .theme-border,
 .artist-theme-ink .hard-border {
   border: var(--border-width) solid var(--border-color);
@@ -950,13 +990,13 @@ html[data-theme="dark"] .gallery-filter-select {
   --shadow-card: 0 8px 40px rgba(0, 0, 0, 0.6);
   --shadow-btn: 0 0 24px rgba(155, 127, 232, 0.50);
   --shadow-offset: none;
-  --timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  --duration: 280ms;
-  --duration-slow: 600ms;
+  --timing: var(--ease-out-expo);
+  --duration: 400ms;
+  --duration-slow: 800ms;
 
-  background: linear-gradient(160deg, #0e1017 0%, #141824 100%);
-  color: var(--fg);
-  font-family: "Helvetica Neue", "Arial", system-ui, sans-serif;
+  background: #0D1117;
+  color: #C9D1D9;
+  font-family: "Inter", sans-serif;
   letter-spacing: -0.01em;
 }
 .artist-theme-ink-b .theme-border,
@@ -980,11 +1020,11 @@ html[data-theme="dark"] .gallery-filter-select {
 /* Tall hero image left (520px) · name + bio + 2-col gallery right         */
 /* 12px radius buttons, soft green shadows, scale hover, serif italic        */
 .artist-theme-verdure {
-  --fg: #1a2e1c;
-  --bg: #f4f7f1;
-  --accent: #4a7c59;
-  --accent-fg: #f4f7f1;
-  --surface: rgba(232, 240, 228, 0.65);
+  --fg: #3C4030;
+  --bg: #F2F3F0;
+  --accent: #6B705C;
+  --accent-fg: #F2F3F0;
+  --surface: #E8E9E4;
   --surface-2: rgba(244, 247, 241, 0.9);
   --muted: #5a7260;
   --border-color: rgba(26, 46, 28, 0.15);
@@ -997,15 +1037,27 @@ html[data-theme="dark"] .gallery-filter-select {
   --shadow-card: 0 8px 32px rgba(26, 46, 28, 0.10);
   --shadow-btn: 0 4px 16px rgba(74, 124, 89, 0.22);
   --shadow-offset: none;
-  --timing: cubic-bezier(0.34, 1.06, 0.64, 1);
-  --duration: 260ms;
-  --duration-slow: 420ms;
+  --timing: var(--ease-out-expo);
+  --duration: 500ms;
+  --duration-slow: 900ms;
 
-  background: linear-gradient(160deg, #f4f7f1 0%, #e8f0e4 100%);
+  background: var(--bg);
   color: var(--fg);
-  font-family: "Georgia", "Times New Roman", serif;
+  font-family: "Outfit", sans-serif;
   letter-spacing: 0;
+
+  /* ESTRUCTURA ORGÁNICA: Asimetría staggered */
+  --gallery-columns: 2;
 }
+
+.artist-theme-verdure .mkt-card:nth-child(even) {
+  transform: translateY(3rem); /* Efecto de rejilla desalineada */
+}
+
+.artist-theme-verdure .mkt-button {
+  border-radius: 50px; /* Botones tipo píldora */
+}
+
 .artist-theme-verdure .theme-border,
 .artist-theme-verdure .hard-border {
   border: var(--border-width) solid var(--border-color);
@@ -1026,11 +1078,11 @@ html[data-theme="dark"] .gallery-filter-select {
 /* ── VERDURE B — Dark Forest ─────────────────────────────────────────────── */
 /* Deep forest night · soft green glow · organic dark                       */
 .artist-theme-verdure-b {
-  --fg: #c8e6c9;
-  --bg: #0d1a0e;
-  --accent: #5daa72;
-  --accent-fg: #0d1a0e;
-  --surface: rgba(74, 124, 89, 0.10);
+  --fg: #F2F3F0;
+  --bg: #3C4030;
+  --accent: #A5A58D;
+  --accent-fg: #3C4030;
+  --surface: #4A4F3B;
   --surface-2: rgba(74, 124, 89, 0.06);
   --muted: #6a9470;
   --border-color: rgba(93, 170, 114, 0.18);
@@ -1043,13 +1095,13 @@ html[data-theme="dark"] .gallery-filter-select {
   --shadow-card: 0 8px 40px rgba(0, 0, 0, 0.6);
   --shadow-btn: 0 4px 20px rgba(93, 170, 114, 0.30);
   --shadow-offset: none;
-  --timing: cubic-bezier(0.34, 1.06, 0.64, 1);
-  --duration: 300ms;
-  --duration-slow: 500ms;
+  --timing: var(--ease-out-expo);
+  --duration: 500ms;
+  --duration-slow: 900ms;
 
-  background: radial-gradient(ellipse at 50% 0%, #142016 0%, #0d1a0e 70%);
+  background: var(--bg);
   color: var(--fg);
-  font-family: "Georgia", "Times New Roman", serif;
+  font-family: "Outfit", sans-serif;
   letter-spacing: 0;
 }
 .artist-theme-verdure-b .theme-border,
@@ -1073,32 +1125,48 @@ html[data-theme="dark"] .gallery-filter-select {
 /* Feature card + overlapping layers · artist badge · booking strip         */
 /* Hard offset shadow (4px 4px 0 accent), shadow retraction on hover        */
 .artist-theme-amber {
-  --fg: #2c1a0e;
-  --bg: #fef5e4;
-  --accent: #c4622d;
-  --accent-fg: #fef5e4;
-  --surface: #fdecc8;
-  --surface-2: #fff8ee;
-  --muted: #7a5232;
-  --border-color: rgba(44, 26, 14, 0.20);
+  --fg: #4A3000;
+  --bg: #FFFBF2;
+  --accent: #D97706;
+  --accent-fg: #FFFBF2;
+  --surface: #F9F1E0;
+  --surface-2: #FFF8EB;
+  --muted: #8B5E00;
+  --border-color: #4A3000;
   --border-width: 2px;
-  --radius-sm: 0px;
-  --radius-btn: 0px;
-  --radius-card: 0px;
-  --radius-input: 0px;
-  --shadow-sm: 2px 2px 0 rgba(196, 98, 45, 0.5);
-  --shadow-card: 4px 4px 0 #c4622d;
-  --shadow-btn: 4px 4px 0 #2c1a0e;
+  --radius-sm: 8px;
+  --radius-btn: 8px;
+  --radius-card: 8px;
+  --radius-input: 8px;
+  --shadow-sm: 2px 2px 0 #4A3000;
+  --shadow-card: 4px 4px 0 #4A3000;
+  --shadow-btn: 4px 4px 0 #4A3000;
   --shadow-offset: 4px 4px 0 currentColor;
   --timing: steps(2, jump-none);
-  --duration: 140ms;
-  --duration-slow: 280ms;
+  --duration: 200ms;
+  --duration-slow: 400ms;
 
-  background: linear-gradient(160deg, #fef5e4 0%, #fdecc8 100%);
+  background: var(--bg);
   color: var(--fg);
-  font-family: "Georgia", "Times New Roman", serif;
+  font-family: "Fraunces", serif;
   letter-spacing: 0;
+
+  /* ESTRUCTURA COLLAGE: Capas desordenadas */
 }
+
+.artist-theme-amber .mkt-card {
+  transform: rotate(var(--rotation, -1deg));
+  transition: transform 0.3s var(--timing);
+}
+
+.artist-theme-amber .mkt-card:nth-child(2n) { --rotation: 1.5deg; }
+.artist-theme-amber .mkt-card:nth-child(3n) { --rotation: -2deg; }
+
+.artist-theme-amber .mkt-card:hover {
+  transform: rotate(0deg) scale(1.02);
+  z-index: 10;
+}
+
 .artist-theme-amber .theme-border,
 .artist-theme-amber .hard-border {
   border: var(--border-width) solid var(--border-color);
@@ -1120,30 +1188,30 @@ html[data-theme="dark"] .gallery-filter-select {
 /* ── AMBER B — Dark Amber ───────────────────────────────────────────────── */
 /* Deep warm darkness · ember glow accent · rich night editorial            */
 .artist-theme-amber-b {
-  --fg: #f5e8d0;
-  --bg: #180d04;
-  --accent: #e8951a;
-  --accent-fg: #180d04;
-  --surface: rgba(232, 149, 26, 0.08);
-  --surface-2: rgba(232, 149, 26, 0.05);
-  --muted: #c4915a;
-  --border-color: rgba(232, 149, 26, 0.18);
+  --fg: #FFFBF2;
+  --bg: #4A3000;
+  --accent: #FBBF24;
+  --accent-fg: #4A3000;
+  --surface: #5C3D00;
+  --surface-2: #6B4900;
+  --muted: #D97706;
+  --border-color: #FFFBF2;
   --border-width: 2px;
-  --radius-sm: 0px;
-  --radius-btn: 0px;
-  --radius-card: 0px;
-  --radius-input: 0px;
-  --shadow-sm: 2px 2px 0 rgba(232, 149, 26, 0.4);
-  --shadow-card: 4px 4px 0 rgba(232, 149, 26, 0.5);
-  --shadow-btn: 4px 4px 0 var(--fg);
+  --radius-sm: 8px;
+  --radius-btn: 8px;
+  --radius-card: 8px;
+  --radius-input: 8px;
+  --shadow-sm: 2px 2px 0 #FFFBF2;
+  --shadow-card: 4px 4px 0 #FFFBF2;
+  --shadow-btn: 4px 4px 0 #FFFBF2;
   --shadow-offset: 4px 4px 0 currentColor;
   --timing: steps(2, jump-none);
-  --duration: 140ms;
-  --duration-slow: 280ms;
+  --duration: 200ms;
+  --duration-slow: 400ms;
 
-  background: linear-gradient(160deg, #180d04 0%, #100802 100%);
+  background: var(--bg);
   color: var(--fg);
-  font-family: "Georgia", "Times New Roman", serif;
+  font-family: "Fraunces", serif;
   letter-spacing: 0;
 }
 .artist-theme-amber-b .theme-border,
