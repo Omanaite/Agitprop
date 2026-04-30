@@ -1,5 +1,16 @@
-﻿import type { Metadata } from "next";
-import { Bebas_Neue, Manrope, Space_Mono, Space_Grotesk, Geist, Geist_Mono } from "next/font/google";
+﻿﻿import type { Metadata } from "next";
+import { 
+  Bebas_Neue, 
+  Manrope, 
+  Space_Mono, 
+  Space_Grotesk, 
+  Geist, 
+  Geist_Mono,
+  EB_Garamond,
+  Inter,
+  Outfit,
+  Fraunces
+} from "next/font/google";
 import { getRequestLocale } from "@/lib/request-locale";
 import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
@@ -38,6 +49,27 @@ const marketingSans = Geist({
 const marketingMono = Geist_Mono({
   variable: "--font-mkt-mono",
   subsets: ["latin"],
+});
+
+const atelierFont = EB_Garamond({
+  variable: "--font-atelier",
+  subsets: ["latin"],
+});
+
+const monoFont = Inter({
+  variable: "--font-mono-ink",
+  subsets: ["latin"],
+});
+
+const verdureFont = Outfit({
+  variable: "--font-verdure",
+  subsets: ["latin"],
+});
+
+const amberFont = Fraunces({
+  variable: "--font-amber",
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -85,12 +117,21 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body
-        className={`${headingFont.variable} ${bodyFont.variable} ${adminFont.variable} ${marketingDisplay.variable} ${marketingSans.variable} ${marketingMono.variable}`}
+        className={`
+          ${headingFont.variable} 
+          ${bodyFont.variable} 
+          ${adminFont.variable} 
+          ${marketingDisplay.variable} 
+          ${marketingSans.variable} 
+          ${marketingMono.variable}
+          ${atelierFont.variable}
+          ${monoFont.variable}
+          ${verdureFont.variable}
+          ${amberFont.variable}
+        `}
       >
         {children}
       </body>
     </html>
   );
 }
-
-

@@ -1211,8 +1211,23 @@ html[data-theme="dark"] .gallery-filter-select {
 
   background: var(--bg);
   color: var(--fg);
-  font-family: "Fraunces", serif;
+  font-family: var(--font-amber), serif;
   letter-spacing: 0;
+
+  /* ESTRUCTURA COLLAGE (Sincronizada con A) */
+}
+
+.artist-theme-amber-b .mkt-card {
+  transform: rotate(var(--rotation, -1deg));
+  transition: transform 0.3s var(--timing);
+}
+
+.artist-theme-amber-b .mkt-card:nth-child(2n) { --rotation: 1.5deg; }
+.artist-theme-amber-b .mkt-card:nth-child(3n) { --rotation: -2deg; }
+
+.artist-theme-amber-b .mkt-card:hover {
+  transform: rotate(0deg) scale(1.02);
+  z-index: 10;
 }
 .artist-theme-amber-b .theme-border,
 .artist-theme-amber-b .hard-border {

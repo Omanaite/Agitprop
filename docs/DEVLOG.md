@@ -24,6 +24,19 @@ Purpose: chronological project progress log to preserve context across sessions.
 - **Panel enter animation** (`components/studio/StudioConsoleShell.tsx`): Added `admin-panel-enter` class to `TabPanel`.
 - **Circular font var fix** (`app/globals.css`): Removed self-referencing `var(--font-heading)`.
 
+## 2026-04-30 (Theme Redesign & Structural Layouts)
+**Agent:** Gemini Code Assist | **Model:** Gemini 1.5 Pro (Workspace Context)
+
+- **Theme Redesign (Palettes & Visual Tokens)**: Updated color palettes, border radii, and font families for Atelier, Mono, Ink, Verdure, and Amber (and their B variants) in `app/globals.css` to align with Emil Kowalski, Impeccable, and Taste Design principles.
+- **Structural Layouts for Themes**: Introduced CSS variables (`--layout-max-width`, `--gallery-columns`, `--nav-alignment`, `--gallery-display`, `--gallery-overflow`) in `app/globals.css` to enable distinct structural layouts for each theme.
+  - **Atelier**: Narrow central column, single-piece gallery, bottom-only borders on cards.
+  - **Mono**: Rigid grid with zero gap, shared borders on cards, technical font.
+  - **Ink**: Horizontal scroll gallery with `scroll-snap`, cinematic feel.
+  - **Verdure**: Staggered vertical layout for gallery cards, pill-shaped buttons.
+  - **Amber**: Rotated gallery cards with hover-to-straighten effect, solid offset shadows.
+- **Font Imports**: Added `EB_Garamond`, `Inter`, `Outfit`, `Fraunces` to `app/layout.tsx` and linked them to CSS variables for each theme.
+- **B Variants Synchronization**: Ensured that the B variants of each theme inherited the structural layout changes of their A counterparts, providing distinct experiences beyond just color.
+
 ## 2026-04-29
 - Enabled `impeccable` for the workspace root by adding shared context files:
   - `../PRODUCT.md`

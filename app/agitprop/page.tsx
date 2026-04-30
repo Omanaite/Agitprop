@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
+import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
   title: "Agitprop | Artist website, portfolio & booking platform",
@@ -117,7 +118,18 @@ function ArrowRight() {
   );
 }
 
-export default function AgitpropPage() {
+export default async function AgitpropPage() {
+  // Obtenemos el slug de Akemi dinámicamente desde Supabase usando su owner_user_id fijo.
+  // ID asociado a akemi@tattoo.ink en STATE.md: 030ae67c-d882-4cfe-a6ae-d006fe6bf2ce
+  const supabase = await createClient();
+  const { data: akemiTenant } = await supabase
+    .from("artist_tenants")
+    .select("slug")
+    .eq("owner_user_id", "030ae67c-d882-4cfe-a6ae-d006fe6bf2ce")
+    .single();
+
+  const akemiSlug = akemiTenant?.slug || "akemion-tattoo";
+
   return (
     <div className="marketing-shell min-h-screen">
       {/* Sticky nav */}
@@ -206,8 +218,8 @@ export default function AgitpropPage() {
               <Link href="/studio/login" className="mkt-button transition-transform active:scale-[0.98] duration-200">
                 Sign in
               </Link>
-              <Link href="/akemi" className="mkt-button transition-transform active:scale-[0.98] duration-200 border-[var(--mkt-border-strong)]">
-                Demo (Piloto)
+              <Link href={`/${akemiSlug}`} className="mkt-button transition-transform active:scale-[0.98] duration-200 border-[var(--mkt-border-strong)]">
+                Demo (Prototype)
               </Link>
             </div>
             <div className="flex flex-wrap items-center gap-2">
