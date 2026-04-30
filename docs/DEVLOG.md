@@ -8,9 +8,14 @@ Last updated: 2026-04-29
 Purpose: chronological project progress log to preserve context across sessions.
 
 ## 2026-04-30
-**Agent:** claude-sonnet-4-6 | `2027aa5` `bce7d5b`
+**Agent:** claude-sonnet-4-6 | `2027aa5` `bce7d5b` `84e9fa1`
 
 - **1.3 + 1.4** (`NavInk.tsx`): eyebrow `text-[9px]` → `text-[10px]` en header y overlay; tracking overlay `1.2em` → `0.6em`
+- **5.2** (`SitePreferencesMenu.tsx`): `aria-label="Site preferences"` en botón toggle
+- **1.2** (`NavAtelier.tsx`, `NavInk.tsx`): Atelier `md:text-8xl` → `md:text-7xl`; Ink `text-xl md:text-3xl` → `text-3xl md:text-5xl`
+- **7.2** (`ContactForm.tsx`): spinner SVG animado durante envío + `disabled:opacity-40 disabled:cursor-not-allowed`
+- **9.3**: ya estaba implementado (`active { transform: scale(0.98) }`)
+- **8.2**: tokens `--ease-out-expo` y `--transition-speed` ya en `:root`; pendiente en Agente-B (BookingForm, GalleryGrid)
 - **5.2** (`SitePreferencesMenu.tsx`): agregado `aria-label="Site preferences"` al botón toggle del dropdown
 - **1.2** (`NavAtelier.tsx`, `NavInk.tsx`): títulos normalizados — Atelier `md:text-8xl` → `md:text-7xl`; Ink `text-xl md:text-3xl` → `text-3xl md:text-5xl`
 
