@@ -734,6 +734,15 @@ html[data-theme="dark"] .gallery-filter-select {
   color: var(--fg);
   font-family: "Georgia", "Times New Roman", serif;
   letter-spacing: 0;
+
+  /* ESTRUCTURA: Columna de Museo */
+  --gallery-columns: 1;
+  --gallery-gap: 5rem;
+}
+.artist-theme-atelier .gallery-container,
+.artist-theme-atelier-b .gallery-container {
+  max-width: 800px;
+  margin: 0 auto;
 }
 .artist-theme-atelier .theme-border,
 .artist-theme-atelier .hard-border {
@@ -777,6 +786,10 @@ html[data-theme="dark"] .gallery-filter-select {
   color: var(--fg);
   font-family: "Georgia", "Times New Roman", serif;
   letter-spacing: 0;
+
+  /* ESTRUCTURA: Columna de Museo */
+  --gallery-columns: 1;
+  --gallery-gap: 5rem;
 }
 .artist-theme-atelier-b .theme-border,
 .artist-theme-atelier-b .hard-border {
@@ -882,6 +895,10 @@ html[data-theme="dark"] .gallery-filter-select {
   color: var(--fg);
   font-family: "Inter", "Helvetica Neue", sans-serif;
   letter-spacing: -0.04em;
+
+  /* ESTRUCTURA: Grid Rígida */
+  --gallery-columns: 3;
+  --gallery-gap: 0px;
 }
 .artist-theme-mono-b .theme-border,
 .artist-theme-mono-b .hard-border {
@@ -928,7 +945,7 @@ html[data-theme="dark"] .gallery-filter-select {
   font-family: "Inter", sans-serif;
   letter-spacing: -0.01em;
 
-  /* ESTRUCTURA CINEMÁTICA: Scroll Horizontal */
+  /* ESTRUCTURA: Scroll Horizontal */
   --gallery-display: flex;
   --gallery-overflow: auto;
 }
@@ -998,6 +1015,10 @@ html[data-theme="dark"] .gallery-filter-select {
   color: #C9D1D9;
   font-family: "Inter", sans-serif;
   letter-spacing: -0.01em;
+
+  /* ESTRUCTURA: Scroll Horizontal */
+  --gallery-display: flex;
+  --gallery-overflow: auto;
 }
 .artist-theme-ink-b .theme-border,
 .artist-theme-ink-b .hard-border {
@@ -1103,6 +1124,10 @@ html[data-theme="dark"] .gallery-filter-select {
   color: var(--fg);
   font-family: "Outfit", sans-serif;
   letter-spacing: 0;
+
+  /* ESTRUCTURA: Grid Orgánica */
+  --gallery-columns: 2;
+  --gallery-gap: 3rem;
 }
 .artist-theme-verdure-b .theme-border,
 .artist-theme-verdure-b .hard-border {
@@ -1151,7 +1176,8 @@ html[data-theme="dark"] .gallery-filter-select {
   font-family: "Fraunces", serif;
   letter-spacing: 0;
 
-  /* ESTRUCTURA COLLAGE: Capas desordenadas */
+  /* ESTRUCTURA: Collage desordenado */
+  --gallery-columns: 2;
 }
 
 .artist-theme-amber .mkt-card {
@@ -1214,7 +1240,8 @@ html[data-theme="dark"] .gallery-filter-select {
   font-family: var(--font-amber), serif;
   letter-spacing: 0;
 
-  /* ESTRUCTURA COLLAGE (Sincronizada con A) */
+  /* ESTRUCTURA: Collage desordenado */
+  --gallery-columns: 2;
 }
 
 .artist-theme-amber-b .mkt-card {

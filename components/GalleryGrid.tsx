@@ -106,40 +106,42 @@ export function GalleryGrid({ tattoos, dict: dictProp }: GalleryGridProps) {
   return (
     <>
       {selected ? <PieceModal tattoo={selected} onClose={() => setSelected(null)} viewLocation={dict.galleries.viewLocation} /> : null}
-      <div className="grid gap-4 md:grid-cols-[1.2fr_0.8fr_1fr]">
+      <div className="gallery-container">
         {tattoos.map((tattoo) => (
-          <article
+          <button
+            type="button"
             key={tattoo.id}
-            className="hard-border flex cursor-pointer flex-col gap-3 bg-[var(--bg)] p-3 transition-opacity hover:opacity-80"
+            className="w-full text-left appearance-none bg-transparent border-0 p-0" // Reset button styles
             onClick={() => setSelected(tattoo)}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => e.key === "Enter" && setSelected(tattoo)}
             aria-label={`View details for ${tattoo.title}`}
           >
-            <Image
-              className="tattoo-image h-64 w-full object-cover"
-              src={tattoo.image_url}
-              alt={tattoo.title}
-              width={960}
-              height={720}
-              sizes="(max-width: 768px) 100vw, 33vw"
-            />
-            <div>
-              <h3 className="font-[var(--font-heading)] text-xl uppercase">
-                {tattoo.title}
-              </h3>
-              <p className="text-xs uppercase tracking-[0.2em]">
-                {tattoo.style}
-              </p>
-              {tattoo.description ? (
-                <p className="mt-2 text-sm">{tattoo.description}</p>
-              ) : null}
-              <p className="mt-2 text-xs uppercase tracking-[0.18em] opacity-40">
-                {dict.galleries.tapToView}
-              </p>
-            </div>
-          </article>
+            <article
+              className="mkt-card gallery-item hard-border flex cursor-pointer flex-col gap-3 bg-[var(--bg)] p-3 transition-opacity hover:opacity-80"
+            >
+              <Image
+                className="tattoo-image h-64 w-full object-cover"
+                src={tattoo.image_url}
+                alt={tattoo.title}
+                width={960}
+                height={720}
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
+              <div>
+                <h3 className="font-[var(--font-heading)] text-xl uppercase">
+                  {tattoo.title}
+                </h3>
+                <p className="text-xs uppercase tracking-[0.2em]">
+                  {tattoo.style}
+                </p>
+                {tattoo.description ? (
+                  <p className="mt-2 text-sm">{tattoo.description}</p>
+                ) : null}
+                <p className="mt-2 text-xs uppercase tracking-[0.18em] opacity-40">
+                  {dict.galleries.tapToView}
+                </p>
+              </div>
+            </article>
+          </button>
         ))}
       </div>
     </>

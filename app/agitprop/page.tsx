@@ -15,6 +15,8 @@ export const metadata: Metadata = {
   },
 };
 
+export const revalidate = 3600; // Revalidar cada hora para actualizar el slug de la demo
+
 const features = [
   {
     tag: "portfolio",
