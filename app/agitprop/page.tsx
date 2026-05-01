@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AdminThemeToggle } from "@/components/admin/AdminThemeToggle";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { MktThemeToggle } from "@/components/marketing/MktThemeToggle";
 
 export const metadata: Metadata = {
   title: "Agitprop | Artist website, portfolio & booking platform",
@@ -145,7 +145,8 @@ export default async function AgitpropPage() {
             <a href="#pricing" className="text-sm mkt-muted hover:text-[var(--mkt-fg)] transition-colors">Pricing</a>
             <a href="#how-it-works" className="text-sm mkt-muted hover:text-[var(--mkt-fg)] transition-colors">How it works</a>
           </nav>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <MktThemeToggle />
             <Link href="/studio/login" className="hidden text-sm mkt-muted hover:text-[var(--mkt-fg)] transition-colors sm:inline">
               Sign in
             </Link>
@@ -418,7 +419,6 @@ export default async function AgitpropPage() {
               >
                 chandiapablo@outlook.com
               </a>
-              <AdminThemeToggle />
             </div>
           </div>
         </footer>
