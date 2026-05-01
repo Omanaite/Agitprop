@@ -394,6 +394,7 @@ a {
   color: var(--mkt-fg);
   font-family: var(--font-mkt-sans), ui-sans-serif, system-ui, sans-serif;
   font-feature-settings: "ss01", "cv11";
+  overflow-x: hidden;
 }
 
 html[data-theme="dark"] .marketing-shell {

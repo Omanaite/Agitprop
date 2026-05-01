@@ -133,7 +133,7 @@ export default async function AgitpropPage() {
   const akemiSlug = akemiTenant?.slug || "akemion-tattoo";
 
   return (
-    <div className="marketing-shell min-h-screen">
+    <div className="marketing-shell min-h-screen overflow-x-hidden">
       {/* Sticky nav */}
       <header className="sticky top-0 z-50 backdrop-blur-md bg-[color-mix(in_srgb,var(--mkt-bg)_85%,transparent)] border-b border-[var(--mkt-border)]">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
@@ -220,7 +220,7 @@ export default async function AgitpropPage() {
               <Link href="/studio/login" className="mkt-button transition-transform active:scale-[0.98] duration-200">
                 Sign in
               </Link>
-              <Link href={`/${akemiSlug}`} className="mkt-button transition-transform active:scale-[0.98] duration-200 border-[var(--mkt-border-strong)]">
+              <Link href={`/${akemiSlug}`} className="mkt-button transition-transform active:scale-[0.98] duration-200 border-[var(--mkt-border-strong)] text-[var(--mkt-muted)]">
                 Demo (Prototype)
               </Link>
             </div>
