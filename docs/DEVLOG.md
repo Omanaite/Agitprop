@@ -8,13 +8,14 @@ Last updated: 2026-04-29
 Purpose: chronological project progress log to preserve context across sessions.
 
 ## 2026-04-30
-**Agent:** claude-sonnet-4-6 | `2027aa5` `bce7d5b` `84e9fa1` `34909bf`
+**Agent:** claude-sonnet-4-6 | `2027aa5` `bce7d5b` `84e9fa1` `34909bf` `9c01343`
 
 - **1.3 + 1.4** (`NavInk.tsx`): eyebrow `text-[9px]` → `text-[10px]` en header y overlay; tracking overlay `1.2em` → `0.6em`
 - **5.2** (`SitePreferencesMenu.tsx`): `aria-label="Site preferences"` en botón toggle
 - **1.2** (`NavAtelier.tsx`, `NavInk.tsx`): Atelier `md:text-8xl` → `md:text-7xl`; Ink `text-xl md:text-3xl` → `text-3xl md:text-5xl`
 - **7.2** (`ContactForm.tsx`): spinner SVG animado durante envío + `disabled:opacity-40 disabled:cursor-not-allowed`
 - **9.3**: ya estaba implementado (`active { transform: scale(0.98) }`)
+- **fix: preview iframe** (`lib/studio-preview-context.tsx`, `StudioPreviewPanel.tsx`): BroadcastChannel no funciona en iframe sandboxed — eliminado. Refresh usa solo `previewKey` increment. Agregado `allow-popups` al sandbox para que ↗ abra en nueva pestaña.
 - **8.2**: tokens `--ease-out-expo` y `--transition-speed` ya en `:root`; BookingForm/PostFeed no tenían hardcoded — cubierto
 - **6.1** (`app/globals.css`): `.hard-border` con `transition` + `:hover`/`:focus` → `border-color: var(--accent)`
 - **6.3** (`studio/LocationSearch.tsx`): estado `fetchError` con mensaje visible cuando Nominatim falla
