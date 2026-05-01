@@ -77,7 +77,7 @@ export function StudioPreviewPanel({ device, onDeviceChange, onClose }: Props) {
             src={previewUrl}
             title="Site preview"
             className="h-full w-full border-0"
-            sandbox="allow-same-origin allow-scripts allow-forms"
+            sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
           />
           {/* Read-only overlay — prevents clicks navigating away from the preview */}
           <div className="absolute inset-0" style={{ pointerEvents: "all" }} aria-hidden="true" />
