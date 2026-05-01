@@ -1,4 +1,4 @@
-﻿﻿# Devlog
+﻿﻿﻿﻿# Devlog
 
 Document role: Canonical
 Owner: Documentation traceability
@@ -33,6 +33,8 @@ Purpose: chronological project progress log to preserve context across sessions.
 - **Theme Structural Correction**: Implementación de un motor de galería en `app/globals.css` y `components/GalleryGrid.tsx` para permitir layouts estructurales dinámicos por tema (Atelier = columna, Mono = grid denso, Ink = scroll horizontal, etc.).
 - **Accessibility 5.4 (GalleryGrid)**: Convertido `<article role="button">` a `<button>` semántico en `components/GalleryGrid.tsx` para mejorar la accesibilidad.
 - **Accessibility 5.5 (WCAG Contrast)**: Reemplazado `opacity-40` por `text-[var(--muted)]` en `components/GalleryGrid.tsx` y `app/agitprop/page.tsx` para mejorar el contraste WCAG. Se han añadido definiciones de `--muted` a todos los temas en `app/globals.css`.
+- **Accessibility 5.5 (BookingForm)**: Eliminación de opacidades bajas en `BookingForm.tsx` reemplazándolas por la variable semántica `--muted` del tema.
+- **Motion 8.2 (BookingForm)**: Aplicación de tokens de movimiento `--ease-out-expo` y `--transition-speed` a botones y transiciones de estado en el formulario de reserva.
 
 ## 2026-04-30
 **Agent:** claude-sonnet-4-6 | **Session:** world-class marketing redesign + UX polish (IMPROVEMENT_PLAN.md)

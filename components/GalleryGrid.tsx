@@ -111,7 +111,7 @@ export function GalleryGrid({ tattoos, dict: dictProp }: GalleryGridProps) {
           <button
             type="button"
             key={tattoo.id}
-            className="w-full text-left appearance-none bg-transparent border-0 p-0" // Reset button styles
+            className="gallery-item-wrapper text-left appearance-none bg-transparent border-0 p-0"
             onClick={() => setSelected(tattoo)}
             aria-label={`View details for ${tattoo.title}`}
           >
@@ -136,7 +136,7 @@ export function GalleryGrid({ tattoos, dict: dictProp }: GalleryGridProps) {
                 {tattoo.description ? (
                   <p className="mt-2 text-sm">{tattoo.description}</p>
                 ) : null}
-                <p className="mt-2 text-xs uppercase tracking-[0.18em] opacity-40">
+                <p className="mt-2 text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
                   {dict.galleries.tapToView}
                 </p>
               </div>

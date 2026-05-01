@@ -140,10 +140,10 @@ export function BookingForm({ copy, tenantSlug, demoMode, locale = "en" }: Booki
       {/* Available dates list — shown when artist uses slot system */}
       {hasSlotSystem && (
         <div className="theme-border rounded-xl p-4">
-          <p className="text-xs uppercase tracking-[0.2em] opacity-60 mb-3">{copy.availableDates}</p>
-          {loadingDates && <p className="text-xs opacity-50">{copy.loading}</p>}
+          <p className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] mb-3">{copy.availableDates}</p>
+          {loadingDates && <p className="text-xs text-[var(--muted)]">{copy.loading}</p>}
           {!loadingDates && availableDates && availableDates.length === 0 && (
-            <p className="text-xs opacity-50">{copy.noAvailableDates}</p>
+            <p className="text-xs text-[var(--muted)]">{copy.noAvailableDates}</p>
           )}
           {!loadingDates && availableDates && availableDates.length > 0 && (
             <div className="flex flex-wrap gap-2">
@@ -153,7 +153,7 @@ export function BookingForm({ copy, tenantSlug, demoMode, locale = "en" }: Booki
                   type="button"
                   onClick={() => setSelectedDate(selectedDate === d ? "" : d)}
                   className={[
-                    "rounded-xl border px-3 py-1.5 text-xs font-semibold transition-all",
+                    "rounded-xl border px-3 py-1.5 text-xs font-semibold transition-all duration-[var(--transition-speed)] cubic-bezier(var(--ease-out-expo))",
                     selectedDate === d
                       ? "bg-[var(--fg)] text-[var(--bg)] border-[var(--fg)]"
                       : "theme-border hover:bg-[var(--fg)] hover:text-[var(--bg)]",
@@ -170,13 +170,13 @@ export function BookingForm({ copy, tenantSlug, demoMode, locale = "en" }: Booki
       {/* Slots for selected date */}
       {selectedDate && (
         <div>
-          {loadingSlots && <p className="text-xs opacity-50">{copy.loading}</p>}
+          {loadingSlots && <p className="text-xs text-[var(--muted)]">{copy.loading}</p>}
           {!loadingSlots && slots !== null && slots.length === 0 && (
-            <p className="text-xs opacity-50">{copy.noTimesForDay}</p>
+            <p className="text-xs text-[var(--muted)]">{copy.noTimesForDay}</p>
           )}
           {!loadingSlots && slots && slots.length > 0 && (
             <div className="grid gap-2">
-              <p className="text-xs uppercase tracking-[0.2em] opacity-60">{copy.selectTime} — {formatDateLabel(selectedDate)}</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">{copy.selectTime} — {formatDateLabel(selectedDate)}</p>
               {slots.map((slot) => {
                 const full = slot.available <= 0;
                 const selected = selectedSlotId === slot.id;
@@ -187,9 +187,9 @@ export function BookingForm({ copy, tenantSlug, demoMode, locale = "en" }: Booki
                     disabled={full}
                     onClick={() => { setSelectedSlotId(slot.id); setErrors([]); }}
                     className={[
-                      "text-left rounded-xl border px-4 py-3 text-sm transition-all",
+                      "text-left rounded-xl border px-4 py-3 text-sm transition-all duration-[var(--transition-speed)] cubic-bezier(var(--ease-out-expo))",
                       full
-                        ? "opacity-40 cursor-not-allowed theme-border"
+                        ? "text-[var(--muted)] cursor-not-allowed theme-border grayscale"
                         : selected
                           ? "bg-[var(--fg)] text-[var(--bg)] border-[var(--fg)]"
                           : "theme-border hover:bg-[var(--fg)] hover:text-[var(--bg)]",
@@ -197,15 +197,15 @@ export function BookingForm({ copy, tenantSlug, demoMode, locale = "en" }: Booki
                   >
                     <div className="flex items-center gap-3 flex-wrap">
                       <span className="font-semibold">{slot.from} – {slot.until}</span>
-                      {slot.label && <span className="opacity-70 text-xs">{slot.label}</span>}
+                      {slot.label && <span className="text-[var(--muted)] text-xs">{slot.label}</span>}
                       {slot.capacity > 1 && (
-                        <span className={["text-xs", full ? "" : selected ? "opacity-70" : "opacity-50"].join(" ")}>
+                        <span className={["text-xs", full ? "" : "text-[var(--muted)]"].join(" ")}>
                           {full ? copy.slotFull : `${slot.available} ${slot.available === 1 ? copy.spotAvailable : copy.spotsAvailable}`}
                         </span>
                       )}
                       {full && slot.capacity === 1 && <span className="text-xs">{copy.slotOccupied}</span>}
                     </div>
-                    {slot.note && <p className="text-xs opacity-50 mt-1">{slot.note}</p>}
+                    {slot.note && <p className="text-xs text-[var(--muted)] mt-1">{slot.note}</p>}
                   </button>
                 );
               })}
@@ -288,7 +288,7 @@ export function BookingForm({ copy, tenantSlug, demoMode, locale = "en" }: Booki
         </div>
 
         <button
-          className="snap-transition theme-border theme-invert w-full px-4 py-3"
+          className="snap-transition theme-border theme-invert w-full px-4 py-3 transition-all duration-[var(--transition-speed)] cubic-bezier(var(--ease-out-expo))"
           type="submit"
           disabled={formState === "submitting" || (hasSlotSystem && !selectedDate)}
           title={hasSlotSystem && !selectedDate ? copy.selectDateFirst : undefined}
