@@ -56,28 +56,30 @@ export function PostFeed({ posts, dict }: { posts: Post[]; dict: Pick<PublicDict
   return (
     <>
       {selected ? <PostModal post={selected} onClose={() => setSelected(null)} /> : null}
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="gallery-container">
         {posts.map((post) => (
-          <article
+          <button
+            type="button"
             key={post.id}
-            className="theme-border cursor-pointer rounded-xl p-5 transition-opacity hover:opacity-80"
+            className="gallery-item-wrapper text-left appearance-none bg-transparent border-0 p-0"
             onClick={() => setSelected(post)}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => e.key === "Enter" && setSelected(post)}
-            aria-label={`Read ${post.title}`}
           >
-            <p className="text-xs uppercase tracking-[0.2em] opacity-50">
+            <article
+              className="theme-border mkt-card h-full cursor-pointer p-5 transition-opacity hover:opacity-80"
+              style={{ borderRadius: 'var(--radius-card)' }}
+            >
+              <p className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">
               {formatDate(post.publish_at ?? post.created_at)}
             </p>
-            <h3 className="mt-2 text-lg font-semibold">{post.title}</h3>
-            <p className="mt-2 text-sm opacity-75 line-clamp-3">
+              <h3 className="font-[var(--font-heading)] mt-2 text-lg font-semibold uppercase">{post.title}</h3>
+              <p className="mt-2 text-sm opacity-80 line-clamp-3">
               {post.excerpt || post.body}
             </p>
-            <p className="mt-3 text-xs uppercase tracking-[0.18em] opacity-40">
+              <p className="mt-3 text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
               {dict.posts.readMore}
             </p>
-          </article>
+            </article>
+          </button>
         ))}
       </div>
     </>

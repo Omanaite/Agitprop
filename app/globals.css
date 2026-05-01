@@ -102,7 +102,7 @@ html,
 body {
   background: var(--bg);
   color: var(--fg);
-  font-family: var(--font-body), sans-serif;
+  font-family: var(--font-body);
   letter-spacing: -0.01em;
   line-height: 1.5;
   transition: background var(--transition-speed) var(--ease-out-expo), color var(--transition-speed) var(--ease-out-expo);
@@ -164,10 +164,10 @@ a {
   border: var(--border);
   transition: border-color 150ms var(--ease-out-expo);
 }
-.hard-border:hover {
+.hard-border:hover, .public-input:hover {
   border-color: var(--accent);
 }
-.hard-border:focus {
+.hard-border:focus, .public-input:focus {
   outline: none;
   border-color: var(--accent);
 }
@@ -442,7 +442,7 @@ html[data-theme="eye"] .marketing-shell {
 .mkt-card {
   background: var(--mkt-card);
   border: 1px solid var(--mkt-border);
-  border-radius: 1rem;
+  border-radius: var(--radius-card, 1rem);
   transition: border-color 200ms ease, background 200ms ease, transform 200ms ease;
 }
 
@@ -740,10 +740,12 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 200ms;
   --duration-slow: 400ms;
 
-  --muted: #7a6a5a; /* Definido para Atelier A */
+  --font-heading: var(--font-atelier), serif;
+  --font-body: var(--font-atelier), serif;
+
   background: linear-gradient(160deg, #faf7f2 0%, #f3ede3 100%);
   color: var(--fg);
-  font-family: "Georgia", "Times New Roman", serif;
+  font-family: var(--font-body);
   letter-spacing: 0;
 
   /* ESTRUCTURA: Columna de Museo */
@@ -751,6 +753,7 @@ html[data-theme="dark"] .gallery-filter-select {
   --gallery-columns-mobile: 1;
   --gallery-gap: 5rem;
   --gallery-item-width: 100%;
+  --gallery-image-height: 70vh;
 }
 .artist-theme-atelier .gallery-container,
 .artist-theme-atelier-b .gallery-container {
@@ -795,10 +798,12 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 240ms;
   --duration-slow: 400ms;
 
-  --muted: #9a8a7a; /* Definido para Atelier B */
+  --font-heading: var(--font-atelier), serif;
+  --font-body: var(--font-atelier), serif;
+
   background: linear-gradient(160deg, #1a1510 0%, #120f0a 100%);
   color: var(--fg);
-  font-family: "Georgia", "Times New Roman", serif;
+  font-family: var(--font-body);
   letter-spacing: 0;
 
   /* ESTRUCTURA: Columna de Museo */
@@ -806,6 +811,7 @@ html[data-theme="dark"] .gallery-filter-select {
   --gallery-columns-mobile: 1;
   --gallery-gap: 5rem;
   --gallery-item-width: 100%;
+  --gallery-image-height: 70vh;
 }
 .artist-theme-atelier-b .theme-border,
 .artist-theme-atelier-b .hard-border {
@@ -851,11 +857,13 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 150ms;
   --duration-slow: 300ms;
 
-  --muted: #666666; /* Definido para Mono A */
+  --font-heading: var(--font-mono-ink), sans-serif;
+  --font-body: var(--font-mono-ink), sans-serif;
+
   background: #ffffff;
   color: var(--fg);
-  font-family: "Inter", "Helvetica Neue", sans-serif;
-  letter-spacing: -0.04em;
+  font-family: var(--font-body);
+  letter-spacing: -0.03em;
 
   /* ESTRUCTURA TÉCNICA: Cuadrícula rígida con bordes */
   --gallery-gap: 0px;
@@ -908,11 +916,13 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 150ms;
   --duration-slow: 300ms;
 
-  --muted: #888888; /* Definido para Mono B */
+  --font-heading: var(--font-mono-ink), sans-serif;
+  --font-body: var(--font-mono-ink), sans-serif;
+
   background: #0a0a0a;
   color: var(--fg);
-  font-family: "Inter", "Helvetica Neue", sans-serif;
-  letter-spacing: -0.04em;
+  font-family: var(--font-body);
+  letter-spacing: -0.03em;
 
   /* ESTRUCTURA: Grid Rígida */
   --gallery-columns: 3;
@@ -960,10 +970,12 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 400ms;
   --duration-slow: 800ms;
 
-  --muted: #8E8E93; /* Definido para Ink A */
+  --font-heading: var(--font-mkt-sans), sans-serif;
+  --font-body: var(--font-mkt-sans), sans-serif;
+
   background: var(--bg);
   color: var(--fg);
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-body);
   letter-spacing: -0.01em;
 
   /* ESTRUCTURA: Scroll Horizontal */
@@ -972,6 +984,7 @@ html[data-theme="dark"] .gallery-filter-select {
   --gallery-snap: x mandatory;
   --gallery-gap: 2rem;
   --gallery-item-width: 85vw;
+  --gallery-image-height: 65vh;
 }
 
 .artist-theme-ink .gallery-container {
@@ -1039,10 +1052,12 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 400ms;
   --duration-slow: 800ms;
 
-  --muted: #8a8fa0; /* Definido para Ink B */
+  --font-heading: var(--font-mkt-sans), sans-serif;
+  --font-body: var(--font-mkt-sans), sans-serif;
+
   background: #0D1117;
   color: #C9D1D9;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-body);
   letter-spacing: -0.01em;
 
   /* ESTRUCTURA: Scroll Horizontal */
@@ -1051,6 +1066,7 @@ html[data-theme="dark"] .gallery-filter-select {
   --gallery-snap: x mandatory;
   --gallery-gap: 2rem;
   --gallery-item-width: 85vw;
+  --gallery-image-height: 65vh;
 }
 .artist-theme-ink-b .theme-border,
 .artist-theme-ink-b .hard-border {
@@ -1094,10 +1110,12 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 500ms;
   --duration-slow: 900ms;
 
-  --muted: #5a7260; /* Definido para Verdure A */
+  --font-heading: var(--font-verdure), sans-serif;
+  --font-body: var(--font-verdure), sans-serif;
+
   background: var(--bg);
   color: var(--fg);
-  font-family: "Outfit", sans-serif;
+  font-family: var(--font-body);
   letter-spacing: 0;
 
   /* ESTRUCTURA ORGÁNICA: Asimetría staggered */
@@ -1153,10 +1171,12 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 500ms;
   --duration-slow: 900ms;
 
-  --muted: #6a9470; /* Definido para Verdure B */
+  --font-heading: var(--font-verdure), sans-serif;
+  --font-body: var(--font-verdure), sans-serif;
+
   background: var(--bg);
   color: var(--fg);
-  font-family: "Outfit", sans-serif;
+  font-family: var(--font-body);
   letter-spacing: 0;
 
   /* ESTRUCTURA: Grid Orgánica */
@@ -1207,10 +1227,12 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 200ms;
   --duration-slow: 400ms;
 
-  --muted: #8B5E00; /* Definido para Amber A */
+  --font-heading: var(--font-amber), serif;
+  --font-body: var(--font-amber), serif;
+
   background: var(--bg);
   color: var(--fg);
-  font-family: "Fraunces", serif;
+  font-family: var(--font-body);
   letter-spacing: 0;
 
   /* ESTRUCTURA: Collage desordenado */
@@ -1275,10 +1297,12 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 200ms;
   --duration-slow: 400ms;
 
-  --muted: #D97706; /* Definido para Amber B */
+  --font-heading: var(--font-amber), serif;
+  --font-body: var(--font-amber), serif;
+
   background: var(--bg);
   color: var(--fg);
-  font-family: var(--font-amber), serif;
+  font-family: var(--font-body);
   letter-spacing: 0;
 
   /* ESTRUCTURA: Collage desordenado */

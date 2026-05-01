@@ -117,14 +117,16 @@ export function GalleryGrid({ tattoos, dict: dictProp }: GalleryGridProps) {
           >
             <article
               className="mkt-card gallery-item hard-border flex cursor-pointer flex-col gap-3 bg-[var(--bg)] p-3 transition-opacity hover:opacity-80"
+              style={{ borderRadius: 'var(--radius-card)' }}
             >
               <Image
-                className="tattoo-image h-64 w-full object-cover"
+                className="tattoo-image w-full object-cover"
                 src={tattoo.image_url}
                 alt={tattoo.title}
                 width={960}
                 height={720}
-                sizes="(max-width: 768px) 100vw, 33vw"
+                style={{ height: 'var(--gallery-image-height, 16rem)' }}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
               <div>
                 <h3 className="font-[var(--font-heading)] text-xl uppercase">

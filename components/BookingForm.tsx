@@ -222,7 +222,7 @@ export function BookingForm({ copy, tenantSlug, demoMode, locale = "en" }: Booki
           <label className="text-xs uppercase tracking-[0.2em]">
             {copy.name}
             <input
-              className={`hard-border mt-1 w-full px-3 py-2 ${errorMap.get("name") ? "input-error" : ""}`}
+              className={`hard-border public-input mt-1 w-full px-3 py-2 ${errorMap.get("name") ? "input-error" : ""}`}
               name="name" minLength={2} required
               aria-invalid={errorMap.has("name") || undefined}
               aria-describedby={errorMap.has("name") ? "err-name" : undefined}
@@ -233,7 +233,7 @@ export function BookingForm({ copy, tenantSlug, demoMode, locale = "en" }: Booki
           <label className="text-xs uppercase tracking-[0.2em]">
             {copy.email}
             <input
-              className={`hard-border mt-1 w-full px-3 py-2 ${errorMap.get("email") ? "input-error" : ""}`}
+              className={`hard-border public-input mt-1 w-full px-3 py-2 ${errorMap.get("email") ? "input-error" : ""}`}
               name="email" type="email" required
               aria-invalid={errorMap.has("email") || undefined}
               aria-describedby={errorMap.has("email") ? "err-email" : undefined}
@@ -247,7 +247,7 @@ export function BookingForm({ copy, tenantSlug, demoMode, locale = "en" }: Booki
               <label className="text-xs uppercase tracking-[0.2em]">
                 {copy.preferredDate}
                 <input
-                  className={`hard-border mt-1 w-full px-3 py-2 ${errorMap.get("preferredDate") ? "input-error" : ""}`}
+                  className={`hard-border public-input mt-1 w-full px-3 py-2 ${errorMap.get("preferredDate") ? "input-error" : ""}`}
                   name="preferredDate" type="date" min={today} required
                 />
               </label>
@@ -264,7 +264,7 @@ export function BookingForm({ copy, tenantSlug, demoMode, locale = "en" }: Booki
           <label className="text-xs uppercase tracking-[0.2em]">
             {copy.placement}
             <input
-              className={`hard-border mt-1 w-full px-3 py-2 ${errorMap.get("placement") ? "input-error" : ""}`}
+              className={`hard-border public-input mt-1 w-full px-3 py-2 ${errorMap.get("placement") ? "input-error" : ""}`}
               name="placement" minLength={2} required
               aria-invalid={errorMap.has("placement") || undefined}
               aria-describedby={errorMap.has("placement") ? "err-placement" : undefined}
@@ -275,7 +275,7 @@ export function BookingForm({ copy, tenantSlug, demoMode, locale = "en" }: Booki
           <label className="text-xs uppercase tracking-[0.2em]">
             {copy.description}
             <textarea
-              className={`hard-border mt-1 min-h-[120px] w-full px-3 py-2 ${errorMap.get("description") ? "input-error" : ""}`}
+              className={`hard-border public-input mt-1 min-h-[120px] w-full px-3 py-2 ${errorMap.get("description") ? "input-error" : ""}`}
               name="description" minLength={10} required
               aria-invalid={errorMap.has("description") || undefined}
               aria-describedby={errorMap.has("description") ? "err-description" : undefined}
