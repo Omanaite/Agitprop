@@ -160,8 +160,7 @@ export function NavMono({ navItems, locale, brandEyebrow, brandTitle, siteTheme 
 
           {/* Grid — items reveal top→bottom with clip-path */}
           <nav
-            className="flex-1 grid p-6 md:p-10 gap-px"
-            style={{ gridTemplateColumns: `repeat(${Math.min(navItems.length, 3)}, 1fr)` }}
+            className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 p-4 md:p-10 gap-px"
           >
             {navItems.map((s, i) => (
               <a
