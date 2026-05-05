@@ -40,38 +40,65 @@ export default async function StudioPage() {
 
   return (
     <StudioPreviewProvider>
-      {/* Injects slug into preview context on mount */}
       {slug && <StudioSlugLoader slug={slug} />}
 
-      <div className="admin-shell px-6 py-8 md:px-10 md:py-10">
-        <div className="mx-auto flex max-w-[1800px] flex-col gap-6">
-          <header className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <p className="admin-chip">Artist workspace</p>
-              <h1 className="admin-title mt-4 text-4xl font-semibold">
-                {studioTitle}
-              </h1>
-              <p className="admin-muted mt-2 max-w-2xl text-sm leading-6">
-                Manage your galleries, posts, bookings, and site settings.
-              </p>
-            </div>
+      <div
+        className="admin-shell flex flex-col"
+        style={{ minHeight: "100vh", height: "100vh", overflow: "hidden" }}
+      >
+        {/* ── Top bar ── */}
+        <header
+          className="shrink-0 flex items-center justify-between px-5 md:px-6"
+          style={{
+            height: "56px",
+            borderBottom: "1px solid var(--admin-border)",
+            background: "var(--admin-surface)",
+            backdropFilter: "blur(12px)",
+            zIndex: 30,
+          }}
+        >
+          <div className="flex items-center gap-3 min-w-0">
+            <span
+              className="text-[10px] font-semibold uppercase tracking-[0.14em] shrink-0"
+              style={{ color: "var(--admin-muted)" }}
+            >
+              Studio
+            </span>
+            <span
+              className="shrink-0"
+              style={{ width: "1px", height: "14px", background: "var(--admin-border)" }}
+            />
+            <span
+              className="text-sm font-semibold truncate"
+              style={{ color: "var(--admin-title)" }}
+            >
+              {studioTitle}
+            </span>
+          </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <StudioSiteLink />
-              <AdminThemeToggle />
-              <form action={signOutArtist}>
-                <button type="submit" className="admin-button admin-button-ghost">
-                  Sign out
-                </button>
-              </form>
-            </div>
-          </header>
+          <div className="flex items-center gap-2 shrink-0">
+            <StudioSiteLink />
+            <AdminThemeToggle />
+            <form action={signOutArtist}>
+              <button
+                type="submit"
+                className="admin-button admin-button-ghost"
+                style={{ padding: "0.45rem 0.8rem", fontSize: "0.78rem" }}
+              >
+                Sign out
+              </button>
+            </form>
+          </div>
+        </header>
 
+        {/* ── Body (sidebar + content) ── */}
+        <div className="flex flex-1 min-h-0">
           <StudioSplitLayout>
             <StudioConsoleShell />
           </StudioSplitLayout>
         </div>
       </div>
+
       <StudioChatbot />
     </StudioPreviewProvider>
   );

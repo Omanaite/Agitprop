@@ -38,39 +38,44 @@ export function StudioSplitLayout({ children }: Props) {
   const showSplit = splitActive && isWide && !!slug;
 
   return (
-    <div className="relative flex flex-col gap-0 flex-1">
-      {/* Split toggle button — only shown on wide screens with a slug */}
+    <div className="flex flex-1 min-h-0 w-full relative">
+      {/* Split toggle — floats over top-right of content */}
       {isWide && !!slug && (
-        <div className="flex justify-end pb-3">
-          <button
-            onClick={() => setSplitActive(!splitActive)}
-            className="admin-button admin-button-ghost flex items-center gap-2 text-xs"
-            title={splitActive ? "Close preview" : "Open live preview"}
-          >
-            <span className="text-base leading-none">{splitActive ? "▣" : "▤"}</span>
-            {splitActive ? "Close preview" : "Preview site"}
-          </button>
-        </div>
+        <button
+          onClick={() => setSplitActive(!splitActive)}
+          className="admin-button admin-button-ghost flex items-center gap-2"
+          title={splitActive ? "Close preview" : "Open live preview"}
+          style={{
+            position: "absolute",
+            top: "12px",
+            right: "16px",
+            zIndex: 10,
+            fontSize: "0.75rem",
+            padding: "0.35rem 0.75rem",
+          }}
+        >
+          <span style={{ fontSize: "1rem", lineHeight: 1 }}>{splitActive ? "▣" : "▤"}</span>
+          {splitActive ? "Close preview" : "Preview site"}
+        </button>
       )}
 
-      {/* Layout */}
       {showSplit ? (
-        <div className="flex h-[calc(100vh-160px)] min-h-[600px] gap-0 rounded-sm overflow-hidden border border-current/10">
-          {/* Left: studio panel */}
-          <div className="w-1/2 overflow-y-auto">
+        <>
+          <div className="w-1/2 min-h-0 overflow-y-auto" style={{ borderRight: "1px solid var(--admin-border)" }}>
             {children}
           </div>
-          {/* Right: live preview */}
-          <div className="w-1/2">
+          <div className="w-1/2 min-h-0">
             <StudioPreviewPanel
               device={device}
               onDeviceChange={setDevice}
               onClose={() => setSplitActive(false)}
             />
           </div>
-        </div>
+        </>
       ) : (
-        <div>{children}</div>
+        <div className="flex-1 min-h-0 min-w-0">
+          {children}
+        </div>
       )}
     </div>
   );
