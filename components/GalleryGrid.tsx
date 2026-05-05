@@ -120,12 +120,11 @@ export function GalleryGrid({ tattoos, dict: dictProp }: GalleryGridProps) {
               style={{ borderRadius: 'var(--radius-card)' }}
             >
               <Image
-                className="tattoo-image w-full object-cover"
+                className="tattoo-image w-full gallery-item-image"
                 src={tattoo.image_url}
                 alt={tattoo.title}
                 width={960}
                 height={720}
-                style={{ height: 'var(--gallery-image-height, 16rem)' }}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
               <div>

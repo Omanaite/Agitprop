@@ -102,7 +102,7 @@ html,
 body {
   background: var(--bg);
   color: var(--fg);
-  font-family: var(--font-body);
+  font-family: var(--font-body), sans-serif;
   letter-spacing: -0.01em;
   line-height: 1.5;
   transition: background var(--transition-speed) var(--ease-out-expo), color var(--transition-speed) var(--ease-out-expo);
@@ -740,8 +740,8 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 200ms;
   --duration-slow: 400ms;
 
-  --font-heading: var(--font-atelier), serif;
-  --font-body: var(--font-atelier), serif;
+  --font-heading: var(--font-atelier, "EB Garamond"), serif;
+  --font-body: var(--font-atelier, "EB Garamond"), serif;
 
   background: linear-gradient(160deg, #faf7f2 0%, #f3ede3 100%);
   color: var(--fg);
@@ -798,8 +798,8 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 240ms;
   --duration-slow: 400ms;
 
-  --font-heading: var(--font-atelier), serif;
-  --font-body: var(--font-atelier), serif;
+  --font-heading: var(--font-atelier, "EB Garamond"), serif;
+  --font-body: var(--font-atelier, "EB Garamond"), serif;
 
   background: linear-gradient(160deg, #1a1510 0%, #120f0a 100%);
   color: var(--fg);
@@ -857,8 +857,8 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 150ms;
   --duration-slow: 300ms;
 
-  --font-heading: var(--font-mono-ink), sans-serif;
-  --font-body: var(--font-mono-ink), sans-serif;
+  --font-heading: var(--font-mono-ink, "Inter"), sans-serif;
+  --font-body: var(--font-mono-ink, "Inter"), sans-serif;
 
   background: #ffffff;
   color: var(--fg);
@@ -868,6 +868,7 @@ html[data-theme="dark"] .gallery-filter-select {
   /* ESTRUCTURA TÉCNICA: Cuadrícula rígida con bordes */
   --gallery-gap: 0px;
   --gallery-columns: 3;
+  --gallery-image-height: 20rem;
 }
 
 .artist-theme-mono .theme-border,
@@ -916,8 +917,8 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 150ms;
   --duration-slow: 300ms;
 
-  --font-heading: var(--font-mono-ink), sans-serif;
-  --font-body: var(--font-mono-ink), sans-serif;
+  --font-heading: var(--font-mono-ink, "Inter"), sans-serif;
+  --font-body: var(--font-mono-ink, "Inter"), sans-serif;
 
   background: #0a0a0a;
   color: var(--fg);
@@ -929,6 +930,7 @@ html[data-theme="dark"] .gallery-filter-select {
   --gallery-columns-mobile: 2;
   --gallery-gap: 0px;
   --gallery-item-width: 100%;
+  --gallery-image-height: 20rem;
 }
 .artist-theme-mono-b .theme-border,
 .artist-theme-mono-b .hard-border {
@@ -970,8 +972,8 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 400ms;
   --duration-slow: 800ms;
 
-  --font-heading: var(--font-mkt-sans), sans-serif;
-  --font-body: var(--font-mkt-sans), sans-serif;
+  --font-heading: var(--font-mkt-sans, "Geist"), sans-serif;
+  --font-body: var(--font-mkt-sans, "Geist"), sans-serif;
 
   background: var(--bg);
   color: var(--fg);
@@ -1052,8 +1054,8 @@ html[data-theme="dark"] .gallery-filter-select {
   --duration: 400ms;
   --duration-slow: 800ms;
 
-  --font-heading: var(--font-mkt-sans), sans-serif;
-  --font-body: var(--font-mkt-sans), sans-serif;
+  --font-heading: var(--font-mkt-sans, "Geist"), sans-serif;
+  --font-body: var(--font-mkt-sans, "Geist"), sans-serif;
 
   background: #0D1117;
   color: #C9D1D9;
@@ -1184,6 +1186,7 @@ html[data-theme="dark"] .gallery-filter-select {
   --gallery-columns-mobile: 1;
   --gallery-gap: 3rem;
   --gallery-item-width: 100%;
+  --gallery-image-height: 70vh;
 }
 .artist-theme-verdure-b .theme-border,
 .artist-theme-verdure-b .hard-border {
