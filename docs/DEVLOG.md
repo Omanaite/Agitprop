@@ -7,6 +7,18 @@ Last updated: 2026-04-29
 
 Purpose: chronological project progress log to preserve context across sessions.
 
+## 2026-05-05
+**Agent:** claude-sonnet-4-6
+
+- **theme redesign** (`NavAtelier`, `NavMono`, `NavInk`, `NavVerdure`, `NavAmber`): Full per-theme hamburger menus + animated overlays
+  - **Atelier**: 2-line editorial hamburger → split-screen fullscreen overlay (fg left column + staggered right nav items, `translateX` enter)
+  - **Mono**: 3×3 dot grid hamburger → fullscreen terminal grid layout, items in CSS grid with `translateY` stagger
+  - **Ink**: square bordered SVG icon → fullscreen dramatic `translateY(-8px)` drop, accent underline on hover via ref
+  - **Verdure**: 3-line rounded + accent middle line → bottom-sheet panel slides up `translateY(100%)→0`, botanical ❧ ornaments
+  - **Amber**: art deco thin/thick/thin lines → center-emerge overlay with ◆ corner decorators + staggered `scale(0.96)→1`
+  - All: `cubic-bezier(0.16,1,0.3,1)` easing, `document.body.overflow` lock, `mounted` state for unmount delay
+- **MktThemeToggle** (`components/marketing/MktThemeToggle.tsx`): replaced emoji icons with inline SVG thin-stroke 16px (sun/moon/eye)
+
 ## 2026-04-30
 **Agent:** claude-sonnet-4-6 | `2027aa5` `bce7d5b` `84e9fa1` `34909bf` `9c01343`
 
