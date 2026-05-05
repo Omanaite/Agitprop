@@ -112,13 +112,16 @@ export function NavInk({ navItems, locale, brandEyebrow, brandTitle, siteTheme }
 
   return (
     <>
-      <header className="bg-[var(--bg)] px-6 md:px-10 py-6">
-        <div className="flex items-center justify-between gap-4">
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.9em] opacity-30 mb-1">{brandEyebrow}</p>
+      <header className="bg-[var(--bg)] px-5 md:px-10 py-5 overflow-hidden">
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0 flex-1">
+            <p className="text-[9px] uppercase tracking-[0.6em] opacity-30 mb-1 truncate">{brandEyebrow}</p>
             <h1
-              className="text-3xl md:text-5xl uppercase tracking-[0.25em] font-light"
-              style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif" }}
+              className="text-2xl md:text-5xl uppercase font-light truncate"
+              style={{
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                letterSpacing: "clamp(0.04em, 1.5vw, 0.25em)",
+              }}
             >
               {brandTitle}
             </h1>
